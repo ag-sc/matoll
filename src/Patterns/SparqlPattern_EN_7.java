@@ -1,4 +1,4 @@
-package Patterns;
+package patterns;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
