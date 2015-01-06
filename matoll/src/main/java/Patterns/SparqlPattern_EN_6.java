@@ -1,15 +1,15 @@
-package patterns;
+package Patterns;
 
 import java.util.Date;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import core.FeatureVector;
-import core.LexicalEntry;
-import core.LexiconWithFeatures;
-import core.Provenance;
-import core.SenseArgument;
-import core.SyntacticArgument;
+import Core.FeatureVector;
+import Core.LexicalEntry;
+import Core.LexiconWithFeatures;
+import Core.Provenance;
+import Core.SenseArgument;
+import Core.SyntacticArgument;
 
 public class SparqlPattern_EN_6 implements SparqlPattern {
 
