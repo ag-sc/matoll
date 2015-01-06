@@ -6,12 +6,19 @@ public class LexiconWithFeatures extends Lexicon{
 
 	HashMap<LexicalEntry,FeatureVector> map;
 	
+	public LexiconWithFeatures()
+	{
+		super();
+		map = new HashMap<LexicalEntry,FeatureVector>();
+	}
+	
 	public void add(LexicalEntry entry, FeatureVector features)
 	{
 		if (this.contains(entry))
 		{
 			entry = this.getLexicalEntry(entry);
-			map.put(entry, map.get(entry).add(features));
+			
+			// map.put(entry, map.get(entry).add(features));
 			
 		}
 		else
@@ -28,5 +35,7 @@ public class LexiconWithFeatures extends Lexicon{
 	
 		else return null;
 	}
+	
+	
 	
 }
