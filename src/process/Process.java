@@ -8,6 +8,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import core.LexiconWithFeatures;
 import patterns.PatternLibrary;
 import patterns.SparqlPattern_EN_6;
+import preprocessor.ModelPreprocessor;
 
 public class Process {
 
@@ -15,6 +16,8 @@ public class Process {
 		
 		List<String> properties = new ArrayList<String>();
 		List<Model> sentences;
+		
+		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
 		LexiconWithFeatures lexicon = new LexiconWithFeatures();
 		
@@ -26,9 +29,14 @@ public class Process {
 		{
 			sentences = new ArrayList<Model>();
 			
+			String subjectEntity = "Barack Obama";
+			String objectEntity = "Michele Obama";
+		
 			for (Model model: sentences)
 			{
-				library.extractLexicalEntries(model, lexicon);
+				preprocessor.preprocess(model,subjectEntity, objectEntity);
+				
+				library.extractLexicalEntries(model, property, lexicon);
 			}
 		}	
 	}

@@ -49,8 +49,8 @@ public class test1 {
 		
 		// The following should say that entry is already contained:
 		
-		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
-		else System.out.print("Entry not included!!!");
+		if (lexicon.contains(entry)) System.out.println("Entry already included!!!");
+		else System.out.println("Entry not included!!!");
 		
 		// Let's changed the lemma
 		
@@ -73,7 +73,7 @@ public class test1 {
 		// The following should say that entry is already contained:
 		
 		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
-		else System.out.print("Entry not included!!!");
+		else System.out.println("Entry not included!!!");
 		
 		// Let's change the frame type
 		
@@ -96,7 +96,7 @@ public class test1 {
 		// The following should say that entry is already contained:
 		
 		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
-		else System.out.print("Entry not included!!!");
+		else System.out.println("Entry not included!!!");
 		
 		// Let's change the mappings
 		
@@ -118,8 +118,8 @@ public class test1 {
 		
 		// The following should say that entry is already contained:
 		
-		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
-		else System.out.print("Entry not included!!!");
+		if (lexicon.contains(entry)) System.out.println("Entry already included!!!");
+		else System.out.println("Entry not included!!!");
 		
 		
 	}

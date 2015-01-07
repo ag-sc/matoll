@@ -18,7 +18,7 @@ public class LexiconWithFeatures extends Lexicon{
 		{
 			entry = this.getLexicalEntry(entry);
 			
-			// map.put(entry, map.get(entry).add(features));
+			map.put(entry, map.get(entry).add(features));
 			
 		}
 		else
