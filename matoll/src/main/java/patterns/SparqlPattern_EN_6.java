@@ -2,6 +2,10 @@ package patterns;
 
 import java.util.Date;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.FeatureVector;
@@ -67,10 +71,32 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 			+ "}";
 	
 	
+
+	
+	
 	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		
 		// match SPARQL query
+		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+	    ResultSet rs = qExec.execSelect() ;
+	    try {
+	    	 while ( rs.hasNext() ) {
+	        	 QuerySolution qs = rs.next();
+	        	 try{
+	        		//String tmp = qs.get("?frequency").toString().replace("^^http://www.w3.org/2001/XMLSchema#integer", "");
+	        		 
+	        	 }
+	        	 catch(Exception e){
+	     	    	e.printStackTrace();
+	        		 //ignore those without Frequency TODO:Check Source of Error
+	     	    }
+	    	 }
+	    }
+	    catch(Exception e){
+	    	e.printStackTrace();
+	    }
+	    qExec.close() ;
 		
 		FeatureVector vector = new FeatureVector();
 		
