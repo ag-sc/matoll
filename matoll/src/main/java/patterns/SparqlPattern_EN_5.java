@@ -67,7 +67,6 @@ public class SparqlPattern_EN_5 implements SparqlPattern {
 					+ "?class <own:obj> ?propObj. "
 					+ "}";
 	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		// TODO Auto-generated method stub
 
@@ -75,7 +74,6 @@ public class SparqlPattern_EN_5 implements SparqlPattern {
 		
 	}
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;

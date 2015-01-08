@@ -87,8 +87,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 				+ "}";
 		
 		
-	
-	@Override
+
 	public void extractLexicalEntries(Model model, String reference,  LexiconWithFeatures lexicon) {
 		// TODO Auto-generated method stub
 
@@ -98,7 +97,6 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
 
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;

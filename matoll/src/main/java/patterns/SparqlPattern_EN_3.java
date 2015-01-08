@@ -77,7 +77,6 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 			+ "}";
 	
 	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		// TODO Auto-generated method stub
 		
@@ -86,7 +85,6 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	}
 
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;

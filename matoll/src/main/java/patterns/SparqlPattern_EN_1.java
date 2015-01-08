@@ -96,7 +96,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 
 */
 	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		
 		// match the query against the model and for each match create a lexical entry and feature Vector
@@ -105,7 +104,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 		
 	}
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;

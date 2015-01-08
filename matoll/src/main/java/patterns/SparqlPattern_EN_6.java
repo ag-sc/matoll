@@ -73,8 +73,6 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	
 
 	
-	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		
 		// match SPARQL query

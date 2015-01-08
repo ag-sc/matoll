@@ -95,7 +95,6 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 18	.	_	.	.	_	4	punct
 	 */
 	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		
 		// match query to model
@@ -104,7 +103,6 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 
 	}
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;

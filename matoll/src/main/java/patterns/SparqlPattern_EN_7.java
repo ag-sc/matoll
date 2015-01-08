@@ -68,13 +68,11 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 			+ "?class <own:obj> ?propObj. "
 			+ "}";
 	
-	@Override
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;
