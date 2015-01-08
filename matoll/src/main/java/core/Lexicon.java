@@ -96,8 +96,18 @@ public class Lexicon {
 		entry.setURI(baseURI+"LexicalEntry_"+entries.size()+"_"+canonicalForm);
 		
 		return entry;
-		
-		
+	
+	}
+
+	public boolean contains(LexicalEntry entry)
+	{
+		return entries.contains(entry);
+	}
+	
+	public LexicalEntry getLexicalEntry(LexicalEntry entry)
+	{
+		if (entries.contains(entry)) return entry;
+		else return null;
 	}
 	
 	public Iterator<LexicalEntry> iterator()
