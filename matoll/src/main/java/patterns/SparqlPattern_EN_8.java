@@ -1,8 +1,8 @@
-package Patterns;
+package patterns;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import Core.LexiconWithFeatures;
+import core.LexiconWithFeatures;
 
 public class SparqlPattern_EN_8 implements SparqlPattern {
 

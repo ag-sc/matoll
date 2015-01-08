@@ -1,4 +1,4 @@
-package Patterns;
+package patterns;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,11 @@ public class PatternLibrary {
 		Patterns.add(pattern);
 	}
 	
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon)
+	public void extractLexicalEntries(Model model, String property, LexiconWithFeatures lexicon)
 	{
 		for (SparqlPattern pattern: Patterns)
 		{
-			pattern.extractLexicalEntries(model, "property", lexicon);
+			pattern.extractLexicalEntries(model, property, lexicon);
 		}
 		
 	}

@@ -1,15 +1,15 @@
-package Patterns;
+package patterns;
 
 import java.util.Date;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import Core.FeatureVector;
-import Core.LexicalEntry;
-import Core.LexiconWithFeatures;
-import Core.Provenance;
-import Core.SenseArgument;
-import Core.SyntacticArgument;
+import core.FeatureVector;
+import core.LexicalEntry;
+import core.LexiconWithFeatures;
+import core.Provenance;
+import core.SenseArgument;
+import core.SyntacticArgument;
 
 public class SparqlPattern_EN_6 implements SparqlPattern {
 
@@ -42,7 +42,7 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	23	II	_	NNP	NNP	_	21	pobj
 	24	.	_	.	.	_	12	punct
 	----------------------*/
-	String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
 			+ "?e1 <conll:deprel> ?e1_grammar . "
@@ -62,8 +62,8 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 			+ "FILTER regex(?e2_grammar, \"obj\") ."
 			+ "?e2 <conll:form> ?e2_form . "
 			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:semArg> ?e1_arg. "
+			+ "?e2 <own:semArg> ?e2_arg. "
 			+ "}";
 	
 	
@@ -86,23 +86,37 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
 		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		if ("?e1_arg".equals("http://lemon-model.net/lemon#subfOfProp") && "?e2_arg".equals("http://lemon-model.net/lemon#objOfProp"))
+		{
+			
+			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
-	
-		lexicon.add(entry, vector);
+			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		
+			lexicon.add(entry, vector);
+		}	
+		
+		if ("?e1_arg".equals("http://lemon-model.net/lemon#objOfProp") && "?e2_arg".equals("http://lemon-model.net/lemon#subfOfProp"))
+		{
+			
+			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+		
+			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		
+			lexicon.add(entry, vector);
+		}	
 	
 		
 	}
 
 
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQLPattern_EN_6";
 	}
 
 }
