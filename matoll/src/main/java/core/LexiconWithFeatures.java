@@ -29,6 +29,8 @@ public class LexiconWithFeatures extends Lexicon{
 		}
 	}
 		
+
+
 	public FeatureVector getFeatureVector(LexicalEntry entry)
 	{
 		if (map.containsKey(entry)) return map.get(entry);
