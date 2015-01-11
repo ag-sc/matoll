@@ -6,6 +6,11 @@ public class FeatureVector {
 
 	HashMap<String,Double> features;
 	
+	public FeatureVector()
+	{
+		features = new HashMap<String,Double>();
+	}
+	
 	public void add(String feature, Double value) {
 		features.put(feature, value);
 		

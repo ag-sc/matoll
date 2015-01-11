@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class ModelPreprocessor {
 
@@ -22,20 +25,29 @@ public class ModelPreprocessor {
 		List<List<String>> objectResources = getResources(model,objectEntity);
 		List<List<String>> subjectResources = getResources(model,subjectEntity);
 		
-		List<Hypothesis> hypotheses = getHypotheses(objectResources);
+		System.out.println("Checking subject hypotheses: "+subjectEntity);
+		
+		List<Hypothesis> hypotheses = getHypotheses(subjectResources);
 		
 		String root;
 	
 		for (Hypothesis hypo: hypotheses)
 		{
+			
+			System.out.print("Final hypo: "+hypo.toString());
+			
 			root = hypo.checkValidAndReturnRoot(Resource2Head);
 				
 		}
+		
+		System.out.println("Checking object hypotheses "+objectEntity);
 		
 		hypotheses = getHypotheses(objectResources);
 			
 		for (Hypothesis hypo: hypotheses)
 		{
+			System.out.print("Final hypo: "+hypo.toString());
+			
 			root = hypo.checkValidAndReturnRoot(Resource2Head);
 				
 		}
@@ -49,14 +61,25 @@ public class ModelPreprocessor {
 		List<Hypothesis> expanded_hypotheses;
 		
 		hypotheses.add(new Hypothesis());
-		
+				
 		for (List<String> nodes: resources)
 		{
+			System.out.print("Checking nodes: "+nodes+"\n");
+			
 			expanded_hypotheses = new ArrayList<Hypothesis>();
+			
 			
 			for (Hypothesis hypo: hypotheses)
 			{
-				expanded_hypotheses.addAll(hypo.expand(nodes));
+				System.out.print("Expanding: "+hypo.toString());
+				
+				for (Hypothesis hypot: hypo.expand(nodes))
+				{
+			
+					System.out.print("Adding: "+hypot.toString());
+					expanded_hypotheses.add(hypot);
+				}
+				
 			}
 			
 			hypotheses = expanded_hypotheses;
@@ -67,24 +90,112 @@ public class ModelPreprocessor {
 	}
 
 	private List<List<String>> getResources(Model model,
-			String subjectEntity) {
-		// TODO Auto-generated method stub
-		return null;
+			String string) {
+		
+		String[] tokens = string.split(" ");
+		
+		ArrayList<List<String>> resourceList = new ArrayList<List<String>>();
+		
+		ArrayList<String> wordResources;
+		
+		StmtIterator iter;
+		
+		Statement stmt;
+		
+		for (int i=0; i < tokens.length; i++)
+		{
+			wordResources = new ArrayList<String>();
+			
+			iter = model.listStatements(null,model.getProperty("conll:form"), (RDFNode) null);
+		
+			while (iter.hasNext()) {
+						
+				stmt = iter.next();
+				
+				if (stmt.getObject().toString().equals(tokens[i]))
+				{
+					wordResources.add(stmt.getSubject().toString());
+					System.out.println(stmt.getSubject().toString()+" has form "+stmt.getObject().toString());
+				}
+				
+			}
+			
+			resourceList.add(wordResources);
+							
+		}	
+
+		 return resourceList;
 	}
 
 	private HashMap<String, String> getResource2Dependency(Model model) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		HashMap<String,String> resource2Dep = new HashMap<String,String>();
+		
+		StmtIterator iter;
+		
+		Statement stmt;
+		
+		iter = model.listStatements(null,model.getProperty("conll:deprel"), (RDFNode) null);
+		
+		while (iter.hasNext()) {
+					
+			stmt = iter.next();
+			
+			resource2Dep.put(stmt.getSubject().toString(), stmt.getObject().toString());
+			
+			System.out.println(stmt.getSubject().toString()+" has dependency "+stmt.getObject().toString());
+		
+			
+		}
+		
+		return resource2Dep;
+	   
 	}
 
 	private HashMap<String, String> getResource2Head(Model model) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		HashMap<String,String> resource2Head = new HashMap<String,String>();
+		
+		StmtIterator iter;
+		
+		Statement stmt;
+		
+		iter = model.listStatements(null,model.getProperty("conll:head"), (RDFNode) null);
+		
+		while (iter.hasNext()) {
+					
+			stmt = iter.next();
+			
+			resource2Head.put(stmt.getSubject().toString(), stmt.getObject().toString());
+			
+			System.out.println(stmt.getSubject().toString()+" has head "+stmt.getObject().toString());
+						
+		}
+		
+		return resource2Head;
 	}
 
 	private HashMap<String, String> getResource2Lemma(Model model) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		HashMap<String,String> resource2Lemma = new HashMap<String,String>();
+		
+		StmtIterator iter;
+		
+		Statement stmt;
+		
+		iter = model.listStatements(null,model.getProperty("conll:lemma"), (RDFNode) null);
+		
+		while (iter.hasNext()) {
+					
+			stmt = iter.next();
+			
+			resource2Lemma.put(stmt.getSubject().toString(), stmt.getObject().toString());
+			
+			System.out.println(stmt.getSubject().toString()+" has lemma "+stmt.getObject().toString());
+			
+		}
+		
+		return resource2Lemma;
 	}
 
 }

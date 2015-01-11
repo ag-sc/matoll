@@ -80,5 +80,12 @@ public class Hypothesis {
 			return null;
 		
 	}
+	
+	public String toString()
+	{
+		String string = "Hypothesis: ";
+		string += Nodes.toString();
+		return string+"\n";
+	}
 
 }
