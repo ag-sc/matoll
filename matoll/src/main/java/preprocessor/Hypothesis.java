@@ -2,7 +2,9 @@ package preprocessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Hypothesis {
 	
@@ -52,27 +54,37 @@ public class Hypothesis {
 		return Nodes;
 	}
 
-	public String checkValidAndReturnRoot(HashMap<String,String> resource2heads) {
+	public String checkValidAndReturnRoot(HashMap<String,String> resource2heads, HashMap<String,String> resource2deps) {
 		
 		int dangling = 0;
 		String root = null;
+		Set<String> pos = new HashSet<String>();
+		pos.add("prep");
+		pos.add("appos");
+		pos.add("nn");
+		pos.add("dobj");
 		
 		String head;
 		
 		for (String node: Nodes)
 		{
+			
+			System.out.print("Checking:"+node+" "+resource2deps.get(node)+"\n");
 			head = resource2heads.get(node);
 			
-			if (head!= null)
+			if ((pos.contains(resource2deps.get(node))) && Nodes.contains(head))
 			{
-				root = head;
+				System.out.print("Node: "+node+" is in good shape\n");
 			}
 			else
 			{
-				if (!Nodes.contains(head)) dangling++;
+				dangling++;
+				root = node;
 			}
 			
 		}
+		
+		System.out.print("Dangling: "+dangling+"\n");
 		
 		if (dangling == 1)
 			return root;

@@ -36,7 +36,11 @@ public class ModelPreprocessor {
 			
 			System.out.print("Final hypo: "+hypo.toString());
 			
-			root = hypo.checkValidAndReturnRoot(Resource2Head);
+			root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+			
+			if (root != null) System.out.print("Root:"+root);
+			model.add(model.getResource(root), model.createProperty("http://lemon-model.net/lemon#subjOfProp"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+			
 				
 		}
 		
@@ -48,7 +52,11 @@ public class ModelPreprocessor {
 		{
 			System.out.print("Final hypo: "+hypo.toString());
 			
-			root = hypo.checkValidAndReturnRoot(Resource2Head);
+			root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+			
+			if (root != null) System.out.print("Root:"+root);
+			
+			model.add(model.getResource(root), model.createProperty("http://lemon-model.net/lemon#objOfProp"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
 				
 		}
 		
