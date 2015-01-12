@@ -1,5 +1,6 @@
 package preprocessor;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ModelPreprocessor {
 			root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
 			
 			if (root != null) System.out.print("Root:"+root);
-			model.add(model.getResource(root), model.createProperty("http://lemon-model.net/lemon#subjOfProp"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+			model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
 			
 				
 		}
@@ -56,7 +57,7 @@ public class ModelPreprocessor {
 			
 			if (root != null) System.out.print("Root:"+root);
 			
-			model.add(model.getResource(root), model.createProperty("http://lemon-model.net/lemon#objOfProp"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+			model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
 				
 		}
 		

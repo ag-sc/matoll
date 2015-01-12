@@ -1,34 +1,31 @@
 package process;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDF;
-
-import core.LexiconWithFeatures;
 import patterns.PatternLibrary;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
-import vocabularies.LEMON;
-import vocabularies.LEXINFO;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+
+import core.LexiconWithFeatures;
 
 public class Process {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		
 		List<String> properties = new ArrayList<String>();
-		properties.add("http://dbpedia.ontology/sopuse");
+		properties.add("http://dbpedia.ontology/spouse");
 		
 		File folder = new File("/Users/cimiano/test");
 		
@@ -67,6 +64,11 @@ public class Process {
 				preprocessor.preprocess(model,subj,obj);
 				
 				library.extractLexicalEntries(model, property, lexicon);
+				
+				FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+				
+				RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+				
 				
 				}
 			}
