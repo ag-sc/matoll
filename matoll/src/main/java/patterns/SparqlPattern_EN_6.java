@@ -1,6 +1,8 @@
 package patterns;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -8,6 +10,8 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import core.FeatureVector;
 import core.LexicalEntry;
@@ -88,6 +92,8 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 		vector.add("freq",1.0);
 		vector.add(this.getID(),1.0);
 		
+		List<String> sentences = this.getSentences(model);
+		
 	     
 	    try {
 	    	 while ( rs.hasNext() ) {
@@ -106,6 +112,11 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 	        			
 	        			entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+	        			
+	        			for (String sentence: sentences)
+	        			{
+	        				entry.addSentence(sentence);
+	        			}
 
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
@@ -152,6 +163,26 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	
 		
 	}
+	
+	private static List<String> getSentences(Model model) {
+		
+		List<String> sentences = new ArrayList<String>();
+		
+		StmtIterator iter = model.listStatements(null,model.getProperty("own:sentence"), (RDFNode) null);
+		
+		Statement stmt;
+		
+		while (iter.hasNext()) {
+						
+			stmt = iter.next();
+			
+	        sentences.add(stmt.getObject().toString());
+	    }
+		
+		return sentences;
+
+		
+	}	
 
 
 	public String getID() {

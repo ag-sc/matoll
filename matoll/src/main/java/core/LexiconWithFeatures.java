@@ -27,8 +27,11 @@ public class LexiconWithFeatures extends Lexicon{
 			{
 				map.put(entry, features.add(features));
 			}
+
 			
 			System.out.print("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
+		
+			
 			
 			// do something to update the features
 			

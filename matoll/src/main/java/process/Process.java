@@ -34,7 +34,7 @@ public class Process {
 		
 		Lexicon lexicon;
 		
-		List<Model> sentences;
+		List<Model> models;
 		
 		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
@@ -46,12 +46,14 @@ public class Process {
 		
 		for (String property: properties)
 		{
-			sentences = new ArrayList<Model>();
+			models = new ArrayList<Model>();
 					
 			Statement stmt;
 			
 			String subj = null;
 			String obj = null;
+			
+			List<String> sentences;
 			
 			
 			for (final File file : folder.listFiles()) {
@@ -65,14 +67,15 @@ public class Process {
 				 obj = getObject(model);
 				 
 				 subj = getSubject(model);
-				 		 
-				preprocessor.preprocess(model,subj,obj);
+				 
+			 		 
+				 preprocessor.preprocess(model,subj,obj);
 				
-				library.extractLexicalEntries(model, property, lexiconwithFeatures);
+				 library.extractLexicalEntries(model, property, lexiconwithFeatures);
 				
-				FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+				 FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 				
-				RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+				 RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
 				
 				
 				}
@@ -96,6 +99,7 @@ public class Process {
 		System.out.print(lexiconwithFeatures.toString());
 		
 	}
+
 
 	private static String getSubject(Model model) {
 		

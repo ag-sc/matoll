@@ -1,4 +1,5 @@
 package core;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +34,7 @@ public class LexicalEntry {
 		argumentMap = new HashMap<String,String>();
 		synArgs = new HashSet<SyntacticArgument>();
 		senseArgs = new HashSet<SenseArgument>();
+		sentences  = new ArrayList<String>();
 			
 	}
 	
@@ -42,6 +44,7 @@ public class LexicalEntry {
 		argumentMap = new HashMap<String,String>();
 		synArgs = new HashSet<SyntacticArgument>();
 		senseArgs = new HashSet<SenseArgument>();
+		sentences  = new ArrayList<String>();
 	}
 	
 
@@ -101,6 +104,11 @@ public class LexicalEntry {
 		for (String synArg: argumentMap.keySet())
 		{
 			string += synArg + " => " + argumentMap.get(synArg) +"\n" ;
+		}
+		
+		for (String sentence: sentences)
+		{
+			string += "Sentence: "+sentence+"\n";
 		}
 		
 		return string;
@@ -273,6 +281,12 @@ public class LexicalEntry {
 	public Provenance getProvenance()
 	{
 		return Provenance;
+	}
+
+
+	public void addSentence(String sentence) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
