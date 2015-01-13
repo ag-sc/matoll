@@ -7,6 +7,7 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 import core.FeatureVector;
 import core.LexicalEntry;
@@ -66,8 +67,8 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 			+ "FILTER regex(?e2_grammar, \"obj\") ."
 			+ "?e2 <conll:form> ?e2_form . "
 			+ "?y <own:partOf> ?class. "
-			+ "?e1 <own:semArg> ?e1_arg. "
-			+ "?e2 <own:semArg> ?e2_arg. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	
@@ -78,11 +79,61 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
+	    
+	    String lemma = "";
+	    String e1_arg ="";
+	    String e2_arg = "";
+	    FeatureVector vector = new FeatureVector();
+		
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+	     
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
 	        	 try{
-	        		//String tmp = qs.get("?frequency").toString().replace("^^http://www.w3.org/2001/XMLSchema#integer", "");
+	        		 lemma = qs.get("?lemma").toString();
+	        		 e1_arg = qs.get("?e1_arg").toString();
+	        		 e2_arg = qs.get("?e2_arg").toString();
+	        		 
+	        		 LexicalEntry entry = new LexicalEntry();
+	        			
+	        			entry.setReference(reference);
+	        			
+	        			entry.setCanonicalForm(lemma);
+	        			
+	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+	        			
+	        			entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			{
+	        				
+	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+	        			
+	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			{
+	        				
+	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+	        			
+	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        		 
 	        		 
 	        	 }
 	        	 catch(Exception e){
@@ -96,44 +147,8 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	    }
 	    qExec.close() ;
 		
-		FeatureVector vector = new FeatureVector();
 		
-		vector.add("freq",1.0);
-		vector.add(this.getID(),1.0);
 		
-		LexicalEntry entry = new LexicalEntry();
-		
-		entry.setReference(reference);
-		
-		entry.setCanonicalForm("?lemma");
-		
-		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
-		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-		
-		if ("?e1_arg".equals("http://lemon-model.net/lemon#subfOfProp") && "?e2_arg".equals("http://lemon-model.net/lemon#objOfProp"))
-		{
-			
-			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
-		
-			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
-		
-			lexicon.add(entry, vector);
-		}	
-		
-		if ("?e1_arg".equals("http://lemon-model.net/lemon#objOfProp") && "?e2_arg".equals("http://lemon-model.net/lemon#subfOfProp"))
-		{
-			
-			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-			entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
-		
-			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-			entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
-		
-			lexicon.add(entry, vector);
-		}	
 	
 		
 	}

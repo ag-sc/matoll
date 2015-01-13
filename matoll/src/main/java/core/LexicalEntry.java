@@ -90,7 +90,7 @@ public class LexicalEntry {
 	{
 		String string = "";
 		
-		string += "Lexical Entry: "+this.CanonicalForm +"(" +  URI+")\n";
+		string += "Lexical Entry: "+this.CanonicalForm +"(" + URI+")\n";
 		
 		string += "Reference: "+this.Reference+"\n";
 		

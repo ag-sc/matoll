@@ -12,28 +12,33 @@ import org.apache.jena.riot.RDFFormat;
 import patterns.PatternLibrary;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
+import serialization.LexiconSerialization;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+import core.Lexicon;
 import core.LexiconWithFeatures;
 
 public class Process {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		
+			
 		List<String> properties = new ArrayList<String>();
 		properties.add("http://dbpedia.ontology/spouse");
 		
-		File folder = new File("/Users/cimiano/test");
+		File folder = new File("/Users/cimiano/Downloads/sentences");
+		
+		Lexicon lexicon;
 		
 		List<Model> sentences;
 		
 		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
-		LexiconWithFeatures lexicon = new LexiconWithFeatures();
+		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 		PatternLibrary library = new PatternLibrary();
 		
@@ -63,7 +68,7 @@ public class Process {
 				 		 
 				preprocessor.preprocess(model,subj,obj);
 				
-				library.extractLexicalEntries(model, property, lexicon);
+				library.extractLexicalEntries(model, property, lexiconwithFeatures);
 				
 				FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 				
@@ -73,6 +78,23 @@ public class Process {
 				}
 			}
 		}
+		
+		LexiconSerialization serializer = new LexiconSerialization();
+		
+		// lexicon = lexiconwithFeatures.filterFeatureGreater("freq",1.0);
+		
+		Model model = ModelFactory.createDefaultModel();
+		
+		serializer.serialize(lexiconwithFeatures, model);
+		
+		FileOutputStream output = new FileOutputStream(new File("lexicon.ttl"));
+		
+		RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+		
+		System.out.print("Lexicon: "+output.toString()+" written out\n");
+		
+		System.out.print(lexiconwithFeatures.toString());
+		
 	}
 
 	private static String getSubject(Model model) {
@@ -85,10 +107,6 @@ public class Process {
 						
 			stmt = iter.next();
 			
-	        System.out.println("  " + stmt
-	                                      .getObject()
-	                                      .toString());
-	        
 	        return stmt.getObject().toString();
 	    }
 		
@@ -103,10 +121,6 @@ public class Process {
 		while (iter.hasNext()) {
 						
 			stmt = iter.next();
-			
-	        System.out.println("  " + stmt
-	                                      .getObject()
-	                                      .toString());
 	        
 	        return stmt.getObject().toString();
 	    }

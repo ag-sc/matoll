@@ -69,12 +69,12 @@ public class Hypothesis {
 		for (String node: Nodes)
 		{
 			
-			System.out.print("Checking:"+node+" "+resource2deps.get(node)+"\n");
+			// System.out.print("Checking:"+node+" "+resource2deps.get(node)+"\n");
 			head = resource2heads.get(node);
 			
 			if ((pos.contains(resource2deps.get(node))) && Nodes.contains(head))
 			{
-				System.out.print("Node: "+node+" is in good shape\n");
+				// System.out.print("Node: "+node+" is in good shape\n");
 			}
 			else
 			{
@@ -84,7 +84,7 @@ public class Hypothesis {
 			
 		}
 		
-		System.out.print("Dangling: "+dangling+"\n");
+		// System.out.print("Dangling: "+dangling+"\n");
 		
 		if (dangling == 1)
 			return root;

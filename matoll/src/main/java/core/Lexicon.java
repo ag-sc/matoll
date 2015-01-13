@@ -115,5 +115,15 @@ public class Lexicon {
 		return entries.iterator();
 	}
 	
-	
+	public String toString()
+	{
+		String string = "";
+		
+		for (LexicalEntry entry: entries)
+		{
+			string+= entry.toString() + "\n\n";
+		}
+		
+		return string;
+	}
 }

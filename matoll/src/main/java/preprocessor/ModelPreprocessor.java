@@ -23,42 +23,44 @@ public class ModelPreprocessor {
 		Resource2Head = getResource2Head(model);
 		Resource2Dependency = getResource2Dependency(model);
 		
-		List<List<String>> objectResources = getResources(model,objectEntity);
-		List<List<String>> subjectResources = getResources(model,subjectEntity);
-		
-		System.out.println("Checking subject hypotheses: "+subjectEntity);
-		
-		List<Hypothesis> hypotheses = getHypotheses(subjectResources);
+		List<Hypothesis> hypotheses;
 		
 		String root;
-	
-		for (Hypothesis hypo: hypotheses)
+		
+		if (objectEntity != null)
 		{
+			List<List<String>> objectResources = getResources(model,objectEntity);
+			hypotheses = getHypotheses(objectResources);
 			
-			System.out.print("Final hypo: "+hypo.toString());
-			
-			root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
-			
-			if (root != null) System.out.print("Root:"+root);
-			model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
-			
+			for (Hypothesis hypo: hypotheses)
+			{
+				// System.out.print("Final hypo: "+hypo.toString());
 				
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+				
+				// if (root != null) System.out.print("Root:"+root);
+				
+				model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+					
+			}
 		}
 		
-		System.out.println("Checking object hypotheses "+objectEntity);
-		
-		hypotheses = getHypotheses(objectResources);
-			
-		for (Hypothesis hypo: hypotheses)
+		if (subjectEntity != null)
 		{
-			System.out.print("Final hypo: "+hypo.toString());
-			
-			root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
-			
-			if (root != null) System.out.print("Root:"+root);
-			
-			model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+			List<List<String>> subjectResources = getResources(model,subjectEntity);
+			 hypotheses = getHypotheses(subjectResources);
+			for (Hypothesis hypo: hypotheses)
+			{
 				
+				// System.out.print("Final hypo: "+hypo.toString());
+				
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+				
+				// if (root != null) System.out.print("Root:"+root);
+				model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
+				
+					
+			}
 		}
 		
 	}
@@ -73,19 +75,19 @@ public class ModelPreprocessor {
 				
 		for (List<String> nodes: resources)
 		{
-			System.out.print("Checking nodes: "+nodes+"\n");
+			// System.out.print("Checking nodes: "+nodes+"\n");
 			
 			expanded_hypotheses = new ArrayList<Hypothesis>();
 			
 			
 			for (Hypothesis hypo: hypotheses)
 			{
-				System.out.print("Expanding: "+hypo.toString());
+				// System.out.print("Expanding: "+hypo.toString());
 				
 				for (Hypothesis hypot: hypo.expand(nodes))
 				{
 			
-					System.out.print("Adding: "+hypot.toString());
+					// System.out.print("Adding: "+hypot.toString());
 					expanded_hypotheses.add(hypot);
 				}
 				
@@ -124,7 +126,7 @@ public class ModelPreprocessor {
 				if (stmt.getObject().toString().equals(tokens[i]))
 				{
 					wordResources.add(stmt.getSubject().toString());
-					System.out.println(stmt.getSubject().toString()+" has form "+stmt.getObject().toString());
+					// System.out.println(stmt.getSubject().toString()+" has form "+stmt.getObject().toString());
 				}
 				
 			}
@@ -152,7 +154,7 @@ public class ModelPreprocessor {
 			
 			resource2Dep.put(stmt.getSubject().toString(), stmt.getObject().toString());
 			
-			System.out.println(stmt.getSubject().toString()+" has dependency "+stmt.getObject().toString());
+			// System.out.println(stmt.getSubject().toString()+" has dependency "+stmt.getObject().toString());
 		
 			
 		}
@@ -177,7 +179,7 @@ public class ModelPreprocessor {
 			
 			resource2Head.put(stmt.getSubject().toString(), stmt.getObject().toString());
 			
-			System.out.println(stmt.getSubject().toString()+" has head "+stmt.getObject().toString());
+			// System.out.println(stmt.getSubject().toString()+" has head "+stmt.getObject().toString());
 						
 		}
 		
@@ -200,7 +202,7 @@ public class ModelPreprocessor {
 			
 			resource2Lemma.put(stmt.getSubject().toString(), stmt.getObject().toString());
 			
-			System.out.println(stmt.getSubject().toString()+" has lemma "+stmt.getObject().toString());
+			// System.out.println(stmt.getSubject().toString()+" has lemma "+stmt.getObject().toString());
 			
 		}
 		
