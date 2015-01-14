@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -22,6 +24,8 @@ import core.SyntacticArgument;
 
 public class SparqlPattern_EN_6 implements SparqlPattern {
 
+	Lemmatizer Lemmatizer;
+	
 	/*	PropSubj:Juana EnrÃ­quez
 	PropObj:John II of Aragon
 	sentence:Juana EnrÃ­quez , great-granddaughter of the founder of the lineage , married John II of Aragon and was the mother of Ferdinand II . 
@@ -84,7 +88,7 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
 	    
-	    String lemma = "";
+	    String verb = "";
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    FeatureVector vector = new FeatureVector();
@@ -99,7 +103,7 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
 	        	 try{
-	        		 lemma = qs.get("?lemma").toString();
+	        		 verb = qs.get("?lemma").toString();
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 
@@ -107,8 +111,15 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        			
 	        			entry.setReference(reference);
 	        			
-	        			entry.setCanonicalForm(lemma);
-	        			
+	        			if (Lemmatizer != null)
+	        			{
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb));
+	        			}
+	        			else
+	        			{
+	        				entry.setCanonicalForm(verb);
+	        			}
+	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 	        			
 	        			entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
@@ -187,6 +198,11 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 
 	public String getID() {
 		return "SPARQLPattern_EN_6";
+	}
+
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		Lemmatizer = lemmatizer;
+		
 	}
 
 }

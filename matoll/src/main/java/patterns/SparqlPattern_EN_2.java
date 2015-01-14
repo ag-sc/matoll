@@ -1,5 +1,7 @@
 package patterns;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
@@ -104,8 +106,12 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	}
 
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQLPattern_EN_2";
+	}
+
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		Lemmatizer Lemmatizer = lemmatizer;
+		
 	}
 
 }

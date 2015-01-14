@@ -1,5 +1,7 @@
 package patterns;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
@@ -95,11 +97,13 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 		
 	}
 
-
-
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQLPattern_EN_4";
+	}
+
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		Lemmatizer Lemmatizer = lemmatizer;
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package patterns;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
@@ -74,8 +76,12 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 	}
 
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQLPattern_EN_7";
+	}
+
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		Lemmatizer Lemmatizer = lemmatizer;
+		
 	}
 
 }

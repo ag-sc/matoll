@@ -9,5 +9,7 @@ public interface SparqlPattern {
 	public String getID();
 	
 	public void extractLexicalEntries(Model model,String reference, LexiconWithFeatures lexicon);
+
+	public void setLemmatizer(utils.Lemmatizer lemmatizer);
 	
 }

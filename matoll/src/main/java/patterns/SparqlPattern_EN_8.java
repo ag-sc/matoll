@@ -1,5 +1,7 @@
 package patterns;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
@@ -44,8 +46,12 @@ public class SparqlPattern_EN_8 implements SparqlPattern {
 	}
 
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQLPattern_EN_8";
+	}
+
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		Lemmatizer Lemmatizer = lemmatizer;
+		
 	}
 
 }
