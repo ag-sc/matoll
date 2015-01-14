@@ -6,6 +6,8 @@ import io.LexiconSerialization;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ import evaluation.LexiconEvaluation;
 
 public class Process {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 			
 		List<String> properties = new ArrayList<String>();
 		properties.add("http://dbpedia.ontology/spouse");
@@ -106,11 +108,9 @@ public class Process {
 		
 		LexiconLoader loader = new LexiconLoader();
 		
-		Lexicon gold = loader.loadFromFile("");
+		Lexicon gold = loader.loadFromFile("/Users/cimiano/Projects/matoll/test.rdf");
 		
 		LexiconEvaluation eval = new LexiconEvaluation();
-		
-		eval.evaluate(lexicon,gold);
 		
 		// filter out all enries with frequency <= 1 and evaluate them!
 		
@@ -124,10 +124,24 @@ public class Process {
 		
 		System.out.print("Lexicon: "+output.toString()+" written out\n");
 		
-		System.out.print(lexiconwithFeatures.toString());
+		FileWriter writer = new FileWriter(new File("gold_lex"));
+		
+		writer.write(gold.toString());
+		
+		writer.close();
+		
+		writer = new FileWriter(new File("induced_lex"));
+		
+		writer.write(lexiconwithFeatures.toString());
+		
+		writer.close();
+		
+		// eval.addReference("http://dbpedia.ontology/spouse");
+		
+		// eval.evaluate(lexicon,gold);
+		
 		
 	}
-
 
 	private static String getSubject(Model model) {
 		

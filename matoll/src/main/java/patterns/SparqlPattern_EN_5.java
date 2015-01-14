@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_5 implements SparqlPattern {
+public class SparqlPattern_EN_5 extends SparqlPattern {
 
 	/*
 	 * 
@@ -78,11 +78,6 @@ public class SparqlPattern_EN_5 implements SparqlPattern {
 
 	public String getID() {
 		return "SPARQLPattern_EN_5";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

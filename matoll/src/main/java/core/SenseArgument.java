@@ -20,5 +20,13 @@ public class SenseArgument {
 	{
 		return Value;
 	}
+
+	@Override
+	public String toString() {
+		return "SenseArgument [ArgumentType=" + ArgumentType + ", Value="
+				+ Value + "]";
+	}
+	
+	
 	
 }

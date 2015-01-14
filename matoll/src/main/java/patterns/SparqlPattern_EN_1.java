@@ -1,12 +1,10 @@
 package patterns;
 
-import utils.Lemmatizer;
-
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_1 implements SparqlPattern {
+public class SparqlPattern_EN_1 extends SparqlPattern {
 
 	String query = "SELECT ?class ?lemma ?dobj_lemma ?advmod_lemma ?lemma_pos ?dobj_lemma ?lemma_grammar ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
 			+ "{?y <conll:cpostag> ?lemma_pos . "
@@ -108,11 +106,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 
 	public String getID() {
 		return "SPARQLPattern_EN_1";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

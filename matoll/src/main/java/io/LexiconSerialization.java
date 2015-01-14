@@ -1,4 +1,4 @@
-package serialization;
+package io;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class LexiconSerialization {
 		
 		
 		
-		if (entry.getSense() != null)
+		if (entry.getReference() != null)
 		{
 			model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
 			model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(entry.getReference()));

@@ -3,6 +3,12 @@ package core;
 public class SyntacticArgument {
 
 	
+	@Override
+	public String toString() {
+		return "SyntacticArgument [ArgumentType=" + ArgumentType + ", Value="
+				+ Value + ", Preposition=" + Preposition + "]";
+	}
+
 	String ArgumentType;
 	
 	String Value;

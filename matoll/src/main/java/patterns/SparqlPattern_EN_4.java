@@ -1,12 +1,10 @@
 package patterns;
 
-import utils.Lemmatizer;
-
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_4 implements SparqlPattern {
+public class SparqlPattern_EN_4 extends SparqlPattern {
 
 	/*################################
 entity1_form:shriram
@@ -99,11 +97,6 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
 	public String getID() {
 		return "SPARQLPattern_EN_4";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

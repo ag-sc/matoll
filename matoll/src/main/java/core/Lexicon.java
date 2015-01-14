@@ -56,8 +56,11 @@ public class Lexicon {
 			list.add(entry);
 			map.put(entry.getCanonicalForm(), list);
 		}
-		references.add(entry.getReference());
+	
+		if (entry.getSense() != null)
 		
+			references.add(entry.getSense().getReference());
+			
 	}
 
 	public List<LexicalEntry> getEntries()
@@ -75,9 +78,16 @@ public class Lexicon {
 		return entries.size();
 	}
 	
-	public boolean containsReference(String reference)
+	public Set<String> getReferences()
 	{
-		return references.contains(reference);
+		Set<String> references = new HashSet<String>();
+		
+		for (LexicalEntry entry: entries)
+		{
+			references.add(entry.getReference());
+		}
+		
+		return references;
 	}
 	
 	public String getStatistics()

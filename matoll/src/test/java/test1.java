@@ -3,8 +3,10 @@
 import core.FeatureVector;
 import core.LexicalEntry;
 import core.LexiconWithFeatures;
+import core.Sense;
 import core.SenseArgument;
 import core.SyntacticArgument;
+import core.SyntacticBehaviour;
 
 public class test1 {
 
@@ -17,17 +19,23 @@ public class test1 {
 		
 		entry.setCanonicalForm("marry");
 		
-		entry.setReference("http://dbpedia.org/ontology/spouse");
+		Sense sense = new Sense();
+		
+		sense.setReference("http://dbpedia.org/ontology/spouse");
+		
+		entry.setSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		SyntacticBehaviour behaviour = new SyntacticBehaviour();
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+				
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 		
 		lexicon.add(entry, new FeatureVector());
 		
@@ -35,17 +43,23 @@ public class test1 {
 		
 		entry.setCanonicalForm("marry");
 		
-		entry.setReference("http://dbpedia.org/ontology/spouse");
+		sense = new Sense();
+		
+		sense.setReference("http://dbpedia.org/ontology/spouse");
+		
+		entry.setSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour = new SyntacticBehaviour();
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+				
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
 		// The following should say that entry is already contained:
 		
@@ -58,17 +72,23 @@ public class test1 {
 		
 		entry.setCanonicalForm("casar");
 		
-		entry.setReference("http://dbpedia.org/ontology/spouse");
+		sense = new Sense();
+		
+		sense.setReference("http://dbpedia.org/ontology/spouse");
+		
+		entry.setSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour = new SyntacticBehaviour();
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+				
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
 		// The following should say that entry is already contained:
 		
@@ -81,17 +101,23 @@ public class test1 {
 		
 		entry.setCanonicalForm("marry");
 		
-		entry.setReference("http://dbpedia.org/ontology/spouse");
+		sense = new Sense();
+		
+		sense.setReference("http://dbpedia.org/ontology/spouse");
+		
+		entry.setSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour = new SyntacticBehaviour();
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+				
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
 		// The following should say that entry is already contained:
 		
@@ -104,17 +130,19 @@ public class test1 {
 		
 		entry.setCanonicalForm("marry");
 		
-		entry.setReference("http://dbpedia.org/ontology/spouse");
+		// entry.setReference("http://dbpedia.org/ontology/spouse");
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
-				
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-		entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+		behaviour = new SyntacticBehaviour();
 		
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+				
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+		
+		// entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+		// entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
 		// The following should say that entry is already contained:
 		

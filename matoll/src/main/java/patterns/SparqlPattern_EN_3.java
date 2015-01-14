@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_3 implements SparqlPattern {
+public class SparqlPattern_EN_3 extends SparqlPattern {
 
 
 	/*
@@ -89,11 +89,6 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 
 	public String getID() {
 		return "SPARQLPattern_EN_3";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

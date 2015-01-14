@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_8 implements SparqlPattern {
+public class SparqlPattern_EN_8 extends SparqlPattern {
 
 	// für Adjective mit JJ, drunter hängende Verb erst einmal ignorieren
 			String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
@@ -47,11 +47,6 @@ public class SparqlPattern_EN_8 implements SparqlPattern {
 
 	public String getID() {
 		return "SPARQLPattern_EN_8";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public class SparqlPattern_EN_7 implements SparqlPattern {
+public class SparqlPattern_EN_7 extends SparqlPattern {
 
 	/*
 	 * PropSubj:University of Colombo
@@ -77,11 +77,6 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 
 	public String getID() {
 		return "SPARQLPattern_EN_7";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer Lemmatizer = lemmatizer;
-		
 	}
 
 }

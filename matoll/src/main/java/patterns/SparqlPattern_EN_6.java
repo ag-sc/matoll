@@ -19,12 +19,13 @@ import core.FeatureVector;
 import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Provenance;
+import core.Sense;
 import core.SenseArgument;
 import core.SyntacticArgument;
+import core.SyntacticBehaviour;
 
-public class SparqlPattern_EN_6 implements SparqlPattern {
+public class SparqlPattern_EN_6 extends SparqlPattern {
 
-	Lemmatizer Lemmatizer;
 	
 	/*	PropSubj:Juana EnrÃ­quez
 	PropObj:John II of Aragon
@@ -109,7 +110,15 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        		 
 	        		 LexicalEntry entry = new LexicalEntry();
 	        			
-	        			entry.setReference(reference);
+	        		 	Sense sense = new Sense();
+	        		 	
+	        		 	sense.setReference(reference);
+	        		 	
+	        		 	entry.setSense(sense);
+	        		 	
+	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
+	        		 	
+	        		 	entry.setSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -122,7 +131,7 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 	        			
-	        			entry.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 	        			
 	        			for (String sentence: sentences)
 	        			{
@@ -133,11 +142,11 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 	        			
-	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
 	        				
@@ -146,11 +155,11 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-	        				entry.addSyntacticArgument(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
 	        			
-	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				entry.addSenseArgument(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
 	        				
@@ -198,11 +207,6 @@ public class SparqlPattern_EN_6 implements SparqlPattern {
 
 	public String getID() {
 		return "SPARQLPattern_EN_6";
-	}
-
-	public void setLemmatizer(Lemmatizer lemmatizer) {
-		Lemmatizer = lemmatizer;
-		
 	}
 
 }

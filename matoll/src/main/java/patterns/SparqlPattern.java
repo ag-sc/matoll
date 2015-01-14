@@ -1,15 +1,23 @@
 package patterns;
 
+import utils.Lemmatizer;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import core.LexiconWithFeatures;
 
-public interface SparqlPattern {
+public abstract class SparqlPattern {
 	
-	public String getID();
+	Lemmatizer Lemmatizer;
 	
-	public void extractLexicalEntries(Model model,String reference, LexiconWithFeatures lexicon);
+	public abstract String getID();
+	
+	public abstract void extractLexicalEntries(Model model,String reference, LexiconWithFeatures lexicon); 
 
-	public void setLemmatizer(utils.Lemmatizer lemmatizer);
+	public void setLemmatizer(Lemmatizer lemmatizer) {
+		
+		Lemmatizer = lemmatizer;
+		
+	}
 	
 }

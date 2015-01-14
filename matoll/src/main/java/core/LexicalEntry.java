@@ -13,28 +13,22 @@ public class LexicalEntry {
 	
 	String CanonicalForm;
 	
-	String Reference;
-	
-	String FrameType;
-	
 	String POS;
 	
 	HashMap<String,String> argumentMap;
 	
-	Set<SyntacticArgument> synArgs;
+	Sense Sense;
 	
-	Set<SenseArgument> senseArgs;
-		
+	SyntacticBehaviour Behaviour;
+	
 	Provenance Provenance;
 	
-	List<String> sentences;
+	List<String> Sentences;
 	
 	public LexicalEntry()
 	{
 		argumentMap = new HashMap<String,String>();
-		synArgs = new HashSet<SyntacticArgument>();
-		senseArgs = new HashSet<SenseArgument>();
-		sentences  = new ArrayList<String>();
+		Sentences  = new ArrayList<String>();
 			
 	}
 	
@@ -42,9 +36,7 @@ public class LexicalEntry {
 	public LexicalEntry(String uri) {
 		URI = uri;
 		argumentMap = new HashMap<String,String>();
-		synArgs = new HashSet<SyntacticArgument>();
-		senseArgs = new HashSet<SenseArgument>();
-		sentences  = new ArrayList<String>();
+		Sentences  = new ArrayList<String>();
 	}
 	
 
@@ -65,28 +57,7 @@ public class LexicalEntry {
 		return CanonicalForm;
 	}
 
-
-	public String getFrameType()
-	{
-		return FrameType;
-	}
-
 	
-	public void setFrame(String frame) {
-		FrameType = frame;
-		
-	}
-
-
-	public void setReference(String reference) {
-		Reference = reference;
-		
-	}
-	
-	public String getReference() {
-		
-		return Reference;
-	}
 	
 	
 	public String toString()
@@ -94,69 +65,62 @@ public class LexicalEntry {
 		String string = "";
 		
 		string += "Lexical Entry: "+this.CanonicalForm +"(" + URI+")\n";
-		
-		string += "Reference: "+this.Reference+"\n";
-		
-		string += "Frame Type: "+this.FrameType+"\n";
+				
 		
 		string += "POS: "+this.POS+"\n";
 		
-		for (String synArg: argumentMap.keySet())
-		{
-			string += synArg + " => " + argumentMap.get(synArg) +"\n" ;
-		}
+		string += Behaviour.toString();
 		
-		for (String sentence: sentences)
+		string += Sense.toString();
+		
+		for (String sentence: Sentences)
 		{
 			string += "Sentence: "+sentence+"\n";
+		}
+		
+		for (String synArg: argumentMap.keySet())
+		{
+			string += synArg + " => "+argumentMap.get(synArg)+"\n";
 		}
 		
 		return string;
 	}
 
 
-
-	public void setSyntacticArguments(Set<SyntacticArgument> syntacticArguments) {
-		
-		synArgs = syntacticArguments;
-	}
 	
-	public Set<SyntacticArgument> getSyntacticArguments()
+	public Sense getSense()
 	{
-		return synArgs;
-	}
-	
-	public Set<SenseArgument> getSenseArguments()
-	{
-		return senseArgs;
+		return Sense;
 	}
 	
 	
-	public void setSenseArguments(Set<SenseArgument> senseArguments) {
-		senseArgs = senseArguments;
+	public void setSense(Sense sense) {
+		Sense = sense;
 		
 	}
 
 
-	public void computeMappings() {
+	public HashMap<String,String> computeMappings(Sense sense) {
 		
-		for (SyntacticArgument synArg: synArgs)
+		HashMap<String,String> map = new HashMap<String,String>();
+		
+		for (SyntacticArgument synArg: Behaviour.getSynArgs())
 		{
 			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
-			
-			for (SenseArgument senseArg: senseArgs)
-			{
-				// System.out.print("Checking: "+senseArg.getArgumenType()+"\n");
-				
-				if (synArg.getValue().equals(senseArg.getValue()))
+						
+				for (SenseArgument senseArg: sense.getSenseArgs())
 				{
-					argumentMap.put(synArg.getArgumentType(), senseArg.getArgumenType());
+					// System.out.print("Checking: "+senseArg.getArgumenType()+"\n");
+				
+					if (synArg.getValue().equals(senseArg.getValue()))
+					{
+						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
 					
-					// System.out.print(synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
-					
+						// System.out.print(synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
+					}	
 				}
-			}		
-		}
+			}	
+		return map;
 	}
 	
 	public HashMap<String,String> getArgumentMap()
@@ -167,14 +131,14 @@ public class LexicalEntry {
 	@Override
 	public boolean equals(Object entry)
 	{
-		this.computeMappings();
-		((LexicalEntry) entry).computeMappings();
 		
 		if (!CanonicalForm.equals(((LexicalEntry) entry).getCanonicalForm())) return false;
+
+		// check that senses are compatible
 		
-		if (!Reference.equals(((LexicalEntry) entry).getReference())) return false;
+		if (Behaviour != null)
 		
-		if (!FrameType.equals(((LexicalEntry) entry).getFrameType())) return false;
+			if (!Behaviour.getFrame().equals(((LexicalEntry) entry).getBehaviour().getFrame())) return false;
 		
 		if (!POS.equals(((LexicalEntry) entry).getPOS())) return false;
 		
@@ -184,21 +148,7 @@ public class LexicalEntry {
 	}
 
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((CanonicalForm == null) ? 0 : CanonicalForm.hashCode());
-		result = prime * result
-				+ ((FrameType == null) ? 0 : FrameType.hashCode());
-		result = prime * result + ((POS == null) ? 0 : POS.hashCode());
-		result = prime * result
-				+ ((Reference == null) ? 0 : Reference.hashCode());
-		result = prime * result
-				+ ((argumentMap == null) ? 0 : argumentMap.hashCode());
-		return result;
-	}
+	
 
 
 //	@Override
@@ -239,6 +189,17 @@ public class LexicalEntry {
 //	}
 
 
+	public SyntacticBehaviour getBehaviour() {
+		return Behaviour;
+	}
+	
+	public void setSyntacticBehaviour(SyntacticBehaviour behaviour)
+	{
+		Behaviour = behaviour;
+	}
+	
+
+
 	public String getPOS() {
 		return POS;
 	}
@@ -261,18 +222,6 @@ public class LexicalEntry {
 	}
 
 
-	public void addSyntacticArgument(SyntacticArgument synArg) {
-		synArgs.add(synArg);
-		
-	}
-	
-
-	public void addSenseArgument(SenseArgument semArg) {
-		senseArgs.add(semArg);
-		
-	}
-
-
 	public void setProvenance(Provenance provenance) {
 		Provenance = provenance;
 		
@@ -285,7 +234,21 @@ public class LexicalEntry {
 
 
 	public void addSentence(String sentence) {
-		// TODO Auto-generated method stub
+		Sentences.add(sentence);
+		
+	}
+
+
+	public String getReference() {
+		
+		if (Sense != null) return Sense.getReference();
+		else return null;
+		
+	}
+
+
+	public void setMappings(HashMap<String, String> map) {
+		argumentMap = map;
 		
 	}
 	
