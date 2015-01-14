@@ -1,5 +1,8 @@
 package process;
 
+import io.LexiconLoader;
+import io.LexiconSerialization;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,7 +15,6 @@ import org.apache.jena.riot.RDFFormat;
 import patterns.PatternLibrary;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
-import serialization.LexiconSerialization;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -20,8 +22,11 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+import core.FeatureVector;
+import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
+import evaluation.LexiconEvaluation;
 
 public class Process {
 
@@ -30,7 +35,7 @@ public class Process {
 		List<String> properties = new ArrayList<String>();
 		properties.add("http://dbpedia.ontology/spouse");
 		
-		File folder = new File("/Users/swalter/Desktop/sentences");
+		File folder = new File("/Users/cimiano/Downloads/sentences");
 		
 		Lexicon lexicon;
 		
@@ -82,9 +87,32 @@ public class Process {
 			}
 		}
 		
+		lexicon = new Lexicon();
+		
 		LexiconSerialization serializer = new LexiconSerialization();
 		
-		// lexicon = lexiconwithFeatures.filterFeatureGreater("freq",1.0);
+		FeatureVector vector;
+		
+		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+		{
+			vector = lexiconwithFeatures.getFeatureVector(entry);
+			
+			if (vector.getValueOfFeature("freq") > 1.0)
+			{
+				lexicon.addEntry(entry);
+			}
+			
+		}
+		
+		LexiconLoader loader = new LexiconLoader();
+		
+		Lexicon gold = loader.loadFromFile("");
+		
+		LexiconEvaluation eval = new LexiconEvaluation();
+		
+		eval.evaluate(lexicon,gold);
+		
+		// filter out all enries with frequency <= 1 and evaluate them!
 		
 		Model model = ModelFactory.createDefaultModel();
 		
