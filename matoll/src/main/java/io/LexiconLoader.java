@@ -67,7 +67,7 @@ public class LexiconLoader {
 			 {
 				 for (SyntacticBehaviour behaviour: behaviours)
 				 {
-					 System.out.println(behaviour);
+					 // System.out.println(behaviour);
 					 
 					 for (Sense sense: senses)
 					 {

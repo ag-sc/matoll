@@ -136,9 +136,11 @@ public class Process {
 		
 		writer.close();
 		
-		// eval.addReference("http://dbpedia.ontology/spouse");
+		eval.addReference("http://dbpedia.ontology/spouse");
 		
-		// eval.evaluate(lexicon,gold);
+		System.out.print(lexicon);
+		
+		eval.evaluate(lexiconwithFeatures,gold);
 		
 		
 	}

@@ -122,11 +122,11 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb));
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb);
+	        				entry.setCanonicalForm(verb+"@en");
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");

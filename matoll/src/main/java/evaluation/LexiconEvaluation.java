@@ -111,6 +111,7 @@ public class LexiconEvaluation {
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
+			
 			foundLemma = false;
 			foundSyntax = false;
 			foundMapping = false;
@@ -121,8 +122,10 @@ public class LexiconEvaluation {
 				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.contains(entry.getReference())) || (onlyGoldReferences && gold.getReferences().contains(entry.getReference())))
 				{
 					lex_entries++;
+
+					System.out.print("Checking entry "+lex_entries+"("+entry.getCanonicalForm()+")\nCandidates:");
 					
-					// System.out.print("Checking entry "+lex_entries+"("+entry.getCanonicalForm()+")");
+					System.out.print(gold.getEntriesWithCanonicalForm(entry.getCanonicalForm())+"\n");
 					
 					if (gold.getEntriesWithCanonicalForm(entry.getCanonicalForm()) != null)
 					{
@@ -140,6 +143,10 @@ public class LexiconEvaluation {
 										foundMapping = true;
 									}
 								}
+							}
+							else
+							{
+								System.out.print("Lemma and reference not found!\n");
 							}
 								
 						}
@@ -289,9 +296,6 @@ public class LexiconEvaluation {
 	private static boolean checkSyntax(LexicalEntry entry, LexicalEntry gold_entry) {
 		
 		return entry.getBehaviour().equals(gold_entry.getBehaviour());
-		
-		
-		
 		
 	
 	}
