@@ -30,7 +30,7 @@ public class Process {
 		List<String> properties = new ArrayList<String>();
 		properties.add("http://dbpedia.ontology/spouse");
 		
-		File folder = new File("/Users/cimiano/Downloads/sentences");
+		File folder = new File("/Users/swalter/Desktop/sentences");
 		
 		Lexicon lexicon;
 		
