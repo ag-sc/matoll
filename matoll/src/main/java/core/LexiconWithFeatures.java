@@ -31,8 +31,7 @@ public class LexiconWithFeatures extends Lexicon{
 			
 			System.out.print("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
 		
-			
-			
+	
 			// do something to update the features
 			
 		}

@@ -97,9 +97,13 @@ public class Process {
 		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
+			System.out.println(entry);
+			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
 			
-			if (vector.getValueOfFeature("freq") > 1.0)
+			System.out.print("Value of feature freq is:" + vector.getValueOfFeature("freq")+"\n");
+			
+			if (vector.getValueOfFeature("freq") > 2.0)
 			{
 				lexicon.addEntry(entry);
 			}
@@ -132,7 +136,7 @@ public class Process {
 		
 		writer = new FileWriter(new File("induced_lex"));
 		
-		writer.write(lexiconwithFeatures.toString());
+		writer.write(lexicon.toString());
 		
 		writer.close();
 		
@@ -140,7 +144,7 @@ public class Process {
 		
 		System.out.print(lexicon);
 		
-		eval.evaluate(lexiconwithFeatures,gold);
+		eval.evaluate(lexicon,gold);
 		
 		
 	}

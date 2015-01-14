@@ -151,48 +151,28 @@ public class LexicalEntry {
 	
 
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		LexicalEntry other = (LexicalEntry) obj;
-//		if (CanonicalForm == null) {
-//			if (other.CanonicalForm != null)
-//				return false;
-//		} else if (!CanonicalForm.equals(other.CanonicalForm))
-//			return false;
-//		if (FrameType == null) {
-//			if (other.FrameType != null)
-//				return false;
-//		} else if (!FrameType.equals(other.FrameType))
-//			return false;
-//		if (POS == null) {
-//			if (other.POS != null)
-//				return false;
-//		} else if (!POS.equals(other.POS))
-//			return false;
-//		if (Reference == null) {
-//			if (other.Reference != null)
-//				return false;
-//		} else if (!Reference.equals(other.Reference))
-//			return false;
-//		if (argumentMap == null) {
-//			if (other.argumentMap != null)
-//				return false;
-//		} else if (!argumentMap.equals(other.argumentMap))
-//			return false;
-//		return true;
-//	}
 
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((CanonicalForm == null) ? 0 : CanonicalForm.hashCode());
+		result = prime * result + ((POS == null) ? 0 : POS.hashCode());
+		return result;
+	}
+
+
+	
 
 	public SyntacticBehaviour getBehaviour() {
 		return Behaviour;
 	}
 	
+	
+
 	public void setSyntacticBehaviour(SyntacticBehaviour behaviour)
 	{
 		Behaviour = behaviour;

@@ -123,9 +123,9 @@ public class LexiconEvaluation {
 				{
 					lex_entries++;
 
-					System.out.print("Checking entry "+lex_entries+"("+entry.getCanonicalForm()+")\nCandidates:");
+					// System.out.print("Checking entry "+lex_entries+"("+entry.getCanonicalForm()+")\nCandidates:");
 					
-					System.out.print(gold.getEntriesWithCanonicalForm(entry.getCanonicalForm())+"\n");
+					// System.out.print(gold.getEntriesWithCanonicalForm(entry.getCanonicalForm())+"\n");
 					
 					if (gold.getEntriesWithCanonicalForm(entry.getCanonicalForm()) != null)
 					{
@@ -146,7 +146,7 @@ public class LexiconEvaluation {
 							}
 							else
 							{
-								System.out.print("Lemma and reference not found!\n");
+								// System.out.print("Lemma and reference not found!\n");
 							}
 								
 						}
