@@ -63,7 +63,6 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 			// pci: eigentlich nur subj und nsubj denke ich
 			+ "FILTER regex(?e1_grammar, \"subj\") ."
 			+ "?e1 <conll:cpostag> ?e1_pos . "
-			//+ "FILTER regex(?e1_pos, \"NN\") ."
 			+ "?e1 <conll:head> ?y . "
 			+ "?y <conll:cpostag> ?lemma_pos . "
 			// pci: Warum nicht nur VBD und VBZ?
@@ -71,13 +70,11 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 			+ "?y <conll:deprel> ?lemma_grammar . "
 			+ "?y <conll:form> ?lemma . "
 			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			// pci: Warum nicht hier gleich dobj ?
-			+ "FILTER regex(?e2_grammar, \"obj\") ."
+			+ "?e2 <conll:deprel>  \"dobj\" . "
 			+ "?e2 <conll:form> ?e2_form . "
 			+ "?y <own:partOf> ?class. "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
+			+ "?e1 <own:senseArg> ?e1_arg . "
+			+ "?e2 <own:senseArg> ?e2_arg . "
 			+ "}";
 	
 	
@@ -108,7 +105,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 
-	        		 LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -184,25 +181,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 		
 	}
 	
-	private static List<String> getSentences(Model model) {
-		
-		List<String> sentences = new ArrayList<String>();
-		
-		StmtIterator iter = model.listStatements(null,model.getProperty("own:sentence"), (RDFNode) null);
-		
-		Statement stmt;
-		
-		while (iter.hasNext()) {
-						
-			stmt = iter.next();
-			
-	        sentences.add(stmt.getObject().toString());
-	    }
-		
-		return sentences;
-
-		
-	}	
+	
 
 
 	public String getID() {

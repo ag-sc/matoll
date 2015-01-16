@@ -1,6 +1,8 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class LexiconWithFeatures extends Lexicon{
 
@@ -28,6 +30,15 @@ public class LexiconWithFeatures extends Lexicon{
 				map.put(entry, features.add(features));
 			}
 
+			
+			List<String> sentences = new ArrayList<String>();
+			
+			for (String sentence: entry.getSentences())
+			{
+				sentences.add(sentence);
+			}
+			
+			this.getLexicalEntry(entry).addSentences(sentences);
 			
 			System.out.print("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
 		

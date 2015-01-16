@@ -140,7 +140,9 @@ public class LexicalEntry {
 		
 			if (!Behaviour.getFrame().equals(((LexicalEntry) entry).getBehaviour().getFrame())) return false;
 		
-		if (!POS.equals(((LexicalEntry) entry).getPOS())) return false;
+		if (POS != null)
+		
+			if (!POS.equals(((LexicalEntry) entry).getPOS())) return false;
 		
 		if (!argumentMap.equals(((LexicalEntry) entry).getArgumentMap())) return false;		
 		
@@ -229,6 +231,17 @@ public class LexicalEntry {
 
 	public void setMappings(HashMap<String, String> map) {
 		argumentMap = map;
+		
+	}
+
+
+	public List<String> getSentences() {
+		return Sentences;
+	}
+
+
+	public void addSentences(List<String> sentences) {
+		Sentences.addAll(sentences);
 		
 	}
 	

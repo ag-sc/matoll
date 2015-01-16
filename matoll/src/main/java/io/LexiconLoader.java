@@ -10,6 +10,7 @@ import vocabularies.LEXINFO;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
@@ -43,7 +44,7 @@ public class LexiconLoader {
 		 
 		 LexicalEntry entry;
 		 
-		 StmtIterator iter = model.listStatements(null, RDF.type, LEMON.LexicalEntry);
+		 StmtIterator iter = model.listStatements(null, LEMON.canonicalForm, (RDFNode) null);
 		 
 		 while (iter.hasNext()) {
 			 
@@ -228,6 +229,8 @@ public class LexiconLoader {
 		
 		Resource prepositionEntry;
 		
+		Statement prepStatement;
+		
 		String preposition;
 		
 		Statement synArg;
@@ -235,10 +238,11 @@ public class LexiconLoader {
 		Set<SyntacticBehaviour> behaviours = new HashSet<SyntacticBehaviour>();
 		
 		SyntacticBehaviour behaviour;
+		
+		Property predicate;
 
 		Statement stmt;
 		
-	
 		StmtIterator iter = model.listStatements(subject, LEMON.syntacticBehaviour, (RDFNode) null);
 		 
 		while (iter.hasNext()) {
@@ -246,58 +250,47 @@ public class LexiconLoader {
 			 stmt = iter.next();
 		
 			 behaviour = new SyntacticBehaviour();
-			 
+
 			 synBehaviour = (Resource) stmt.getObject();
-			
-			 StmtIterator it = synBehaviour.listProperties(LEXINFO.subject);
+			 
+			 StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
+					 
 			 while( it.hasNext() ) {
 		    	
 				synArg = it.next();
 		    	
 			 	object = (Resource) synArg.getObject();
-		    	
-			 	behaviour.add(new SyntacticArgument(synArg.getPredicate().toString(),object.toString(),null));
+			 	
+			 	predicate = synArg.getPredicate();
+			 	
+			 	prepStatement = object.getProperty(LEMON.marker);
+			 	
+			 	preposition = null;
+			 
+			 	if (prepStatement != null)
+			 	{
+	
+			 		prepositionEntry = (Resource) prepStatement.getObject();
+			 	
+			 		if (prepositionEntry != null)
+			 		{
+			 			preposition = getCanonicalForm(prepositionEntry,model);
+		    		
+			 			// System.out.print("Preposition: "+preposition+"\n");
+		    		
+			 		}
+			 		else
+			 		{
+			 			preposition = null;
+			 		}
+			 	}
+			 		
+			 	if (!predicate.toString().equals(RDF.type.toString()))
+			 	
+			 	behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
 		    }	
 		    	
-	    	it = synBehaviour.listProperties(LEXINFO.object);
-		    while( it.hasNext() ) {
-		    
-			
-		    	synArg = it.next();
-		    	
-		    	object = (Resource) synArg.getObject();
-		    	
-		    	behaviour.add(new SyntacticArgument(synArg.getPredicate().toString(),object.toString(),null));
-		    	
-		    }
-		    
-		    
-	    	it = synBehaviour.listProperties(LEXINFO.pobject);
-		   
-	    	while( it.hasNext() ) {
-		    
-	    	 	synArg = it.next();
-		    	
-		    	object = (Resource) synArg.getObject();
-		    	
-		    	prepositionEntry = (Resource) object.getProperty(LEMON.marker).getObject();
-		    	
-		    	if (prepositionEntry != null)
-		    	{
-		    		preposition = getCanonicalForm(prepositionEntry,model);
-		    		
-		    		// System.out.print("Preposition: "+preposition+"\n");
-		    		
-		    	}
-		    	else
-		    	{
-		    		preposition = null;
-		    	}
-		    	
-		    	behaviour.add(new SyntacticArgument(synArg.getPredicate().toString(),object.toString(),preposition));	
-		    	
-		    }
-	    	
+	    
 	    	behaviour.setFrame(getFrame(synBehaviour,model));
 	    	
 	    	behaviours.add(behaviour);

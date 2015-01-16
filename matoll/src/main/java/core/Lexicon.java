@@ -39,22 +39,34 @@ public class Lexicon {
 	
 	public void addEntry(LexicalEntry entry)
 	{
-		// check if entry is already contained
 		
-		entries.add(entry);
+		LexicalEntry containedEntry;
 		
-		ArrayList<LexicalEntry> list;
-		
-		if (map.containsKey(entry.getCanonicalForm()))
+		if(!entries.contains(entry))
 		{
-			list = (ArrayList<LexicalEntry>) map.get(entry.getCanonicalForm());
-			list.add(entry);
+			entries.add(entry);
+		
+			ArrayList<LexicalEntry> list;
+		
+			if (map.containsKey(entry.getCanonicalForm()))
+			{
+				list = (ArrayList<LexicalEntry>) map.get(entry.getCanonicalForm());
+				list.add(entry);
+			}
+			else
+			{
+				list = new ArrayList<LexicalEntry>();
+				list.add(entry);
+				map.put(entry.getCanonicalForm(), list);
+			}
 		}
 		else
 		{
-			list = new ArrayList<LexicalEntry>();
-			list.add(entry);
-			map.put(entry.getCanonicalForm(), list);
+			containedEntry = getLexicalEntry(entry);
+			for (String sentence: entry.getSentences())
+			{
+				containedEntry.addSentence(sentence);
+			}
 		}
 	
 		if (entry.getSense() != null)

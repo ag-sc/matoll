@@ -2,9 +2,18 @@ package patterns;
 
 import utils.Lemmatizer;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
+import core.LexicalEntry;
 import core.LexiconWithFeatures;
+import core.Sense;
+import core.SenseArgument;
+import core.SyntacticArgument;
+import core.SyntacticBehaviour;
 
 public class SparqlPattern_EN_7 extends SparqlPattern {
 
@@ -36,11 +45,11 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 	
 // pci: Why is this not the same as Pattern 4 ???	
 	
-	String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
 			+ "?e1 <conll:deprel> ?e1_grammar . "
-			+ "FILTER regex(?e1_grammar, \"subj\") ."
+			+ "FILTER regex(?e1_grammar, \"nsubj\") ."
 			+ "?e1 <conll:cpostag> ?e1_pos . "
 			//+ "FILTER regex(?e1_pos, \"NN\") ."
 			+ "?e1 <conll:head> ?y . "
@@ -62,16 +71,26 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER regex(?e2_grammar, \"obj\") ."
+			+ "FILTER regex(?e2_grammar, \"pobj\") ."
 			//+ "?o <is> ?e2 ."
 			+ "?e2 <conll:form> ?e2_form . "
 			+ "?y <own:partOf> ?class. "
 			+ "?class <own:subj> ?propSubj. "
 			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		
+		
+		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+	    ResultSet rs = qExec.execSelect() ;
+	    
+	    String noun;
+		
+	   
+		
 
 	}
 

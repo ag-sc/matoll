@@ -15,6 +15,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
 import patterns.PatternLibrary;
+import patterns.SparqlPattern_EN_4;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
 
@@ -49,7 +50,7 @@ public class Process {
 		
 		PatternLibrary library = new PatternLibrary();
 		
-		library.addPattern(new SparqlPattern_EN_6());
+		library.addPattern(new SparqlPattern_EN_4());
 		
 		for (String property: properties)
 		{
@@ -75,7 +76,7 @@ public class Process {
 				 
 				 subj = getSubject(model);
 				 
-			 		 
+	
 				 preprocessor.preprocess(model,subj,obj);
 				
 				 library.extractLexicalEntries(model, property, lexiconwithFeatures);
@@ -112,7 +113,7 @@ public class Process {
 		
 		LexiconLoader loader = new LexiconLoader();
 		
-		Lexicon gold = loader.loadFromFile("/Users/cimiano/Projects/matoll/test.rdf");
+		Lexicon gold = loader.loadFromFile("/Users/cimiano/Projects/matoll/dbpedia_en.rdf");
 		
 		LexiconEvaluation eval = new LexiconEvaluation();
 		
