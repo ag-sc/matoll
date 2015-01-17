@@ -15,7 +15,9 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
 import patterns.PatternLibrary;
+import patterns.SparqlPattern_EN_1;
 import patterns.SparqlPattern_EN_2;
+import patterns.SparqlPattern_EN_3;
 import patterns.SparqlPattern_EN_4;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
@@ -53,7 +55,7 @@ public class Process {
 		
 		PatternLibrary library = new PatternLibrary();
 		
-		library.addPattern(new SparqlPattern_EN_2());
+		library.addPattern(new SparqlPattern_EN_1());
 		
 		for (String property: properties)
 		{

@@ -35,8 +35,8 @@ public class SparqlPattern_EN_2 extends SparqlPattern {
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel>  \"pobj\". "
-			// + "?e1 <own:senseArg> ?e1_arg. "
-			// + "?e2 <own:senseArg> ?e2_arg. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	/*
@@ -118,6 +118,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
+	        	 System.out.print("Query 2 matched\n!!!");
 	        	 try{
 	        		 noun = qs.get("?lemma").toString();
 	        		 

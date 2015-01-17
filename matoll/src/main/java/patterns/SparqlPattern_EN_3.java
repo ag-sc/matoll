@@ -2,9 +2,19 @@ package patterns;
 
 import utils.Lemmatizer;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
+import core.FeatureVector;
+import core.LexicalEntry;
 import core.LexiconWithFeatures;
+import core.Sense;
+import core.SenseArgument;
+import core.SyntacticArgument;
+import core.SyntacticBehaviour;
 
 public class SparqlPattern_EN_3 extends SparqlPattern {
 
@@ -48,41 +58,132 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 16	stated	_	VBD	VBD	_	0	null
 
 	 */
+
 	
-	String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
-			+ "?y <conll:deprel> ?lemma_grammar . "
+	
+	String query = "SELECT ?lemma ?prefix ?prep  WHERE {"
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
 			+ "?y <conll:form> ?lemma . "
 			+"OPTIONAL{"
-			+ "?lemma_nn <conll:head> ?y. "
-			+ "?lemma_nn <conll:form> ?lemma_addition. "
-			+ "?lemma_nn <conll:deprel> \"nn\"."
+			+ "?modifier <conll:head> ?y. "
+			+ "?modifier <conll:form> ?prefix. "
+			+ "?modifier <conll:deprel> \"nn\"."
 			+"} "
 			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:form> ?e1_form . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
-			+ "FILTER regex(?e1_grammar, \"appos\") ."
+			+ "?e1 <conll:deprel> \"appos\"."
 			+ "?p <conll:head> ?y . "
 			+ "?p <conll:deprel> \"prep\" . "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			// pci: Why not only pobj?
-			+ "FILTER regex(?e2_grammar, \"obj\") ."
-			+ "?e2 <conll:form> ?e2_form . "
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e2 <conll:deprel> \"pobj\" "
+			// + "?e1 <own:senseArg> ?e1_arg. "
+			// + "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+	    ResultSet rs = qExec.execSelect() ;
+	    
+	    String noun;
+	    String prefix;
+	    String e1_arg ="http://lemon-model.net/lemon#subjfOfProp";
+	    String e2_arg = "http://lemon-model.net/lemon#objfOfProp";
+	    String preposition;
+	    
+	    FeatureVector vector = new FeatureVector();
+	    
+	    vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
 		
-		// generate a NounPPFrame
+	    try {
+	    	 while ( rs.hasNext() ) {
+	        	 QuerySolution qs = rs.next();
+	        	 
+	        	 System.out.print("Query 3 matched\n!!!");
+	        	 
+	        	 try{
+	        		 noun = qs.get("?lemma").toString();
+	        		 
+	        		 if(qs.get("?prefix") != null )
+	        		 {
+	        			 prefix = qs.get("?prefix").toString();
+	        			 noun = prefix +" " +noun;
+	        		 }
+	        		 // e1_arg = qs.get("?e1_arg").toString();
+	        		 // e2_arg = qs.get("?e2_arg").toString();
+	        		 
+	        		 preposition = qs.get("?prep").toString();
+	        		 
+	        		 System.out.print("Found: "+noun+"\n");
+	        		 
+	        		 	LexicalEntry entry = new LexicalEntry();
+	        			
+	        		 	Sense sense = new Sense();
+	        		 	
+	        		 	sense.setReference(reference);
+	        		 	
+	        		 	entry.setSense(sense);
+	        		 	
+	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
+	        		 	
+	        		 	entry.setSyntacticBehaviour(behaviour);
+	        			
+	        			if (Lemmatizer != null)
+	        			{
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(noun)+"@en");
+	        			}
+	        			else
+	        			{
+	        				entry.setCanonicalForm(noun+"@en");
+	        			}
+	        				
+	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+	        			
+	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+	        			
+	        			System.out.print(entry+"\n");
+	        			
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			{
+	        				
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",preposition));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
+	        			
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			{
+	        				
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","1",preposition));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
+	        			
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        			 
+	        	 }
+	        	 catch(Exception e){
+	     	    	e.printStackTrace();
+	        		 //ignore those without Frequency TODO:Check Source of Error
+	     	    }
+	    	 }
+	    }
+	    catch(Exception e){
+	    	e.printStackTrace();
+	    }
+	    qExec.close() ;
 
 	}
 

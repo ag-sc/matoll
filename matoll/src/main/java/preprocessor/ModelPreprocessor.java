@@ -133,11 +133,11 @@ public class ModelPreprocessor {
 					if (Resource2Lemma.get(Int2NodeMapping.get(number -1)).equals(","))
 					{
 						
-						System.out.print("... previous one is a comma "+(number-1)+"\n");
+						// System.out.print("... previous one is a comma "+(number-1)+"\n");
 						if (number > 2 && senseArgs.containsKey(Int2NodeMapping.get(number -2)))
 						{
 							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -2))));
-							System.out.print("Relative pronoun" + lemma + " resolved to "+(number-2)+"!!!\n");
+							// System.out.print("Relative pronoun" + lemma + " resolved to "+(number-2)+"!!!\n");
 						}
 						
 					}
@@ -146,7 +146,7 @@ public class ModelPreprocessor {
 						if (senseArgs.containsKey(Int2NodeMapping.get(number -1)))
 						{
 							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -1))));
-							System.out.print("Relative pronoun" + lemma + " resolved to "+(number-1)+"!!!\n");
+							// System.out.print("Relative pronoun" + lemma + " resolved to "+(number-1)+"!!!\n");
 						}
 					}
 				}

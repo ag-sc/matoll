@@ -17,6 +17,8 @@ import core.SyntacticBehaviour;
 
 public class SparqlPattern_EN_7 extends SparqlPattern {
 
+	
+	
 	/*
 	 * PropSubj:University of Colombo
 PropObj:Professor
