@@ -15,6 +15,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
 import patterns.PatternLibrary;
+import patterns.SparqlPattern_EN_2;
 import patterns.SparqlPattern_EN_4;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
@@ -46,11 +47,13 @@ public class Process {
 		
 		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
+		preprocessor.setCoreferenceResolution(true);
+		
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 		PatternLibrary library = new PatternLibrary();
 		
-		library.addPattern(new SparqlPattern_EN_4());
+		library.addPattern(new SparqlPattern_EN_2());
 		
 		for (String property: properties)
 		{
@@ -104,7 +107,7 @@ public class Process {
 			
 			System.out.print("Value of feature freq is:" + vector.getValueOfFeature("freq")+"\n");
 			
-			if (vector.getValueOfFeature("freq") > 2.0)
+			if (vector.getValueOfFeature("freq") > 1.0)
 			{
 				lexicon.addEntry(entry);
 			}

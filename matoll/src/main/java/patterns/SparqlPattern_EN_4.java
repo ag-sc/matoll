@@ -100,8 +100,9 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	    
 	    String noun;
 	    String prefix;
-	    String e1_arg ="http://lemon-model.net/lemon#subjfOfProp";
-	    String e2_arg ="http://lemon-model.net/lemon#objOfProp";
+	    String e1_arg;
+	    String e2_arg;
+	    String preposition;
 	    
 	    FeatureVector vector = new FeatureVector();
 	    
@@ -119,8 +120,10 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			 prefix = qs.get("?prefix").toString();
 	        			 noun = prefix +" " +noun;
 	        		 }
-	        		 // e1_arg = qs.get("?e1_arg").toString();
-	        		 // e2_arg = qs.get("?e2_arg").toString();
+	        		 e1_arg = qs.get("?e1_arg").toString();
+	        		 e2_arg = qs.get("?e2_arg").toString();
+	        		 
+	        		 preposition = qs.get("?prep").toString();
 	        		 
 	        		 System.out.print("Found\n");
 	        		 
@@ -153,8 +156,8 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",preposition));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
@@ -166,11 +169,11 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","1",preposition));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
 	        				

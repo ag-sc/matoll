@@ -16,12 +16,26 @@ public class ModelPreprocessor {
 	HashMap<String,String> Resource2Head;
 	HashMap<String,String> Resource2Dependency;
 	
+	HashMap<Integer,String> Int2NodeMapping;
+	HashMap<String,Integer> Node2IntMapping;
+	
+	HashMap<String,String> senseArgs;
+	
+	boolean coref = false;
+	
 	public void preprocess(Model model, String subjectEntity,
 			String objectEntity) {
 		
 		Resource2Lemma = getResource2Lemma(model);
 		Resource2Head = getResource2Head(model);
 		Resource2Dependency = getResource2Dependency(model);
+		
+		Int2NodeMapping = new HashMap<Integer,String>();
+		Node2IntMapping = new HashMap<String,Integer>();
+		
+		senseArgs = new HashMap<String,String>();
+		
+		getMapings(Int2NodeMapping,Node2IntMapping,model);
 		
 		List<Hypothesis> hypotheses;
 		
@@ -38,10 +52,11 @@ public class ModelPreprocessor {
 				
 				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
 				
-				// if (root != null) System.out.print("Root:"+root);
-				
-				model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
-					
+				if (root != null) 
+				{
+					model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+					senseArgs.put(root, "http://lemon-model.net/lemon#objOfProp");
+				}
 			}
 		}
 		
@@ -56,12 +71,91 @@ public class ModelPreprocessor {
 				
 				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
 				
-				// if (root != null) System.out.print("Root:"+root);
-				model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
-				
-					
+				if (root != null) 
+				{	
+					model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
+					senseArgs.put(root, "http://lemon-model.net/lemon#subjOfProp");
+				}	
 			}
 		}
+		
+		if (coref) computeCoreference(model);
+				
+	}
+
+	private void getMapings(HashMap<Integer, String> int2NodeMapping,
+			HashMap<String, Integer> node2IntMapping, Model model) {
+		
+		StmtIterator iter;
+		
+		Statement stmt;
+		
+		String node;
+		
+		String number;
+		
+		iter = model.listStatements(null,model.getProperty("conll:wordnumber"), (RDFNode) null);
+		
+		while (iter.hasNext()) {
+					
+			stmt = iter.next();
+			
+			node = stmt.getSubject().toString();
+			number = stmt.getObject().toString();
+			
+			int2NodeMapping.put(new Integer(number), node);
+			node2IntMapping.put(node, new Integer(number));
+		}
+		
+	}
+
+	private void computeCoreference(Model model) {
+		
+		String lemma;
+		Integer number;
+		
+		// System.out.print("Computing coreference!!!\n");
+		
+		for (String resource: Resource2Lemma.keySet())
+		{
+			lemma = Resource2Lemma.get(resource);
+			
+			if (lemma.equals("which") || lemma.equals("who"))
+			{
+				System.out.print("Contains "+lemma+"\n");
+				
+				number = Node2IntMapping.get(resource);
+				
+				System.out.print("... at position "+number+"\n");
+				
+				if (number > 1)
+				{
+					if (Resource2Lemma.get(Int2NodeMapping.get(number -1)).equals(","))
+					{
+						
+						System.out.print("... previous one is a comma "+(number-1)+"\n");
+						if (number > 2 && senseArgs.containsKey(Int2NodeMapping.get(number -2)))
+						{
+							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -2))));
+							System.out.print("Relative pronoun" + lemma + " resolved to "+(number-2)+"!!!\n");
+						}
+						
+					}
+					else
+					{
+						if (senseArgs.containsKey(Int2NodeMapping.get(number -1)))
+						{
+							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -1))));
+							System.out.print("Relative pronoun" + lemma + " resolved to "+(number-1)+"!!!\n");
+						}
+					}
+				}
+				
+				
+			}
+			
+		}
+		
 		
 	}
 
@@ -194,7 +288,7 @@ public class ModelPreprocessor {
 		
 		Statement stmt;
 		
-		iter = model.listStatements(null,model.getProperty("conll:lemma"), (RDFNode) null);
+		iter = model.listStatements(null,model.getProperty("conll:form"), (RDFNode) null);
 		
 		while (iter.hasNext()) {
 					
@@ -207,6 +301,11 @@ public class ModelPreprocessor {
 		}
 		
 		return resource2Lemma;
+	}
+
+	public void setCoreferenceResolution(boolean b) {
+		coref = b;
+		
 	}
 
 }
