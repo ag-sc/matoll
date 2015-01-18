@@ -122,11 +122,11 @@ public class ModelPreprocessor {
 			
 			if (lemma.equals("which") || lemma.equals("who"))
 			{
-				System.out.print("Contains "+lemma+"\n");
+				// System.out.print("Contains "+lemma+"\n");
 				
 				number = Node2IntMapping.get(resource);
 				
-				System.out.print("... at position "+number+"\n");
+				// System.out.print("... at position "+number+"\n");
 				
 				if (number > 1)
 				{

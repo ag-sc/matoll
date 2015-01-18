@@ -128,32 +128,6 @@ public class LexicalEntry {
 		return this.argumentMap;
 	}
 	
-	@Override
-	public boolean equals(Object entry)
-	{
-		
-		if (!CanonicalForm.equals(((LexicalEntry) entry).getCanonicalForm())) return false;
-
-		// check that senses are compatible
-		
-		if (Behaviour != null)
-		
-			if (!Behaviour.getFrame().equals(((LexicalEntry) entry).getBehaviour().getFrame())) return false;
-		
-		if (POS != null)
-		
-			if (!POS.equals(((LexicalEntry) entry).getPOS())) return false;
-		
-		if (!argumentMap.equals(((LexicalEntry) entry).getArgumentMap())) return false;		
-		
-		return true;
-	}
-
-
-	
-
-
-
 
 
 	@Override
@@ -167,7 +141,53 @@ public class LexicalEntry {
 	}
 
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LexicalEntry other = (LexicalEntry) obj;
+		if (Behaviour == null) {
+			if (other.Behaviour != null)
+				return false;
+		} else if (!Behaviour.equals(other.Behaviour))
+			return false;
+		if (CanonicalForm == null) {
+			if (other.CanonicalForm != null)
+				return false;
+		} else if (!CanonicalForm.equals(other.CanonicalForm))
+			return false;
+		if (POS == null) {
+			if (other.POS != null)
+				return false;
+		} else if (!POS.equals(other.POS))
+			return false;
+		if (Sense == null) {
+			if (other.Sense != null)
+				return false;
+		} else if (!Sense.equals(other.Sense))
+			return false;
+		if (argumentMap == null) {
+			if (other.argumentMap != null)
+				return false;
+		} else 
+		{
+			for (String synArg: this.getArgumentMap().keySet())	
+			{
+				if (!other.getArgumentMap().containsKey(synArg)) return false;
+				else
+				{
+					if (!other.getArgumentMap().get(synArg).equals(this.getArgumentMap().get(synArg))) return false;
+				}
+					
+			}
+		}
+		return true;
+	}
+
 
 	public SyntacticBehaviour getBehaviour() {
 		return Behaviour;

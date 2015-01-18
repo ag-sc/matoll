@@ -136,7 +136,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			}
 
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
@@ -174,11 +174,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	    	e.printStackTrace();
 	    }
 	    qExec.close() ;
-		
-		
-		
-	
-		
+
 	}
 	
 	

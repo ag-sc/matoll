@@ -1,13 +1,25 @@
 package patterns;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import java.util.List;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+
+import core.FeatureVector;
+import core.LexicalEntry;
 import core.LexiconWithFeatures;
+import core.Sense;
+import core.SenseArgument;
+import core.SyntacticArgument;
+import core.SyntacticBehaviour;
 
 public class SparqlPattern_EN_1 extends SparqlPattern {
 
-	String query = "SELECT ?class ?lemma ?dobj_lemma ?advmod_lemma ?lemma_pos ?dobj_lemma ?lemma_grammar ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
+	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
 			+ "{?y <conll:cpostag> \"VB\" .}"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"VBD\" .}"
@@ -16,15 +28,7 @@ public class SparqlPattern_EN_1 extends SparqlPattern {
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"VBZ\" .}"
 			+ "?y <conll:form> ?lemma . "
-			+ "?y <conll:deprel> ?lemma_grammar. "
-			+"OPTIONAL{"
-			+ "?lemma_nn <conll:head> ?y. "
-			+ "?lemma_nn <conll:form> ?lemma_addition. "
-			+ "?lemma_nn <conll:deprel> \"nn\"."
-			+"} "
 			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:form> ?e1_form . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
 			+ "?e1 <conll:deprel> ?deprel. "
 			+ "FILTER regex(?deprel, \"subj\") ."
 			+ "?p <conll:head> ?y . "
@@ -32,12 +36,14 @@ public class SparqlPattern_EN_1 extends SparqlPattern {
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "?e2 <conll:form> ?e2_form . "
-			+ "?e2 <conll:deprel> ?deprel2. "
-			+ "FILTER regex(?deprel2, \"obj\") ."
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e2 <conll:deprel> \"pobj\". "
+			+"OPTIONAL{"
+			+ "?e2 <conll:head> ?y. "
+			+ "?e2 <conll:form> ?dobj_form. "
+			+ "?e2 <conll:deprel> \"dobj\"."
+			+"} "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	/*
@@ -98,9 +104,102 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	
 	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
 		
-		// match the query against the model and for each match create a lexical entry and feature Vector
+		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+	    ResultSet rs = qExec.execSelect() ;
+	    
+	    String verb = "";
+	    String prep = "";
+	    String e1_arg ="http://lemon-model.net/lemon#subjOfProp";
+	    String e2_arg = "http://lemon-model.net/lemon#objOfProp";
+	    RDFNode dobj_form;
+	    FeatureVector vector = new FeatureVector();
+		
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+	     
+	    try {
+	    	 while ( rs.hasNext() ) {
+	        	 QuerySolution qs = rs.next();
+	        	 try{
+	        		 verb = qs.get("?lemma").toString();
+	        		 e1_arg = qs.get("?e1_arg").toString();
+	        		 e2_arg = qs.get("?e2_arg").toString();
+	        		 prep = qs.get("?prep").toString();
+	        		 dobj_form = qs.get("?dobj_form");
+	        		 
+	        		 
+	        		 	LexicalEntry entry = new LexicalEntry();
+	        			
+	        		 	Sense sense = new Sense();
+	        		 	
+	        		 	sense.setReference(reference);
+	        		 	
+	        		 	entry.setSense(sense);
+	        		 	
+	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
+	        		 	
+	        		 	entry.setSyntacticBehaviour(behaviour);
+	        			
+	        			if (Lemmatizer != null)
+	        			{
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
+	        			}
+	        			else
+	        			{
+	        				entry.setCanonicalForm(verb+"@en");
+	        			}
+	        				
+	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+	        			
+	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePPFrame");
+	        			
+	        			for (String sentence: sentences)
+	        			{
+	        				entry.addSentence(sentence);
+	        			}
 
-		// generate an intransitive with prepositional object
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			{
+	        				
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2",prep));
+	        			
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        			
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			{
+	        				
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",prep));
+	        			
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        			
+	        				lexicon.add(entry, vector);
+	        				
+	        			}	
+	        		 
+	        		 
+	        	 }
+	        	 catch(Exception e){
+	     	    	e.printStackTrace();
+	        		 //ignore those without Frequency TODO:Check Source of Error
+	     	    }
+	    	 }
+	    }
+	    catch(Exception e){
+	    	e.printStackTrace();
+	    }
+	    qExec.close() ;
 		
 	}
 

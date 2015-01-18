@@ -76,6 +76,37 @@ public class SyntacticBehaviour {
 		return "SyntacticBehaviour [Frame=" + Frame + ", synArgs=" + synArgs
 				+ "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Frame == null) ? 0 : Frame.hashCode());
+		result = prime * result + ((synArgs == null) ? 0 : synArgs.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SyntacticBehaviour other = (SyntacticBehaviour) obj;
+		if (Frame == null) {
+			if (other.Frame != null)
+				return false;
+		} else if (!Frame.equals(other.Frame))
+			return false;
+		if (synArgs == null) {
+			if (other.synArgs != null)
+				return false;
+		} else if (!synArgs.equals(other.synArgs))
+			return false;
+		return true;
+	}
 	
 	
 }
