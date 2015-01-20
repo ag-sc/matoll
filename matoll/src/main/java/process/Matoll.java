@@ -34,10 +34,18 @@ import core.Lexicon;
 import core.LexiconWithFeatures;
 import evaluation.LexiconEvaluation;
 
-public class Process {
+public class Matoll {
 
 	public static void main(String[] args) throws IOException {
 			
+		
+		if (args.length < 3)
+		{
+			System.out.print("Usage: PerceptronTagger --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON>\n");
+			
+			return;
+		}
+		
 		List<String> properties = new ArrayList<String>();
 		properties.add("http://dbpedia.ontology/spouse");
 		
@@ -81,14 +89,13 @@ public class Process {
 				 
 				 subj = getSubject(model);
 				 
-	
 				 preprocessor.preprocess(model,subj,obj);
 				
 				 library.extractLexicalEntries(model, property, lexiconwithFeatures);
 				
-				 FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+				 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 				
-				 RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+				 // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
 				
 				
 				}
@@ -134,6 +141,18 @@ public class Process {
 		
 		System.out.print("Lexicon: "+output.toString()+" written out\n");
 		
+		// if train
+		
+		// apply classifier to every example
+		// order examples by score
+		// add lexical entries one to one to the lexicon
+		// evaluate quality of the lexicon
+		
+		// re-engineer the lexicon evaluation to store evaluation measures as a hashmap
+		// extend the pattern matching to get the actual reference
+		
+		// if test
+		
 		FileWriter writer = new FileWriter(new File("gold_lex"));
 		
 		writer.write(gold.toString());
@@ -146,9 +165,7 @@ public class Process {
 		
 		writer.close();
 		
-		eval.addReference("http://dbpedia.ontology/spouse");
-		
-		System.out.print(lexicon);
+		eval.setReferences(lexicon.getReferences());
 		
 		eval.evaluate(lexicon,gold);
 		

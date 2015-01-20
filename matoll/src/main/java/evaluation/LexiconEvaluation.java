@@ -503,5 +503,10 @@ public class LexiconEvaluation {
 		
 	}
 
+	public void setReferences(Set<String> references2) {
+		this.references = references;
+		
+	}
+
 	
 }
