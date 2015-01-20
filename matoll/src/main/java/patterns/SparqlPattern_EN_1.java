@@ -102,7 +102,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 
 */
 	
-	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
@@ -135,7 +135,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(reference);
+	        		 	sense.setReference(this.getReference(model));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

@@ -80,7 +80,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	
 
 	
-	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;

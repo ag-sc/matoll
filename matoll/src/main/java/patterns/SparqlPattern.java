@@ -44,7 +44,24 @@ public abstract class SparqlPattern {
 		
 		return sentences;
 
+	}	
+	
+	protected String getReference(Model model) {
 		
+		StmtIterator iter = model.listStatements(null,model.createProperty("conll:reference"), (RDFNode) null);
+		
+		Statement stmt;
+		
+		while (iter.hasNext()) {
+						
+			stmt = iter.next();
+			
+	        return stmt.getObject().toString();
+
+	    }
+		
+		return null;
+
 	}	
 	
 }

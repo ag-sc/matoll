@@ -33,11 +33,11 @@ public class PatternLibrary {
 			pattern.setLemmatizer(Lemmatizer);
 	}
 	
-	public void extractLexicalEntries(Model model, String property, LexiconWithFeatures lexicon)
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon)
 	{
 		for (SparqlPattern pattern: Patterns)
 		{
-			pattern.extractLexicalEntries(model, property, lexicon);
+			pattern.extractLexicalEntries(model, lexicon);
 		}
 		
 	}

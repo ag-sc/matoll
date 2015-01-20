@@ -99,7 +99,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 18	.	_	.	.	_	4	punct
 	 */
 	
-	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
@@ -138,7 +138,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(reference);
+	        		 	sense.setReference(this.getReference(model)));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

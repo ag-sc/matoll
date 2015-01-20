@@ -39,21 +39,18 @@ public class Matoll {
 	public static void main(String[] args) throws IOException {
 			
 		
-		if (args.length < 3)
+		if (args.length < 5)
 		{
-			System.out.print("Usage: PerceptronTagger --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON>\n");
+			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> --coreference=true/false --no_entries=n\n");
 			
 			return;
 		}
 		
-		List<String> properties = new ArrayList<String>();
-		properties.add("http://dbpedia.ontology/spouse");
-		
-		File folder = new File("/Users/cimiano/Downloads/sentences");
+		File folder = new File(args[1]);
 		
 		Lexicon lexicon;
 		
-		List<Model> models;
+		// Creating preprocessor and setting coreference
 		
 		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
@@ -61,44 +58,38 @@ public class Matoll {
 		
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
+		// Creating library and pattern
+		
 		PatternLibrary library = new PatternLibrary();
 		
 		library.addPattern(new SparqlPattern_EN_1());
+				
 		
-		for (String property: properties)
-		{
-			models = new ArrayList<Model>();
-					
-			Statement stmt;
-			
-			String subj = null;
-			String obj = null;
-			
-			List<String> sentences;
-			
-			
-			for (final File file : folder.listFiles()) {
-				
-				if (file.isFile() && file.toString().endsWith(".ttl")) {	
+		String subj = null;
+		String obj = null;
 
-				System.out.print("Loading: "+file.toString()+"\n");	
-					
-				 Model model = RDFDataMgr.loadModel(file.toString());	
-	
-				 obj = getObject(model);
-				 
-				 subj = getSubject(model);
-				 
-				 preprocessor.preprocess(model,subj,obj);
+		
+		for (final File file : folder.listFiles()) {
+			
+			if (file.isFile() && file.toString().endsWith(".ttl")) {	
+
+			System.out.print("Processing: "+file.toString()+"\n");	
 				
-				 library.extractLexicalEntries(model, property, lexiconwithFeatures);
-				
-				 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
-				
-				 // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
-				
-				
-				}
+			 Model model = RDFDataMgr.loadModel(file.toString());	
+
+			 obj = getObject(model);
+			 
+			 subj = getSubject(model);
+			 
+			 preprocessor.preprocess(model,subj,obj);
+			
+			 library.extractLexicalEntries(model, lexiconwithFeatures);
+			
+			 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+			
+			 // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+			
+			
 			}
 		}
 		

@@ -83,7 +83,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 			+ "}";
 	
 	
-	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
 	    

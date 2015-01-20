@@ -94,7 +94,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 		
 		
 
-	public void extractLexicalEntries(Model model, String reference,  LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
 	    

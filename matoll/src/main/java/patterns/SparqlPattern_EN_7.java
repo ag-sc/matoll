@@ -83,7 +83,7 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
-	public void extractLexicalEntries(Model model, String reference, LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		
 		
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;

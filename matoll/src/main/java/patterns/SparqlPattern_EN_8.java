@@ -40,7 +40,7 @@ public class SparqlPattern_EN_8 extends SparqlPattern {
 					+ "?class <own:obj> ?propObj. "
 					+ "}";
 
-	public void extractLexicalEntries(Model model, String reference,  LexiconWithFeatures lexicon) {
+	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
 		// TODO Auto-generated method stub
 
 	}
