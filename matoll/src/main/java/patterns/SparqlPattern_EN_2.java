@@ -138,7 +138,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(this.getReference(model)));
+	        		 	sense.setReference(this.getReference(model));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

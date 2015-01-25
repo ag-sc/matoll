@@ -109,7 +109,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(reference);
+	        		 	sense.setReference(this.getReference(model));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

@@ -131,7 +131,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(reference);
+	        		 	sense.setReference(this.getReference(model));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

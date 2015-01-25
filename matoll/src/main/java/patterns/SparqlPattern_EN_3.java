@@ -123,7 +123,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(reference);
+	        		 	sense.setReference(this.getReference(model));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

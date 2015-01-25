@@ -18,7 +18,7 @@ public abstract class SparqlPattern {
 	
 	public abstract String getID();
 	
-	public abstract void extractLexicalEntries(Model model,String reference, LexiconWithFeatures lexicon); 
+	public abstract void extractLexicalEntries(Model model, LexiconWithFeatures lexicon); 
 
 	public void setLemmatizer(Lemmatizer lemmatizer) {
 		
