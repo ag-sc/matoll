@@ -508,5 +508,20 @@ public class LexiconEvaluation {
 		
 	}
 
+	public double getFMeasure(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public double getPrecision(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public double getRecall(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

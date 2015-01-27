@@ -148,4 +148,17 @@ public class Lexicon {
 		
 		return string;
 	}
+
+	public List<LexicalEntry> getEntriesForReference(String ref) {
+		
+		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
+		
+		for (LexicalEntry entry: this.entries)
+		{
+			if (entry.getReference().equals(ref))
+				entries.add(entry);
+		}
+		
+		return entries;
+	}
 }

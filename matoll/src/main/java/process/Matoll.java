@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ import classifiers.FreqClassifier;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
@@ -55,6 +57,7 @@ public class Matoll {
 		String output_lexicon;
 		boolean coreference = false;
 		int no_entries = 1000;
+		String output;
 		
 		Provenance provenance;
 		
@@ -62,9 +65,9 @@ public class Matoll {
 		  
 		Matcher matcher;
 		 
-		if (args.length < 5)
+		if (args.length < 6)
 		{
-			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> --coreference=true/false --no_entries=n\n");
+			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> <OUT> --coreference=true/false --no_entries=n\n");
 			return;
 		
 		}
@@ -73,6 +76,7 @@ public class Matoll {
 		gold_standard_lexicon = args[2];
 		model_file = args[3];
 		output_lexicon = args[4];
+		output = args[5];
 				
 	
 
@@ -93,7 +97,7 @@ public class Matoll {
 			    }
 			    else
 			    {
-			    	System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> --coreference=true/false --no_entries=n\n");
+			    	System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> <OUT> --coreference=true/false --no_entries=n\n");
 			    	return;
 			    }
 			    if (matcher.group(1).equals("coreference"))
@@ -139,7 +143,10 @@ public class Matoll {
 		
 		String subj = null;
 		String obj = null;
-
+		
+		String reference = null;
+		
+		List<Model> sentences;
 		
 		for (final File file : folder.listFiles()) {
 			
@@ -147,15 +154,23 @@ public class Matoll {
 
 			System.out.print("Processing: "+file.toString()+"\n");	
 				
-			 Model model = RDFDataMgr.loadModel(file.toString());	
+			 Model model = RDFDataMgr.loadModel(file.toString());
+			 
+			 sentences = getSentences(model);
+			 
+			 for (Model sentence: sentences)
+			 {
 
-			 obj = getObject(model);
+				 obj = getObject(sentence);
 			 
-			 subj = getSubject(model);
+				 subj = getSubject(sentence);
 			 
-			 preprocessor.preprocess(model,subj,obj);
+				 reference = getReference(sentence);
 			
-			 library.extractLexicalEntries(model, lexiconwithFeatures);
+				 preprocessor.preprocess(sentence,subj,obj);
+			
+				 library.extractLexicalEntries(sentence, lexiconwithFeatures);
+			 }
 			
 			 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 			
@@ -176,11 +191,15 @@ public class Matoll {
 		Dataset trainingSet = new Dataset();
 		
 		
+		// process features
+		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
-			System.out.println(entry);
+			// System.out.println(entry);
 			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
+			
+			// preprocessing vector
 			
 			if (gold.contains(entry))
 			{
@@ -195,9 +214,10 @@ public class Matoll {
 		
 		classifier.train(trainingSet);
 		
+		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
-			System.out.println(entry);
+			// System.out.println(entry);
 			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
 			
@@ -218,7 +238,7 @@ public class Matoll {
 			
 		}
 		
-		lexicon = new Lexicon();
+		
 		
 		Collections.sort(entries, new Comparator<LexicalEntry>() {
 			 
@@ -229,7 +249,11 @@ public class Matoll {
 				        });
 		
 		
+		lexicon = new Lexicon();
+		
 		LexiconEvaluation eval = new LexiconEvaluation();
+		
+		FileWriter writer = new FileWriter(output);
 		
 		for (int i=0; i < entries.size(); i++)
 		{
@@ -239,20 +263,42 @@ public class Matoll {
 			
 			eval.evaluate(lexicon,gold);
 			
-			// write out entries into csv file file with precision, recall, FMeasure
-			// write lexicon out into file, entry by entry, indicating score
+			writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntax")+"\t"+eval.getRecall("syntax")+"\t"+eval.getFMeasure("syntax")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
+			writer.flush();
+		
 			
 		}
 		
-		// filter out all enries with frequency <= 1 and evaluate them!
+		writer.close();
 		
+		Set<String> references = lexicon.getReferences();
+	
+		
+		
+		for (String ref: references)
+		{
+			writer = new FileWriter(ref+".lex");
+			entries = lexicon.getEntriesForReference(ref);
+			
+			for (LexicalEntry entry: entries)
+			{
+				writer.write(entry.toString()+"\n");
+				writer.flush();
+			}
+			
+			writer.close();
+			
+			
+			
+		}
+	
 		Model model = ModelFactory.createDefaultModel();
 		
 		serializer.serialize(lexiconwithFeatures, model);
 		
-		FileOutputStream output = new FileOutputStream(new File(output_lexicon));
+		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
 		
-		RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
 		System.out.print("Lexicon: "+output.toString()+" written out\n");
 		
@@ -263,6 +309,86 @@ public class Matoll {
 	
 			
 	}
+
+	private static String getReference(Model model) {
+		StmtIterator iter = model.listStatements(null,model.getProperty("own:reference"), (RDFNode) null);
+		
+		Statement stmt;
+		
+		while (iter.hasNext()) {
+						
+			stmt = iter.next();
+			
+	        return stmt.getObject().toString();
+	    }
+		
+		return null;
+	}
+
+	private static List<Model> getSentences(Model model) throws FileNotFoundException {
+		
+		// get all ?res <conll:sentence> 
+		
+		List<Model> sentences = new ArrayList<Model>();
+		
+		StmtIterator iter, iter2, iter3;
+		
+		Statement stmt, stmt2, stmt3;
+		
+		Resource resource;
+		
+		Resource token;
+		
+		iter = model.listStatements(null,model.getProperty("conll:language"), (RDFNode) null);
+		
+		while (iter.hasNext()) {
+					
+			Model sentence = ModelFactory.createDefaultModel();
+			
+			stmt = iter.next();
+			
+			resource = stmt.getSubject();
+			
+			iter2 = model.listStatements(resource , null, (RDFNode) null);
+			
+			while (iter2.hasNext())
+			{
+				stmt2 = iter2.next();
+				
+				sentence.add(stmt2);
+				
+			}
+			
+			iter2 = model.listStatements(null , model.getProperty("own:partOf"), (RDFNode) resource);
+			
+			while (iter2.hasNext())
+			{
+				stmt2 = iter2.next();
+				
+				token = stmt2.getSubject();
+				
+				iter3 = model.listStatements(token , null, (RDFNode) null);
+				
+				while (iter3.hasNext())
+				{
+					stmt3 = iter3.next();
+					
+					sentence.add(stmt3);
+					
+				}
+			}
+			
+			sentences.add(sentence);
+			
+			RDFDataMgr.write(new FileOutputStream(new File(resource+".ttl")), sentence, RDFFormat.TURTLE) ;
+			
+		}
+		
+
+		return sentences;
+		
+	}
+
 
 	private static String getSubject(Model model) {
 		

@@ -55,5 +55,15 @@ public class FreqClassifier implements Classifier {
 		
 	}
 
+	public void saveModel(String file) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void loadModel(String file) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
