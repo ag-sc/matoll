@@ -120,7 +120,7 @@ public class Matoll {
 		
 		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
 		
-		FreqClassifier classifier = new FreqClassifier("freq",5.0);
+		FreqClassifier classifier = new FreqClassifier("freq",1.0);
 		
 		File folder = new File(directory);
 		
