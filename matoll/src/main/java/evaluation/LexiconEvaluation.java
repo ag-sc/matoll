@@ -20,7 +20,17 @@ public class LexiconEvaluation {
 	static boolean onlyGoldReferences = false;
 	static boolean filterReferences = false;
 	
+	static HashMap<String,Double> fmeasures;
+	static HashMap<String,Double> correct;
+	static HashMap<String,Double> precision;
+	static HashMap<String,Double> recall;
+	
 	public static void main(String[] args) throws IOException {
+		
+		fmeasures = new HashMap<String,Double>();
+		precision = new HashMap<String,Double>();
+		recall = new HashMap<String,Double>();
+		correct = new HashMap<String,Double>();
 		
 
 		if (args.length < 2)
@@ -55,15 +65,11 @@ public class LexiconEvaluation {
 		Lexicon lexicon = loader.loadFromFile(lexiconFile);
 		Lexicon gold = loader.loadFromFile(goldFile);
 		
-		
 		System.out.print(lexicon.getStatistics());
 		
 		System.out.print(gold.getStatistics());
 		
 		evaluate(lexicon,gold);
-		
-		
-		 
 		
 	}
 
@@ -81,66 +87,12 @@ public class LexiconEvaluation {
 
 	public static void evaluate(Lexicon lexicon, Lexicon gold) {
 		
-		int lemma_correctness = 0;
-		
-		int syntactic_correctness = 0;
-		
-		int mapping_correctness = 0;
-		
-		int lemma_correctness_verb = 0;
-		
-		int syntactic_correctness_verb = 0;
-		
-		int mapping_correctness_verb = 0;
-		
-		int lemma_correctness_noun = 0;
-		
-		int syntactic_correctness_noun = 0;
-		
-		int mapping_correctness_noun = 0;
-		
 		int lex_entries = 0;
 		
 		int lex_entries_verb = 0;
 		
 		int lex_entries_noun = 0;
-		
-		double lemma_precision;
-		
-		double lemma_recall;
-		
-		double lemma_recall_noun;
-		
-		double lemma_precision_verb;
-		
-		double lemma_recall_verb;
-		
-		double lemma_precision_noun;
-		
-		double mapping_recall;
-		
-		double syntactic_precision;
-		
-		double syntactic_recall;
-		
-		double mapping_precision;
-		
-		double syntactic_precision_verb;
-		
-		double syntactic_recall_verb;
-		
-		double mapping_precision_verb;
-
-		double syntactic_precision_noun;
-		
-		double syntactic_recall_noun;
-		
-		double mapping_precision_noun;
-		
-		double mapping_recall_noun;
-		
-		double mapping_recall_verb;
-		
+			
 		Boolean foundLemma;
 		
 		Boolean foundSyntax;
@@ -195,9 +147,9 @@ public class LexiconEvaluation {
 						}
 						if (foundLemma) 
 						{
-							lemma_correctness ++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) lemma_correctness_verb++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) lemma_correctness_noun++;
+							update(correct,"lemma");
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) update(correct,"lemma_verb");
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(correct,"lemma_noun");
 						}
 					
 						if (foundSyntax)
@@ -446,6 +398,11 @@ public class LexiconEvaluation {
 		
 	}
 
+
+	private static void update(HashMap<String, Double> correct2, String string) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private static boolean checkMappings(LexicalEntry entry, LexicalEntry gold_entry) {
 		

@@ -3,6 +3,9 @@ package process;
 import io.LexiconLoader;
 import io.LexiconSerialization;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -50,6 +53,8 @@ public class Matoll {
 	public static void main(String[] args) throws IOException {
 			
 		
+		Logger logger = LogManager.getLogger(Matoll.class.getName());
+
 		String directory;
 		String mode;
 		String gold_standard_lexicon;
@@ -67,7 +72,7 @@ public class Matoll {
 		 
 		if (args.length < 6)
 		{
-			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> <OUT> --coreference=true/false --no_entries=n\n");
+			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> --coreference=true/false --no_entries=n\n");
 			return;
 		
 		}
@@ -89,11 +94,12 @@ public class Matoll {
 			    if (i== 0 && matcher.group(1).equals("mode"))
 			    {
 			    	mode = matcher.group(2);
-			    	System.out.print("Starting MATOLL with mode: "+mode+"\n");
-			    	System.out.print("Processing directory: "+directory+"\n");
-			    	System.out.print("Using gold standard: "+gold_standard_lexicon+"\n");
-			    	System.out.print("Using model file: "+model_file+"\n");
-			    	System.out.print("Output lexicon: "+output_lexicon+"\n");
+			    	logger.info("Starting MATOLL with mode: "+mode+"\n");
+			    	logger.info("Processing directory: "+directory+"\n");
+			    	logger.info("Using gold standard: "+gold_standard_lexicon+"\n");
+			    	logger.info("Using model file: "+model_file+"\n");
+			    	logger.info("Output lexicon: "+output_lexicon+"\n");
+
 			    }
 			    else
 			    {
@@ -105,13 +111,13 @@ public class Matoll {
 			    	if (matcher.group(2).equals("true"))
 			    	{
 			    		coreference = true;
-			    		System.out.print("Using coreference!!!\n");
+			    		logger.info("Using coreference!!!\n");
 			    	}
 			    }
 			    if (matcher.group(1).equals("no_entries"))
 			    {
 			    	no_entries = (new Integer(matcher.group(2))).intValue();
-			    	System.out.print("No. entries"+no_entries+"\n");
+			    	logger.info("No. entries"+no_entries+"\n");
 			    }
 			}		
 		}
@@ -152,8 +158,8 @@ public class Matoll {
 			
 			if (file.isFile() && file.toString().endsWith(".ttl")) {	
 
-			System.out.print("Processing: "+file.toString()+"\n");	
-				
+				logger.info("Processing: "+file.toString()+"\n");	
+								
 			 Model model = RDFDataMgr.loadModel(file.toString());
 			 
 			 sentences = getSentences(model);
@@ -275,22 +281,22 @@ public class Matoll {
 	
 		
 		
-		for (String ref: references)
-		{
-			writer = new FileWriter(ref+".lex");
-			entries = lexicon.getEntriesForReference(ref);
-			
-			for (LexicalEntry entry: entries)
-			{
-				writer.write(entry.toString()+"\n");
-				writer.flush();
-			}
-			
-			writer.close();
-			
-			
-			
-		}
+//		for (String ref: references)
+//		{
+//			writer = new FileWriter(ref+".lex");
+//			entries = lexicon.getEntriesForReference(ref);
+//			
+//			for (LexicalEntry entry: entries)
+//			{
+//				writer.write(entry.toString()+"\n");
+//				writer.flush();
+//			}
+//			
+//			writer.close();
+//			
+//			
+//			
+//		}
 	
 		Model model = ModelFactory.createDefaultModel();
 		
