@@ -160,9 +160,9 @@ public class Matoll {
 
 				logger.info("Processing: "+file.toString()+"\n");	
 								
-			 Model model = RDFDataMgr.loadModel(file.toString());
+				Model model = RDFDataMgr.loadModel(file.toString());
 			 
-			 sentences = getSentences(model);
+				sentences = getSentences(model);
 			 
 			 for (Model sentence: sentences)
 			 {
@@ -210,10 +210,15 @@ public class Matoll {
 			if (gold.contains(entry))
 			{
 				trainingSet.addInstance(vector, 1);
+				logger.info("Adding training example: "+entry.toString()+"\n");
+				logger.info(vector.toString()+" is positive"+"\n");
+				
 			}
 			else
 			{
 				trainingSet.addInstance(vector, 0);
+				logger.info("Adding training example: "+entry.toString()+"\n");
+				logger.info(vector.toString()+" is negative"+"\n");
 			}
 			
 		}
@@ -249,7 +254,7 @@ public class Matoll {
 		Collections.sort(entries, new Comparator<LexicalEntry>() {
 			 
 			            public int compare(LexicalEntry one, LexicalEntry two) {
-				                return (((LexicalEntry) one).getProvenance().getConfidence() > ((LexicalEntry) two).getProvenance().getConfidence()) ? 1 : -1;
+				                return (((LexicalEntry) one).getProvenance().getConfidence() > ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;
 				            }
 				             
 				        });
@@ -269,7 +274,12 @@ public class Matoll {
 			
 			eval.evaluate(lexicon,gold);
 			
-			writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntax")+"\t"+eval.getRecall("syntax")+"\t"+eval.getFMeasure("syntax")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
+			System.out.print("Considering entry "+entries.get(i)+"("+i+")\n");
+			
+			writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping")+"\n");
+			
+			System.out.println(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
+			
 			writer.flush();
 		
 			
@@ -281,22 +291,22 @@ public class Matoll {
 	
 		
 		
-//		for (String ref: references)
-//		{
-//			writer = new FileWriter(ref+".lex");
-//			entries = lexicon.getEntriesForReference(ref);
-//			
-//			for (LexicalEntry entry: entries)
-//			{
-//				writer.write(entry.toString()+"\n");
-//				writer.flush();
-//			}
-//			
-//			writer.close();
-//			
-//			
-//			
-//		}
+		for (String ref: references)
+		{
+			writer = new FileWriter(ref.replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex");
+			entries = lexicon.getEntriesForReference(ref);
+			
+			for (LexicalEntry entry: entries)
+			{
+				writer.write(entry.toString()+"\n");
+				writer.flush();
+			}
+			
+			writer.close();
+			
+			
+			
+		}
 	
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -386,7 +396,7 @@ public class Matoll {
 			
 			sentences.add(sentence);
 			
-			RDFDataMgr.write(new FileOutputStream(new File(resource+".ttl")), sentence, RDFFormat.TURTLE) ;
+			// RDFDataMgr.write(new FileOutputStream(new File(resource+".ttl")), sentence, RDFFormat.TURTLE) ;
 			
 		}
 		

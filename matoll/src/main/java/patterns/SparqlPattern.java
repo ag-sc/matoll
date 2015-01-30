@@ -39,7 +39,7 @@ public abstract class SparqlPattern {
 			stmt = iter.next();
 			
 	        sentences.add(stmt.getObject().toString());
-	        System.out.print(stmt.getObject().toString()+"\n");
+	        // System.out.print(stmt.getObject().toString()+"\n");
 	    }
 		
 		return sentences;

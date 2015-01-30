@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import process.Matoll;
+
 public class LexiconWithFeatures extends Lexicon{
 
+	Logger logger = LogManager.getLogger(Matoll.class.getName());
+	
 	HashMap<LexicalEntry,FeatureVector> map;
 	
 	public LexiconWithFeatures()
@@ -14,20 +21,23 @@ public class LexiconWithFeatures extends Lexicon{
 		map = new HashMap<LexicalEntry,FeatureVector>();
 	}
 	
-	public void add(LexicalEntry entry, FeatureVector features)
+	public void add(LexicalEntry entry, FeatureVector vec)
 	{
-		FeatureVector vector;
+		FeatureVector vector = null;
+		FeatureVector updatedVector = null;
 		
 		if (this.contains(entry))
 		{	
 			if (map.containsKey(entry))
 			{
 				vector = map.get(entry);
-				map.put(entry, features.add(vector));
+				updatedVector = vector.add(vec);
+				
+				map.put(entry, updatedVector);
 			}
 			else
 			{
-				map.put(entry, features.add(features));
+				map.put(entry, vec.add(vec));
 			}
 
 			
@@ -40,17 +50,22 @@ public class LexiconWithFeatures extends Lexicon{
 			
 			this.getLexicalEntry(entry).addSentences(sentences);
 			
-			System.out.print("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
+			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
+			logger.info("Updated "+vector+"\n");
+			logger.info("to"+updatedVector+"\n");
 		
 	
-			// do something to update the features
-			
 		}
 		else
 		{
 			entry.setURI(baseURI+"LexicalEntry_"+entries.size()+"_"+entry.getCanonicalForm());
 			this.addEntry(entry);
-			map.put(entry,features);
+			map.put(entry,vec);
+			
+			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
+			logger.info("Updated "+vector+"\n");
+			logger.info("to"+updatedVector+"\n");
+			
 			
 		}
 	}
