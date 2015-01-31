@@ -10,8 +10,6 @@ import java.util.Set;
 
 import core.LexicalEntry;
 import core.Lexicon;
-import core.SyntacticArgument;
-import core.SenseArgument;
 
 public class LexiconEvaluation {
 
@@ -24,15 +22,13 @@ public class LexiconEvaluation {
 	static HashMap<String,Double> correct;
 	static HashMap<String,Double> precision;
 	static HashMap<String,Double> recall;
+	static HashMap<String,Double> entries;
+	static HashMap<String,Double> gold_entries;
+	static HashMap<String,Double> gold_correct;
 	
 	public static void main(String[] args) throws IOException {
 		
-		fmeasures = new HashMap<String,Double>();
-		precision = new HashMap<String,Double>();
-		recall = new HashMap<String,Double>();
-		correct = new HashMap<String,Double>();
 		
-
 		if (args.length < 2)
 		{
 			System.out.print("Usage: LexiconEvaluation <Lexicon.rdf> <GoldLexicon.rdf> (--onlyGoldReferences|<FileWithReferences>)?\n");
@@ -65,10 +61,6 @@ public class LexiconEvaluation {
 		Lexicon lexicon = loader.loadFromFile(lexiconFile);
 		Lexicon gold = loader.loadFromFile(goldFile);
 		
-		System.out.print(lexicon.getStatistics());
-		
-		System.out.print(gold.getStatistics());
-		
 		evaluate(lexicon,gold);
 		
 	}
@@ -87,12 +79,15 @@ public class LexiconEvaluation {
 
 	public static void evaluate(Lexicon lexicon, Lexicon gold) {
 		
-		int lex_entries = 0;
-		
-		int lex_entries_verb = 0;
-		
-		int lex_entries_noun = 0;
 			
+		fmeasures = new HashMap<String,Double>();
+		precision = new HashMap<String,Double>();
+		recall = new HashMap<String,Double>();
+		correct = new HashMap<String,Double>();
+		gold_correct = new HashMap<String,Double>();
+		entries = new HashMap<String,Double>();
+		gold_entries = new HashMap<String,Double>();
+		
 		Boolean foundLemma;
 		
 		Boolean foundSyntax;
@@ -113,10 +108,24 @@ public class LexiconEvaluation {
 				
 				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.contains(entry.getReference())) || (onlyGoldReferences && gold.getReferences().contains(entry.getReference())))
 				{
-					lex_entries++;
+					update(entries,"lemma",1.0);
+					update(entries,"syntactic",1.0);
+					update(entries,"mapping",1.0);
 
-					if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) lex_entries_verb++;
-					if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) lex_entries_noun++;
+
+					if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) 
+					{
+						update(entries,"lemma_verb",1.0);
+						update(entries,"syntactic_verb",1.0);
+						update(entries,"mapping_verb",1.0);
+					}
+					
+					if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun")))
+					{
+						update(entries,"lemma_noun",1.0);
+						update(entries,"syntactic_noun",1.0);
+						update(entries,"mapping_noun",1.0);
+					}
 					
 					// System.out.print("Checking entry "+lex_entries+"("+entry.getCanonicalForm()+")\nCandidates:");
 					
@@ -147,16 +156,16 @@ public class LexiconEvaluation {
 						}
 						if (foundLemma) 
 						{
-							update(correct,"lemma");
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) update(correct,"lemma_verb");
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(correct,"lemma_noun");
+							update(correct,"lemma",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) update(correct,"lemma_verb",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(correct,"lemma_noun",1.0);
 						}
 					
 						if (foundSyntax)
 						{
-							syntactic_correctness ++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) syntactic_correctness_verb++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) syntactic_correctness_noun++;
+							update(correct,"syntactic",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) update(correct,"syntactic_verb",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(correct,"syntactic_noun",1.0);
 						}
 						else
 						{
@@ -165,85 +174,26 @@ public class LexiconEvaluation {
 						
 						if (foundMapping)
 						{
-							mapping_correctness ++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  mapping_correctness_verb++;
-							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) mapping_correctness_noun++;
+							update(correct,"mapping",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  update(correct,"mapping_verb",1.0);
+							if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(correct,"mapping_noun",1.0);
 						}
 					}
 				}
 			}						
 		}
 		
-		if (lex_entries > 0)
-		{
-			lemma_precision = (double) lemma_correctness / lex_entries;
-			syntactic_precision = (double) syntactic_correctness / lex_entries;
-			mapping_precision = (double) mapping_correctness / lex_entries;
-		}
-		else
-		{
-			lemma_precision = 1;
-			syntactic_precision = 1;
-			mapping_precision = 1;
-		}
-		
-		if (lex_entries_verb > 0)
-		{
-			lemma_precision_verb = (double) lemma_correctness_verb / lex_entries_verb;
-			syntactic_precision_verb = (double) syntactic_correctness_verb / lex_entries_verb;
-			mapping_precision_verb = (double) mapping_correctness_verb / lex_entries_verb;
-		}
-		else
-		{
-			lemma_precision_verb = 1;
-			syntactic_precision_verb = 1;
-			mapping_precision_verb = 1;
-		}
-		
-		
-		if (lex_entries_noun > 0)
-		{
-			lemma_precision_noun = (double) lemma_correctness_noun / lex_entries_noun;
-			syntactic_precision_noun = (double) syntactic_correctness_noun / lex_entries_noun;
-			mapping_precision_noun = (double) mapping_correctness_noun / lex_entries_noun;
-		}
-		else
-		{
-			lemma_precision_noun = 1;
-			syntactic_precision_noun = 1;
-			mapping_precision_noun = 1;
-		}
-		
-		System.out.print("Precision at lemma level: "+ lemma_precision+"\n");
-		System.out.print("Precision at syntactic level: "+ syntactic_precision+"\n");
-		System.out.print("Precision at mapping level: "+ mapping_precision+"\n");
-		
-		System.out.print("Precision at lemma level (verb): "+ lemma_precision_verb+"\n");
-		System.out.print("Precision at syntactic level (verb): "+ syntactic_precision_verb+"\n");
-		System.out.print("Precision at mapping level (verb): "+ mapping_precision_verb+"\n");
-		
-		System.out.print("Precision at lemma level (noun): "+ lemma_precision_noun+"\n");
-		System.out.print("Precision at syntactic level (noun): "+ syntactic_precision_noun+"\n");
-		System.out.print("Precision at mapping level (noun): "+ mapping_precision_noun+"\n");
-		
 		System.out.print("Computing Recall...\n");
+	
+		for (String key: correct.keySet())
+		{
+			if (entries.get(key) != null)
+			
+				update(precision, key, (double) correct.get(key).doubleValue() / entries.get(key) );
+			else 
+				update(precision, key, 1.0);
+		}
 		
-
-		lemma_correctness = 0;
-		syntactic_correctness = 0;
-		mapping_correctness = 0;
-		lex_entries = 0;
-		
-		lemma_correctness_verb = 0;
-		syntactic_correctness_verb = 0;
-		mapping_correctness_verb = 0;
-		lex_entries_verb = 0;
-		
-		lemma_correctness_noun = 0;
-		syntactic_correctness_noun = 0;
-		mapping_correctness_noun = 0;
-		lex_entries_noun = 0;
-
 		
 		for (LexicalEntry gold_entry: gold.getEntries())
 		{
@@ -256,7 +206,9 @@ public class LexiconEvaluation {
 				if (!filterReferences || (filterReferences && references.contains(gold_entry.getReference())))
 				{
 				
-					lex_entries++;
+					update(gold_entries,"lemma",1.0);
+					update(gold_entries,"syntactic",1.0);
+					update(gold_entries,"mapping",1.0);
 					
 					// System.out.print("Checking entry "+lex_entries+"("+gold_entry.getCanonicalForm()+")");
 					
@@ -281,17 +233,17 @@ public class LexiconEvaluation {
 						}
 						if (foundLemma) 
 						{
-							lemma_correctness ++;
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  lemma_correctness_verb++;
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) lemma_correctness_noun++;
+							update(gold_correct,"lemma",1.0);
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  update(gold_correct,"lemma_verb",1.0);
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(gold_correct,"lemma_noun",1.0);
 						}
 						}
 					
 						if (foundSyntax)
 						{
-							syntactic_correctness ++;
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  syntactic_correctness_verb++;
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) syntactic_correctness_noun++;
+							update(gold_correct,"syntactic",1.0);
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  update(gold_correct,"syntactic_verb",1.0);
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(gold_correct,"syntactic_noun",1.0);
 						}
 						else
 						{
@@ -299,109 +251,47 @@ public class LexiconEvaluation {
 						}
 						if (foundMapping)
 						{
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  mapping_correctness_verb++;
-							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) mapping_correctness_noun++;
-							mapping_correctness ++;
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb")))  update(gold_correct,"mapping_verb",1.0);
+							if (gold_entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"))) update(gold_correct,"mapping_verb",1.0);
+							update(gold_correct,"mapping",1.0);
 						}
 					}						
 				}
 			}
 		
-		
-		if (lex_entries > 0)
+		for (String key: gold_correct.keySet())
 		{
-			lemma_recall = (double) lemma_correctness / lex_entries;
-			syntactic_recall = (double) syntactic_correctness / lex_entries;
-			mapping_recall = (double) mapping_correctness / lex_entries;
-		}
-		else
-		{
-			lemma_recall = 1;
-			syntactic_recall = 1;
-			mapping_recall = 1;
+			if (gold_entries.get(key) != null)
+			
+				update(recall, key, (double) gold_correct.get(key).doubleValue() / gold_entries.get(key) );
+			
+			else 
+				update(recall, key,1.0);
+				
 		}
 		
-		if (lex_entries_verb > 0)
+		for (String key: correct.keySet())
 		{
-			lemma_recall_verb = (double) lemma_correctness_verb / lex_entries_verb;
-			syntactic_recall_verb = (double) syntactic_correctness_verb / lex_entries_verb;
-			mapping_recall_verb = (double) mapping_correctness_verb / lex_entries_verb;
+			if (precision.containsKey(key) && recall.containsKey(key))
+			
+			update(fmeasures,key, 2 * (precision.get(key) * recall.get(key)) / (precision.get(key) + recall.get(key)));
+			
+			else update(fmeasures,key,0.0);
 		}
-		else
-		{
-			lemma_recall_verb = 1;
-			syntactic_recall_verb = 1;
-			mapping_recall_verb = 1;
-		}
-		
-		if (lex_entries_noun > 0)
-		{
-		
-			lemma_recall_noun = (double) lemma_correctness_noun / lex_entries_noun;
-			syntactic_recall_noun = (double) syntactic_correctness_noun / lex_entries_noun;
-			mapping_recall_noun = (double) mapping_correctness_noun / lex_entries_noun;
-		}
-		else
-		{
-			lemma_recall_noun = 1;
-			syntactic_recall_noun = 1;
-			mapping_recall_noun = 1;
-		}
-		
-		System.out.print("Recall at lemma level: "+ lemma_recall+"\n");
-		System.out.print("Recall at syntactic level: "+ syntactic_recall+"\n");
-		System.out.print("Recall at mapping level: "+ mapping_recall+"\n");
-		
-		System.out.print("Recall at lemma level (verb): "+ lemma_recall_verb+"\n");
-		System.out.print("Recall at syntactic level (verb): "+ syntactic_recall_verb+"\n");
-		System.out.print("Recall at mapping level (verb): "+ mapping_recall_verb+"\n");
-		
-		System.out.print("Recall at lemma level (noun): "+ lemma_recall_verb+"\n");
-		System.out.print("Recall at syntactic level (noun): "+ syntactic_recall_verb+"\n");
-		System.out.print("Recall at mapping level (noun): "+ mapping_recall_verb+"\n");
-		
-		double lemma_fmeasure = (2 * lemma_precision * lemma_recall) / (lemma_precision + lemma_recall);
-	
-		System.out.print("F-Measure at lemma level: "+ lemma_fmeasure+"\n");
-		
-		double syntactic_fmeasure = (2 * syntactic_precision * syntactic_recall) / (syntactic_precision + syntactic_recall);
-		
-		System.out.print("F-Measure at syntactic level: "+ syntactic_fmeasure+"\n");
-		
-		double mapping_fmeasure = (2 * mapping_precision * mapping_recall) / (mapping_precision + mapping_recall);
-		
-		System.out.print("F-Measure at mapping level: "+ mapping_fmeasure+"\n");
-		
-		double lemma_fmeasure_verb = (2 * lemma_precision_verb * lemma_recall_verb) / (lemma_precision_verb + lemma_recall_verb);
-		
-		System.out.print("F-Measure at lemma level (verb): "+ lemma_fmeasure_verb+"\n");
-		
-		double syntactic_fmeasure_verb = (2 * syntactic_precision_verb * syntactic_recall_verb) / (syntactic_precision_verb + syntactic_recall_verb);
-		
-		System.out.print("F-Measure at syntactic level (verb): "+ syntactic_fmeasure_verb+"\n");
-		
-		double mapping_fmeasure_verb = (2 * mapping_precision_verb * mapping_recall_verb) / (mapping_precision_verb + mapping_recall_verb);
-		
-		System.out.print("F-Measure at mapping level (verb): "+ mapping_fmeasure_verb+"\n");
-		
-		double lemma_fmeasure_noun = (2 * lemma_precision_noun * lemma_recall_noun) / (lemma_precision_noun + lemma_recall_noun);
-		
-		System.out.print("F-Measure at lemma level (noun): "+ lemma_fmeasure_noun+"\n");
-		
-		double syntactic_fmeasure_noun = (2 * syntactic_precision_noun * syntactic_recall_noun) / (syntactic_precision_noun + syntactic_recall_noun);
-		
-		System.out.print("F-Measure at syntactic level (noun): "+ syntactic_fmeasure_noun+"\n");
-		
-		double mapping_fmeasure_noun = (2 * mapping_precision_noun * mapping_recall_noun) / (mapping_precision_noun + mapping_recall_noun);
-		
-		System.out.print("F-Measure at mapping level (noun): "+ mapping_fmeasure_noun+"\n");
 		
 	}
 
 
-	private static void update(HashMap<String, Double> correct2, String string) {
-		// TODO Auto-generated method stub
+	private static void update(HashMap<String, Double> map, String key, double value) {
 		
+		if (map.containsKey(key))
+		{
+			map.put(key, map.get(key + value));
+		}
+		else
+		{
+			map.put(key, value);
+		}
 	}
 
 	private static boolean checkMappings(LexicalEntry entry, LexicalEntry gold_entry) {
@@ -465,19 +355,19 @@ public class LexiconEvaluation {
 		
 	}
 
-	public double getFMeasure(String string) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getFMeasure(String key) {
+		if (fmeasures.containsKey(key)) return fmeasures.get(key);
+		else return 0.0;
 	}
 	
-	public double getPrecision(String string) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getPrecision(String key) {
+		if (precision.containsKey(key)) return precision.get(key);
+		else return 0.0;
 	}
 	
-	public double getRecall(String string) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getRecall(String key) {
+		if (recall.containsKey(key)) return recall.get(key);
+		else return 0.0;
 	}
 
 	
