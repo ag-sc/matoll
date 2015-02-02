@@ -26,8 +26,20 @@ public class LexiconWithFeatures extends Lexicon{
 		FeatureVector vector = null;
 		FeatureVector updatedVector = null;
 		
+		logger.info("Lexicon has "+this.getEntries().size()+" entries\n");
+		logger.info("Map has "+map.keySet().size()+" entries\n");
+		
+		List<String> sentences = entry.getSentences();
+		
+		for (String sentence: sentences)
+		{
+			logger.info("new sentence: "+sentence+"\n");
+		}
+		
 		if (this.contains(entry))
 		{	
+			entry = this.getLexicalEntry(entry);
+			
 			if (map.containsKey(entry))
 			{
 				vector = map.get(entry);
@@ -41,19 +53,23 @@ public class LexiconWithFeatures extends Lexicon{
 			}
 
 			
-			List<String> sentences = new ArrayList<String>();
-			
-			for (String sentence: entry.getSentences())
-			{
-				sentences.add(sentence);
-			}
-			
-			this.getLexicalEntry(entry).addSentences(sentences);
 			
 			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
 			logger.info("Updated "+vector+"\n");
-			logger.info("to"+updatedVector+"\n");
-		
+			logger.info("to "+updatedVector+"\n");
+			logger.info("Sentences: ");
+			
+			for (String sentence: entry.getSentences())
+			{
+				logger.info("old: "+sentence+"\n");
+			}
+			
+			entry.addSentence("This is a test sentence");
+			
+			for (String sentence: entry.getSentences())
+			{
+				logger.info("new + old: "+sentence+"\n");
+			}
 	
 		}
 		else
@@ -62,11 +78,9 @@ public class LexiconWithFeatures extends Lexicon{
 			this.addEntry(entry);
 			map.put(entry,vec);
 			
-			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
-			logger.info("Updated "+vector+"\n");
-			logger.info("to"+updatedVector+"\n");
-			
-			
+			logger.info("Entry with lemma "+entry.getCanonicalForm() +" has been newly created!\n");
+			logger.info("Vector set to "+vec+"\n");
+	
 		}
 	}
 		

@@ -104,7 +104,6 @@ public class LexiconEvaluation {
 			
 			if (entry.getReference() != null) 
 			{
-				System.out.print("Reference: "+entry.getReference()+"\n");
 				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.contains(entry.getReference())) || (onlyGoldReferences && gold.getReferences().contains(entry.getReference())))
 				{
 
