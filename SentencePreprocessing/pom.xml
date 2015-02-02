@@ -41,4 +41,52 @@
   		<version>4.10.3</version>
   	</dependency>
   </dependencies>
+    <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>1.7</source>
+                  <target>1.7</target>
+              </configuration>
+          </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+             <configuration>
+            <excludes>
+            <exclude>**/log4j.properties</exclude>
+            </excludes>
+            <archive>
+           <manifest>
+           <addClasspath>true</addClasspath>
+           <mainClass>process.Process</mainClass>
+           <classpathPrefix>dependency-jars/</classpathPrefix>
+           </manifest>
+           </archive>
+          </configuration>
+          </plugin>
+	<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>process.Process</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      </plugins>
+  </build>
 </project>
