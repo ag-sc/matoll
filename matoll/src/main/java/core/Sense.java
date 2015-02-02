@@ -27,8 +27,17 @@ public class Sense {
 	
 	@Override
 	public String toString() {
-		return "Sense [senseArgs=" + senseArgs + ", Reference=" + Reference
-				+ "]\n";
+		
+		String string = "";
+		
+		string += "Reference: "+Reference+"\n";
+		
+		for (SenseArgument arg: senseArgs)
+		{
+			string += "\t SenseArg: "+arg.getArgumenType();
+		}
+		
+		return string;
 	}
 
 	@Override

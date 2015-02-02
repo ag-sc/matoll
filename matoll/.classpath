@@ -51,5 +51,9 @@
 	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-jena-2.11.2/lib/slf4j-log4j12-1.7.6.jar"/>
 	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-jena-2.11.2/lib/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-jena-2.11.2/lib/xml-apis-1.4.01.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bimmel"/>
+	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-log4j-2.1-bin/log4j-1.2-api-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-log4j-2.1-bin/log4j-api-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/cimiano/Software/apache-log4j-2.1-bin/log4j-core-2.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

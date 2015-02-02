@@ -73,8 +73,16 @@ public class SyntacticBehaviour {
 
 	@Override
 	public String toString() {
-		return "SyntacticBehaviour [Frame=" + Frame + ", synArgs=" + synArgs
-				+ "]";
+		String string = "";
+		
+		string += "Frame:" +Frame+ "\n";
+		
+		for (SyntacticArgument arg: synArgs)
+		{
+			string += "\t Syntactic Argument: "+arg.getArgumentType() + "("+arg.getPreposition()+")\n";
+		}
+		
+		return string;
 	}
 
 	@Override

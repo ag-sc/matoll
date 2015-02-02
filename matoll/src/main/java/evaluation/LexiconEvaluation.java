@@ -98,16 +98,16 @@ public class LexiconEvaluation {
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
-			
 			foundLemma = false;
 			foundSyntax = false;
 			foundMapping = false;
 			
 			if (entry.getReference() != null) 
 			{
-				
+				System.out.print("Reference: "+entry.getReference()+"\n");
 				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.contains(entry.getReference())) || (onlyGoldReferences && gold.getReferences().contains(entry.getReference())))
 				{
+
 					update(entries,"lemma",1.0);
 					update(entries,"syntactic",1.0);
 					update(entries,"mapping",1.0);
@@ -183,8 +183,11 @@ public class LexiconEvaluation {
 			}						
 		}
 		
-		System.out.print("Computing Recall...\n");
-	
+		for (String entry: entries.keySet())
+		{
+			System.out.print(entry+": "+entries.get(entry)+"\n");
+		}
+		
 		for (String key: correct.keySet())
 		{
 			if (entries.get(key) != null)
@@ -194,6 +197,7 @@ public class LexiconEvaluation {
 				update(precision, key, 1.0);
 		}
 		
+		System.out.print("Computing Recall...\n");
 		
 		for (LexicalEntry gold_entry: gold.getEntries())
 		{
@@ -286,7 +290,7 @@ public class LexiconEvaluation {
 		
 		if (map.containsKey(key))
 		{
-			map.put(key, map.get(key + value));
+			map.put(key, map.get(key) + value);
 		}
 		else
 		{
@@ -362,12 +366,12 @@ public class LexiconEvaluation {
 	
 	public double getPrecision(String key) {
 		if (precision.containsKey(key)) return precision.get(key);
-		else return 0.0;
+		else return 1.0;
 	}
 	
 	public double getRecall(String key) {
 		if (recall.containsKey(key)) return recall.get(key);
-		else return 0.0;
+		else return 1.0;
 	}
 
 	
