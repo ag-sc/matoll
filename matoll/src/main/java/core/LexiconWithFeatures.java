@@ -52,23 +52,20 @@ public class LexiconWithFeatures extends Lexicon{
 				map.put(entry, vec.add(vec));
 			}
 
-			
-			
+		
 			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
 			logger.info("Updated "+vector+"\n");
 			logger.info("to "+updatedVector+"\n");
 			logger.info("Sentences: ");
 			
-			for (String sentence: entry.getSentences())
+			for (String sentence: sentences)
 			{
-				logger.info("old: "+sentence+"\n");
+				entry.addSentence(sentence);
 			}
 			
-			entry.addSentence("This is a test sentence");
-			
 			for (String sentence: entry.getSentences())
 			{
-				logger.info("new + old: "+sentence+"\n");
+				logger.info("sentences: "+sentence+"\n");
 			}
 	
 		}

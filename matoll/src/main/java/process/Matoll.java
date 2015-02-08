@@ -164,23 +164,23 @@ public class Matoll {
 			 
 				sentences = getSentences(model);
 			 
-			 for (Model sentence: sentences)
-			 {
+				for (Model sentence: sentences)
+				{
 
-				 obj = getObject(sentence);
+					obj = getObject(sentence);
 			 
-				 subj = getSubject(sentence);
+					subj = getSubject(sentence);
 			 
-				 reference = getReference(sentence);
+					reference = getReference(sentence);
 			
-				 preprocessor.preprocess(sentence,subj,obj);
+					preprocessor.preprocess(sentence,subj,obj);
 			
-				 library.extractLexicalEntries(sentence, lexiconwithFeatures);
-			 }
+					library.extractLexicalEntries(sentence, lexiconwithFeatures);
+				}
 			
-			 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+				// FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 			
-			 // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+				// RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
 			
 			}
 		}
