@@ -1,5 +1,6 @@
 package process;
 
+import io.Config;
 import io.LexiconLoader;
 import io.LexiconSerialization;
 
@@ -21,8 +22,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.xml.sax.SAXException;
 
 import patterns.PatternLibrary;
 import patterns.SparqlPattern_EN_1;
@@ -42,6 +46,8 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import core.Dataset;
 import core.FeatureVector;
+import core.Instance;
+import core.Label;
 import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
@@ -50,7 +56,7 @@ import evaluation.LexiconEvaluation;
 
 public class Matoll {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 			
 		
 		Logger logger = LogManager.getLogger(Matoll.class.getName());
@@ -60,6 +66,9 @@ public class Matoll {
 		String gold_standard_lexicon;
 		String model_file;
 		String output_lexicon;
+		String configFile;
+		String language;
+		Config config;
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
@@ -70,21 +79,29 @@ public class Matoll {
 		  
 		Matcher matcher;
 		 
-		if (args.length < 6)
+		if (args.length < 2)
 		{
-			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> --coreference=true/false --no_entries=n\n");
+			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <CONFIG>\n");
 			return;
 		
 		}
 		
 		directory = args[1];
-		gold_standard_lexicon = args[2];
-		model_file = args[3];
-		output_lexicon = args[4];
-		output = args[5];
+		configFile = args[2];
+		
+		config = new Config();
+		
+		config.loadFromFile(configFile);
+		
+		gold_standard_lexicon = config.getGoldStandardLexicon();
+		model_file = config.getModel();
+		output_lexicon = config.getOutputLexicon();
+		output = config.getOutput();
+		
+		coreference = config.getCoreference();
+		
+		language = config.getLanguage();
 				
-	
-
 		for (int i=0; i < args.length; i++)
 		{
 			matcher = p.matcher(args[i]);
@@ -103,21 +120,8 @@ public class Matoll {
 			    }
 			    else
 			    {
-			    	System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <GOLD_STANDARD_LEXICON> <MODEL_FILE> <OUTPUT_LEXICON> <OUT> --coreference=true/false --no_entries=n\n");
+			    	System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <CONFIG>\n");
 			    	return;
-			    }
-			    if (matcher.group(1).equals("coreference"))
-			    {
-			    	if (matcher.group(2).equals("true"))
-			    	{
-			    		coreference = true;
-			    		logger.info("Using coreference!!!\n");
-			    	}
-			    }
-			    if (matcher.group(1).equals("no_entries"))
-			    {
-			    	no_entries = (new Integer(matcher.group(2))).intValue();
-			    	logger.info("No. entries"+no_entries+"\n");
 			    }
 			}		
 		}
@@ -125,6 +129,8 @@ public class Matoll {
 		LexiconLoader loader = new LexiconLoader();
 		
 		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
+		
+		// add SVM classifier, load model
 		
 		FreqClassifier classifier = new FreqClassifier("freq",1.0);
 		
@@ -143,9 +149,15 @@ public class Matoll {
 		// Creating library and pattern
 		
 		PatternLibrary library = new PatternLibrary();
+
+		// add patterns by reflection
 		
-		library.addPattern(new SparqlPattern_EN_6());
-				
+		//		for (String pattern: config.getPatterns())
+		//		{
+		//			library.addPattern();
+		//		}
+		
+		library.addPattern(new SparqlPattern_EN_1());
 		
 		String subj = null;
 		String obj = null;
@@ -209,14 +221,14 @@ public class Matoll {
 			
 			if (gold.contains(entry))
 			{
-				trainingSet.addInstance(vector, 1);
+				trainingSet.addInstance(new Instance(vector, new Label(1)));
 				logger.info("Adding training example: "+entry.toString()+"\n");
 				logger.info(vector.toString()+" is positive"+"\n");
 				
 			}
 			else
 			{
-				trainingSet.addInstance(vector, 0);
+				trainingSet.addInstance(new Instance(vector, new Label(0)));
 				logger.info("Adding training example: "+entry.toString()+"\n");
 				logger.info(vector.toString()+" is negative"+"\n");
 			}
