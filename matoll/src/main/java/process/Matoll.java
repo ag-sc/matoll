@@ -29,12 +29,14 @@ import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
 
 import patterns.PatternLibrary;
+import patterns.SparqlPattern;
 import patterns.SparqlPattern_EN_1;
 import patterns.SparqlPattern_EN_2;
 import patterns.SparqlPattern_EN_3;
 import patterns.SparqlPattern_EN_4;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
+import sc.citec.uni.bielefeld.de.bimmel.learning.SVMClassifier;
 import classifiers.FreqClassifier;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -56,9 +58,8 @@ import evaluation.LexiconEvaluation;
 
 public class Matoll {
 
-	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
-		
 		Logger logger = LogManager.getLogger(Matoll.class.getName());
 
 		String directory;
@@ -79,7 +80,7 @@ public class Matoll {
 		  
 		Matcher matcher;
 		 
-		if (args.length < 2)
+		if (args.length < 3)
 		{
 			System.out.print("Usage: Matoll --mode=train/test <DIRECTORY> <CONFIG>\n");
 			return;
@@ -97,7 +98,6 @@ public class Matoll {
 		model_file = config.getModel();
 		output_lexicon = config.getOutputLexicon();
 		output = config.getOutput();
-		
 		coreference = config.getCoreference();
 		
 		language = config.getLanguage();
@@ -116,6 +116,9 @@ public class Matoll {
 			    	logger.info("Using gold standard: "+gold_standard_lexicon+"\n");
 			    	logger.info("Using model file: "+model_file+"\n");
 			    	logger.info("Output lexicon: "+output_lexicon+"\n");
+			    	logger.info("Output: "+output+"\n");
+			    	logger.info("Using coreference: "+coreference+"\n");
+			    	
 
 			    }
 			    else
@@ -132,7 +135,7 @@ public class Matoll {
 		
 		// add SVM classifier, load model
 		
-		FreqClassifier classifier = new FreqClassifier("freq",1.0);
+		SVMClassifier classifier = new SVMClassifier();
 		
 		File folder = new File(directory);
 		
@@ -142,22 +145,27 @@ public class Matoll {
 		
 		ModelPreprocessor preprocessor = new ModelPreprocessor();
 		
-		preprocessor.setCoreferenceResolution(true);
+		preprocessor.setCoreferenceResolution(coreference);
 		
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 		// Creating library and pattern
 		
 		PatternLibrary library = new PatternLibrary();
-
+		
 		// add patterns by reflection
+		
+		SparqlPattern pat = new SparqlPattern_EN_6();
+		library.addPattern(pat);
+		
+		// fix the following to set the patterns in the library by reflection
 		
 		//		for (String pattern: config.getPatterns())
 		//		{
-		//			library.addPattern();
+		//			library.addPattern(((SparqlPattern) Class.forName(pattern).newInstance()));
+		//			logger.info("Adding pattern: "+pattern+" to pattern library \n");
 		//		}
-		
-		library.addPattern(new SparqlPattern_EN_1());
+
 		
 		String subj = null;
 		String obj = null;

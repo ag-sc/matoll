@@ -30,8 +30,16 @@ public class Config {
 	
 	List<String> Patterns;
 	
+	public Config()
+	{
+		Patterns = new ArrayList<String>();
+	}
+	
 	public void loadFromFile(String configFile) throws ParserConfigurationException, SAXException, IOException {
 	
+		// add logger here...
+		System.out.print("Reading configuration from: "+configFile+"\n");
+		
 		File fXmlFile = new File(configFile);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -40,8 +48,6 @@ public class Config {
 		//optional, but recommended
 		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 		doc.getDocumentElement().normalize();
-	 
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 	 
 		NodeList nList = doc.getDocumentElement().getChildNodes();
 		
@@ -54,35 +60,41 @@ public class Config {
 									
 			if (node.getNodeName().equals("Language"))
 			{
-				this.Language = node.getNodeValue();
+				this.Language = node.getTextContent();
 			}
 			
 			if (node.getNodeName().equals("Coreference"))
-			{
-				if (node.getNodeValue().equals("True")) this.Coreference = true;
-				if (node.getNodeValue().equals("False")) this.Coreference = false;
+			{				
+				if (node.getTextContent().equals("True")) this.Coreference = true;
+				if (node.getTextContent().equals("False")) this.Coreference = false;
 			}
 			
-			if (node.getNodeName().equals("GoldLexicon"))
+			if (node.getNodeName().equals("GoldStandardLexicon"))
 			{
-				this.GoldStandardLexicon = node.getNodeValue();
+				this.GoldStandardLexicon = node.getTextContent();
 			}
 			
 			if (node.getNodeName().equals("OutputLexicon"))
 			{
-				this.OutputLexicon = node.getNodeValue();
+				this.OutputLexicon = node.getTextContent();
+			}
+			
+			if (node.getNodeName().equals("Output"))
+			{
+				this.Output = node.getTextContent();
 			}
 			
 			if (node.getNodeName().equals("NumLexItems"))
 			{
-				this.numItems = new Integer(node.getNodeValue());
+				this.numItems = new Integer(node.getTextContent());
 			}
 			
 			if (node.getNodeName().equals("Model"))
 			{
-				this.Model = node.getNodeValue();
+				this.Model = node.getTextContent();
 			}
 			
+		
 			if (node.getNodeName().equals("Patterns"))
 			{
 				NodeList patterns = node.getChildNodes();
@@ -91,9 +103,9 @@ public class Config {
 			
 					Node pattern = patterns.item(j);
 					
-					if (node.getNodeName().equals("Pattern"))
+					if (pattern.getNodeName().equals("Pattern"))
 					
-						Patterns.add(node.getNodeValue());
+						Patterns.add(node.getTextContent());
 				}
 
 			}
@@ -102,13 +114,6 @@ public class Config {
 	}
 
 	
-	
-	private String getValueOfAttribute(Node node, String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	public String getModel() {
 		return Model;
