@@ -34,43 +34,6 @@ public class SyntacticBehaviour {
 		synArgs.add(synArg);
 	}
 	
-	public boolean equals(SyntacticBehaviour behaviour)
-	{
-		boolean found;
-		
-		if (Frame != null && behaviour.getFrame() != null)
-		{
-			if (!Frame.equals(behaviour.getFrame())) return false;
-		}
-		
-		for (SyntacticArgument synArg: synArgs)
-		{
-			found = false;
-			
-			for (SyntacticArgument synGold: behaviour.getSynArgs())
-			{
-				if (synGold.getArgumentType().equals(synArg.getArgumentType()))
-				{
-					found = true;
-					
-					if (synGold.getPreposition() != null)
-					{
-						if (synArg.getPreposition() == null) found = false;
-						else
-						{
-							if (!synGold.getPreposition().equals(synArg.getPreposition())) found = false;
-						}
-					}
-				}
-					
-			}
-			if (!found) return false;
-			
-		}
-	
-		return true;
-	}
-
 	@Override
 	public String toString() {
 		String string = "";
@@ -79,7 +42,7 @@ public class SyntacticBehaviour {
 		
 		for (SyntacticArgument arg: synArgs)
 		{
-			string += "\t Syntactic Argument: "+arg.getArgumentType() + "("+arg.getPreposition()+")\n";
+			string += "\t Syntactic Argument: "+arg.getArgumentType() + " ("+arg.getPreposition()+")\n";
 		}
 		
 		return string;
@@ -90,12 +53,14 @@ public class SyntacticBehaviour {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((Frame == null) ? 0 : Frame.hashCode());
-		result = prime * result + ((synArgs == null) ? 0 : synArgs.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		
+		// System.out.print("I am in equals (Syntactic Behaviour)\n");
+		
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -107,12 +72,20 @@ public class SyntacticBehaviour {
 			if (other.Frame != null)
 				return false;
 		} else if (!Frame.equals(other.Frame))
-			return false;
+			{
+				// System.out.print("Frames are different!\n");
+				return false;
+			}
 		if (synArgs == null) {
 			if (other.synArgs != null)
 				return false;
-		} else if (!synArgs.equals(other.synArgs))
-			return false;
+		} 
+			else if (!synArgs.equals(other.synArgs))
+			{
+				// System.out.print("synArgs are different!\n");
+				return false;
+			}
+			
 		return true;
 	}
 	

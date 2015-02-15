@@ -50,6 +50,8 @@ public class SyntacticArgument {
 
 	@Override
 	public boolean equals(Object obj) {
+		
+		// System.out.print("I am in equals (Syntactic Argument)\n");
 		if (this == obj)
 			return true;
 		if (obj == null)

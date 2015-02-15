@@ -131,6 +131,8 @@ public class Matoll {
 		
 		LexiconLoader loader = new LexiconLoader();
 		
+		logger.info("Loading lexicon from: "+gold_standard_lexicon+"\n");
+		
 		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
 		
 		// add SVM classifier, load model
@@ -216,41 +218,59 @@ public class Matoll {
 		
 		Dataset trainingSet = new Dataset();
 		
-		
 		// process features
+		
+		int numPos = 0;
+		
+		int numNeg = 0;
 		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
+			entry.setMappings(entry.computeMappings(entry.getSense()));
+			
+			// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
+			
 			// System.out.println(entry);
 			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
 			
 			// preprocessing vector
 			
+			List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
+			
+		
 			if (gold.contains(entry))
 			{
 				trainingSet.addInstance(new Instance(vector, new Label(1)));
-				logger.info("Adding training example: "+entry.toString()+"\n");
-				logger.info(vector.toString()+" is positive"+"\n");
-				
+				logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+				numPos++;
+			
 			}
+			
+			
 			else
 			{
-				trainingSet.addInstance(new Instance(vector, new Label(0)));
-				logger.info("Adding training example: "+entry.toString()+"\n");
-				logger.info(vector.toString()+" is negative"+"\n");
+				if (numNeg < numPos)
+				{
+					trainingSet.addInstance(new Instance(vector, new Label(0)));
+					// logger.info("Adding training example: "+entry.toString()+"\n");
+					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
+					numNeg++;
+				}
 			}
 			
 		}
 		
 		classifier.train(trainingSet);
 		
-		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
 			// System.out.println(entry);
 			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
+			
+			logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
+			
 			
 			if (classifier.predict(vector)==1)
 			{
@@ -266,10 +286,12 @@ public class Matoll {
 							
 				entries.add(entry);
 			}
+			else
+			{
+				
+			}
 			
 		}
-		
-		
 		
 		Collections.sort(entries, new Comparator<LexicalEntry>() {
 			 
@@ -301,7 +323,6 @@ public class Matoll {
 			System.out.println(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
 			
 			writer.flush();
-		
 			
 		}
 		
@@ -336,13 +357,10 @@ public class Matoll {
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
-		System.out.print("Lexicon: "+output.toString()+" written out\n");
+		// System.out.print("Lexicon: "+output.toString()+" written out\n");
 		
+
 		
-		// re-engineer the lexicon evaluation to store evaluation measures as a hashmap
-		// extend the pattern matching to get the actual reference
-		
-	
 			
 	}
 

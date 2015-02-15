@@ -142,7 +142,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
@@ -155,7 +155,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);

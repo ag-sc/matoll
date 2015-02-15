@@ -60,7 +60,7 @@ public class LexicalEntry {
 	{
 		String string = "";
 		
-		string += "Lexical Entry: "+this.CanonicalForm +"(" + URI+")\n";
+		string += "Lexical Entry: "+this.CanonicalForm +" (" + URI+")\n";
 				
 		
 		string += "POS: "+this.POS+"\n";
@@ -112,7 +112,7 @@ public class LexicalEntry {
 					{
 						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
 					
-						// System.out.print(synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
+						// System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
 					}	
 				}
 			}	
@@ -139,18 +139,29 @@ public class LexicalEntry {
 
 	@Override
 	public boolean equals(Object obj) {
+		
+		// System.out.print("I am in equals (LexicalEntry)\n");
+		
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
+		// System.out.print("Checking class equivalence!!!\n");
 		if (getClass() != obj.getClass())
+		{
+			System.out.print(getClass() +" vs. "+obj.getClass()+"\n");
 			return false;
+		}
 		LexicalEntry other = (LexicalEntry) obj;
 		if (Behaviour == null) {
+			// System.out.print("Behaviour is null!\n");
 			if (other.Behaviour != null)
 				return false;
-		} else if (!Behaviour.equals(other.Behaviour))
-			return false;
+		} else { 
+			// System.out.print("Checking Syntactic behaviour...\n"); 
+			if (!Behaviour.equals(other.Behaviour))
+				return false;
+				}
 		if (CanonicalForm == null) {
 			if (other.CanonicalForm != null)
 				return false;
@@ -166,6 +177,7 @@ public class LexicalEntry {
 				return false;
 		} else if (!Sense.equals(other.Sense))
 			return false;
+		
 		if (argumentMap == null) {
 			if (other.argumentMap != null)
 				return false;
@@ -258,6 +270,12 @@ public class LexicalEntry {
 
 	public void addSentences(List<String> sentences) {
 		Sentences.addAll(sentences);
+		
+	}
+
+
+	public void setSentences(List<String> sentences) {
+		Sentences = sentences;
 		
 	}
 	

@@ -1,6 +1,8 @@
 package io;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.jena.riot.RDFDataMgr;
@@ -54,26 +56,24 @@ public class LexiconLoader {
 			 
 			 // System.out.println("Processing entry "+subject.toString());
 
-			 Set<SyntacticBehaviour> behaviours = getSyntacticArguments(subject,model);
+			 List<SyntacticBehaviour> behaviours = getSyntacticArguments(subject,model);
 			 
-			 Set<Sense> senses = getSenseArguments(subject,model);
+			 List<Sense> senses = getSenseArguments(subject,model);
 			 
 			 // System.out.println(behaviours.size()+" synargs extracted");
 			 
 			 // System.out.println(senses.size()+" senses extracted");
 			 
+			 
 			 HashMap<String,String> map;
 			 
+		
 			 if (behaviours.size() > 0)
 			 {
 				 for (SyntacticBehaviour behaviour: behaviours)
 				 {
-					 // System.out.println(behaviour);
-					 
 					 for (Sense sense: senses)
-					 {
-						 // System.out.println(sense);
-						 
+					 { 
 						 entry = new LexicalEntry();
 						 
 						 entry.setURI(subject.toString());
@@ -88,8 +88,6 @@ public class LexiconLoader {
 						 
 						 if (map.keySet().size() > 0)
 						 {
-							 // System.out.println("Mapping found: "+map);
-							 
 							 entry.setSense(sense);
 							 entry.setMappings(map);
 							 lexicon.addEntry(entry);
@@ -147,9 +145,9 @@ public class LexiconLoader {
 		
 	}
 
-	private Set<Sense> getSenseArguments(Resource subject, Model model) {
+	private List<Sense> getSenseArguments(Resource subject, Model model) {
 		
-		Set<Sense> senses = new HashSet<Sense>();
+		List<Sense> senses = new ArrayList<Sense>();
 		
 		Sense sen;
 		
@@ -221,7 +219,7 @@ public class LexiconLoader {
 		
 	}
 
-	private static Set<SyntacticBehaviour> getSyntacticArguments(Resource subject, Model model) {
+	private static List<SyntacticBehaviour> getSyntacticArguments(Resource subject, Model model) {
 		
 		Resource synBehaviour;
 		
@@ -235,7 +233,7 @@ public class LexiconLoader {
 		
 		Statement synArg;
 				
-		Set<SyntacticBehaviour> behaviours = new HashSet<SyntacticBehaviour>();
+		List<SyntacticBehaviour> behaviours = new ArrayList<SyntacticBehaviour>();
 		
 		SyntacticBehaviour behaviour;
 		

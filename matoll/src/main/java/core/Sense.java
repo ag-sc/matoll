@@ -34,7 +34,7 @@ public class Sense {
 		
 		for (SenseArgument arg: senseArgs)
 		{
-			string += "\t SenseArg: "+arg.getArgumenType();
+			string += "\t SenseArg: "+arg.getArgumenType()+"\n";
 		}
 		
 		return string;
@@ -51,23 +51,33 @@ public class Sense {
 
 	@Override
 	public boolean equals(Object obj) {
+		
+		// System.out.print("I am in equals (Sense)\n");
+		
 		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
 			return false;
 		Sense other = (Sense) obj;
 		if (Reference == null) {
 			if (other.Reference != null)
 				return false;
 		} else if (!Reference.equals(other.Reference))
-			return false;
+			{
+				// System.out.print("Reference is different\n");
+				return false;
+			}
 		if (senseArgs == null) {
 			if (other.senseArgs != null)
 				return false;
-		} else if (!senseArgs.equals(other.senseArgs))
-			return false;
+		} 
+		else if (!senseArgs.equals(other.senseArgs))
+			{
+				// System.out.print("Sense args are different\n");
+				// System.out.println(senseArgs);
+				// System.out.println(other.senseArgs);
+				return false;
+			}
 		return true;
 	}
 

@@ -33,12 +33,14 @@ public class SenseArgument {
 		int result = 1;
 		result = prime * result
 				+ ((ArgumentType == null) ? 0 : ArgumentType.hashCode());
-		result = prime * result + ((Value == null) ? 0 : Value.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		
+		// System.out.print("I am in equals (SenseArgument)\n");
+		
 		if (this == obj)
 			return true;
 		if (obj == null)

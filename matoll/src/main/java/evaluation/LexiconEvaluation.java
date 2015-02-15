@@ -94,7 +94,7 @@ public class LexiconEvaluation {
 		
 		Boolean foundMapping;
 		
-		System.out.print("Computing Precision...\n");
+		// System.out.print("Computing Precision...\n");
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
@@ -182,10 +182,10 @@ public class LexiconEvaluation {
 			}						
 		}
 		
-		for (String entry: entries.keySet())
-		{
-			System.out.print(entry+": "+entries.get(entry)+"\n");
-		}
+//		for (String entry: entries.keySet())
+//		{
+//			System.out.print(entry+": "+entries.get(entry)+"\n");
+//		}
 		
 		for (String key: correct.keySet())
 		{
@@ -196,7 +196,7 @@ public class LexiconEvaluation {
 				update(precision, key, 1.0);
 		}
 		
-		System.out.print("Computing Recall...\n");
+		// System.out.print("Computing Recall...\n");
 		
 		for (LexicalEntry gold_entry: gold.getEntries())
 		{

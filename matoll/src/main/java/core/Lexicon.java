@@ -39,7 +39,6 @@ public class Lexicon {
 	
 	public void addEntry(LexicalEntry entry)
 	{
-		
 		LexicalEntry containedEntry;
 		
 		if(!entries.contains(entry))
@@ -62,11 +61,17 @@ public class Lexicon {
 		}
 		else
 		{
+	
 			containedEntry = getLexicalEntry(entry);
-			for (String sentence: entry.getSentences())
-			{
-				containedEntry.addSentence(sentence);
-			}
+			
+			List<String> sentences = new ArrayList<String>();
+			
+			sentences.addAll(entry.getSentences());
+			sentences.addAll(containedEntry.getSentences());
+			
+			containedEntry.setSentences(sentences);
+			
+			
 		}
 	
 		if (entry.getSense() != null)
@@ -128,8 +133,15 @@ public class Lexicon {
 	
 	public LexicalEntry getLexicalEntry(LexicalEntry entry)
 	{
-		if (entries.contains(entry)) return entry;
-		else return null;
+		if (entries.contains(entry))
+		{
+			for (LexicalEntry containedEntry: this.getEntriesWithCanonicalForm(entry.getCanonicalForm()))
+			{
+				if (entry.equals(containedEntry)) return containedEntry;
+			}
+		}
+		
+		return null;
 	}
 	
 	public Iterator<LexicalEntry> iterator()

@@ -1,8 +1,6 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,59 +24,27 @@ public class LexiconWithFeatures extends Lexicon{
 		FeatureVector vector = null;
 		FeatureVector updatedVector = null;
 		
-		logger.info("Lexicon has "+this.getEntries().size()+" entries\n");
-		logger.info("Map has "+map.keySet().size()+" entries\n");
+		this.addEntry(entry);
 		
-		List<String> sentences = entry.getSentences();
-		
-		for (String sentence: sentences)
+		if (map.containsKey(entry))
 		{
-			logger.info("new sentence: "+sentence+"\n");
-		}
-		
-		if (this.contains(entry))
-		{	
-			entry = this.getLexicalEntry(entry);
+			vector = map.get(entry);
+			updatedVector = vector.add(vec);
 			
-			if (map.containsKey(entry))
-			{
-				vector = map.get(entry);
-				updatedVector = vector.add(vec);
-				
-				map.put(entry, updatedVector);
-			}
-			else
-			{
-				map.put(entry, vec.add(vec));
-			}
-
-		
+			map.put(entry, updatedVector);
+			
 			logger.info("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
 			logger.info("Updated "+vector+"\n");
 			logger.info("to "+updatedVector+"\n");
 			logger.info("Sentences: ");
 			
-			for (String sentence: sentences)
-			{
-				entry.addSentence(sentence);
-			}
-			
-			for (String sentence: entry.getSentences())
-			{
-				logger.info("sentences: "+sentence+"\n");
-			}
-	
 		}
 		else
 		{
-			entry.setURI(baseURI+"LexicalEntry_"+entries.size()+"_"+entry.getCanonicalForm());
-			this.addEntry(entry);
-			map.put(entry,vec);
-			
-			logger.info("Entry with lemma "+entry.getCanonicalForm() +" has been newly created!\n");
-			logger.info("Vector set to "+vec+"\n");
-	
+			map.put(entry, vec);
 		}
+
+
 	}
 		
 
