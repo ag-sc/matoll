@@ -13,7 +13,7 @@ public class Lexicon {
 	
 	List<LexicalEntry> entries;
 	
-	Set<String> references;
+	Set<Reference> references;
 	
 	String baseURI = "";
 	
@@ -23,7 +23,7 @@ public class Lexicon {
 		
 		map = new HashMap<String,List<LexicalEntry>>();
 		
-		references = new HashSet<String>();
+		references = new HashSet<Reference>();
 	}
 	
 	public Lexicon(String baseURI)
@@ -32,7 +32,7 @@ public class Lexicon {
 		
 		map = new HashMap<String,List<LexicalEntry>>();
 		
-		references = new HashSet<String>();
+		references = new HashSet<Reference>();
 		
 		this.baseURI = baseURI;
 	}
@@ -95,9 +95,9 @@ public class Lexicon {
 		return entries.size();
 	}
 	
-	public Set<String> getReferences()
+	public Set<Reference> getReferences()
 	{
-		Set<String> references = new HashSet<String>();
+		Set<Reference> references = new HashSet<Reference>();
 		
 		for (LexicalEntry entry: entries)
 		{
@@ -167,7 +167,7 @@ public class Lexicon {
 		
 		for (LexicalEntry entry: this.entries)
 		{
-			if (entry.getReference().equals(ref))
+			if (entry.getReference().toString().equals(ref))
 				entries.add(entry);
 		}
 		

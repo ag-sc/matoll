@@ -23,6 +23,7 @@ import core.LexicalEntry;
 import core.Lexicon;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -209,7 +210,7 @@ public class LexiconLoader {
 		    }
 		   
 		    sen.setSenseArgs(senseArguments);
-		    sen.setReference(getReference(sense,model));
+		    sen.setReference(new SimpleReference(getReference(sense,model)));
 		    senses.add(sen);
 		    	
 		}

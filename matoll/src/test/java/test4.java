@@ -9,6 +9,7 @@ import core.Lexicon;
 import core.LexiconWithFeatures;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -57,7 +58,7 @@ public class test4 {
 		
 		Sense sense = new Sense();
 		
-		sense.setReference("http://dbpedia.org/ontology/spouse");
+		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
 		entry.setSense(sense);
 		

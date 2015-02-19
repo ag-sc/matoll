@@ -6,7 +6,7 @@ import java.util.Set;
 public class Sense {
 
 	Set<SenseArgument> senseArgs;
-	String Reference;
+	Reference Reference;
 	
 	public Sense()
 	{
@@ -81,10 +81,10 @@ public class Sense {
 		return true;
 	}
 
-	public String getReference() {
+	public Reference getReference() {
 		return Reference;
 	}
-	public void setReference(String reference) {
+	public void setReference(Reference reference) {
 		Reference = reference;
 	}
 	

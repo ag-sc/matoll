@@ -10,6 +10,7 @@ import java.util.Set;
 
 import core.LexicalEntry;
 import core.Lexicon;
+import core.Reference;
 
 public class LexiconEvaluation {
 
@@ -353,7 +354,7 @@ public class LexiconEvaluation {
 		
 	}
 
-	public void setReferences(Set<String> references2) {
+	public void setReferences(Set<Reference> set) {
 		this.references = references;
 		
 	}

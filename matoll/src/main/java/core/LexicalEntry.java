@@ -249,7 +249,7 @@ public class LexicalEntry {
 	}
 
 
-	public String getReference() {
+	public Reference getReference() {
 		
 		if (Sense != null) return Sense.getReference();
 		else return null;

@@ -13,6 +13,7 @@ import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -123,8 +124,8 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(this.getReference(model));
-	        		 	
+	           		 	sense.setReference(new SimpleReference(this.getReference(model)));
+	           		 	
 	        		 	entry.setSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();

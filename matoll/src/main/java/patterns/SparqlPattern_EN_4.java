@@ -11,6 +11,7 @@ import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -131,7 +132,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(this.getReference(model));
+	           		 	sense.setReference(new SimpleReference(this.getReference(model)));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

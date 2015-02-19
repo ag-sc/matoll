@@ -13,6 +13,7 @@ import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -138,8 +139,8 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(this.getReference(model));
-	        		 	
+	           		 	sense.setReference(new SimpleReference(this.getReference(model)));
+	           		 	
 	        		 	entry.setSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();

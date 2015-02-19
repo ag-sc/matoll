@@ -54,6 +54,7 @@ import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
 import core.Provenance;
+import core.Reference;
 import evaluation.LexiconEvaluation;
 
 public class Matoll {
@@ -328,14 +329,14 @@ public class Matoll {
 		
 		writer.close();
 		
-		Set<String> references = lexicon.getReferences();
+		Set<Reference> references = lexicon.getReferences();
 	
 		
 		
-		for (String ref: references)
+		for (Reference ref: references)
 		{
-			writer = new FileWriter(ref.replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex");
-			entries = lexicon.getEntriesForReference(ref);
+			writer = new FileWriter(ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex");
+			entries = lexicon.getEntriesForReference(ref.toString());
 			
 			for (LexicalEntry entry: entries)
 			{

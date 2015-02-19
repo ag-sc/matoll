@@ -21,6 +21,7 @@ import core.LexiconWithFeatures;
 import core.Provenance;
 import core.Sense;
 import core.SenseArgument;
+import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
 
@@ -109,7 +110,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(this.getReference(model));
+	           		 	sense.setReference(new SimpleReference(this.getReference(model)));
 	        		 	
 	        		 	entry.setSense(sense);
 	        		 	

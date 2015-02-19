@@ -6,7 +6,9 @@ import java.util.HashMap;
 import vocabularies.LEMON;
 import vocabularies.LEXINFO;
 import vocabularies.PROVO;
+import vocabularies.OWL;
 
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -14,6 +16,9 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import core.LexicalEntry;
 import core.Lexicon;
 import core.Provenance;
+import core.Reference;
+import core.SimpleReference;
+import core.Restriction;
 
 public class LexiconSerialization {
 
@@ -36,12 +41,37 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"_CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.canonicalForm, model.createLiteral(entry.getCanonicalForm()));
 		
-		
-		
+
 		if (entry.getReference() != null)
 		{
-			model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
-			model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(entry.getReference()));
+			
+			// <rdf:Description rdf:about="http://github.com/cunger/lemon.dbpedia/target/dbpedia_en_9#female__adjective/reference">
+			// <owl:hasValue rdf:resource="http://dbpedia.org/resource/Female"/>
+			// <owl:onProperty rdf:resource="http://dbpedia.org/ontology/gender"/>
+			// <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/></rdf:Description>
+			
+		
+			if (entry.getReference() instanceof core.SimpleReference)
+			{
+				SimpleReference reference = (SimpleReference) entry.getReference();
+				
+				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
+				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.toString()));
+			}
+			
+			if (entry.getReference() instanceof core.Restriction)
+			{
+				Restriction reference = (Restriction) entry.getReference();
+				
+				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
+				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(entry.getURI()+"_Reference"));
+				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.hasValue, model.createLiteral(reference.getValue()));
+				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.onProperty, model.createLiteral(reference.getProperty()));
+				model.add(model.createResource(entry.getURI()+"_Reference"), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
+				
+			}
+			
+			
 			
 		}
 		
@@ -89,6 +119,9 @@ public class LexiconSerialization {
 			if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"_Activity"), model.createProperty("confidence"), model.createLiteral(provenance.getConfidence().toString()));
 		
 			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
+			
+			
+			
 			
 		}
 		
