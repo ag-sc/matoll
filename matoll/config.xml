@@ -1,12 +1,8 @@
 <Config>
    <Language>EN</Language>
    <Coreference>True</Coreference>
-   <GoldStandardLexicon>/Users/cimiano/Projects/matoll/dbpedia_en.rdf</GoldStandardLexicon>
+   <GoldStandardLexicon>/Users/cimiano/GitHubSC/matoll/lexica/dbpedia_en.rdf</GoldStandardLexicon>
    <OutputLexicon>Run_EN_P6_coref.lex</OutputLexicon>
    <Output>Run_EN_P6_coref.eval</Output>
-   <Model>Run_EN_P6_coref.model</Model>
    <NumLexItems>1000</NumLexItems>
-   <Patterns>
-     <Pattern>SparqlPattern_EN_6</Pattern>  
-   </Patterns> 
 </Config>
