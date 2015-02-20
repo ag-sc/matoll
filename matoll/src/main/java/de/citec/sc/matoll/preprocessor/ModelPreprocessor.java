@@ -2,7 +2,9 @@ package de.citec.sc.matoll.preprocessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -19,6 +21,13 @@ public class ModelPreprocessor {
 	HashMap<String,Integer> Node2IntMapping;
 	
 	HashMap<String,String> senseArgs;
+	
+	Set<String> POS;
+	
+	public ModelPreprocessor()
+	{
+		POS = new HashSet<String>();
+	}
 	
 	boolean coref = false;
 	
@@ -49,7 +58,7 @@ public class ModelPreprocessor {
 			{
 				// System.out.print("Final hypo: "+hypo.toString());
 				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,POS);
 				
 				if (root != null) 
 				{
@@ -68,7 +77,7 @@ public class ModelPreprocessor {
 				
 				// System.out.print("Final hypo: "+hypo.toString());
 				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency);
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,POS);
 				
 				if (root != null) 
 				{	
@@ -304,6 +313,11 @@ public class ModelPreprocessor {
 
 	public void setCoreferenceResolution(boolean b) {
 		coref = b;
+		
+	}
+
+	public void setPOS(Set<String> pos) {
+		POS = pos;
 		
 	}
 

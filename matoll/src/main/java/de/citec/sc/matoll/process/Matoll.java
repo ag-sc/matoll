@@ -28,6 +28,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
+
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -53,7 +56,10 @@ import de.citec.sc.matoll.patterns.SparqlPattern_EN_1;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_2;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_4;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_6;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_7;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 
 import org.apache.jena.riot.RDFDataMgr;
@@ -84,6 +90,7 @@ public class Matoll {
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
+		double frequency = 1.0;
 		
 		Provenance provenance;
 		
@@ -98,6 +105,9 @@ public class Matoll {
 		
 		}
 		
+		Classifier classifier;
+		
+	
 		directory = args[1];
 		configFile = args[2];
 		
@@ -107,11 +117,30 @@ public class Matoll {
 		
 		gold_standard_lexicon = config.getGoldStandardLexicon();
 		model_file = config.getModel();
+		
+		if (model_file == null)
+		{
+			classifier = new FreqClassifier("freq", frequency);
+			logger.info("Instantiating FreqClassifier\n");
+		}
+		else
+		{
+			classifier = new SVMClassifier();
+			logger.info("Instantiating SVM Classifier\n");
+		}
+		
 		output_lexicon = config.getOutputLexicon();
 		output = config.getOutput();
 		coreference = config.getCoreference();
 		
 		language = config.getLanguage();
+		
+		if (language == null)
+		{
+			System.out.print("Set language to EN, DE or ES in config file\n");
+			return;
+		}
+		
 				
 		for (int i=0; i < args.length; i++)
 		{
@@ -130,7 +159,6 @@ public class Matoll {
 			    	logger.info("Output: "+output+"\n");
 			    	logger.info("Using coreference: "+coreference+"\n");
 			    	
-
 			    }
 			    else
 			    {
@@ -146,11 +174,6 @@ public class Matoll {
 		
 		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
 		
-		// add SVM classifier, load model
-		
-		SVMClassifier classifier = new SVMClassifier();
-		//FreqClassifier classifier = new FreqClassifier();
-		
 		File folder = new File(directory);
 		
 		Lexicon lexicon;
@@ -163,24 +186,35 @@ public class Matoll {
 		
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
-		// Creating library and pattern
 		
 		PatternLibrary library = new PatternLibrary();
 		
-		// add patterns by reflection
-		
-		SparqlPattern pat = new SparqlPattern_EN_6();
-		library.addPattern(pat);
-		
-		// fix the following to set the patterns in the library by reflection
-		
-		//		for (String pattern: config.getPatterns())
-		//		{
-		//			library.addPattern(((SparqlPattern) Class.forName(pattern).newInstance()));
-		//			logger.info("Adding pattern: "+pattern+" to pattern library \n");
-		//		}
-
-		
+		if (config.getPatterns() != null)
+		{
+			for (String pattern: config.getPatterns())
+			{
+				library.addPattern(((SparqlPattern) Class.forName(pattern).newInstance()));
+				logger.info("Adding pattern: "+pattern+" to pattern library \n");
+			}
+			
+		}
+		else{
+			if (language.equals("EN"))
+			{
+				library.addPattern(new SparqlPattern_EN_1());
+				library.addPattern(new SparqlPattern_EN_2());
+				library.addPattern(new SparqlPattern_EN_3());
+				library.addPattern(new SparqlPattern_EN_4());
+				library.addPattern(new SparqlPattern_EN_5());
+				library.addPattern(new SparqlPattern_EN_6());
+				library.addPattern(new SparqlPattern_EN_7());
+				library.addPattern(new SparqlPattern_EN_8());
+				
+				logger.info("Adding patterns 1-8 (EN) to pattern library \n");
+			}
+			
+		}
+	
 		String subj = null;
 		String obj = null;
 		

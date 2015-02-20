@@ -16,11 +16,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_1;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_2;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_3;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_4;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_5;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_6;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_7;
+import de.citec.sc.matoll.patterns.SparqlPattern_EN_8;
+
 public class Config {
 
 	HashMap<String,String> params;
 	
-	String Model ="model";
+	String Model = null;
 	String GoldStandardLexicon = null;
 	String OutputLexicon = "lexicon";
 	String Output = "eval";
@@ -28,7 +37,7 @@ public class Config {
 	String Language = "EN";
 	Integer numItems;
 	
-	List<String> Patterns;
+	List<String> Patterns = null;
 	
 	public Config()
 	{
@@ -94,7 +103,6 @@ public class Config {
 				this.Model = node.getTextContent();
 			}
 			
-		
 			if (node.getNodeName().equals("Patterns"))
 			{
 				NodeList patterns = node.getChildNodes();
@@ -189,7 +197,11 @@ public class Config {
 
 	public List<String> getPatterns()
 	{
+		if (Patterns.size() > 0)
+		
 		return Patterns;
+		
+		return null;
 	}
 
 }

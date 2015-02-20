@@ -102,7 +102,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
 	        	 
-	        	 System.out.print("Query 3 matched\n!!!");
+	        	 // System.out.print("Query 3 matched\n!!!");
 	        	 
 	        	 try{
 	        		 noun = qs.get("?lemma").toString();
@@ -117,7 +117,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        		 
 	        		 preposition = qs.get("?prep").toString();
 	        		 
-	        		 System.out.print("Found: "+noun+"\n");
+	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
@@ -144,7 +144,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
 	        			
-	        			System.out.print(entry+"\n");
+	        			// System.out.print(entry+"\n");
 	        			
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))

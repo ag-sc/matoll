@@ -54,15 +54,11 @@ public class Hypothesis {
 		return Nodes;
 	}
 
-	public String checkValidAndReturnRoot(HashMap<String,String> resource2heads, HashMap<String,String> resource2deps) {
+	public String checkValidAndReturnRoot(HashMap<String,String> resource2heads, HashMap<String,String> resource2deps, Set<String> pos) {
 		
 		int dangling = 0;
 		String root = null;
-		Set<String> pos = new HashSet<String>();
-		pos.add("prep");
-		pos.add("appos");
-		pos.add("nn");
-		pos.add("dobj");
+
 		
 		String head;
 		
