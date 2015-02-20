@@ -1,5 +1,7 @@
 package de.citec.sc.matoll.patterns;
 
+import java.util.List;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -98,6 +100,8 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	    vector.add("freq",1.0);
 		vector.add(this.getID(),1.0);
 		
+		List<String> sentences = this.getSentences(model);
+		
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
@@ -146,6 +150,10 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        			
 	        			// System.out.print(entry+"\n");
 	        			
+	        			for (String sentence: sentences)
+	        			{
+	        				entry.addSentence(sentence);
+	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{

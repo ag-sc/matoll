@@ -134,7 +134,6 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			{
 	        				entry.addSentence(sentence);
 	        			}
-
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{

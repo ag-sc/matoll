@@ -1,5 +1,7 @@
 package de.citec.sc.matoll.patterns;
 
+import java.util.List;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -115,10 +117,12 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	    vector.add("freq",1.0);
 		vector.add(this.getID(),1.0);
 		
+		List<String> sentences = this.getSentences(model);
+		
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
-	        	 System.out.print("Query 2 matched\n!!!");
+	        	 // System.out.print("Query 2 matched\n!!!");
 	        	 try{
 	        		 noun = qs.get("?lemma").toString();
 	        		 
@@ -132,7 +136,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        		 
 	        		 preposition = qs.get("?prep").toString();
 	        		 
-	        		 System.out.print("Found: "+noun+"\n");
+	        		 // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
@@ -159,8 +163,12 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
 	        			
-	        			System.out.print(entry+"\n");
+	        			// System.out.print(entry+"\n");
 	        			
+	        			for (String sentence: sentences)
+	        			{
+	        				entry.addSentence(sentence);
+	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{

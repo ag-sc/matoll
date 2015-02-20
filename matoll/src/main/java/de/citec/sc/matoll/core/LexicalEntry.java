@@ -69,15 +69,17 @@ public class LexicalEntry {
 		
 		string += Sense.toString();
 		
+		for (String synArg: argumentMap.keySet())
+		{
+			string += synArg + " => "+argumentMap.get(synArg)+"\n";
+		}
+		
+		
 		for (String sentence: Sentences)
 		{
 			string += "Sentence: "+sentence+"\n";
 		}
 		
-		for (String synArg: argumentMap.keySet())
-		{
-			string += synArg + " => "+argumentMap.get(synArg)+"\n";
-		}
 		
 		return string;
 	}

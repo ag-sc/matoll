@@ -1,5 +1,7 @@
 package de.citec.sc.matoll.patterns;
 
+import java.util.List;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -110,6 +112,8 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	    vector.add("freq",1.0);
 		vector.add(this.getID(),1.0);
 		
+		List<String> sentences = this.getSentences(model);
+		
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
@@ -153,6 +157,10 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
 	        			
+	        			for (String sentence: sentences)
+	        			{
+	        				entry.addSentence(sentence);
+	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
