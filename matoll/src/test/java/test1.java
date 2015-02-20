@@ -1,13 +1,13 @@
 
 
-import core.LexicalEntry;
-import core.LexiconWithFeatures;
-import core.Sense;
-import core.SenseArgument;
-import core.SimpleReference;
-import core.SyntacticArgument;
-import core.SyntacticBehaviour;
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.LexicalEntry;
+import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.SimpleReference;
+import de.citec.sc.matoll.core.SyntacticArgument;
+import de.citec.sc.matoll.core.SyntacticBehaviour;
 
 public class test1 {
 

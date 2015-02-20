@@ -2,3 +2,5 @@
 *.prefs
 
 SentencePreprocessing/.classpath
+
+*.prefs

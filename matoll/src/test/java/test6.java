@@ -1,6 +1,3 @@
-import io.LexiconLoader;
-import io.LexiconSerialization;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,17 +9,19 @@ import org.apache.jena.riot.RDFFormat;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.LexicalEntry;
-import core.Lexicon;
-import core.LexiconWithFeatures;
-import core.Provenance;
-import core.Restriction;
-import core.Sense;
-import core.SenseArgument;
-import core.SyntacticArgument;
-import core.SyntacticBehaviour;
 import de.citec.sc.bimmel.core.FeatureVector;
-import evaluation.LexiconEvaluation;
+import de.citec.sc.matoll.core.LexicalEntry;
+import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Restriction;
+import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.SyntacticArgument;
+import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.evaluation.LexiconEvaluation;
+import de.citec.sc.matoll.io.LexiconLoader;
+import de.citec.sc.matoll.io.LexiconSerialization;
 
 public class test6 {
 

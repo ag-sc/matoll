@@ -1,15 +1,14 @@
-import io.LexiconLoader;
-
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import core.LexicalEntry;
-import core.Lexicon;
-import core.Sense;
-import core.SenseArgument;
-import core.SimpleReference;
-import core.SyntacticArgument;
-import core.SyntacticBehaviour;
+import de.citec.sc.matoll.core.LexicalEntry;
+import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.SimpleReference;
+import de.citec.sc.matoll.core.SyntacticArgument;
+import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.io.LexiconLoader;
 
 public class test2 {
 
