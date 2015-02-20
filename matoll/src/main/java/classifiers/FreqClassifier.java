@@ -2,7 +2,7 @@ package classifiers;
 
 import java.util.Set;
 
-import sc.citec.uni.bielefeld.de.bimmel.learning.Classifier;
+import learning.Classifier;
 import core.Dataset;
 import core.FeatureVector;
 

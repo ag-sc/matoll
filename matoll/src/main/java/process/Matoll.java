@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import learning.SVMClassifier;
+
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
@@ -36,7 +38,6 @@ import patterns.SparqlPattern_EN_3;
 import patterns.SparqlPattern_EN_4;
 import patterns.SparqlPattern_EN_6;
 import preprocessor.ModelPreprocessor;
-import sc.citec.uni.bielefeld.de.bimmel.learning.SVMClassifier;
 import classifiers.FreqClassifier;
 
 import com.hp.hpl.jena.rdf.model.Model;
