@@ -1,8 +1,8 @@
-# matoll
+# M-ATOLL
 
 In order to run matoll, please install <a href="https://github.com/ag-sc/bimmel.git">bimmel</a>
 
-To use MATOLL please cite the paper :
+To use M-ATOLL please cite the paper :
 <a href="http://link.springer.com/chapter/10.1007/978-3-319-11964-9_30">M-ATOLL: A Framework for the Lexicalization of Ontologies in Multiple Languages</a>
 
 A PDF of the paper can be found at 
