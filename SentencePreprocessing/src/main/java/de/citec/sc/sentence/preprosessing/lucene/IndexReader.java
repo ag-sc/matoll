@@ -1,4 +1,4 @@
-package lucene;
+package de.citec.sc.sentence.preprosessing.lucene;
 
 
 

@@ -1,4 +1,4 @@
-package sparql;
+package de.citec.sc.sentence.preprosessing.sparql;
 
 import java.util.ArrayList;
 import java.util.List;

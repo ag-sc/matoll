@@ -1,4 +1,4 @@
-package process;
+package de.citec.sc.sentence.preprosessing.process;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lucene.IndexReader;
-
 import org.apache.commons.io.IOUtils;
+
+import de.citec.sc.sentence.preprosessing.lucene.IndexReader;
 
 public class Process {
 
@@ -41,7 +41,7 @@ public class Process {
 		}
 		if(!folderToSaveResourcesSentences.endsWith("/")) folderToSaveResourcesSentences+="/";
 		System.out.println("Retrieve Entities");
-		sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint);
+		de.citec.sc.sentence.preprosessing.sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint);
 		System.out.println("Done");
 		System.out.println();
 		
@@ -56,11 +56,11 @@ public class Process {
 					boolean check_modelfolder = checkFolder(pathToSentenceModel);
 					if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_modelfolder){
 						System.out.println("Processing:"+property.get(0));
-						List<List<String>> entities = sparql.Resources.loadEntities(property, folderToSaveResourcesSentences);
+						List<List<String>> entities = de.citec.sc.sentence.preprosessing.sparql.Resources.loadEntities(property, folderToSaveResourcesSentences);
 						List<List<String>> sentences = index.search(entities);
 						int value = 10000;
 						if(sentences.size()<=value){
-							rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0));
+							de.citec.sc.sentence.preprosessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0));
 						}
 						else{
 							int begin = 0;
@@ -68,9 +68,9 @@ public class Process {
 							for(int i= 0; i<Math.floor((double)sentences.size()/value);i++){
 								begin = i*value;
 								end = begin+value;
-								rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0));
+								de.citec.sc.sentence.preprosessing.rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0));
 							}
-							rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0));
+							de.citec.sc.sentence.preprosessing.rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0));
 						}
 						
 						System.out.println("Done");

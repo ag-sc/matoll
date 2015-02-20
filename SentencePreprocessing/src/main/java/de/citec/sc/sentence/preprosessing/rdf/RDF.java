@@ -1,4 +1,4 @@
-package rdf;
+package de.citec.sc.sentence.preprosessing.rdf;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
