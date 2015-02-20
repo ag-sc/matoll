@@ -15,7 +15,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-import core.FeatureVector;
 import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Provenance;
@@ -24,6 +23,7 @@ import core.SenseArgument;
 import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
+import de.citec.sc.bimmel.core.FeatureVector;
 
 public class SparqlPattern_EN_6 extends SparqlPattern {
 

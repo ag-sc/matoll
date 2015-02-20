@@ -2,9 +2,9 @@ package classifiers;
 
 import java.util.Set;
 
-import learning.Classifier;
-import core.Dataset;
-import core.FeatureVector;
+import de.citec.sc.bimmel.core.Dataset;
+import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.bimmel.learning.Classifier;
 
 public class FreqClassifier implements Classifier {
 

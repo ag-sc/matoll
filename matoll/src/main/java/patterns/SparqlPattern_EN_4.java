@@ -6,7 +6,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
-import core.FeatureVector;
 import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Sense;
@@ -14,6 +13,7 @@ import core.SenseArgument;
 import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
+import de.citec.sc.bimmel.core.FeatureVector;
 
 public class SparqlPattern_EN_4 extends SparqlPattern {
 

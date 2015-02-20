@@ -12,7 +12,6 @@ import org.apache.jena.riot.RDFFormat;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.FeatureVector;
 import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
@@ -22,6 +21,7 @@ import core.Sense;
 import core.SenseArgument;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
+import de.citec.sc.bimmel.core.FeatureVector;
 import evaluation.LexiconEvaluation;
 
 public class test6 {

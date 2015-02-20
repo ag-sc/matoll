@@ -22,6 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/bimmel"/>
+	<classpathentry kind="lib" path="/Users/swalter/Software/bimmel/target/classes"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

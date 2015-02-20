@@ -3,7 +3,6 @@ import io.LexiconLoader;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import core.FeatureVector;
 import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
@@ -11,6 +10,7 @@ import core.Sense;
 import core.SenseArgument;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
+import de.citec.sc.bimmel.core.FeatureVector;
 import evaluation.LexiconEvaluation;
 
 public class test5 {

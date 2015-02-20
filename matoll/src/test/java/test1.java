@@ -1,6 +1,5 @@
 
 
-import core.FeatureVector;
 import core.LexicalEntry;
 import core.LexiconWithFeatures;
 import core.Sense;
@@ -8,6 +7,7 @@ import core.SenseArgument;
 import core.SimpleReference;
 import core.SyntacticArgument;
 import core.SyntacticBehaviour;
+import de.citec.sc.bimmel.core.FeatureVector;
 
 public class test1 {
 

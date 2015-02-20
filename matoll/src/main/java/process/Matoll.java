@@ -24,7 +24,17 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import learning.SVMClassifier;
+//import learning.SVMClassifier;
+
+//import core.
+import de.citec.sc.bimmel.learning.*;
+
+import de.citec.sc.bimmel.core.Dataset;
+import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.bimmel.core.Instance;
+import de.citec.sc.bimmel.core.Label;
+
+
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -47,10 +57,6 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-import core.Dataset;
-import core.FeatureVector;
-import core.Instance;
-import core.Label;
 import core.LexicalEntry;
 import core.Lexicon;
 import core.LexiconWithFeatures;
@@ -140,6 +146,7 @@ public class Matoll {
 		// add SVM classifier, load model
 		
 		SVMClassifier classifier = new SVMClassifier();
+		//FreqClassifier classifier = new FreqClassifier();
 		
 		File folder = new File(directory);
 		
