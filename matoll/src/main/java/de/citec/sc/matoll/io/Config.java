@@ -43,6 +43,7 @@ public class Config {
 	String Classifier = "de.citec.sc.matoll.classifiers.FreqClassifier";
 	String Language = "EN";
 	Integer numItems;
+	String Frequency;
 	
 	List<SparqlPattern> Patterns = null;
 	
@@ -114,6 +115,12 @@ public class Config {
 			{
 				this.OutputLexicon = node.getTextContent();
 			}
+			
+			if (node.getNodeName().equals("MinFrequency"))
+			{
+				this.Frequency = node.getTextContent();
+			}
+			
 			
 			if (node.getNodeName().equals("Output"))
 			{
@@ -207,7 +214,10 @@ public class Config {
 		return Coreference;
 	}
 
-
+	public String getFrequency()
+	{
+		return Frequency;
+	}
 
 	public void setCoreference(Boolean coreference) {
 		Coreference = coreference;

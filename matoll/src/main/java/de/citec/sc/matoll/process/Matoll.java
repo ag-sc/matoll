@@ -32,6 +32,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -62,6 +63,7 @@ import de.citec.sc.matoll.patterns.SparqlPattern_EN_6;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_7;
 import de.citec.sc.matoll.patterns.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
+import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -92,7 +94,7 @@ public class Matoll {
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
-		double frequency = 1.0;
+		double frequency = 2.0;
 		
 		Provenance provenance;
 		
@@ -121,8 +123,6 @@ public class Matoll {
 		gold_standard_lexicon = config.getGoldStandardLexicon();
 		
 		model_file = config.getModel();
-		
-		
 		
 		output_lexicon = config.getOutputLexicon();
 		output = config.getOutput();
@@ -187,7 +187,7 @@ public class Matoll {
 		
 		// Creating preprocessor and setting coreference
 		
-		ModelPreprocessor preprocessor = new ModelPreprocessor();
+		ModelPreprocessor preprocessor = ModelPreprocessorFactory.getPreprocessor(language);
 		
 		preprocessor.setCoreferenceResolution(coreference);
 		
@@ -275,10 +275,11 @@ public class Matoll {
 					numPos++;
 				
 				}
-				
-				
+			
 				else
 				{
+					System.out.print("Lexicon does not contain "+entry+"\n");
+					
 					if (numNeg < numPos)
 					{
 						trainingSet.addInstance(new Instance(vector, new Label(0)));
@@ -290,7 +291,16 @@ public class Matoll {
 				
 			}
 			
+			if (trainingSet.size() > 0)
+			
 			classifier.train(trainingSet);
+			
+			else
+			{
+				System.out.print("Can not train classifier as there are no training instances\n");
+				return;
+				
+			}
 		
 		}
 		
