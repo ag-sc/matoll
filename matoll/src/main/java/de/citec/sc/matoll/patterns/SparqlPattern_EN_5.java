@@ -1,12 +1,19 @@
 package de.citec.sc.matoll.patterns;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_5 extends SparqlPattern {
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_5.class.getName());
+
+	
 	/*
 	 * 
 	PropSubj:Joe Wright

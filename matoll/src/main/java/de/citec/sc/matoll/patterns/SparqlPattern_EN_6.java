@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -22,10 +25,13 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_6 extends SparqlPattern {
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_6.class.getName());
+	
 	
 	/*	PropSubj:Juana EnrÃ­quez
 	PropObj:John II of Aragon
@@ -146,6 +152,8 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
+	        				logger.info("Found entry:"+entry+"/n");
+	        				
 	        			}	
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
@@ -158,6 +166,8 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
+	        				
+	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
 	        		 

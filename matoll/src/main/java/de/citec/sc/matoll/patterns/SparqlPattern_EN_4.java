@@ -2,6 +2,9 @@ package de.citec.sc.matoll.patterns;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -16,6 +19,7 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 
 public class SparqlPattern_EN_4 extends SparqlPattern {
 
@@ -68,7 +72,9 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
 
 */
-		
+	
+		Logger logger = LogManager.getLogger(SparqlPattern_EN_4.class.getName());
+
 		String query = "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
 				+"{ "
 				+"{ ?y <conll:cpostag> \"NN\" . } "
@@ -130,7 +136,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        		 
 	        		 preposition = qs.get("?prep").toString();
 	        		 
-	        		 System.out.print("Found\n");
+	        		//  System.out.print("Found\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
@@ -173,6 +179,8 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        			
 	        				lexicon.add(entry, vector);
 	        				
+	        				logger.info("Found entry:"+entry+"/n");
+	        				
 	        			}	
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
@@ -185,6 +193,8 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
+	        				
+	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
 	        			 

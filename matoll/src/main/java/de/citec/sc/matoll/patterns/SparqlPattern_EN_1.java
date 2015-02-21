@@ -2,6 +2,9 @@ package de.citec.sc.matoll.patterns;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -17,9 +20,12 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 
 public class SparqlPattern_EN_1 extends SparqlPattern {
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_1.class.getName());
+	
 	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
 			+ "{?y <conll:cpostag> \"VB\" .}"
 			+ "UNION"
@@ -174,6 +180,8 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	        			
 	        				lexicon.add(entry, vector);
 	        				
+	        				logger.info("Found entry:"+entry+"/n");
+	        				
 	        			}	
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
@@ -186,6 +194,8 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
+	        				
+	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
 	        		 

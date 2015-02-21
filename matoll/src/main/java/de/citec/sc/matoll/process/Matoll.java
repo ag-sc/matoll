@@ -31,6 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -80,13 +81,14 @@ public class Matoll {
 		Logger logger = LogManager.getLogger(Matoll.class.getName());
 
 		String directory;
-		String mode;
+		String mode = "train";
 		String gold_standard_lexicon;
-		String model_file;
+		String model_file = "model";
 		String output_lexicon;
 		String configFile;
 		String language;
-		Config config;
+		String classi;
+		Config config = null;
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
@@ -107,7 +109,6 @@ public class Matoll {
 		
 		Classifier classifier;
 		
-	
 		directory = args[1];
 		configFile = args[2];
 		
@@ -115,19 +116,13 @@ public class Matoll {
 		
 		config.loadFromFile(configFile);
 		
+		classi = config.getClassifier();
+	
 		gold_standard_lexicon = config.getGoldStandardLexicon();
+		
 		model_file = config.getModel();
 		
-		if (model_file == null)
-		{
-			classifier = new FreqClassifier("freq", frequency);
-			logger.info("Instantiating FreqClassifier\n");
-		}
-		else
-		{
-			classifier = new SVMClassifier();
-			logger.info("Instantiating SVM Classifier\n");
-		}
+		
 		
 		output_lexicon = config.getOutputLexicon();
 		output = config.getOutput();
@@ -151,13 +146,14 @@ public class Matoll {
 			    if (i== 0 && matcher.group(1).equals("mode"))
 			    {
 			    	mode = matcher.group(2);
-			    	logger.info("Starting MATOLL with mode: "+mode+"\n");
-			    	logger.info("Processing directory: "+directory+"\n");
-			    	logger.info("Using gold standard: "+gold_standard_lexicon+"\n");
-			    	logger.info("Using model file: "+model_file+"\n");
-			    	logger.info("Output lexicon: "+output_lexicon+"\n");
-			    	logger.info("Output: "+output+"\n");
-			    	logger.info("Using coreference: "+coreference+"\n");
+			    	System.out.print("Starting MATOLL with mode: "+mode+"\n");
+			    	System.out.print("Language: "+language+"\n");
+			    	System.out.print("Processing directory: "+directory+"\n");
+			    	System.out.print("Using gold standard: "+gold_standard_lexicon+"\n");
+			    	System.out.print("Using model file: "+model_file+"\n");
+			    	System.out.print("Output lexicon: "+output_lexicon+"\n");
+			    	System.out.print("Output: "+output+"\n");
+			    	System.out.print("Using coreference: "+coreference+"\n");
 			    	
 			    }
 			    else
@@ -166,6 +162,17 @@ public class Matoll {
 			    	return;
 			    }
 			}		
+		}
+		
+		if (classi.equals("de.citec.sc.matoll.classifiers.FreqClassifier"))
+		{
+			classifier = new FreqClassifier("freq", frequency);
+			System.out.print("Instantiating" + classifier.getClass() + "\n");
+		}
+		else
+		{
+			classifier = (Classifier) Class.forName(classi).newInstance();
+			System.out.print("Instantiating "+classifier.getClass()+ "\n");
 		}
 		
 		LexiconLoader loader = new LexiconLoader();
@@ -186,34 +193,11 @@ public class Matoll {
 		
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
-		
+
 		PatternLibrary library = new PatternLibrary();
 		
-		if (config.getPatterns() != null)
-		{
-			for (String pattern: config.getPatterns())
-			{
-				library.addPattern(((SparqlPattern) Class.forName(pattern).newInstance()));
-				logger.info("Adding pattern: "+pattern+" to pattern library \n");
-			}
-			
-		}
-		else{
-			if (language.equals("EN"))
-			{
-				library.addPattern(new SparqlPattern_EN_1());
-				library.addPattern(new SparqlPattern_EN_2());
-				library.addPattern(new SparqlPattern_EN_3());
-				library.addPattern(new SparqlPattern_EN_4());
-				library.addPattern(new SparqlPattern_EN_5());
-				library.addPattern(new SparqlPattern_EN_6());
-				library.addPattern(new SparqlPattern_EN_7());
-				library.addPattern(new SparqlPattern_EN_8());
-				
-				logger.info("Adding patterns 1-8 (EN) to pattern library \n");
-			}
-			
-		}
+		library.setPatterns(config.getPatterns());
+		
 	
 		String subj = null;
 		String obj = null;
@@ -259,55 +243,56 @@ public class Matoll {
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
 		
 		FeatureVector vector;
-		
-		// Training
-		
-		Dataset trainingSet = new Dataset();
-		
-		// process features
-		
-		int numPos = 0;
-		
-		int numNeg = 0;
-		
-		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+				
+		if (mode.equals("train"))
 		{
-			entry.setMappings(entry.computeMappings(entry.getSense()));
+			Dataset trainingSet = new Dataset();
 			
-			// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
+			// process features
 			
-			// System.out.println(entry);
+			int numPos = 0;
 			
-			vector = lexiconwithFeatures.getFeatureVector(entry);
+			int numNeg = 0;
 			
-			// preprocessing vector
-			
-			List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
-			
-		
-			if (gold.contains(entry))
+			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 			{
-				trainingSet.addInstance(new Instance(vector, new Label(1)));
-				logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
-				numPos++;
-			
-			}
-			
-			
-			else
-			{
-				if (numNeg < numPos)
+				entry.setMappings(entry.computeMappings(entry.getSense()));
+				
+				// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
+				
+				// System.out.println(entry);
+				
+				vector = lexiconwithFeatures.getFeatureVector(entry);
+				
+				// preprocessing vector
+				
+				List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
+				
+				if (gold.contains(entry))
 				{
-					trainingSet.addInstance(new Instance(vector, new Label(0)));
-					// logger.info("Adding training example: "+entry.toString()+"\n");
-					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
-					numNeg++;
+					trainingSet.addInstance(new Instance(vector, new Label(1)));
+					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+					numPos++;
+				
 				}
+				
+				
+				else
+				{
+					if (numNeg < numPos)
+					{
+						trainingSet.addInstance(new Instance(vector, new Label(0)));
+						// logger.info("Adding training example: "+entry.toString()+"\n");
+						logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
+						numNeg++;
+					}
+				}
+				
 			}
 			
-		}
+			classifier.train(trainingSet);
 		
-		classifier.train(trainingSet);
+		}
 		
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{

@@ -1,5 +1,8 @@
 package de.citec.sc.matoll.patterns;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -12,9 +15,13 @@ import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_7 extends SparqlPattern {
+
+	
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_7.class.getName());
 
 	
 	

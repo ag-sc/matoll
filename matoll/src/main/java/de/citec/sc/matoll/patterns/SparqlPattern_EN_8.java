@@ -1,12 +1,19 @@
 package de.citec.sc.matoll.patterns;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_8 extends SparqlPattern {
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_8.class.getName());
+
+	
 	// für Adjective mit JJ, drunter hängende Verb erst einmal ignorieren
 			String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
 					+ "{ "

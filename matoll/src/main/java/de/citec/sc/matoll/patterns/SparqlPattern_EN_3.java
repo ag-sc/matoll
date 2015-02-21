@@ -2,6 +2,9 @@ package de.citec.sc.matoll.patterns;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -16,11 +19,15 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_3 extends SparqlPattern {
 
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_3.class.getName());
+
+	
 	/*
 	 * ################################
 entity1_form:akerson
@@ -166,6 +173,8 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        			
 	        				lexicon.add(entry, vector);
 	        				
+	        				logger.info("Found entry:"+entry+"/n");
+	        				
 	        			}	
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
@@ -178,6 +187,8 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
+	        				
+	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
 	        			 

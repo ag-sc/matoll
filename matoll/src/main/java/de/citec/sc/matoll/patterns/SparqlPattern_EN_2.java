@@ -2,6 +2,9 @@ package de.citec.sc.matoll.patterns;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -16,10 +19,13 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_2 extends SparqlPattern {
 
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_2.class.getName());
+	
 	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
 			+ "{?y <conll:deprel> \"appos\".} UNION {?y <conll:deprel> \"dep\".}"
 			+ "?y <conll:form> ?lemma . "
@@ -181,6 +187,8 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        			
 	        				lexicon.add(entry, vector);
 	        				
+	        				logger.info("Found entry:"+entry+"/n");
+	        				
 	        			}	
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
@@ -193,6 +201,8 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
+	        				
+	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
 	        			 

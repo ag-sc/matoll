@@ -1,6 +1,7 @@
 package de.citec.sc.matoll.patterns;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -9,7 +10,7 @@ import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class PatternLibrary {
 
-	ArrayList<SparqlPattern> Patterns;
+	List<SparqlPattern> Patterns;
 	
 	Lemmatizer Lemmatizer;
 	
@@ -38,6 +39,11 @@ public class PatternLibrary {
 		{
 			pattern.extractLexicalEntries(model, lexicon);
 		}
+		
+	}
+
+	public void setPatterns(List<SparqlPattern> patterns) {
+		Patterns = patterns;
 		
 	}
 	
