@@ -270,6 +270,8 @@ public class Matoll {
 				
 				if (gold.contains(entry))
 				{
+					System.out.print("Lexicon contains "+entry+"\n");
+					
 					trainingSet.addInstance(new Instance(vector, new Label(1)));
 					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
 					numPos++;
@@ -278,7 +280,7 @@ public class Matoll {
 			
 				else
 				{
-					System.out.print("Lexicon does not contain "+entry+"\n");
+					// System.out.print("Lexicon does not contain "+entry+"\n");
 					
 					if (numNeg < numPos)
 					{
