@@ -33,6 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -77,7 +78,8 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class Matoll {
-
+ 
+	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
 		Logger logger = LogManager.getLogger(Matoll.class.getName());
@@ -95,6 +97,10 @@ public class Matoll {
 		int no_entries = 1000;
 		String output;
 		double frequency = 2.0;
+		
+		HashMap<String,Double> maxima; 
+		maxima = new HashMap<String,Double>();
+		
 		
 		Provenance provenance;
 		
@@ -254,6 +260,18 @@ public class Matoll {
 			
 			int numNeg = 0;
 			
+			// get maxima
+			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+			{
+				vector = lexiconwithFeatures.getFeatureVector(entry);
+				
+				for (String feature: vector.getFeatures())
+				{
+					updateMaximum(feature,vector.getFeatureMap().get(feature),maxima);
+				}
+				
+			}
+			
 			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 			{
 				entry.setMappings(entry.computeMappings(entry.getSense()));
@@ -272,7 +290,7 @@ public class Matoll {
 				{
 					System.out.print("Lexicon contains "+entry+"\n");
 					
-					trainingSet.addInstance(new Instance(vector, new Label(1)));
+					trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
 					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
 					numPos++;
 				
@@ -284,7 +302,7 @@ public class Matoll {
 					
 					if (numNeg < numPos)
 					{
-						trainingSet.addInstance(new Instance(vector, new Label(0)));
+						trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
 						// logger.info("Adding training example: "+entry.toString()+"\n");
 						logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
 						numNeg++;
@@ -405,6 +423,39 @@ public class Matoll {
 
 		
 			
+	}
+
+	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
+		
+		HashMap<String,Double> map;
+		
+		map = vector.getFeatureMap();
+		
+		for (String feature: map.keySet())
+		{
+			map.put(feature, new Double(map.get(feature).doubleValue() / max.get(feature).doubleValue()));
+		}
+		
+		return vector;
+		
+	}
+
+	private static void updateMaximum(String feature, Double value, HashMap<String,Double> map) {
+		
+		
+		if (map.containsKey(feature))
+		{
+		
+			if (value > map.get(feature))
+			{
+				map.put(feature, value);
+			}
+		}
+		else
+		{
+			map.put(feature, value);
+		}
+		
 	}
 
 	private static String getReference(Model model) {

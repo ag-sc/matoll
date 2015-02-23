@@ -38,7 +38,7 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
 		
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"_CanonicalForm"));
-		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.canonicalForm, model.createLiteral(entry.getCanonicalForm()));
+		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
 
 		if (entry.getReference() != null)
