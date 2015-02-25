@@ -51,5 +51,10 @@
   		<artifactId>bimmel</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>nz.ac.waikato.cms.moa</groupId>
+  		<artifactId>weka-package</artifactId>
+  		<version>2014.04</version>
+  	</dependency>
   </dependencies>
 </project>

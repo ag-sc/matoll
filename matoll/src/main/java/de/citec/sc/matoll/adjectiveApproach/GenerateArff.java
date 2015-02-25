@@ -69,7 +69,7 @@ public class GenerateArff {
 		//List<AdjectiveObject> randomised_wrongAdjectives = new ArrayList<AdjectiveObject>();
 		//getRandomisedWrongEntries(randomised_wrongAdjectives,wrongAdjectives,correctAdjectives.size());
 		getCsvLine(lines,wrongAdjectives,subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
-		writeArff(lines,path_to_write+"all_adjective.arff",subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
+		writeArff(lines,path_to_write,subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
 		System.out.println("wrote #"+lines.size()+" lines");
 		System.out.println();
 		
@@ -146,7 +146,7 @@ public class GenerateArff {
 					+","+Double.toString(adjectiveobject.getRatio())
 					+","+Double.toString(adjectiveobject.getRatio_pattern())
 					+","+Double.toString(adjectiveobject.getRatio_pos_pattern())
-					+","+Double.toString(adjectiveobject.getEntropy())
+					//+","+Double.toString(adjectiveobject.getEntropy())
 					+","+Integer.toString(adjectiveobject.getPosition());
 			if(adjectiveobject.isFirstPosition())line+=","+"1";
 			else line+=","+"0";
