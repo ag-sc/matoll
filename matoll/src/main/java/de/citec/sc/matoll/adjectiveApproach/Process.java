@@ -1,15 +1,19 @@
 package de.citec.sc.matoll.adjectiveApproach;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
+import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.converters.ArffLoader;
 
 /*
  * Good description for using Weka with Java:
@@ -62,16 +66,24 @@ public class Process {
 		/*
 		 * Load instances to predict.
 		 */
-		 BufferedReader reader = new BufferedReader(
-                 new FileReader("test.arff"));
-		 Instances data = new Instances(reader);
-		 reader.close();
+		 ArffLoader loader = new ArffLoader();
+		 loader.setFile(new File(path_to_write_arff));
+		 Instances structure = loader.getStructure();
+		 structure.setClassIndex(structure.numAttributes() - 1);
+		 
+		 Instance current;
+		 while ((current = loader.getNextInstance(structure)) != null){
+			 /*
+			  * predict
+			  */
+			 List<String> result = prediction.predict(current);
+			 System.out.println("Prediction:"+result.get(0));
+			 System.out.println("Distribution:"+result.get(1));
+			 
+		 }
 		 
 		 
-		 /*
-		  * predict
-		  */
-		 prediction.predict(data, 0);
+		 
 		
 	}
 

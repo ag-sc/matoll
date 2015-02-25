@@ -1,6 +1,10 @@
 package de.citec.sc.matoll.adjectiveApproach;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import weka.classifiers.Classifier;
+import weka.core.Instance;
 import weka.core.Instances;
 
 /*
@@ -18,22 +22,20 @@ public class Prediction {
 	}
 	
 	
-	public void predict(Instances instance, int value_to_predict) throws Exception{
+	public List<String> predict(Instance current) throws Exception{
 		/*
 		 * value_to_predict
 		 * can be only 0 or 1, as only two classes are given 
 		 */
-	    double value=cls.classifyInstance(instance.instance(value_to_predict));
+	    //double value=cls.classifyInstance(current.instance(value_to_predict));
+		
+		double value=cls.classifyInstance(current);
 
 	    //get the prediction percentage or distribution
-	    double[] percentage=cls.distributionForInstance(instance.instance(value_to_predict));
-
+	    //double[] percentage=cls.distributionForInstance(current.instance(value_to_predict));
+	    double[] percentage=cls.distributionForInstance(current);
 	    //get the name of the class value
-	    String prediction=instance.classAttribute().value((int)value); 
-
-	    System.out.println("The predicted value of instance "+
-	                            Integer.toString(value_to_predict)+
-	                            ": "+prediction); 
+	    String prediction=current.classAttribute().value((int)value); 
 	    
 	    String distribution="";
         for(int i=0; i <percentage.length; i=i+1)
@@ -49,7 +51,22 @@ public class Prediction {
         }
         distribution=distribution.substring(0, distribution.length()-1);
 
-        System.out.println("Distribution:"+ distribution);
+        /*
+         * TODO: Work on distribution
+         */
+        
+        List<String> result = new ArrayList<String>();
+        /*
+         * add prediction
+         */
+        result.add(prediction);
+        
+        /*
+         * add distribution
+         */
+        result.add(distribution);
+        
+        return result;
 	}
 
 
