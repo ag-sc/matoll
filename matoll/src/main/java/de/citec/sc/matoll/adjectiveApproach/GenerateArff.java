@@ -17,18 +17,17 @@ public class GenerateArff {
 	
 	
 	
-	public static void run(String path_annotatedFiles,String path_normalPath,String path_to_write) throws FileNotFoundException{
+	public static void run(String path_annotatedFiles,String path_normalPath,String path_to_write,
+			HashSet<String> subLabelList,HashSet<String> subLabelList_2,HashSet<String> posPatternList,HashSet<String> posAdjPatternList) throws FileNotFoundException{
 		
 		
 		List<AdjectiveObject> annotated = readCSV(path_annotatedFiles);
 		List<AdjectiveObject> adjectives = readCSV(path_normalPath);
 		joinAnnotation(annotated,adjectives);
 		
-		HashSet<String> subLabelList = new HashSet<String>();
-		HashSet<String> subLabelList_2 = new HashSet<String>();
 		generateSubLabelList(adjectives,subLabelList,subLabelList_2);
-		HashSet<String> posPatternList = generatePosPatternList(adjectives);
-		HashSet<String> posAdjPatternList = generatePosAdjPatternList(adjectives);
+		generatePosPatternList(adjectives,posPatternList);
+		generatePosAdjPatternList(adjectives,posAdjPatternList);
 		
 		
 		createArrf(subLabelList,subLabelList_2,posPatternList,posAdjPatternList,adjectives,path_to_write);
@@ -192,19 +191,15 @@ public class GenerateArff {
 	}
 
 
-	private static HashSet<String> generatePosAdjPatternList(
-			List<AdjectiveObject> adjectives) {
-		HashSet<String> posAdj = new HashSet<String>();
-		for(AdjectiveObject adjectiveobject: adjectives) posAdj.add(adjectiveobject.getPos_adj_Pattern());
-		return posAdj;
+	private static void generatePosAdjPatternList(
+			List<AdjectiveObject> adjectives, HashSet<String> posAdjPatternList) {
+		for(AdjectiveObject adjectiveobject: adjectives) posAdjPatternList.add(adjectiveobject.getPos_adj_Pattern());
 	}
 
 
-	private static HashSet<String> generatePosPatternList(
-			List<AdjectiveObject> adjectives) {
-		HashSet<String> pos = new HashSet<String>();
-		for(AdjectiveObject adjectiveobject: adjectives) pos.add(adjectiveobject.getPos_Pattern());
-		return pos;
+	private static void generatePosPatternList(
+			List<AdjectiveObject> adjectives, HashSet<String> posPatternList) {
+		for(AdjectiveObject adjectiveobject: adjectives) posPatternList.add(adjectiveobject.getPos_Pattern());
 	}
 
 
