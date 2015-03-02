@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,9 +21,12 @@ public class ExtractData {
 	
 	private static Wordnet wordnet; 
 	private static HashMap<String, String> cache;
+	private static HashSet<String> stopwords;
+	
 	public ExtractData(String path_to_wordnet) throws IOException{
 		ExtractData.wordnet = new Wordnet(path_to_wordnet);
 		ExtractData.cache = new HashMap<String, String>();
+		ExtractData.stopwords = new HashSet<String>();
 		String everything = "";
 		FileInputStream inputStream = new FileInputStream("resources/adjectivelist_en.txt");
 	    try {
@@ -39,6 +43,17 @@ public class ExtractData {
 	    	else{
 	    		ExtractData.cache.put(adjective.toLowerCase(), "");
 	    	}
+	    }
+	    
+	    inputStream = new FileInputStream("resources/englishST.txt");
+	    try {
+	        everything = IOUtils.toString(inputStream);
+	    } finally {
+	        inputStream.close();
+	    }
+	    
+	    for(String stopword : everything.split("\n")){
+	    	ExtractData.stopwords.add(stopword.toLowerCase());
 	    }
 	    
 	}
@@ -62,7 +77,8 @@ public class ExtractData {
 				String[] object_tmp = property_object.split(" ");
 				for(String term : object_tmp){
 					//System.out.println("term:"+term);
-					if(wordnet.checkForAdjective(term.toLowerCase())|| cache.containsKey(term.toLowerCase())){
+					if((wordnet.checkForAdjective(term.toLowerCase())|| cache.containsKey(term.toLowerCase()))
+							&&!stopwords.contains(term.toLowerCase())){
 						adjectiveobject.setAdjectiveTerm(term);
 						adjectiveobject.setAdjective(true);
 						adjectiveobject.setSublabel(getSublabel(term));
@@ -73,7 +89,8 @@ public class ExtractData {
 				}
 			}
 			else {
-				if(wordnet.checkForAdjective(property_object.toLowerCase())|| cache.containsKey(property_object.toLowerCase())){
+				if((wordnet.checkForAdjective(property_object.toLowerCase())|| cache.containsKey(property_object.toLowerCase())
+						&&!stopwords.contains(property_object.toLowerCase()))){
 					adjectiveobject.setAdjectiveTerm(property_object);
 					adjectiveobject.setAdjective(true);
 					adjectiveobject.setSublabel(getSublabel(property_object));
