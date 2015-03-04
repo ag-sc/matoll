@@ -30,31 +30,24 @@ public class Prediction {
 	    //double value=cls.classifyInstance(current.instance(value_to_predict));
 		
 		double value=cls.classifyInstance(current);
+		
+		
 
 	    //get the prediction percentage or distribution
 	    //double[] percentage=cls.distributionForInstance(current.instance(value_to_predict));
 	    double[] percentage=cls.distributionForInstance(current);
+	    String distribution = Double.toString(percentage[(int) value]);
 	    //get the name of the class value
 	    String prediction=current.classAttribute().value((int)value); 
 	    
-	    String distribution="";
-        for(int i=0; i <percentage.length; i=i+1)
-        {
-            if(i==value)
-            {
-                distribution=distribution+"*"+Double.toString(percentage[i])+",";
-            }
-            else
-            {
-                distribution=distribution+Double.toString(percentage[i])+",";
-            }
-        }
-        distribution=distribution.substring(0, distribution.length()-1);
+	   /* if(value==0.0){
+	    	System.out.println("value:"+value);
+	    	System.out.println("Prediction:"+prediction);
+	    	System.out.println("distribution:"+distribution);
+	    	System.out.println();
+	    }*/
+	    
 
-        /*
-         * TODO: Work on distribution
-         */
-        
         List<String> result = new ArrayList<String>();
         /*
          * add prediction

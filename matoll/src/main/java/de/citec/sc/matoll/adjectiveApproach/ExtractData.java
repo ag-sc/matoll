@@ -119,6 +119,10 @@ public class ExtractData {
 
 	
 	private List<String> getRawObjects(String resourceFolder,String uri, String language) throws IOException {
+		/*
+		 * In the moment only consider those adjective, which have an URI and a label as object.
+		 * 
+		 */
 		String ontologyName =findOntologyName(uri);
     	String[] tmp = uri.split("/");
     	String name = tmp[tmp.length-1];
@@ -151,9 +155,13 @@ public class ExtractData {
 	        inputStream.close();
 	    }
 	    for(String x:entities_raw.split("\n")){
-	    	String obj = x.split("\t")[1];
+	    	String obj = x.split("\t")[2];
 	    	obj = cleanEntity(obj);
-	    	entities.add(obj);
+	    	/*
+			 * In the moment only consider those adjective, which have an URI and a label as object.
+			 * With other words ignore those properties, with only literals on the right side
+			 */
+	    	if(x.split("\t")[3].contains("http"))entities.add(obj);
 	    }
 		
 		return entities;

@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -52,6 +53,8 @@ public class Process {
 		String path_to_objects = "/Users/swalter/Desktop/Resources/";
 		String path_to_tagger_model = "/Users/swalter/Software/stanford_models/english-caseless-left3words-distsim.tagger";
 		Classifier cls = new SMO();
+		
+		List<String> csv_output = new ArrayList<String>();
 		
 		OntologyImporter importer = new OntologyImporter("/Users/swalter/Downloads/dbpedia_2014.owl","RDF/XML");
 		
@@ -119,6 +122,7 @@ public class Process {
 		System.out.println("Done preprosessing");
 		int counter = 0;
 		int uri_counter = 0;
+		int uri_used = 0;
 		HashSet<String> properties = importer.getProperties();
 		for(String uri:properties){
 			uri_counter+=1;
@@ -127,6 +131,7 @@ public class Process {
 			try{
 				List<AdjectiveObject> object_list = adjectiveExtractor.start(path_to_objects, uri, tagger, mp);
 				System.out.println(object_list.size());
+				if(object_list.size()>0)uri_used+=1;
 				for(AdjectiveObject adjectiveObject : object_list){
 					/*
 					 * ignore "adjectives", which start with a digit
@@ -157,6 +162,7 @@ public class Process {
 								 System.out.println();
 								 lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObject(),uri,
 										 adjectiveObject.getFrequency(),result.get(1)));
+								 csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
 							 }						 
 						 }
 					}
@@ -177,9 +183,27 @@ public class Process {
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
+		
+		/*
+		 * write csv
+		 */
+		
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(path_to_write_arff.replace(".arff", ".csv"));
+			for(String line:csv_output) writer.print(line);
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		System.out.println("Properties:"+Integer.toString(properties.size()));
 		System.out.println("Created entries:"+Integer.toString(counter));
 		System.out.println("Average Entries per Property:"+Double.toString((double) counter/properties.size()));
+		System.out.println("Properties with Data:"+Integer.toString(uri_used));
+		System.out.println("Average Entries per Property with data:"+Double.toString((double) uri_used/properties.size()));
 		
 		
 		 
@@ -218,8 +242,8 @@ LexicalEntry entry;
 		
 		Provenance provenance = new Provenance();
 		
-		//provenance.setAgent("Distribution");
-		//provenance.setConfidence(Double.valueOf(distribution));
+		provenance.setAgent("Distribution");
+		provenance.setConfidence(Double.valueOf(distribution));
 		
 		provenance.setAgent("Frequency");
 		provenance.setConfidence((double) frequency);
@@ -241,7 +265,6 @@ LexicalEntry entry;
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
 		entry.setSyntacticBehaviour(behaviour);
-		
 		
 		
 		entry.setProvenance(provenance);
