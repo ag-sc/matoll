@@ -31,7 +31,7 @@ public class Sparql {
 	
 	private static String getQueryLabel(String language, String uri){
 		String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
-				+ "SELECT DISTINCT ?subj ?obj WHERE "
+				+ "SELECT DISTINCT ?y ?subj ?obj ?x WHERE "
 				+ "{?y <"+uri+"> ?x. "
 				+ "?y rdfs:label ?subj. FILTER (lang(?subj) = '"+language+"') . "
 						+ "OPTIONAL {?y rdfs:label ?subj . FILTER (lang(?subj) = 'en')} . "
@@ -42,7 +42,7 @@ public class Sparql {
 	
 	private static String getQueryData(String language, String uri){
 		String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
-				+ "SELECT DISTINCT ?subj ?obj WHERE "
+				+ "SELECT DISTINCT ?y ?subj ?obj WHERE "
 				+ "{?y <"+uri+"> ?obj. "
 				+ "?y rdfs:label ?subj. FILTER (lang(?subj) = '"+language+"') . "
 						+ "OPTIONAL {?y rdfs:label ?subj . FILTER (lang(?subj) = 'en')} . "
@@ -51,6 +51,7 @@ public class Sparql {
 	}
 	
 	private static List<String> getValues(String endpoint, String queryString, String language){
+		System.out.println(queryString);
 		Query query = QueryFactory.create(queryString);
 		List<String> entities = new ArrayList<String>();
 		QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
@@ -60,8 +61,16 @@ public class Sparql {
 	        	 QuerySolution qs = results.next();
 	        	 try{
 	        			String subj = qs.get("?subj").toString();
+	        			String subj_uri = qs.get("?y").toString();
+	        			String obj_uri = "";
+	        			try{
+	        				obj_uri = qs.get("?x").toString();
+	        			}
+	        			catch(Exception e){
+	        				obj_uri = qs.get("?obj").toString();
+	        			}
 	              		String obj = qs.get("?obj").toString();
-	              		String entityPair = subj+"\t"+obj;
+	              		String entityPair = subj_uri+"\t"+subj+"\t"+obj+"\t"+obj_uri;
 	              		entityPair = entityPair.replace("@en", "");
 	              		entityPair = entityPair.replace("@"+language, "");
 	              		//System.out.println("entityPair:"+entityPair);

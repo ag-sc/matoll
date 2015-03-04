@@ -51,8 +51,11 @@ public class Resources {
 	        inputStream.close();
 	    }
 	    for(String x:entities_raw.split("\n")){
-	    	String subj = x.split("\t")[0];
-	    	String obj = x.split("\t")[1];
+	    	/*
+	    	 * 1,3 are the uri's
+	    	 */
+	    	String subj = x.split("\t")[1];
+	    	String obj = x.split("\t")[2];
 	    	
 	    	List<String> pair = new ArrayList<String>();
 	    	
