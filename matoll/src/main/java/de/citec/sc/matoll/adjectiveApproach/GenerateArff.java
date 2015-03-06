@@ -193,13 +193,23 @@ public class GenerateArff {
 
 	private static void generatePosAdjPatternList(
 			List<AdjectiveObject> adjectives, HashSet<String> posAdjPatternList) {
-		for(AdjectiveObject adjectiveobject: adjectives) posAdjPatternList.add(adjectiveobject.getPos_adj_Pattern());
+		for(AdjectiveObject adjectiveobject: adjectives){
+			if(adjectiveobject.getAnnotation().equals("1")||adjectiveobject.getAnnotation().equals("0")){
+				posAdjPatternList.add(adjectiveobject.getPos_adj_Pattern());
+			}
+			
+		}
 	}
 
 
 	private static void generatePosPatternList(
 			List<AdjectiveObject> adjectives, HashSet<String> posPatternList) {
-		for(AdjectiveObject adjectiveobject: adjectives) posPatternList.add(adjectiveobject.getPos_Pattern());
+		for(AdjectiveObject adjectiveobject: adjectives){
+			if(adjectiveobject.getAnnotation().equals("1")||adjectiveobject.getAnnotation().equals("0")){
+				posPatternList.add(adjectiveobject.getPos_Pattern());
+			}
+			
+		}
 	}
 
 
@@ -207,10 +217,13 @@ public class GenerateArff {
 			List<AdjectiveObject> adjectives,HashSet<String> label_3, HashSet<String> label_2) {
 		
 		for(AdjectiveObject adjectiveobject: adjectives) {
-			label_3.add(adjectiveobject.getSublabel());
-			String tmp_label = getSublabel(adjectiveobject.getSublabel(),2);
-			label_2.add(tmp_label);
-			adjectiveobject.setSublabel_2(tmp_label);
+			if(adjectiveobject.getAnnotation().equals("1")||adjectiveobject.getAnnotation().equals("0")){
+				label_3.add(adjectiveobject.getSublabel());
+				String tmp_label = getSublabel(adjectiveobject.getSublabel(),2);
+				label_2.add(tmp_label);
+				adjectiveobject.setSublabel_2(tmp_label);
+			}
+			
 		}
 
 	}
@@ -233,6 +246,7 @@ public class GenerateArff {
 		List<AdjectiveObject> adj_list = new ArrayList<AdjectiveObject>();
 		for(File file : listFilesForFolder(new File(path_normalPath2))){
 			try {
+				System.out.println(file.toString());
 				adj_list.addAll(readCSV(file));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
