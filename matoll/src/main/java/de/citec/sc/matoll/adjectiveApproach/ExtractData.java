@@ -60,18 +60,19 @@ public class ExtractData {
 	
 	public List<AdjectiveObject> start(String path_to_resourceFolder, String uri,MaxentTagger tagger,Morphology mp) throws Exception{
 		
-		List<String> results = getRawObjects(path_to_resourceFolder,uri,"en");
+		List<List<String>> results = getRawObjects(path_to_resourceFolder,uri,"en");
 		List<AdjectiveObject> list_adjectiveobject = new ArrayList<AdjectiveObject>();
 		if(results.size()==0){
 			System.out.println("No properties for "+uri);
 			return list_adjectiveobject;
 		}
 
-		for (String property_object: results){
+		for (List<String> property_objects: results){
 			//System.out.println(property_object);
 			AdjectiveObject adjectiveobject = new AdjectiveObject();
-			property_object = property_object.toLowerCase();
+			String property_object = property_objects.get(0).toLowerCase();
 			adjectiveobject.setObject(property_object);
+			adjectiveobject.setObjectURI(property_objects.get(1));
 			adjectiveobject.setUri(uri);
 			if(property_object.contains(" ")){
 				String[] object_tmp = property_object.split(" ");
@@ -118,7 +119,7 @@ public class ExtractData {
 
 
 	
-	private List<String> getRawObjects(String resourceFolder,String uri, String language) throws IOException {
+	private List<List<String>> getRawObjects(String resourceFolder,String uri, String language) throws IOException {
 		/*
 		 * In the moment only consider those adjective, which have an URI and a label as object.
 		 * 
@@ -134,7 +135,7 @@ public class ExtractData {
     	property.add(language);
     	property.add(name);
 		
-		List<String> entities = new ArrayList<String>();
+		List<List<String>> entities = new ArrayList<List<String>>();
 		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
 		String entities_raw = "";
 		
@@ -156,12 +157,20 @@ public class ExtractData {
 	    }
 	    for(String x:entities_raw.split("\n")){
 	    	String obj = x.split("\t")[2];
+	    	String obj_uri = x.split("\t")[3];
+	    	//System.out.println("obj_uri:"+obj_uri);
+	    	//System.out.println("obj:"+obj);
 	    	obj = cleanEntity(obj);
 	    	/*
 			 * In the moment only consider those adjective, which have an URI and a label as object.
 			 * With other words ignore those properties, with only literals on the right side
 			 */
-	    	if(x.split("\t")[3].contains("http"))entities.add(obj);
+	    	if(obj_uri.contains("http://dbpedia.org/")){
+	    		List<String> tmp_entity = new ArrayList<String>();
+	    		tmp_entity.add(obj);
+	    		tmp_entity.add(obj_uri);
+	    		entities.add(tmp_entity);
+	    	}
 	    }
 		
 		return entities;

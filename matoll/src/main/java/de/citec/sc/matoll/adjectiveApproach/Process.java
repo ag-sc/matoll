@@ -160,7 +160,7 @@ public class Process {
 								 System.out.println("Object:"+adjectiveObject.getObject());
 								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
 								 System.out.println();
-								 lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObject(),uri,
+								 lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
 										 adjectiveObject.getFrequency(),result.get(1)));
 								 csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
 							 }						 
@@ -203,7 +203,7 @@ public class Process {
 		System.out.println("Created entries:"+Integer.toString(counter));
 		System.out.println("Average Entries per Property:"+Double.toString((double) counter/properties.size()));
 		System.out.println("Properties with Data:"+Integer.toString(uri_used));
-		System.out.println("Average Entries per Property with data:"+Double.toString((double) uri_used/properties.size()));
+		System.out.println("Average Entries per Property with data:"+Double.toString((double) counter/uri_used));
 		
 		
 		 
@@ -212,7 +212,7 @@ public class Process {
 		
 	}
 
-	private static LexicalEntry getLexicalEntry(Lexicon lexicon,String adjective, String object, String uri, int frequency, String distribution) {
+	private static LexicalEntry getLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, String distribution) {
 LexicalEntry entry;
 		
 		entry = lexicon.createNewEntry(adjective);
@@ -224,7 +224,7 @@ LexicalEntry entry;
 		/*
 		 * TODO object should be a URI and not a label
 		 */
-		sense.setReference(new Restriction(object,uri));
+		sense.setReference(new Restriction(object_uri,uri));
 		
 		entry.setSense(sense);
 		

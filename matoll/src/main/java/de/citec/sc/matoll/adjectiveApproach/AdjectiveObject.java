@@ -23,6 +23,7 @@ public class AdjectiveObject {
 	private String annotation = "";
 	private double entropy = 0.0;
 	private String sublabel_2 = "";
+	private String objectURI = "";
 	
 	public String getAdjectiveTerm() {
 		return adjectiveTerm;
@@ -159,6 +160,12 @@ public class AdjectiveObject {
 	}
 	public void setSublabel_2(String sublabel_2) {
 		this.sublabel_2 = sublabel_2;
+	}
+	public String getObjectURI() {
+		return objectURI;
+	}
+	public void setObjectURI(String objectURI) {
+		this.objectURI = objectURI;
 	}
 	
 }
