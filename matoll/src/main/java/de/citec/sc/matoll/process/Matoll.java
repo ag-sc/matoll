@@ -34,6 +34,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -55,14 +56,14 @@ import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
 import de.citec.sc.matoll.patterns.SparqlPattern;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_1;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_2;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_3;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_4;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_5;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_7;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_8;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_1;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_2;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_7;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
 

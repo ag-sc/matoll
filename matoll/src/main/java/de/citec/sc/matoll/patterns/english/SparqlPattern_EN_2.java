@@ -1,4 +1,4 @@
-package de.citec.sc.matoll.patterns;
+package de.citec.sc.matoll.patterns.english;
 
 import java.util.List;
 
@@ -19,80 +19,97 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
-public class SparqlPattern_EN_3 extends SparqlPattern {
+public class SparqlPattern_EN_2 extends SparqlPattern {
 
-
-	Logger logger = LogManager.getLogger(SparqlPattern_EN_3.class.getName());
-
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_2.class.getName());
 	
-	/*
-	 * ################################
-entity1_form:akerson
-entity2_form:motors
-propSubject:daniel akerson
-propObject:general motors
---------------
-entity1_grammar:appos
-entity2_grammar:pobj
---------------
-lemma:chairman
-lemma_grammar:nsubj
-lemma_pos:nn
-depending dobj:
-depending advmod:
---------------
-query_name:query3
-intended_lexical_type:Noun
-entry:RelationalNoun("chairman",<http://dbpedia.org/ontology/board>, propSubj = PrepositionalObject("of"), propObj = CopulativeArg)
---------------
-sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson , stated that while the cost of hydrogen fuel cell cars is decreasing : `` The car is still too expensive and probably wo n't be practical until the 2020-plus period , I do n't know . '' 
-1	In	_	IN	IN	_	16	prep
-2	July	_	NNP	NNP	_	1	pobj
-3	2011	_	CD	CD	_	2	num
-4	,	_	,	,	_	16	punct
-5	the	_	DT	DT	_	6	det
-6	chairman	_	NN	NN	_	16	nsubj
-7	and	_	CC	CC	_	6	cc
-8	CEO	_	NN	NN	_	6	conj
-9	of	_	IN	IN	_	6	prep
-10	General	_	NNP	NNP	_	11	nn
-11	Motors	_	NNPS	NNPS	_	9	pobj
-12	,	_	,	,	_	6	punct
-13	Daniel	_	NNP	NNP	_	14	nn
-14	Akerson	_	NNP	NNP	_	6	appos
-15	,	_	,	,	_	6	punct
-16	stated	_	VBD	VBD	_	0	null
-
-	 */
-
-	
-	
-	String query = "SELECT ?lemma ?prefix ?prep  WHERE {"
+	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
+			+ "{?y <conll:deprel> \"appos\".} UNION {?y <conll:deprel> \"dep\".}"
+			+ "?y <conll:form> ?lemma . "
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
-			+ "?y <conll:form> ?lemma . "
 			+"OPTIONAL{"
 			+ "?modifier <conll:head> ?y. "
 			+ "?modifier <conll:form> ?prefix. "
 			+ "?modifier <conll:deprel> \"nn\"."
 			+"} "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> \"appos\"."
+			+ "?y <conll:head> ?e1 . "
 			+ "?p <conll:head> ?y . "
 			+ "?p <conll:deprel> \"prep\" . "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"pobj\" "
-			// + "?e1 <own:senseArg> ?e1_arg. "
-			// + "?e2 <own:senseArg> ?e2_arg. "
+			+ "?e2 <conll:deprel>  \"pobj\". "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
+	/*
+	 * 
+entity1_form:murdoch
+entity2_form:company
+propSubject:rupert murdoch
+propObject:fox broadcasting company
+--------------
+entity1_grammar:nsubj
+entity2_grammar:pobj
+--------------
+lemma:creator
+lemma_grammar:appos
+lemma_pos:nn
+depending dobj:
+depending advmod:
+--------------
+query_name:query2
+intended_lexical_type:Noun
+entry:RelationalNoun("creator",<http://dbpedia.org/ontology/board>, propSubj = PrepositionalObject("of"), propObj = CopulativeArg)
+--------------
+sentence:Also featured in the episode is Rupert Murdoch , creator of the Fox Broadcasting Company . 
+1       Also    _       RB      RB      _       2       advmod
+2       featured        _       VBN     VBN     _       0       null
+3       in      _       IN      IN      _       2       prep
+4       the     _       DT      DT      _       5       det
+5       episode _       NN      NN      _       3       pobj
+6       is      _       VBZ     VBZ     _       2       dep
+7       Rupert  _       NNP     NNP     _       8       nn
+8       Murdoch _       NNP     NNP     _       6       nsubj
+9       ,       _       ,       ,       _       8       punct
+10      creator _       NN      NN      _       8       appos
+11      of      _       IN      IN      _       10      prep
+12      the     _       DT      DT      _       15      det
+13      Fox     _       NNP     NNP     _       15      nn
+14      Broadcasting    _       NNP     NNP     _       15      nn
+15      Company _       NNP     NNP     _       11      pobj
+16      .       _       .       .       _       2       punct
+PropSubj:Anne Hyde
+PropObj:James II of England
+sentence:Ann was later named after Lady Anne Hyde the first wife of King James II of England . 
+1	Ann	_	NNP	NNP	_	4	nsubjpass
+2	was	_	VBD	VBD	_	4	auxpass
+3	later	_	RB	RB	_	4	advmod
+4	named	_	VBN	VBN	_	0	null
+5	after	_	IN	IN	_	4	prep
+6	Lady	_	NNP	NNP	_	8	nn
+7	Anne	_	NNP	NNP	_	8	nn
+8	Hyde	_	NNP	NNP	_	5	pobj
+9	the	_	DT	DT	_	11	det
+10	first	_	JJ	JJ	_	11	amod
+11	wife	_	NN	NN	_	8	dep
+12	of	_	IN	IN	_	11	prep
+13	King	_	NNP	NNP	_	15	nn
+14	James	_	NNP	NNP	_	15	nn
+15	II	_	NNP	NNP	_	12	pobj
+16	of	_	IN	IN	_	15	prep
+17	England	_	NNP	NNP	_	16	pobj
+18	.	_	.	.	_	4	punct
+	 */
 	
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
+		
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	    ResultSet rs = qExec.execSelect() ;
 	    
@@ -112,9 +129,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
-	        	 
-	        	 // System.out.print("Query 3 matched\n!!!");
-	        	 
+	        	 // System.out.print("Query 2 matched\n!!!");
 	        	 try{
 	        		 noun = qs.get("?lemma").toString();
 	        		 
@@ -128,7 +143,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	        		 
 	        		 preposition = qs.get("?prep").toString();
 	        		 
-	        		    // System.out.print("Found: "+noun+"\n");
+	        		 // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
@@ -203,12 +218,11 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 	    	e.printStackTrace();
 	    }
 	    qExec.close() ;
-
+		
 	}
 
-
 	public String getID() {
-		return "SPARQLPattern_EN_3";
+		return "SPARQLPattern_EN_2";
 	}
 
 }

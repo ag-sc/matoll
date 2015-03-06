@@ -1,4 +1,4 @@
-package de.citec.sc.matoll.patterns;
+package de.citec.sc.matoll.patterns.english;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.process.Matoll;
 
 public class SparqlPattern_EN_4 extends SparqlPattern {

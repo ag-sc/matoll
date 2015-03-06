@@ -13,7 +13,7 @@ import de.citec.sc.matoll.utils.Lemmatizer;
 
 public abstract class SparqlPattern {
 	
-	Lemmatizer Lemmatizer;
+	protected Lemmatizer Lemmatizer;
 	
 	public abstract String getID();
 	

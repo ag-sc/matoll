@@ -1,4 +1,4 @@
-package de.citec.sc.matoll.patterns;
+package de.citec.sc.matoll.patterns.english;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.process.Matoll;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
