@@ -25,7 +25,7 @@ public abstract class SparqlPattern {
 		
 	}
 	
-	protected static List<String> getSentences(Model model) {
+	protected List<String> getSentences(Model model) {
 		
 		List<String> sentences = new ArrayList<String>();
 		
