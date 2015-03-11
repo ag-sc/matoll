@@ -1,4 +1,4 @@
-package query;
+package de.citec.sc.matoll.patterns.german;
 import java.util.ArrayList;
 import java.util.List;
 
