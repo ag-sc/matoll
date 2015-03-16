@@ -1,12 +1,16 @@
 package de.citec.sc.matoll.patterns.spanish;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
+import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_ES_6 extends SparqlPattern{
 
@@ -39,8 +43,8 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 7	Irene_Angelina	irene_angelina	n	NP00000	_	6	COMP	_	_
 	 * 
 	 */
-	String query= "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
+	String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+			+ "?y <conll:cpostag> ?lemma_pos . "
 			+ "?y <conll:form> ?lemma . "
 			+ "?y <conll:deprel> ?lemma_grammar. "
 			//+ "?y <conll:cpostag> \"v\" . "
@@ -60,9 +64,8 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 			+ "?e2 <conll:deprel> ?e2_grammar . "
 			+ "?e2 <conll:form> ?e2_form . "
 			+ "?e2 <conll:deprel>  \"COMP\". "
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 			
 	@Override
@@ -72,7 +75,14 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 
 	@Override
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		FeatureVector vector = new FeatureVector();
+
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
 		
 	}
 

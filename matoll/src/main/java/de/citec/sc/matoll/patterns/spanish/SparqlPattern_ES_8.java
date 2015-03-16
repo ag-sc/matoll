@@ -1,12 +1,16 @@
 package de.citec.sc.matoll.patterns.spanish;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
+import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_ES_8 extends SparqlPattern{
 
@@ -46,16 +50,12 @@ New Parse:
 11	.	.	f	Fp	_	10	punct	_	_
 
 	 */
-	String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?y <conll:cpostag> \"n\" . "
 			+" ?y <conll:postag> \"NCCS000\" ."
-			+ "?y <conll:deprel> ?lemma_grammar . "
 			+ "?y <conll:form> ?lemma . "
 			+ "?y <conll:head> ?e1 . "
 			+ "?y <conll:deprel> \"_\" . "
-			+ "?e1 <conll:form> ?e1_form . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
 			+ "?e1 <conll:cpostag> \"n\" . "
 			+ "?p <conll:head> ?y . "
 			+ "?p <conll:deprel> \"MOD\" . "
@@ -65,10 +65,8 @@ New Parse:
 			+ "?e2 <conll:cpostag> \"n\" . "
 			+ "?e2 <conll:deprel> ?e2_grammar . "
 			+ "FILTER regex(?e2_grammar, \"COMP\") ."
-			+ "?e2 <conll:form> ?e2_form . "
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 			
 	@Override
@@ -78,7 +76,14 @@ New Parse:
 
 	@Override
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		FeatureVector vector = new FeatureVector();
+
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
 		
 	}
 

@@ -1,12 +1,16 @@
 package de.citec.sc.matoll.patterns.spanish;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
+import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_ES_3 extends SparqlPattern{
 
@@ -27,9 +31,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 6	de	de	s	SPS00	_	4	MOD
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
-	String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
-			+ "?y <conll:deprel> ?lemma_grammar . "
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?y <conll:form> ?lemma . "
 			+ "?y <conll:head> ?blank . "
 			+ "?y <conll:deprel> \"MOD\" . "
@@ -39,7 +41,6 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 			+ "?verb <conll:postag> ?verb_pos . "
 			+ "FILTER regex(?verb_pos, \"VS\") ."
 			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:form> ?e1_form . "
 			+ "?e1 <conll:deprel> ?e1_grammar . "
 			+ "FILTER regex(?e1_grammar, \"SUBJ\") ."
 			+ "?p <conll:head> ?blank . "
@@ -50,10 +51,8 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 			+ "?e2 <conll:cpostag> \"n\" . "
 			+ "?e2 <conll:deprel> ?e2_grammar . "
 			+ "FILTER regex(?e2_grammar, \"COMP\") ."
-			+ "?e2 <conll:form> ?e2_form . "
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	@Override
@@ -63,7 +62,14 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 
 	@Override
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		FeatureVector vector = new FeatureVector();
+
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
 		
 	}
 
