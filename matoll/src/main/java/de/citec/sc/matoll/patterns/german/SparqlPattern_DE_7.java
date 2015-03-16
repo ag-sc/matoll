@@ -1,12 +1,16 @@
 package de.citec.sc.matoll.patterns.german;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
+import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_DE_7 extends SparqlPattern{
 
@@ -40,18 +44,14 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 	20	.	.	$.	$.	_	0	root	_	_ 	
 	----------------------
 	 */
-			String query = "SELECT ?class ?lemma_pos ?dobj_lemma ?lemma_grammar ?advmod_lemma ?lemma ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-					+ "{ "
-					+ "?e1 <conll:form> ?e1_form . "
+			String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg WHERE{"
 					+ "?e1 <conll:deprel> ?e1_grammar . "
 					+ "FILTER regex(?e1_grammar, \"subj\") ."
-					+ "?e1 <conll:cpostag> ?e1_pos . "
 					+ "?e1 <conll:head> ?verb . "
 					+ "?verb <conll:cpostag> \"V\" . "
 					+ "?y <conll:head> ?verb . "
 					+ "?y <conll:postag> ?lemma_pos . "
 					+ "FILTER regex(?lemma_pos, \"ADJ\") ."
-					+ "?y <conll:deprel> ?lemma_grammar . "
 					+ "?y <conll:lemma> ?lemma . "
 					+ "?p <conll:head> ?verb . "
 					+ "?p <conll:deprel> \"pp\" . "
@@ -62,10 +62,8 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 					//+ "{?e2 <conll:deprel> \"pn\" . }"
 					//+ "UNION"
 					//+ "FILTER regex(?e2_grammar, \"obj\") ."
-					+ "?e2 <conll:form> ?e2_form . "
-					+ "?y <own:partOf> ?class. "
-					+ "?class <own:subj> ?propSubj. "
-					+ "?class <own:obj> ?propObj. "
+					+ "?e1 <own:senseArg> ?e1_arg. "
+					+ "?e2 <own:senseArg> ?e2_arg. "
 					+ "}";
 			
 	
@@ -78,7 +76,15 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 
 	@Override
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+		FeatureVector vector = new FeatureVector();
+		
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
+		
 		
 	}
 
