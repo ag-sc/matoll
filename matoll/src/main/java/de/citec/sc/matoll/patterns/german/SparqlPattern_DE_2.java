@@ -1,12 +1,16 @@
 package de.citec.sc.matoll.patterns.german;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
+import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_DE_2 extends SparqlPattern{
 
@@ -32,15 +36,11 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
 	 */
 	
 	
-	String query = "SELECT ?class ?lemma ?dobj_lemma ?advmod_lemma ?lemma_pos ?dobj_lemma ?lemma_grammar ?e1 ?e2 ?e1_form ?e2_form ?e1_grammar ?e2_grammar ?prep ?propSubj ?propObj ?lemma_addition WHERE"
-			+ "{?y <conll:cpostag> ?lemma_pos . "
+	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
 			+ "?y <conll:cpostag> \"V\" ."
 			//VVFIN
 			+ "?y <conll:lemma> ?lemma . "
-			+ "?y <conll:deprel> ?lemma_grammar. "
 			+ "?e1 <conll:head> ?p . "
-			+ "?e1 <conll:form> ?e1_form . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
 			+ "?e1 <conll:deprel> ?deprel. "
 			+ "FILTER regex(?deprel, \"pn\") ."
 			+ "?p <conll:head> ?y . "
@@ -48,17 +48,9 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
 			+" ?p <conll:postag> \"APPRART\". "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "?e2 <conll:form> ?e2_form . "
 			+ "?e2 <conll:deprel> \"obja\" . "
-			//+"?e2 <conll:deprel>  \"pn\" ."
-			//+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"subj\") || regex(?e2_grammar, \"pn\"))"
-			//+ "{?e2 <conll:deprel>  \"pn\" .}"
-			//+ "UNION"
-			//+ "{FILTER regex(?e2_grammar, \"obj\") .}"
-			+ "?y <own:partOf> ?class. "
-			+ "?class <own:subj> ?propSubj. "
-			+ "?class <own:obj> ?propObj. "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	
@@ -69,7 +61,14 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
 
 	@Override
 	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		// TODO Auto-generated method stub
+	    FeatureVector vector = new FeatureVector();
+		
+		vector.add("freq",1.0);
+		vector.add(this.getID(),1.0);
+		
+		List<String> sentences = this.getSentences(model);
+		
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
 		
 	}
 
