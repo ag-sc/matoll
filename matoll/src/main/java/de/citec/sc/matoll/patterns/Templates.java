@@ -25,27 +25,31 @@ public class Templates {
 	
 	public static void getNoun(Model model, LexiconWithFeatures lexicon,
 			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
-		String verb = "";
 	    String e1_arg ="";
 	    String e2_arg = "";
+	    String noun = "";
 	    // match SPARQL query
 	    QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	 	ResultSet rs = qExec.execSelect() ;
 	     
-	    try {
+	 	try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
+	        	 
+	        	 // System.out.print("Query 3 matched\n!!!");
+	        	 
 	        	 try{
-	        		 verb = qs.get("?lemma").toString();
+	        		 noun = qs.get("?lemma").toString();
 	        		 e1_arg = qs.get("?e1_arg").toString();
-	        		 e2_arg = qs.get("?e2_arg").toString();
+	        		 e2_arg = qs.get("?e2_arg").toString();	        		 
+	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
-	        		 	
+	           		 	
 	        		 	entry.setSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -54,29 +58,31 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(noun)+"@en");
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@en");
+	        				entry.setCanonicalForm(noun+"@en");
 	        			}
 	        				
-	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 	        			
-	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+	        			
+	        			// System.out.print(entry+"\n");
 	        			
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
 	        			}
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#DirectObject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#Subject","1",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
@@ -88,19 +94,18 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/DirectObject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#Subject","2",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
-	        		 
-	        		 
+	        			 
 	        	 }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -118,29 +123,35 @@ public class Templates {
 	
 	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
 			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
-		String verb = "";
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String prep = "";
+	    String noun = "";
 	    // match SPARQL query
 	    QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	 	ResultSet rs = qExec.execSelect() ;
 	     
-	    try {
+	 	try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
+	        	 
+	        	 // System.out.print("Query 3 matched\n!!!");
+	        	 
 	        	 try{
-	        		 verb = qs.get("?lemma").toString();
+	        		 noun = qs.get("?lemma").toString();
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
+	        		 
 	        		 prep = qs.get("?prep").toString();
+	        		 
+	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
-	        		 	
+	           		 	
 	        		 	entry.setSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -149,29 +160,31 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
+	        				entry.setCanonicalForm(Lemmatizer.getLemma(noun)+"@en");
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@en");
+	        				entry.setCanonicalForm(noun+"@en");
 	        			}
 	        				
-	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 	        			
-	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+	        			
+	        			// System.out.print(entry+"\n");
 	        			
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
 	        			}
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
 	        				lexicon.add(entry, vector);
@@ -183,19 +196,18 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","1",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"/n");
 	        				
 	        			}	
-	        		 
-	        		 
+	        			 
 	        	 }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
