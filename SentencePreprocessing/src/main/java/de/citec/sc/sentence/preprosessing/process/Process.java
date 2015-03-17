@@ -32,7 +32,7 @@ public class Process {
 		String folderToSaveResourcesSentences = "/Users/swalter/Desktop/Resources";
 		String language = "en";
 		
-		IndexReader index = new IndexReader(pathToIndex);
+		IndexReader index = new IndexReader(pathToIndex,language);
 		List<List<String>> properties = new ArrayList<List<String>>();
 		try {
 			if(args[0].endsWith(".owl")){
