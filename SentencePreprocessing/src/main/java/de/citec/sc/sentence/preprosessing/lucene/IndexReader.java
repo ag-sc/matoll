@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -20,17 +21,26 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
+
 
 public class IndexReader {
 	private static String pathIndex = "";
-	private static StandardAnalyzer analyzer;
+	/* TODO make class more flexible w.r.t. type of analyzer being used */
+	private static Analyzer analyzer;
 	//private static MMapDirectory index;
 	private static DirectoryReader indexReader;
     private static IndexSearcher searcher;
+    private static String language;
 	
-	public IndexReader(String pathToIndex) throws IOException{
+	public IndexReader(String pathToIndex, String language) throws IOException{
 		IndexReader.pathIndex = pathToIndex;
-		IndexReader.analyzer = new StandardAnalyzer(Version.LATEST);
+		IndexReader.language = language;
+		if (language.equals("ja")) {
+			IndexReader.analyzer = new JapaneseAnalyzer();
+		} else {
+			IndexReader.analyzer = new StandardAnalyzer(Version.LATEST);
+		}
 		indexReader = DirectoryReader.open(FSDirectory.open(new File(pathToIndex)));
 		searcher = new IndexSearcher(indexReader);
 		//IndexReader.index = new MMapDirectory(new File(IndexReader.pathIndex));
@@ -45,23 +55,35 @@ public class IndexReader {
 			
 			//Generate Boolean query out of term
 			BooleanQuery booleanQuery = new BooleanQuery();
+			
 			subj = preprocessing(subj);
 			obj = preprocessing(obj);
-			if(subj.length()<=2||obj.length()<=2) return results;
+			if (!IndexReader.language.equals("ja")) {
+				if(subj.length()<=2||obj.length()<=2) return results;
+			}
 			String term = subj+" "+obj;
-			String[] tmp = term.split(" ");
-			//or/and/not has to be checked here, otherwise I would for example remove the or from order, or notice etc
-			for (String x : tmp){
-				if(!x.equals("")&&!x.toLowerCase().equals("or")&&!x.toLowerCase().equals("and")&&!x.toLowerCase().equals("not")&&x.length()>2){
-					try{
-						booleanQuery.add(new QueryParser(Version.LUCENE_47, "sentence", analyzer).parse(x), BooleanClause.Occur.MUST);
-					}
-					catch(Exception e){
-						System.err.println("Problem with "+x);
+			if (IndexReader.language.equals("ja")) {
+				QueryParser queryParser = new QueryParser("sentence", IndexReader.analyzer);
+				queryParser.setDefaultOperator(QueryParser.Operator.AND);
+				try {
+					booleanQuery.add(queryParser.parse(term), BooleanClause.Occur.MUST);
+				} catch (Exception e) {
+					System.err.println("Problem with "+term);
+				}
+			} else {
+				String[] tmp = term.split(" ");
+				//or/and/not has to be checked here, otherwise I would for example remove the or from order, or notice etc
+				for (String x : tmp){
+					if(!x.equals("")&&!x.toLowerCase().equals("or")&&!x.toLowerCase().equals("and")&&!x.toLowerCase().equals("not")&&x.length()>2){
+						try{
+							booleanQuery.add(new QueryParser("sentence", analyzer).parse(x), BooleanClause.Occur.MUST);
+						}
+						catch(Exception e){
+							System.err.println("Problem with "+x);
+						}
 					}
 				}
 			}
-
 		    int hitsPerPage = 1000;
 		    
 		    
