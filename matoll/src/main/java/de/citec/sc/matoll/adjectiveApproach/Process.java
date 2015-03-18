@@ -51,7 +51,11 @@ public class Process {
 		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
 		String path_to_wordnet = "/Users/swalter/Software/WordNet-3.0";
 		String path_to_objects = "/Users/swalter/Desktop/Resources/";
-		String path_to_tagger_model = "/Users/swalter/Software/stanford_models/english-caseless-left3words-distsim.tagger";
+		/*
+		 * TODO: Automatically import via maven
+		 */
+		
+		String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
 		Classifier cls = new SMO();
 		
 		List<String> csv_output = new ArrayList<String>();

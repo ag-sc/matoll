@@ -35,6 +35,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -66,6 +67,7 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_7;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
+import de.citec.sc.matoll.utils.StanfordLemmatizer;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -202,6 +204,8 @@ public class Matoll {
 		
 
 		PatternLibrary library = new PatternLibrary();
+		StanfordLemmatizer sl = new StanfordLemmatizer(language);
+		library.setLemmatizer(sl);
 		
 		library.setPatterns(config.getPatterns());
 		
