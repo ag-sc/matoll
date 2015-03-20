@@ -359,10 +359,12 @@ public class Matoll {
 			
 		}
 		
-		Collections.sort(entries, new Comparator<LexicalEntry>() {
+
+		  Collections.sort(entries, new Comparator<LexicalEntry>() {
+	
 			 
 			            public int compare(LexicalEntry one, LexicalEntry two) {
-				                return (((LexicalEntry) one).getProvenance().getConfidence() > ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;
+				                return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;
 				            }
 				             
 				        });

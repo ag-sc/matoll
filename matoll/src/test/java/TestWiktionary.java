@@ -32,7 +32,7 @@ public class TestWiktionary {
 		
 		IWiktionaryEdition wkt = JWKTL.openEdition(new File(TARGET_DIRECTORY));
 		  
-		 for (IWiktionaryEntry entry : wkt.getEntriesForWord("wife",true)){
+		 for (IWiktionaryEntry entry : wkt.getEntriesForWord("married",true)){
 			 String etymology = "";
 			String word = entry.getWord(); 
 			String part_of_speech = entry.getPartOfSpeech().toString();

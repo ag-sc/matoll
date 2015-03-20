@@ -4,8 +4,8 @@ import de.citec.sc.matoll.utils.StanfordLemmatizer;
 public class TestLemmatizer {
 
 	public static void main(String[] args) throws Exception {
-		StanfordLemmatizer sl = new StanfordLemmatizer("de");
+		StanfordLemmatizer sl = new StanfordLemmatizer("");
 
-		System.out.println(sl.getLemma("casado"));
+		System.out.println(sl.getLemma("married"));
 	}
 }
