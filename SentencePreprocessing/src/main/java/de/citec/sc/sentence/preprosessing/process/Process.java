@@ -24,7 +24,7 @@ public class Process {
 			System.exit(1);
 		}
 		String endpoint = "http://dbpedia.org/sparql";
-		Boolean with_sentences = false;
+		Boolean with_sentences = true;
 		/*
 		 *in pathToIndex only one index for one language can be found 
 		 */
