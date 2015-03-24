@@ -86,6 +86,7 @@ public class Matoll {
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
 		Logger logger = LogManager.getLogger(Matoll.class.getName());
+		
 
 		String directory;
 		String mode = "train";
