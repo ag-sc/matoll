@@ -204,7 +204,6 @@ public class Matoll {
 
 		PatternLibrary library = new PatternLibrary();
 		StanfordLemmatizer sl = new StanfordLemmatizer(language);
-		System.out.println("married="+sl.getLemma("married"));
 		library.setLemmatizer(sl);
 		
 		library.setPatterns(config.getPatterns());

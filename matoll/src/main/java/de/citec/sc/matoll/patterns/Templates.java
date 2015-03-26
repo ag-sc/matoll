@@ -78,7 +78,7 @@ public class Templates {
 	        				entry.addSentence(sentence);
 	        			}
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
@@ -89,11 +89,11 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
@@ -104,9 +104,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
-	        			}	
+	        			}
+	        			else{
+	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        			}
 	        			 
 	        	 }
 	        	 catch(Exception e){
@@ -182,7 +185,7 @@ public class Templates {
 	        				entry.addSentence(sentence);
 	        			}
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",prep));
@@ -193,11 +196,11 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","1",prep));
@@ -208,9 +211,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
-	        			}	
+	        			}
+	        			else{
+	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        			}
 	        			 
 	        	 }
 	        	 catch(Exception e){
@@ -286,7 +292,7 @@ public class Templates {
 	        				entry.addSentence(sentence);
 	        			}
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjfOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",prep));
@@ -297,11 +303,11 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject","1",prep));
@@ -312,9 +318,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
-	        			}	
+	        			}
+	        			else{
+	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        			}
 	        			 
 	        	 }
 	        	 catch(Exception e){
@@ -395,11 +404,11 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
@@ -410,9 +419,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
-	        			}	
+	        			}
+	        			else{
+	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        			}
 	        		 
 	        		 
 	        	 }
@@ -500,11 +512,11 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
 	        			
-	        			if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
 	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
@@ -515,9 +527,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"/n");
+	        				logger.info("Found entry:"+entry+"\n");
 	        				
 	        			}	
+	        			else{
+	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        			}
 	        		 
 	        		 
 	        	 }
