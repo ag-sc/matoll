@@ -371,10 +371,22 @@ public class Matoll {
 	
 			 
 			            public int compare(LexicalEntry one, LexicalEntry two) {
-				                return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;
+			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
 				            }
 				             
 				        });
+		  
+		 /*
+		  * TODO
+		  Exception in thread "main" java.lang.IllegalArgumentException: Comparison method violates its general contract!
+	at java.util.TimSort.mergeHi(TimSort.java:895)
+	at java.util.TimSort.mergeAt(TimSort.java:512)
+	at java.util.TimSort.mergeForceCollapse(TimSort.java:453)
+	at java.util.TimSort.sort(TimSort.java:250)
+	at java.util.Arrays.sort(Arrays.java:1435)
+	at java.util.Collections.sort(Collections.java:230)
+	at de.citec.sc.matoll.process.Matoll.main(Matoll.java:370)
+		  */
 		
 		
 		lexicon = new Lexicon();
