@@ -88,7 +88,8 @@ public class Resources {
 		if(term.contains("(")){
 			term = term.split("\\(")[0];
 			if(term.endsWith(" ")){
-				term = term.substring(0,term.lastIndexOf(" ")-1);
+				// -1 removes not only whitespace, but also last character of term!
+				term = term.substring(0,term.lastIndexOf(" ")); //-1);
 			}
 		}
 		
