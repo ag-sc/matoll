@@ -40,6 +40,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -203,6 +204,7 @@ public class Matoll {
 
 		PatternLibrary library = new PatternLibrary();
 		StanfordLemmatizer sl = new StanfordLemmatizer(language);
+		System.out.println("married="+sl.getLemma("married"));
 		library.setLemmatizer(sl);
 		
 		library.setPatterns(config.getPatterns());

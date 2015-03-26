@@ -12,6 +12,7 @@ public class PatternLibrary {
 
 	List<SparqlPattern> Patterns;
 	
+
 	Lemmatizer Lemmatizer;
 	
 	public PatternLibrary()
@@ -19,6 +20,7 @@ public class PatternLibrary {
 		Patterns = new ArrayList<SparqlPattern>();
 		Lemmatizer = null;
 	}
+
 	
 	public void setLemmatizer(Lemmatizer lemmatizer)
 	{
@@ -37,6 +39,8 @@ public class PatternLibrary {
 	{
 		for (SparqlPattern pattern: Patterns)
 		{
+			if (Lemmatizer != null)
+				pattern.setLemmatizer(Lemmatizer);
 			pattern.extractLexicalEntries(model, lexicon);
 		}
 		

@@ -58,7 +58,9 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(noun)+"@en");
+	        				String term = Lemmatizer.getLemma(noun)+"@en";
+	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
@@ -160,7 +162,9 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(noun)+"@en");
+	        				String term = Lemmatizer.getLemma(noun)+"@en";
+	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
@@ -262,7 +266,9 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(adj)+"@en");
+	        				String term = Lemmatizer.getLemma(adj)+"@en";
+	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
@@ -360,7 +366,9 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
+	        				String term = Lemmatizer.getLemma(verb)+"@en";
+	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
@@ -462,7 +470,9 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				entry.setCanonicalForm(Lemmatizer.getLemma(verb)+"@en");
+	        				String term = Lemmatizer.getLemma(verb)+"@en";
+	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{

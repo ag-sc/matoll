@@ -102,7 +102,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 	}
 
 

@@ -64,7 +64,7 @@ Assuming Board is obj
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, Lemmatizer);
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 		
 	}
 
