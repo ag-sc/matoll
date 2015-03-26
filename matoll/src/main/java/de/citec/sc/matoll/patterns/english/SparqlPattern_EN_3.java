@@ -72,7 +72,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 
 	
 	
-	String query = "SELECT ?lemma ?prefix ?prep  WHERE {"
+	String query = "SELECT ?lemma ?prefix ?prep ?e1_arg ?e2_arg  WHERE {"
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
@@ -88,9 +88,9 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 			+ "?p <conll:deprel> \"prep\" . "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"pobj\" "
-			// + "?e1 <own:senseArg> ?e1_arg. "
-			// + "?e2 <own:senseArg> ?e2_arg. "
+			+ "?e2 <conll:deprel> \"pobj\". "
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	

@@ -36,6 +36,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
+
+
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -56,15 +60,6 @@ import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
-import de.citec.sc.matoll.patterns.SparqlPattern;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_1;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_2;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_7;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
@@ -82,10 +77,12 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class Matoll {
  
+	private static Logger logger = LogManager.getRootLogger();
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
-		Logger logger = LogManager.getLogger(Matoll.class.getName());
+		//Logger logger = LogManager.getLogger(Matoll.class.getName());
+
 		
 
 		String directory;
@@ -230,7 +227,7 @@ public class Matoll {
 			 
 				for (Model sentence: sentences)
 				{
-
+					//System.out.println(sentence.toString());
 					obj = getObject(sentence);
 			 
 					subj = getSubject(sentence);
@@ -239,6 +236,7 @@ public class Matoll {
 			
 					preprocessor.preprocess(sentence,subj,obj);
 			
+					//logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
 					library.extractLexicalEntries(sentence, lexiconwithFeatures);
 				}
 			
@@ -249,13 +247,16 @@ public class Matoll {
 			}
 		}
 		
+		logger.info("Extracted all entries \n");
+		logger.info("Lexicon contains "+Integer.toString(lexiconwithFeatures.getEntries().size())+" entries\n");
 		
 		LexiconSerialization serializer = new LexiconSerialization();
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
 		
 		FeatureVector vector;
-				
+		logger.info("Starting "+mode.toString()+"\n");	
+		boolean predict = true;
 		if (mode.equals("train"))
 		{
 			Dataset trainingSet = new Dataset();
@@ -324,38 +325,42 @@ public class Matoll {
 			else
 			{
 				System.out.print("Can not train classifier as there are no training instances\n");
+				logger.info("Can not train classifier as there are no training instances\n");
+				writeByReference(lexiconwithFeatures);
+				System.out.print("Exit MATOLL\n");
+				logger.info("Exit MATOLL\n");
 				return;
 				
 			}
 		
 		}
 		
+		writeByReference(lexiconwithFeatures);
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
 			// System.out.println(entry);
-			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
-			
+
 			logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
-			
-			
+
+
 			if (classifier.predict(vector)==1)
 			{
 				provenance = new Provenance();
-				
+
 				provenance.setConfidence(classifier.predict(vector, 1));
-				
+
 				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
 
 				provenance.setEndedAtTime(new Date());
-				
+
 				entry.setProvenance(provenance);
-							
+
 				entries.add(entry);
 			}
 			else
 			{
-				
+
 			}
 			
 		}
@@ -397,13 +402,35 @@ public class Matoll {
 		
 		writer.close();
 		
+		
+	
+		logger.info("Write lexicon to "+output_lexicon+"\n");
+		Model model = ModelFactory.createDefaultModel();
+		
+		serializer.serialize(lexiconwithFeatures, model);
+		
+		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
+		
+		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+		
+		// System.out.print("Lexicon: "+output.toString()+" written out\n");
+		
+		
+			
+	}
+
+	private static void writeByReference(Lexicon lexicon) throws IOException {
+		List<LexicalEntry> entries;
+		FileWriter writer;
 		Set<Reference> references = lexicon.getReferences();
 	
 		
 		
 		for (Reference ref: references)
 		{
-			writer = new FileWriter(ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex");
+			String filename = ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
+			logger.info("Write lexicon for reference "+ref.toString()+" to "+filename);
+			writer = new FileWriter(filename);
 			entries = lexicon.getEntriesForReference(ref.toString());
 			
 			for (LexicalEntry entry: entries)
@@ -417,20 +444,6 @@ public class Matoll {
 			
 			
 		}
-	
-		Model model = ModelFactory.createDefaultModel();
-		
-		serializer.serialize(lexiconwithFeatures, model);
-		
-		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
-		
-		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
-		
-		// System.out.print("Lexicon: "+output.toString()+" written out\n");
-		
-
-		
-			
 	}
 
 	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {

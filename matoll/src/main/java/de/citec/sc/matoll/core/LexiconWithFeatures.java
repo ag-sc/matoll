@@ -22,6 +22,7 @@ public class LexiconWithFeatures extends Lexicon{
 	
 	public void add(LexicalEntry entry, FeatureVector vec)
 	{
+		logger.info("add entry "+entry.toString()+"\n");
 		FeatureVector vector = null;
 		FeatureVector updatedVector = null;
 		
