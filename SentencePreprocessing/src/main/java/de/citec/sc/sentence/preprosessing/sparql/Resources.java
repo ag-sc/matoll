@@ -93,6 +93,11 @@ public class Resources {
 			}
 		}
 		
+		if (term.contains("[")) {
+			term = term.split("\\[")[0];
+			term.trim();
+		}
+		
 		/*
 		 * 3: 62.0^^http://www.w3.org/2001/XMLSchema#double
 		 */
