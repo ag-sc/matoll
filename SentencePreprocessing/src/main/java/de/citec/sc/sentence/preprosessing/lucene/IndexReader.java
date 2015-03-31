@@ -132,6 +132,8 @@ public class IndexReader {
 		term = term.replace("+","");
 		term = term.replace("","");
 		// hyphen seems to affect output of QueryParser
+		// not sure if this may affect e.g. processing of dates
+		// for other languages
 		if (language.equals("ja")) term = term.replace("-", "");
 		// JapaneseAnalyzer does not like stars
 		if (language.equals("ja")) term = term.replace("*", "");
