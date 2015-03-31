@@ -81,8 +81,7 @@ public class Debug {
                     + "?token <conll:head> ?head. "
                     + "?token <conll:deprel> ?deprel. "
                     + "?token <conll:wordnumber> ?number"
-                    + "}"
-                    + "ORDER BY ASC(?number)";
+                    + "}";
             QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
 	 	ResultSet rs = qExec.execSelect() ;
 	     
