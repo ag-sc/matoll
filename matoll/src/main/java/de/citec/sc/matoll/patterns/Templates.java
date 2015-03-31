@@ -19,12 +19,13 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.utils.Debug;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class Templates {
 	
 	public static void getNoun(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Debug debugger) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String noun = "";
@@ -40,8 +41,13 @@ public class Templates {
 	        	 
 	        	 try{
 	        		 noun = qs.get("?lemma").toString();
-	        		 e1_arg = qs.get("?e1_arg").toString();
-	        		 e2_arg = qs.get("?e2_arg").toString();	        		 
+                    		 e1_arg = qs.get("?e1_arg").toString();
+	        		 e2_arg = qs.get("?e2_arg").toString();	
+                                 debugger.printWaiter();
+                                 debugger.print("Noun: "+noun, "Templates.getNoun()");
+                                 debugger.print("e1_arg: "+e1_arg, "");
+                                 debugger.print("e2_arg: "+e2_arg, "");
+                                 
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
@@ -60,6 +66,7 @@ public class Templates {
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@en";
 	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+                                                debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -76,6 +83,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
+                                                debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
@@ -90,6 +98,9 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.setWait(true);
+                                                debugger.printWaiter();
+                                                debugger.setWait(false);
 	        				
 	        			}	
 	        			
@@ -105,10 +116,12 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}
 	        			else{
 	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+                                                debugger.printWaiter();
 	        			}
 	        			 
 	        	 }
@@ -127,7 +140,7 @@ public class Templates {
 	
 	
 	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer,Debug debugger) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String prep = "";
@@ -148,7 +161,11 @@ public class Templates {
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 
 	        		 prep = qs.get("?prep").toString();
-	        		 
+                                 debugger.printWaiter();
+                                 debugger.print("Noun: "+noun, "Templates.getNounWithPrep()");
+                                 debugger.print("e1_arg: "+e1_arg, "");
+                                 debugger.print("e2_arg: "+e2_arg, "");
+	        		 debugger.print("prep: "+prep, "");
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
@@ -167,6 +184,7 @@ public class Templates {
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@en";
 	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+                                                debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -183,6 +201,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
+                                                debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
@@ -197,6 +216,7 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}	
 	        			
@@ -212,10 +232,12 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}
 	        			else{
 	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+                                                debugger.printWaiter();
 	        			}
 	        			 
 	        	 }
@@ -233,7 +255,7 @@ public class Templates {
 	
 	
 	public static void getAdjective(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Debug debugger) {
 		//TODO: Check this entry
 	    String e1_arg ="";
 	    String e2_arg = "";
@@ -255,6 +277,11 @@ public class Templates {
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 
 	        		 prep = qs.get("?prep").toString();
+                                 debugger.printWaiter();
+                                 debugger.print("Adj: "+adj, "Templates.getAdjective()");
+                                 debugger.print("e1_arg: "+e1_arg, "");
+                                 debugger.print("e2_arg: "+e2_arg, "");
+	        		 debugger.print("prep: "+prep, "");
 	        		 
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
@@ -274,6 +301,7 @@ public class Templates {
 	        			{
 	        				String term = Lemmatizer.getLemma(adj)+"@en";
 	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+                                                debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -290,6 +318,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
+                                                debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
@@ -304,6 +333,7 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}	
 	        			
@@ -319,10 +349,12 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}
 	        			else{
 	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+                                                debugger.printWaiter();
 	        			}
 	        			 
 	        	 }
@@ -342,7 +374,7 @@ public class Templates {
 	
 	
 	public static void getTransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer,Debug debugger) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -360,6 +392,10 @@ public class Templates {
 	        		 verb = qs.get("?lemma").toString();
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
+                                 debugger.printWaiter();
+                                 debugger.print("Verb: "+verb, "Templates.getTransitiveVerb()");
+                                 debugger.print("e1_arg: "+e1_arg, "");
+                                 debugger.print("e2_arg: "+e2_arg, "");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
 	        			
@@ -377,6 +413,7 @@ public class Templates {
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@en";
 	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+                                                debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -391,6 +428,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
+                                                debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
@@ -405,6 +443,7 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}	
 	        			
@@ -420,10 +459,12 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}
 	        			else{
 	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+                                                debugger.printWaiter();
 	        			}
 	        		 
 	        		 
@@ -444,7 +485,7 @@ public class Templates {
 	
 	
 	public static void getIntransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Debug debugger) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -460,12 +501,18 @@ public class Templates {
 	    try {
 	    	 while ( rs.hasNext() ) {
 	        	 QuerySolution qs = rs.next();
-	        	 try{
+	        	 try{   
+                                 debugger.printWaiter();
 	        		 verb = qs.get("?lemma").toString();
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 prep = qs.get("?prep").toString();
 	        		 dobj_form = qs.get("?dobj_form");
+                                 debugger.print("Verb: "+verb, "Templates.getIntransitiveVerb()");
+                                 debugger.print("e1_arg: "+e1_arg, "");
+                                 debugger.print("e2_arg: "+e2_arg, "");
+                                 debugger.print("Prep: "+prep, "");
+                                 debugger.print("dobj_form: "+dobj_form, "");
 	        		 
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
@@ -484,6 +531,7 @@ public class Templates {
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@en";
 	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+                                                debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -498,6 +546,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
+                                                debugger.print("Added Sentence:"+sentence, "");
 	        			}
 
 	        			
@@ -513,6 +562,7 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}	
 	        			
@@ -528,10 +578,12 @@ public class Templates {
 	        				lexicon.add(entry, vector);
 	        				
 	        				logger.info("Found entry:"+entry+"\n");
+                                                debugger.printWaiter();
 	        				
 	        			}	
 	        			else{
 	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+                                                debugger.printWaiter();
 	        			}
 	        		 
 	        		 

@@ -5,16 +5,25 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * 
+ * @author swalter
+ */
 public class Hypothesis {
 	
 	List<String> Nodes;
-	
+	/**
+         * 
+         */
 	public Hypothesis()
 	{
 		Nodes = new ArrayList<String>();
 	}
 	
+        /**
+         * 
+         * @param hypothesis 
+         */
 	public Hypothesis(Hypothesis hypothesis) {
 		
 		Nodes = new ArrayList<String>();
@@ -25,12 +34,19 @@ public class Hypothesis {
 		}
 		
 	}
-
+        /**
+         * 
+         * @param node 
+         */
 	public void add(String node)
 	{
 		Nodes.add(node);
 	}
-	
+	/**
+         * 
+         * @param Nodes
+         * @return 
+         */
 	public List<Hypothesis> expand(List<String> Nodes)
 	{
 		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
@@ -48,12 +64,21 @@ public class Hypothesis {
 		
 		return hypotheses;
 	}
-	
+	/**
+         * 
+         * @return 
+         */
 	public List<String> getNodes()
 	{
 		return Nodes;
 	}
-
+        /**
+         * 
+         * @param resource2heads
+         * @param resource2deps
+         * @param pos
+         * @return 
+         */
 	public String checkValidAndReturnRoot(HashMap<String,String> resource2heads, HashMap<String,String> resource2deps, Set<String> pos) {
 		
 		int dangling = 0;
@@ -88,7 +113,10 @@ public class Hypothesis {
 			return null;
 		
 	}
-	
+	/**
+         * 
+         * @return 
+         */
 	public String toString()
 	{
 		String string = "Hypothesis: ";

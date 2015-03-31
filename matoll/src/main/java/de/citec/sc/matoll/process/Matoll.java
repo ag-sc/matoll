@@ -75,16 +75,30 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.utils.Debug;
 
 public class Matoll {
  
-	private static Logger logger = LogManager.getRootLogger();
-	
+	private static Logger logger = LogManager.getLogger(Matoll.class.getName());
+	/**
+         * 
+         * @param args
+         * @throws IOException
+         * @throws ParserConfigurationException
+         * @throws SAXException
+         * @throws InstantiationException
+         * @throws IllegalAccessException
+         * @throws ClassNotFoundException 
+         */
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
 		//Logger logger = LogManager.getLogger(Matoll.class.getName());
 
-		
+		Debug debugger = new Debug(logger);
+                /*
+                activate debugger
+                */
+                debugger.setDebug(false);
 
 		String directory;
 		String mode = "train";
@@ -202,7 +216,7 @@ public class Matoll {
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 
-		PatternLibrary library = new PatternLibrary();
+		PatternLibrary library = new PatternLibrary(debugger);
 		StanfordLemmatizer sl = new StanfordLemmatizer(language);
 		library.setLemmatizer(sl);
 		
@@ -431,7 +445,11 @@ public class Matoll {
 		
 			
 	}
-
+        /**
+         * 
+         * @param lexicon
+         * @throws IOException 
+         */
 	private static void writeByReference(Lexicon lexicon) throws IOException {
 		List<LexicalEntry> entries;
 		FileWriter writer;
@@ -458,7 +476,12 @@ public class Matoll {
 			
 		}
 	}
-
+        /**
+         * 
+         * @param vector
+         * @param max
+         * @return 
+         */
 	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
 		
 		HashMap<String,Double> map;
@@ -473,7 +496,12 @@ public class Matoll {
 		return vector;
 		
 	}
-
+        /**
+         * 
+         * @param feature
+         * @param value
+         * @param map 
+         */
 	private static void updateMaximum(String feature, Double value, HashMap<String,Double> map) {
 		
 		
@@ -491,7 +519,11 @@ public class Matoll {
 		}
 		
 	}
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getReference(Model model) {
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:reference"), (RDFNode) null);
 		
@@ -506,7 +538,13 @@ public class Matoll {
 		
 		return null;
 	}
-
+        
+        /**
+         * 
+         * @param model
+         * @return
+         * @throws FileNotFoundException 
+         */
 	private static List<Model> getSentences(Model model) throws FileNotFoundException {
 		
 		// get all ?res <conll:sentence> 
@@ -571,7 +609,11 @@ public class Matoll {
 		
 	}
 
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getSubject(Model model) {
 		
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:subj"), (RDFNode) null);
@@ -587,7 +629,12 @@ public class Matoll {
 		
 		return null;
 	}
-
+        
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getObject(Model model) {
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:obj"), (RDFNode) null);
 		
