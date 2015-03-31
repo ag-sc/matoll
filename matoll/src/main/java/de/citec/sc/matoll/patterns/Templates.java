@@ -86,6 +86,8 @@ public class Templates {
                                                 debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
+                                        debugger.printDependencys(model);
+                                        
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
@@ -203,6 +205,8 @@ public class Templates {
 	        				entry.addSentence(sentence);
                                                 debugger.print("Added Sentence:"+sentence, "");
 	        			}
+                                        
+                                        debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
@@ -320,6 +324,8 @@ public class Templates {
 	        				entry.addSentence(sentence);
                                                 debugger.print("Added Sentence:"+sentence, "");
 	        			}
+                                        
+                                        debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
@@ -431,6 +437,8 @@ public class Templates {
                                                 debugger.print("Added Sentence:"+sentence, "");
 	        			}
 	        			
+                                        debugger.printDependencys(model);
+                                        
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
@@ -548,7 +556,8 @@ public class Templates {
 	        				entry.addSentence(sentence);
                                                 debugger.print("Added Sentence:"+sentence, "");
 	        			}
-
+                                        
+                                        debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{

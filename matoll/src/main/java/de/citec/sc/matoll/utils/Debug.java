@@ -5,7 +5,15 @@
  */
 package de.citec.sc.matoll.utils;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import org.apache.logging.log4j.Logger;
 
@@ -53,6 +61,79 @@ public class Debug {
         }
        
              
+    }
+    
+    /**
+     * Returns a human readable version of the parsed text
+     * @param model RDF-Model
+     */
+    public void printDependencys(Model model){
+        
+        if(isDebug()){
+            System.out.println("\n");
+            HashMap<Integer,String> hm = new HashMap<Integer,String>();
+            String query = "SELECT ?token ?number ?form ?lemma ?cpostag ?head ?deprel ?postag WHERE{"
+                    + "?token <own:partOf> ?class. "
+                    + "?token <conll:form> ?form. "
+                    + "OPTIONAL{?token <conll:lemma> ?lemma}. "
+                    + "?token <conll:cpostag> ?cpostag. "
+                    + "?token <conll:postag> ?postag. "
+                    + "?token <conll:head> ?head. "
+                    + "?token <conll:deprel> ?deprel. "
+                    + "?token <conll:wordnumber> ?number"
+                    + "}"
+                    + "ORDER BY ASC(?number)";
+            QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+	 	ResultSet rs = qExec.execSelect() ;
+	     
+	 	try {
+	    	 while ( rs.hasNext() ) {
+	        	 QuerySolution qs = rs.next();
+	        	 	        	 
+	        	 try{
+                                String lemma = "";
+                                try{
+                                    lemma = qs.get("?lemma").toString();
+                                }
+                                catch(Exception e){
+                                    lemma = "_";
+                                }
+	        		 String line = qs.get("?number").toString()
+                                         +"\t"
+                                         //+qs.get("?token").toString()
+                                         //+"\t"
+                                         +qs.get("?form").toString()
+                                         +"\t"
+                                         +lemma
+                                         +"\t"
+                                         +qs.get("?cpostag").toString()
+                                         +"\t"
+                                         +qs.get("?postag").toString()
+                                         +"\t"
+                                         +qs.get("?head").toString().split("_")[1]
+                                         +"\t"
+                                         +qs.get("?deprel").toString();
+                                 
+                                 hm.put(Integer.valueOf(qs.get("?number").toString()),line);
+                                 //System.out.println("Line:"+line);
+                    		 
+                         }
+                         catch(Exception e){
+	     	    	e.printStackTrace();
+	     	    }
+                 }
+                }
+                 catch(Exception e){
+	     	    	e.printStackTrace();
+	     	    }
+                
+                SortedSet<Integer> keys = new TreeSet<Integer>(hm.keySet());
+                for(Integer key:keys){
+                    System.out.println(hm.get(key));
+                }
+                System.out.println("\n");
+                
+        }
     }
     
     public void print(String message, String className){

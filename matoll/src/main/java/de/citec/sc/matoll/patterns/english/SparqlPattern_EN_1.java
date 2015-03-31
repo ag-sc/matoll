@@ -44,13 +44,16 @@ public class SparqlPattern_EN_1 extends SparqlPattern {
 			+ "?p <conll:deprel> \"prep\" . "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
+			//+ "?e2 <conll:deprel> ?e2_grammar . "
 			+ "?e2 <conll:deprel> \"pobj\". "
-			+"OPTIONAL{"
+			/*+"OPTIONAL{"
 			+ "?e2 <conll:head> ?y. "
 			+ "?e2 <conll:form> ?dobj_form. "
 			+ "?e2 <conll:deprel> \"dobj\"."
-			+"} "
+			+"} "*/
+                /*
+                TODO: Check dobj vs. pobj
+                */
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";

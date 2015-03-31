@@ -98,7 +98,7 @@ public class Matoll {
                 /*
                 activate debugger
                 */
-                debugger.setDebug(false);
+                debugger.setDebug(true);
 
 		String directory;
 		String mode = "train";
