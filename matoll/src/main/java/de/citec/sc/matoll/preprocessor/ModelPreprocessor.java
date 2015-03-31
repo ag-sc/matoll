@@ -30,7 +30,11 @@ public class ModelPreprocessor {
 	}
 	
 	boolean coref = false;
-	
+	/**
+         * @param model
+         * @param subjectEntity
+         * @param objectEntity 
+         */
 	public void preprocess(Model model, String subjectEntity,
 			String objectEntity) {
 		
@@ -90,7 +94,12 @@ public class ModelPreprocessor {
 		if (coref) computeCoreference(model);
 				
 	}
-
+        /**
+         * 
+         * @param int2NodeMapping
+         * @param node2IntMapping
+         * @param model 
+         */
 	private void getMapings(HashMap<Integer, String> int2NodeMapping,
 			HashMap<String, Integer> node2IntMapping, Model model) {
 		
@@ -116,7 +125,10 @@ public class ModelPreprocessor {
 		}
 		
 	}
-
+        /**
+         * 
+         * @param model 
+         */
 	private void computeCoreference(Model model) {
 		
 		String lemma;
@@ -166,7 +178,11 @@ public class ModelPreprocessor {
 		
 		
 	}
-
+        /**
+         * 
+         * @param resources
+         * @return 
+         */
 	private List<Hypothesis> getHypotheses(List<List<String>> resources) {
 		
 		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
@@ -201,7 +217,12 @@ public class ModelPreprocessor {
 		return hypotheses;
 		
 	}
-
+        /**
+         * 
+         * @param model
+         * @param string
+         * @return 
+         */
 	private List<List<String>> getResources(Model model,
 			String string) {
 		
@@ -239,7 +260,11 @@ public class ModelPreprocessor {
 
 		 return resourceList;
 	}
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private HashMap<String, String> getResource2Dependency(Model model) {
 		
 		HashMap<String,String> resource2Dep = new HashMap<String,String>();
@@ -264,7 +289,11 @@ public class ModelPreprocessor {
 		return resource2Dep;
 	   
 	}
-
+/**
+ * 
+ * @param model
+ * @return 
+ */
 	private HashMap<String, String> getResource2Head(Model model) {
 		
 		HashMap<String,String> resource2Head = new HashMap<String,String>();
@@ -287,7 +316,11 @@ public class ModelPreprocessor {
 		
 		return resource2Head;
 	}
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private HashMap<String, String> getResource2Lemma(Model model) {
 		
 		HashMap<String,String> resource2Lemma = new HashMap<String,String>();

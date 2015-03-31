@@ -44,13 +44,7 @@ public class SparqlPattern_EN_1 extends SparqlPattern {
 			+ "?p <conll:deprel> \"prep\" . "
 			+ "?p <conll:form> ?prep . "
 			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
 			+ "?e2 <conll:deprel> \"pobj\". "
-			+"OPTIONAL{"
-			+ "?e2 <conll:head> ?y. "
-			+ "?e2 <conll:form> ?dobj_form. "
-			+ "?e2 <conll:deprel> \"dobj\"."
-			+"} "
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
@@ -120,7 +114,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(), this.getDebugger());
 		
 	}
 

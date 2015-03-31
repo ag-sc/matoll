@@ -14,3 +14,5 @@ matoll/Run_EN_P6_coref.eval
 matoll/Run_EN_P6_coref.lex
 
 *.lex
+
+matoll/nbactions.xml
