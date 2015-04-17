@@ -230,7 +230,7 @@ LexicalEntry entry;
 		 */
 		sense.setReference(new Restriction(object_uri,uri));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
@@ -242,7 +242,7 @@ LexicalEntry entry;
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		Provenance provenance = new Provenance();
 		
@@ -256,7 +256,7 @@ LexicalEntry entry;
 		
 		entry = lexicon.createNewEntry(adjective);
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 
@@ -268,7 +268,7 @@ LexicalEntry entry;
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		
 		entry.setProvenance(provenance);

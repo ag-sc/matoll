@@ -63,6 +63,15 @@ public class Debug {
              
     }
     
+    public void printQuery(String query){
+        if(isDebug()){
+            query = query.replace(". }",". }\n");
+            query = query.replace(".","\n");
+            query = query.replace(" {"," {\n");
+            System.out.println("Query:"+query);
+        }
+    }
+    
     /**
      * Returns a human readable version of the parsed text
      * @param model RDF-Model

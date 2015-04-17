@@ -296,7 +296,8 @@ public class Matoll {
 			
 			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 			{
-				entry.setMappings(entry.computeMappings(entry.getSense()));
+                                
+				//entry.setMappings(entry.computeMappings(entry.getSense()));
 				
 				// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
 				

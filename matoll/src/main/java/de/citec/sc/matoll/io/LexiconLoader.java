@@ -82,14 +82,14 @@ public class LexiconLoader {
 					 			 
 						 entry.setPOS(getPOS(subject,model));
 					 
-						 entry.setSyntacticBehaviour(behaviour);
+						 entry.addSyntacticBehaviour(behaviour);
 						 
 						 map = entry.computeMappings(sense);
 						 
 						 if (map.keySet().size() > 0)
 						 {
-							 entry.setSense(sense);
-							 entry.setMappings(map);
+							 entry.addSense(sense);
+							 //entry.setMappings(map);
 							 lexicon.addEntry(entry);
 						 }
 					 }
@@ -110,7 +110,7 @@ public class LexiconLoader {
 				 
 				 for (Sense sense: senses)
 				 {
-					 entry.setSense(sense);
+					 entry.addSense(sense);
 				 }
 			 				
 			}

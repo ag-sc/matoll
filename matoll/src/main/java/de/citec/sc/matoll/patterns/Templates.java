@@ -56,11 +56,11 @@ public class Templates {
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
-	        		 	entry.setSense(sense);
+	        		 	entry.addSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.setSyntacticBehaviour(behaviour);
+	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -176,11 +176,11 @@ public class Templates {
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
-	        		 	entry.setSense(sense);
+	        		 	entry.addSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.setSyntacticBehaviour(behaviour);
+	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -295,11 +295,11 @@ public class Templates {
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
-	        		 	entry.setSense(sense);
+	        		 	entry.addSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.setSyntacticBehaviour(behaviour);
+	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -409,11 +409,11 @@ public class Templates {
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
 	        		 	
-	        		 	entry.setSense(sense);
+	        		 	entry.addSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.setSyntacticBehaviour(behaviour);
+	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -529,11 +529,11 @@ public class Templates {
 	        		 	
 	        		 	sense.setReference(new SimpleReference(reference));
 	        		 	
-	        		 	entry.setSense(sense);
+	        		 	entry.addSense(sense);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.setSyntacticBehaviour(behaviour);
+	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{

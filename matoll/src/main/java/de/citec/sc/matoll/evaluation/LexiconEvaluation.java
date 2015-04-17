@@ -299,8 +299,12 @@ public class LexiconEvaluation {
 
 	private static boolean checkMappings(LexicalEntry entry, LexicalEntry gold_entry) {
 		
-		HashMap<String,String> entry_map = entry.getArgumentMap();
-		HashMap<String,String> gold_entry_map = gold_entry.getArgumentMap();
+            /*
+            Mapping does not exist any more.
+            TODO: Solve differently
+            */
+		//HashMap<String,String> entry_map = entry.getArgumentMap();
+		//HashMap<String,String> gold_entry_map = gold_entry.getArgumentMap();
 				
 		for (String synArg: entry_map.keySet())
 		{

@@ -39,7 +39,7 @@ public class test6 {
 		
 		sense.setReference(new Restriction("http://dbpedia.org/resource/Female","http://dbpedia.org/ontology/gender"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
@@ -51,7 +51,7 @@ public class test6 {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		Provenance provenance = new Provenance();
 		
@@ -62,7 +62,7 @@ public class test6 {
 		
 		entry = lexicon.createNewEntry("female");
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 
@@ -74,7 +74,7 @@ public class test6 {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		
 		

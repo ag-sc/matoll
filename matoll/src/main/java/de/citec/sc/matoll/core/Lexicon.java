@@ -76,7 +76,8 @@ public class Lexicon {
 	
 		if (entry.getSense() != null)
 		
-			references.add(entry.getSense().getReference());
+			//references.add(entry.getSense().getReference());
+                        references.add(entry.getReference());
 			
 	}
 

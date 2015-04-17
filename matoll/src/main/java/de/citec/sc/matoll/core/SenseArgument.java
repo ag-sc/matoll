@@ -5,7 +5,11 @@ public class SenseArgument {
 	String ArgumentType;
 	String Value;
 	
-	
+	/**
+         * Sets the argument Type to an value (identifier)
+         * @param argumentType
+         * @param value Has to be a unique identifier
+         */
 	public SenseArgument(String argumentType, String value) {
 		ArgumentType = argumentType;
 		Value = value;
@@ -16,6 +20,10 @@ public class SenseArgument {
 		return ArgumentType;
 	}
 	
+        /**
+         * Gets the identifier for a given SenseArgument. If set correctly, identifier is unique in the world of one lexical entry.
+         * @return identifier
+         */
 	public String getValue()
 	{
 		return Value;
@@ -31,6 +39,9 @@ public class SenseArgument {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+                /**
+                 * TODO: Why prime * result ? The result(without the addition) is always 31; with the additional term the result is a multiple of 31
+                 */
 		result = prime * result
 				+ ((ArgumentType == null) ? 0 : ArgumentType.hashCode());
 		return result;
