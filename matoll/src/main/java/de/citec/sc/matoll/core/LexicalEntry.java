@@ -290,9 +290,13 @@ public class LexicalEntry {
 		
 		if (hashsetSense!=null){
                     if(hashsetSense.size()>1) System.err.println("Returns reference of the first sense!");
-                    return hashsetSense.iterator().next().getReference();
+                    for(Sense sense: hashsetSense){
+                        return sense.getReference();
+                    }
+                    
                 }
 		else return null;
+            return null;
 		
 	}
 

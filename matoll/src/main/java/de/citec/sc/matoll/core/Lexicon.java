@@ -101,8 +101,9 @@ public class Lexicon {
 		Set<Reference> references = new HashSet<Reference>();
 		
 		for (LexicalEntry entry: entries)
-		{
-			references.add(entry.getReference());
+		{   
+                    for (Sense sense : entry.getSense())
+                            references.add(sense.getReference());
 		}
 		
 		return references;
