@@ -224,13 +224,10 @@ LexicalEntry entry;
 		entry.setCanonicalForm(adjective);
 		
 		Sense sense = new Sense();
-		
-		/*
-		 * TODO object should be a URI and not a label
-		 */
+
 		sense.setReference(new Restriction(object_uri,uri));
 		
-		entry.addSense(sense);
+		//entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
@@ -254,11 +251,11 @@ LexicalEntry entry;
 		
 		entry.setProvenance(provenance);
 		
-		entry = lexicon.createNewEntry(adjective);
+		//entry = lexicon.createNewEntry(adjective);
 		
 		entry.addSense(sense);
 		
-		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
+		//entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 
 		behaviour = new SyntacticBehaviour();
 		
@@ -271,7 +268,7 @@ LexicalEntry entry;
 		entry.addSyntacticBehaviour(behaviour);
 		
 		
-		entry.setProvenance(provenance);
+		//entry.setProvenance(provenance);
 		
 		lexicon.addEntry(entry);
 		
