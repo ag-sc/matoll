@@ -78,4 +78,58 @@
   		<version>2.2</version>
   	</dependency>
   </dependencies>
+  <build>
+  <plugins>
+    <plugin>
+     
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>2.4</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <!--<classpathPrefix>lib/</classpathPrefix>-->
+            <mainClass>de.citec.sc.matoll.process.Matoll</mainClass>
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+  
+  <!--<plugin>  
+   <groupId>org.codehaus.mojo</groupId>  
+   <artifactId>exec-maven-plugin</artifactId>  
+   <version>1.1.1</version>  
+   <executions>  
+    <execution>  
+     <phase>matoll</phase>  
+     <goals>  
+      <goal>java</goal>  
+     </goals>  
+     <configuration>  
+      <mainClass>de.citec.sc.matoll.process.Matoll</mainClass>  
+     
+     </configuration>  
+    </execution>  
+   </executions>  
+  </plugin>  -->
+  
+    <!--<plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <configuration>
+        <archive>
+          <manifest>
+            <mainClass>de.citec.sc.matoll.process.Matoll</mainClass>
+          </manifest>
+        </archive>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+      </configuration>
+    </plugin>-->
+  
+ </plugins>  
+
+
+</build>
 </project>

@@ -16,3 +16,5 @@ matoll/Run_EN_P6_coref.lex
 *.lex
 
 matoll/nbactions.xml
+
+matoll/nb-configuration.xml
