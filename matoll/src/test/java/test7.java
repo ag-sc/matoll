@@ -17,76 +17,67 @@ public class test7 {
 		
 		Lexicon lexicon = new Lexicon();
 		
-		LexicalEntry entry = new LexicalEntry();
+		LexicalEntry entry1 = new LexicalEntry();
 		
-		entry.setCanonicalForm("marry");
+		entry1.setCanonicalForm("marry");
 		
-		Sense sense = new Sense();
+		Sense sense1 = new Sense();
 		
-		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		sens1e.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.addSense(sense);
+		entry1.addSense(sense);
 		
-		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+		entry1.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		SyntacticBehaviour behaviour = new SyntacticBehaviour();
+		SyntacticBehaviour behaviour1 = new SyntacticBehaviour();
 		
-		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+		behaviour1.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
+		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 		
-		lexicon.addEntry(entry);
+		lexicon.addEntry(entry1);
 		
-		entry = new LexicalEntry();
+		LexicalEntry entry2 = new LexicalEntry();
 		
-		entry.setCanonicalForm("marry");
+		entry2.setCanonicalForm("marry");
 		
-		sense = new Sense();
+		Sense sense2 = new Sense();
 		
-		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		sense2.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry2.addSense(sense2);
 		
-		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+		entry2.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		behaviour = new SyntacticBehaviour();
+		SyntacticBehaviour behaviour2 = new SyntacticBehaviour();
 		
-		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+		behaviour2.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
+		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
-		entry.addSyntacticBehaviour(behaviour);
+		entry2.addSyntacticBehaviour(behaviour2);
 		
-		behaviour = new SyntacticBehaviour();
+		SyntacticBehaviour behaviour3 = new SyntacticBehaviour();
 		
-		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+		behaviour3.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePP");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2","with"));
 		
-		entry.addSyntacticBehaviour(behaviour);
-		
-		behaviour = new SyntacticBehaviour();
-		
-		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePP");
-				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2","with"));
-		
-		entry.addSyntacticBehaviour(behaviour);
+		entry2.addSyntacticBehaviour(behaviour3);
 		
 		
 		// The following should say that entry is already contained:
 		
-		if (lexicon.contains(entry)) System.out.println("Entry already included!!!");
+		if (lexicon.contains(entry2)) System.out.println("Entry already included!!!");
 		else System.out.println("Entry not included!!!");
 		
 		
