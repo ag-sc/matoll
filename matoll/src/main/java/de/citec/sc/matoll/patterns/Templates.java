@@ -21,6 +21,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Debug;
 import de.citec.sc.matoll.utils.Lemmatizer;
+import java.util.Calendar;
 
 public class Templates {
 	
@@ -51,7 +52,11 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-	        			
+                                        Calendar calendar = Calendar.getInstance();
+                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(Long.toString(timestamp)+"_LexicalEntry_Noun_"+noun);
+                                        
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
@@ -171,7 +176,10 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-	        			
+	        			Calendar calendar = Calendar.getInstance();
+                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(Long.toString(timestamp)+"_LexicalEntry_NounWithPrep_"+noun);
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
@@ -290,6 +298,10 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
+                                        Calendar calendar = Calendar.getInstance();
+                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(Long.toString(timestamp)+"_LexicalEntry_Adjective_"+adj);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -404,6 +416,10 @@ public class Templates {
                                  debugger.print("e2_arg: "+e2_arg, "");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
+                                        Calendar calendar = Calendar.getInstance();
+                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(Long.toString(timestamp)+"_LexicalEntry_TransitiveVerb_"+verb);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -524,6 +540,10 @@ public class Templates {
 	        		 
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
+                                        Calendar calendar = Calendar.getInstance();
+                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(Long.toString(timestamp)+"_LexicalEntry_IntransitiveVerb_"+verb);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
