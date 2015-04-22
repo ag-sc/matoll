@@ -95,7 +95,7 @@ public class LexiconSerialization {
 			model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
                             Resource res = model.createResource(synarc.getValue());
-                            synarc.getArgumentType();
+                            //synarc.getArgumentType();
                             model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),res);                    
                          }
 			

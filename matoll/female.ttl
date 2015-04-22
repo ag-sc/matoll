@@ -10,7 +10,7 @@
 
 <LexicalEntry_1_female_Sense1>
         <http://lemon-model.net/lemon#isA>
-                <http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject> , <http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg> .
+                <http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject> .
 
 <LexicalEntry_1_female>
         a       <http://lemon-model.net/lemon#LexicalEntry> ;
@@ -44,7 +44,7 @@
 <LexicalEntry_1_female_SynBehaviour1>
         a       <http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame> ;
         <http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg>
-                <1> .
+                <2> .
 
 <LexicalEntry_1_female_Sense>
         <http://lemon-model.net/lemon#reference>
