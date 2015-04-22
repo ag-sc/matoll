@@ -25,7 +25,7 @@ public class test7 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
