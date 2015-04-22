@@ -24,7 +24,7 @@ public class test1 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -47,8 +47,10 @@ public class test1 {
 		sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
-		entry.setSense(sense);
+		/*
+                TODO: addSense
+                */
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -77,7 +79,7 @@ public class test1 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -106,7 +108,7 @@ public class test1 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		

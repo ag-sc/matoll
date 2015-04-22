@@ -51,8 +51,11 @@ public class Resources {
 	        inputStream.close();
 	    }
 	    for(String x:entities_raw.split("\n")){
-	    	String subj = x.split("\t")[0];
-	    	String obj = x.split("\t")[1];
+	    	/*
+	    	 * 1,3 are the uri's
+	    	 */
+	    	String subj = x.split("\t")[1];
+	    	String obj = x.split("\t")[2];
 	    	
 	    	List<String> pair = new ArrayList<String>();
 	    	
@@ -85,8 +88,14 @@ public class Resources {
 		if(term.contains("(")){
 			term = term.split("\\(")[0];
 			if(term.endsWith(" ")){
-				term = term.substring(0,term.lastIndexOf(" ")-1);
+				// -1 removes not only whitespace, but also last character of term!
+				term = term.substring(0,term.lastIndexOf(" ")); //-1);
 			}
+		}
+		
+		if (term.contains("[")) {
+			term = term.split("\\[")[0];
+			term.trim();
 		}
 		
 		/*
@@ -109,6 +118,13 @@ public class Resources {
 		 */
 		if(term.contains("XMLSchema#decimal")){
 			term = term.replace("^^http://www.w3.org/2001/XMLSchema#decimal", "");
+		}
+                
+                /*
+                0001-12-290200^^httpwww.w3.org2001XMLSchema#gMonthDay
+                */
+                if(term.contains("200^^httpwww.w3.org2001XMLSchema#gMonthDay")){
+			term = term.replace("200^^httpwww.w3.org2001XMLSchema#gMonthDay", "");
 		}
 		return term;
 	}

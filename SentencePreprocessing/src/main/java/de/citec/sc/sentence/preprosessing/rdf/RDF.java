@@ -18,9 +18,13 @@ public class RDF {
 		String plain_sentence = "";
 		for (String item:input_sentence.split("\t\t")){
 			String tmp[] =item.split("\t");
-			plain_sentence+=" "+tmp[1];
+			if (language.equals("ja")) {
+				plain_sentence+=tmp[1];
+			} else {
+				plain_sentence+=" "+tmp[1];
+			}
 		}
-		plain_sentence = plain_sentence.substring(1);			
+		if (!language.equals("ja")) plain_sentence = plain_sentence.substring(1);			
 		Resource res_class_token = default_model.createResource("class:"+class_token)
 				.addProperty(default_model.createProperty("own:subj"),propSubj.toLowerCase())
 				.addProperty(default_model.createProperty("own:obj"),propObj.toLowerCase())

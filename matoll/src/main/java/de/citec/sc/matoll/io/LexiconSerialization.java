@@ -13,7 +13,10 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
+import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SimpleReference;
+import de.citec.sc.matoll.core.SyntacticArgument;
+import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
@@ -80,28 +83,59 @@ public class LexiconSerialization {
 
 		}
 			
-		if (entry.getBehaviour() != null)
-		{
-			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"_SynBehaviour"));
-			model.add(model.createResource(entry.getURI()+"_SynBehaviour"), RDF.type, model.createResource(entry.getBehaviour().getFrame()));
+                /*
+                TODO: Check!
+                */
+                int synbehaviour_counter = 0;
+                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                    synbehaviour_counter+=1;
+                    if (synbehaviour != null)
+                    {
+			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"_SynBehaviour")+Integer.toString(synbehaviour_counter));
+			model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+                            Resource res = model.createResource(synarc.getValue());
+                            //synarc.getArgumentType();
+                            model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),res);                    
+                         }
 			
-		}
+                    }
+                }
+		
 	
-		entry.setMappings(entry.computeMappings(entry.getSense()));
-		
-		Resource res;
+                /*
+                this has to be run under Syntactic Behaviour
+                */
+                /*for( Sense sense:entry.getSense()){
+                    HashMap<String, String> argumentMap = entry.computeMappings(sense);
+                    
+                    //entry.setMappings(argumentMa);
 
-		HashMap<String,String> argumentMap;
+                    Resource res;
+                    
+                    for (String synArg: argumentMap.keySet())
+                        {
+                        res = model.createResource();
+
+                        //TODO: Put this to syntactic behavioir  model.add(model.createResource(entry.getURI()+"_SynBehaviour"),model.createProperty(synArg),res);
+                        model.add(model.createResource(entry.getURI()+"_Sense"),model.createProperty(argumentMap.get(synArg)),res);
+                        }
+
+                }*/
+                
+                int sense_counter = 0;
+                for( Sense sense:entry.getSense()){
+                    HashMap<String, String> argumentMap = entry.computeMappings(sense);
+                    Resource res;
+                    sense_counter+=1;
+                    for (String synArg: argumentMap.keySet())
+                        {
+                        res = model.createResource(synArg);
+                        model.add(model.createResource(entry.getURI()+"_Sense"+Integer.toBinaryString(sense_counter)),model.createProperty(argumentMap.get(synArg)),res);
+                        }
+
+                }
 		
-		argumentMap = entry.getArgumentMap();
-		
-		for (String synArg: argumentMap.keySet())
-		{
-			res = model.createResource();
-			
-			model.add(model.createResource(entry.getURI()+"_SynBehaviour"),model.createProperty(synArg),res);
-			model.add(model.createResource(entry.getURI()+"_Sense"),model.createProperty(argumentMap.get(synArg)),res);
-		}
 		
 		Provenance provenance = entry.getProvenance();
 		

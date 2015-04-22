@@ -34,6 +34,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
+
+
+
+
+
+
+
 //import core.
 import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
@@ -54,17 +61,9 @@ import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
-import de.citec.sc.matoll.patterns.SparqlPattern;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_1;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_2;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_3;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_4;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_5;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_7;
-import de.citec.sc.matoll.patterns.SparqlPattern_EN_8;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
+import de.citec.sc.matoll.utils.StanfordLemmatizer;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -76,13 +75,30 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.utils.Debug;
 
 public class Matoll {
  
-	
+	private static Logger logger = LogManager.getLogger(Matoll.class.getName());
+	/**
+         * 
+         * @param args
+         * @throws IOException
+         * @throws ParserConfigurationException
+         * @throws SAXException
+         * @throws InstantiationException
+         * @throws IllegalAccessException
+         * @throws ClassNotFoundException 
+         */
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 			
-		Logger logger = LogManager.getLogger(Matoll.class.getName());
+		//Logger logger = LogManager.getLogger(Matoll.class.getName());
+
+		Debug debugger = new Debug(logger);
+                /*
+                activate debugger
+                */
+                debugger.setDebug(true);
 
 		String directory;
 		String mode = "train";
@@ -200,7 +216,9 @@ public class Matoll {
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 
-		PatternLibrary library = new PatternLibrary();
+		PatternLibrary library = new PatternLibrary(debugger);
+		StanfordLemmatizer sl = new StanfordLemmatizer(language);
+		library.setLemmatizer(sl);
 		
 		library.setPatterns(config.getPatterns());
 		
@@ -224,7 +242,7 @@ public class Matoll {
 			 
 				for (Model sentence: sentences)
 				{
-
+					//System.out.println(sentence.toString());
 					obj = getObject(sentence);
 			 
 					subj = getSubject(sentence);
@@ -233,6 +251,7 @@ public class Matoll {
 			
 					preprocessor.preprocess(sentence,subj,obj);
 			
+					//logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
 					library.extractLexicalEntries(sentence, lexiconwithFeatures);
 				}
 			
@@ -243,13 +262,16 @@ public class Matoll {
 			}
 		}
 		
+		logger.info("Extracted all entries \n");
+		logger.info("Lexicon contains "+Integer.toString(lexiconwithFeatures.getEntries().size())+" entries\n");
 		
 		LexiconSerialization serializer = new LexiconSerialization();
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
 		
 		FeatureVector vector;
-				
+		logger.info("Starting "+mode.toString()+"\n");	
+		boolean predict = true;
 		if (mode.equals("train"))
 		{
 			Dataset trainingSet = new Dataset();
@@ -274,7 +296,8 @@ public class Matoll {
 			
 			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 			{
-				entry.setMappings(entry.computeMappings(entry.getSense()));
+                                
+				//entry.setMappings(entry.computeMappings(entry.getSense()));
 				
 				// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
 				
@@ -318,49 +341,67 @@ public class Matoll {
 			else
 			{
 				System.out.print("Can not train classifier as there are no training instances\n");
+				logger.info("Can not train classifier as there are no training instances\n");
+				writeByReference(lexiconwithFeatures);
+				System.out.print("Exit MATOLL\n");
+				logger.info("Exit MATOLL\n");
 				return;
 				
 			}
 		
 		}
 		
+		writeByReference(lexiconwithFeatures);
 		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
 		{
 			// System.out.println(entry);
-			
 			vector = lexiconwithFeatures.getFeatureVector(entry);
-			
+
 			logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
-			
-			
+
+
 			if (classifier.predict(vector)==1)
 			{
 				provenance = new Provenance();
-				
+
 				provenance.setConfidence(classifier.predict(vector, 1));
-				
+
 				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
 
 				provenance.setEndedAtTime(new Date());
-				
+
 				entry.setProvenance(provenance);
-							
+
 				entries.add(entry);
 			}
 			else
 			{
-				
+
 			}
 			
 		}
 		
-		Collections.sort(entries, new Comparator<LexicalEntry>() {
+
+		  Collections.sort(entries, new Comparator<LexicalEntry>() {
+	
 			 
 			            public int compare(LexicalEntry one, LexicalEntry two) {
-				                return (((LexicalEntry) one).getProvenance().getConfidence() > ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;
+			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
 				            }
 				             
 				        });
+		  
+		 /*
+		  * TODO
+		  Exception in thread "main" java.lang.IllegalArgumentException: Comparison method violates its general contract!
+	at java.util.TimSort.mergeHi(TimSort.java:895)
+	at java.util.TimSort.mergeAt(TimSort.java:512)
+	at java.util.TimSort.mergeForceCollapse(TimSort.java:453)
+	at java.util.TimSort.sort(TimSort.java:250)
+	at java.util.Arrays.sort(Arrays.java:1435)
+	at java.util.Collections.sort(Collections.java:230)
+	at de.citec.sc.matoll.process.Matoll.main(Matoll.java:370)
+		  */
 		
 		
 		lexicon = new Lexicon();
@@ -389,13 +430,39 @@ public class Matoll {
 		
 		writer.close();
 		
+		
+	
+		logger.info("Write lexicon to "+output_lexicon+"\n");
+		Model model = ModelFactory.createDefaultModel();
+		
+		serializer.serialize(lexiconwithFeatures, model);
+		
+		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
+		
+		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+		
+		// System.out.print("Lexicon: "+output.toString()+" written out\n");
+		
+		
+			
+	}
+        /**
+         * 
+         * @param lexicon
+         * @throws IOException 
+         */
+	private static void writeByReference(Lexicon lexicon) throws IOException {
+		List<LexicalEntry> entries;
+		FileWriter writer;
 		Set<Reference> references = lexicon.getReferences();
 	
 		
 		
 		for (Reference ref: references)
 		{
-			writer = new FileWriter(ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex");
+			String filename = ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
+			logger.info("Write lexicon for reference "+ref.toString()+" to "+filename);
+			writer = new FileWriter(filename);
 			entries = lexicon.getEntriesForReference(ref.toString());
 			
 			for (LexicalEntry entry: entries)
@@ -409,22 +476,13 @@ public class Matoll {
 			
 			
 		}
-	
-		Model model = ModelFactory.createDefaultModel();
-		
-		serializer.serialize(lexiconwithFeatures, model);
-		
-		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
-		
-		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
-		
-		// System.out.print("Lexicon: "+output.toString()+" written out\n");
-		
-
-		
-			
 	}
-
+        /**
+         * 
+         * @param vector
+         * @param max
+         * @return 
+         */
 	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
 		
 		HashMap<String,Double> map;
@@ -439,7 +497,12 @@ public class Matoll {
 		return vector;
 		
 	}
-
+        /**
+         * 
+         * @param feature
+         * @param value
+         * @param map 
+         */
 	private static void updateMaximum(String feature, Double value, HashMap<String,Double> map) {
 		
 		
@@ -457,7 +520,11 @@ public class Matoll {
 		}
 		
 	}
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getReference(Model model) {
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:reference"), (RDFNode) null);
 		
@@ -472,7 +539,13 @@ public class Matoll {
 		
 		return null;
 	}
-
+        
+        /**
+         * 
+         * @param model
+         * @return
+         * @throws FileNotFoundException 
+         */
 	private static List<Model> getSentences(Model model) throws FileNotFoundException {
 		
 		// get all ?res <conll:sentence> 
@@ -537,7 +610,11 @@ public class Matoll {
 		
 	}
 
-
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getSubject(Model model) {
 		
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:subj"), (RDFNode) null);
@@ -553,7 +630,12 @@ public class Matoll {
 		
 		return null;
 	}
-
+        
+        /**
+         * 
+         * @param model
+         * @return 
+         */
 	private static String getObject(Model model) {
 		StmtIterator iter = model.listStatements(null,model.getProperty("own:obj"), (RDFNode) null);
 		

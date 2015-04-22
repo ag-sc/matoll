@@ -76,7 +76,8 @@ public class Lexicon {
 	
 		if (entry.getSense() != null)
 		
-			references.add(entry.getSense().getReference());
+			//references.add(entry.getSense().getReference());
+                        references.add(entry.getReference());
 			
 	}
 
@@ -100,8 +101,9 @@ public class Lexicon {
 		Set<Reference> references = new HashSet<Reference>();
 		
 		for (LexicalEntry entry: entries)
-		{
-			references.add(entry.getReference());
+		{   
+                    for (Sense sense : entry.getSense())
+                            references.add(sense.getReference());
 		}
 		
 		return references;

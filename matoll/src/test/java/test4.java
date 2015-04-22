@@ -59,7 +59,7 @@ public class test4 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -72,7 +72,7 @@ public class test4 {
 		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
 		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));

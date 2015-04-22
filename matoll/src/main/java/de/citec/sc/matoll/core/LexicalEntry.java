@@ -1,6 +1,7 @@
 package de.citec.sc.matoll.core;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class LexicalEntry {
@@ -11,11 +12,27 @@ public class LexicalEntry {
 	
 	String POS;
 	
-	HashMap<String,String> argumentMap;
-	
-	Sense Sense;
-	
-	SyntacticBehaviour Behaviour;
+        /*
+        ArgumentType(uri(lexinfoSubject)) 
+        */
+	//HashMap<String,String> argumentMap;
+	/*
+        TODO: Set
+        */
+	//Sense Sense;
+        HashSet<Sense> hashsetSense = new HashSet<Sense>();
+        
+        //HashMap<Sense,SyntacticBehaviour> sense_syntacticBehaviour = new HashMap<Sense,SyntacticBehaviour>();
+	/*
+        TODO: Set
+        */
+	HashSet<SyntacticBehaviour> hashsetBehaviour = new HashSet<SyntacticBehaviour>();
+        
+        /*
+        * OLD TODO: Add for each sense one SyntacticBehaviour (for ArgumentMapping) and one argumentMapping?
+        Why is the argumentMapping stored seperatly, if we have the Syntactic Behaviour already? Why not computing on the fly, when accessing the entry?
+        *
+        */
 	
 	Provenance Provenance;
 	
@@ -23,7 +40,7 @@ public class LexicalEntry {
 	
 	public LexicalEntry()
 	{
-		argumentMap = new HashMap<String,String>();
+		//argumentMap = new HashMap<String,String>();
 		Sentences  = new ArrayList<String>();
 			
 	}
@@ -31,17 +48,17 @@ public class LexicalEntry {
 	
 	public LexicalEntry(String uri) {
 		URI = uri;
-		argumentMap = new HashMap<String,String>();
+		//argumentMap = new HashMap<String,String>();
 		Sentences  = new ArrayList<String>();
 	}
 	
 
-	public String getMapping(String synArg)
+	/*public String getMapping(String synArg)
 	{
 		if (argumentMap.containsKey(synArg))
 			return argumentMap.get(synArg);
 		else return null;
-	}
+	}*/
 
 	public void setCanonicalForm(String canonicalForm)
 	{
@@ -65,14 +82,13 @@ public class LexicalEntry {
 		
 		string += "POS: "+this.POS+"\n";
 		
-		string += Behaviour.toString();
+                for(SyntacticBehaviour Behaviour : hashsetBehaviour) string += Behaviour.toString();
+		for(Sense sense :hashsetSense) string += sense.toString();
 		
-		string += Sense.toString();
-		
-		for (String synArg: argumentMap.keySet())
+		/*for (String synArg: argumentMap.keySet())
 		{
 			string += synArg + " => "+argumentMap.get(synArg)+"\n";
-		}
+		}*/
 		
 		
 		for (String sentence: Sentences)
@@ -86,24 +102,31 @@ public class LexicalEntry {
 
 
 	
-	public Sense getSense()
+	public HashSet<Sense> getSense()
 	{
-		return Sense;
+		return hashsetSense;
 	}
 	
 	
-	public void setSense(Sense sense) {
-		Sense = sense;
+	public void addSense(Sense sense) {
+		hashsetSense.add(sense);
 		
 	}
-
-
+        /*
+        TODO: Increase to multiple sense arguments
+        */
+        /**
+         * Mapping of argument types
+         * @param sense
+         * @return 
+         */
 	public HashMap<String,String> computeMappings(Sense sense) {
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		
-		for (SyntacticArgument synArg: Behaviour.getSynArgs())
-		{
+                for(SyntacticBehaviour Behaviour : hashsetBehaviour){
+                    for (SyntacticArgument synArg: Behaviour.getSynArgs())
+                    {
 			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
 						
 				for (SenseArgument senseArg: sense.getSenseArgs())
@@ -114,17 +137,20 @@ public class LexicalEntry {
 					{
 						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
 					
-						// System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
+						System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
 					}	
 				}
-			}	
+                    }
+                }
+			
 		return map;
 	}
 	
+       /* //Don't we need one ArgumentMap per Sense?
 	public HashMap<String,String> getArgumentMap()
 	{
 		return this.argumentMap;
-	}
+	}*/
 	
 
 
@@ -155,15 +181,15 @@ public class LexicalEntry {
 			return false;
 		}
 		LexicalEntry other = (LexicalEntry) obj;
-		if (Behaviour == null) {
+		if (hashsetBehaviour.isEmpty()) {
 			// System.out.print("Behaviour is null!\n");
-			if (other.Behaviour != null)
+			if (!other.hashsetBehaviour.isEmpty())
 				return false;
-		} else { 
-			// System.out.print("Checking Syntactic behaviour...\n"); 
-			if (!Behaviour.equals(other.Behaviour))
-				return false;
-				}
+		} /*else if (!Behaviour.equals(other.Behaviour))
+			return false;*/
+                else if (!hashsetBehaviour.equals(other.hashsetBehaviour))
+			return false;
+				
 		if (CanonicalForm == null) {
 			if (other.CanonicalForm != null)
 				return false;
@@ -174,16 +200,19 @@ public class LexicalEntry {
 				return false;
 		} else if (!POS.equals(other.POS))
 			return false;
-		if (Sense == null) {
-			if (other.Sense != null)
+		if (hashsetSense.isEmpty()) {
+			if (!other.hashsetSense.isEmpty())
 				return false;
-		} else if (!Sense.equals(other.Sense))
+		} /*else if (!Sense.equals(other.Sense))
+			return false;*/
+                else if (!hashsetSense.equals(other.hashsetSense))
 			return false;
 		
-		if (argumentMap == null) {
+		/*if (argumentMap == null) {
 			if (other.argumentMap != null)
 				return false;
-		} else 
+		} */
+                /*else 
 		{
 			for (String synArg: this.getArgumentMap().keySet())	
 			{
@@ -194,21 +223,21 @@ public class LexicalEntry {
 				}
 					
 			}
-		}
+		}*/
 		return true;
 	}
 
 
-	public SyntacticBehaviour getBehaviour() {
-		return Behaviour;
+	public HashSet<SyntacticBehaviour> getBehaviours() {
+		return hashsetBehaviour;
 	}
 	
 	
 
-	public void setSyntacticBehaviour(SyntacticBehaviour behaviour)
+	public void addSyntacticBehaviour(SyntacticBehaviour behaviour)
 	{
-		Behaviour = behaviour;
-	}
+            hashsetBehaviour.add(behaviour);
+        }
 	
 
 
@@ -251,18 +280,33 @@ public class LexicalEntry {
 	}
 
 
-	public Reference getReference() {
+	/*public Reference getReference() {
 		
 		if (Sense != null) return Sense.getReference();
 		else return null;
 		
-	}
-
-
-	public void setMappings(HashMap<String, String> map) {
-		argumentMap = map;
+	}*/
+        public Reference getReference() {
+		
+		if (hashsetSense!=null){
+                    if(hashsetSense.size()>1) System.err.println("Returns reference of the first sense!");
+                    for(Sense sense: hashsetSense){
+                        return sense.getReference();
+                    }
+                    
+                }
+		else return null;
+            return null;
 		
 	}
+
+
+        
+
+	/*public void setMappings(HashMap<String, String> map) {
+		argumentMap = map;
+		
+	}*/
 
 
 	public List<String> getSentences() {

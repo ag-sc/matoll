@@ -39,7 +39,7 @@ public class test6 {
 		
 		sense.setReference(new Restriction("http://dbpedia.org/resource/Female","http://dbpedia.org/ontology/gender"));
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
@@ -51,7 +51,7 @@ public class test6 {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		Provenance provenance = new Provenance();
 		
@@ -60,9 +60,9 @@ public class test6 {
 		
 		entry.setProvenance(provenance);
 		
-		entry = lexicon.createNewEntry("female");
+		//entry = lexicon.createNewEntry("female");
 		
-		entry.setSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 
@@ -70,17 +70,17 @@ public class test6 {
 		
 		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","2",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","2"));
 		
-		entry.setSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour);
 		
 		
 		
 		entry.setProvenance(provenance);
 		
-		lexicon.addEntry(entry);
+                lexicon.addEntry(entry);
 		
 		Model model = ModelFactory.createDefaultModel();
 		

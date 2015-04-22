@@ -9,11 +9,15 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.utils.Debug;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public abstract class SparqlPattern {
 	
-	Lemmatizer Lemmatizer;
+
+	protected Lemmatizer Lemmatizer;
+        
+        protected Debug Debugger;
 	
 	public abstract String getID();
 	
@@ -24,8 +28,29 @@ public abstract class SparqlPattern {
 		Lemmatizer = lemmatizer;
 		
 	}
+        
+        public void setDebugger(Debug debugger) {
+		
+		Debugger = debugger;
+		
+	}
+        
+        public Debug getDebugger() {
+		
+		return Debugger;
+		
+	}
 	
-	protected static List<String> getSentences(Model model) {
+	public Lemmatizer getLemmatizer() {
+		return Lemmatizer;
+	}
+	
+        /**
+         * Extracts plain sentences out of the RDF-Model
+         * @param model Model, containing the parsed sentence
+         * @return List of plain sentences
+         */
+	protected List<String> getSentences(Model model) {
 		
 		List<String> sentences = new ArrayList<String>();
 		
@@ -38,13 +63,18 @@ public abstract class SparqlPattern {
 			stmt = iter.next();
 			
 	        sentences.add(stmt.getObject().toString());
-	        // System.out.print(stmt.getObject().toString()+"\n");
+                Debugger.print("Sentence: "+stmt.getObject().toString(),SparqlPattern.class.getName());
 	    }
 		
 		return sentences;
 
 	}	
 	
+        /**
+         * Returns for a given RDF-Model the reference encoded in the model.
+         * @param model Model
+         * @return Reference/URI
+         */
 	protected String getReference(Model model) {
 		
 		StmtIterator iter = model.listStatements(null,model.createProperty("conll:reference"), (RDFNode) null);
@@ -54,10 +84,11 @@ public abstract class SparqlPattern {
 		while (iter.hasNext()) {
 						
 			stmt = iter.next();
-			
+
+                Debugger.print("Reference: "+stmt.getObject().toString(),SparqlPattern.class.getName());
 	        return stmt.getObject().toString();
 
-	    }
+                }
 		
 		return null;
 
