@@ -60,7 +60,7 @@ public class test6 {
 		
 		entry.setProvenance(provenance);
 		
-		entry = lexicon.createNewEntry("female");
+		//entry = lexicon.createNewEntry("female");
 		
 		entry.addSense(sense);
 		
@@ -80,7 +80,7 @@ public class test6 {
 		
 		entry.setProvenance(provenance);
 		
-		lexicon.addEntry(entry);
+                lexicon.addEntry(entry);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
