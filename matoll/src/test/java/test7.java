@@ -23,9 +23,9 @@ public class test7 {
 		
 		Sense sense1 = new Sense();
 		
-		sens1e.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		sense1.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry1.addSense(sense);
+		entry1.addSense(sense1);
 		
 		entry1.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -48,7 +48,7 @@ public class test7 {
 		Sense sense2 = new Sense();
 		
 		sense2.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
+
 		entry2.addSense(sense2);
 		
 		entry2.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -78,6 +78,47 @@ public class test7 {
 		// The following should say that entry is already contained:
 		
 		if (lexicon.contains(entry2)) System.out.println("Entry already included!!!");
+		else System.out.println("Entry not included!!!");
+                
+                
+                
+                LexicalEntry entry3 = new LexicalEntry();
+		
+		entry3.setCanonicalForm("marry");
+		
+		Sense sense3 = new Sense();
+		
+		sense3.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+
+		entry3.addSense(sense3);
+		
+		entry3.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+		
+		SyntacticBehaviour behaviour4 = new SyntacticBehaviour();
+		
+		behaviour4.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+				
+		behaviour4.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour4.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		
+		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
+		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+		
+		entry3.addSyntacticBehaviour(behaviour4);
+		
+		SyntacticBehaviour behaviour5 = new SyntacticBehaviour();
+		
+		behaviour5.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePP");
+				
+		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2","with"));
+		
+		entry3.addSyntacticBehaviour(behaviour5);
+                
+                
+                // The following should say that entry is already contained:
+		
+		if (lexicon.contains(entry3)) System.out.println("Entry already included!!!");
 		else System.out.println("Entry not included!!!");
 		
 		
