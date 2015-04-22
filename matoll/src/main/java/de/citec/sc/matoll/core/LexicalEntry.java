@@ -137,7 +137,7 @@ public class LexicalEntry {
 					{
 						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
 					
-						// System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
+						System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
 					}	
 				}
                     }
