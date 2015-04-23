@@ -28,9 +28,9 @@
 <LexicalEntry_1_female_Reference>
         a       <http://www.w3.org/2002/07/owl#Restriction> ;
         <http://www.w3.org/2002/07/owl#hasValue>
-                "http://dbpedia.org/ontology/gender" ;
+                "http://dbpedia.org/resource/Female" ;
         <http://www.w3.org/2002/07/owl#onProperty>
-                "http://dbpedia.org/resource/Female" .
+                "http://dbpedia.org/ontology/gender" .
 
 <LexicalEntry_1_female_SynBehaviour2>
         a       <http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicativeFrame> ;
