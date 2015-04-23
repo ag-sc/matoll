@@ -248,8 +248,20 @@ public class LexiconLoader {
 			 stmt = iter.next();
 		
 			 behaviour = new SyntacticBehaviour();
-
-			 synBehaviour = (Resource) stmt.getObject();
+                         
+                         //#####################################
+                         
+                         System.out.println("Uri:"+stmt.getObject().toString());
+			 /*
+                         Why do we try to convert an URI into a resource?
+                         */
+                         //synBehaviour = (Resource) stmt.getObject();
+                         
+                         /*
+                         before fixing the templates (adding URI), basically this happend:
+                         */
+                         synBehaviour = (Resource) null;
+                         //#####################################
 			 
 			 StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
 					 
@@ -257,11 +269,36 @@ public class LexiconLoader {
 		    	
 				synArg = it.next();
 		    	
-			 	object = (Resource) synArg.getObject();
-			 	
+                                 //#####################################
+                                
+                                System.out.println("Object:"+synArg.getObject());
+                                /*
+                                TODO: Why is the synArg.getObject here sometimes a literal, e.g. write@en ?
+                                */
+                                try{
+                                    object = (Resource) synArg.getObject();
+                                }
+			 	catch(Exception e){
+                                    e.printStackTrace();
+                                    object = (Resource) null;
+                                }
+			 	 //#####################################
+                                
 			 	predicate = synArg.getPredicate();
 			 	
-			 	prepStatement = object.getProperty(LEMON.marker);
+                                //#####################################
+                                /*
+                                TODO: Null pointer exception is raised - why?
+                                Check if LEMON.marker is set!
+                                */
+                                try{
+                                    prepStatement = object.getProperty(LEMON.marker);
+                                }
+			 	catch(Exception e){
+                                    e.printStackTrace();
+                                    prepStatement = null;
+                                }
+                                //#####################################
 			 	
 			 	preposition = null;
 			 
@@ -283,9 +320,21 @@ public class LexiconLoader {
 			 		}
 			 	}
 			 		
-			 	if (!predicate.toString().equals(RDF.type.toString()))
+			 	if (!predicate.toString().equals(RDF.type.toString())){
+                                    /*
+                                    TODO: Check Nullpointer exception
+                                    */
+                                    try{
+                                    behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
+                                    }
+                                    catch(Exception e){
+                                    e.printStackTrace();
+                                    }
+                                }
+                                    
 			 	
-			 	behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
+                                
+			 	
 		    }	
 		    	
 	    
@@ -337,8 +386,11 @@ public class LexiconLoader {
 		
 		Statement stmt;
 		
-						
-		StmtIterator it = syntacticBehaviour.listProperties(RDF.type);
+                /*
+                TODO: Check NullPointer exception
+                */
+                try{
+                    StmtIterator it = syntacticBehaviour.listProperties(RDF.type);
 		    while( it.hasNext() ) {
 		    
 		    	stmt = it.next();
@@ -355,6 +407,12 @@ public class LexiconLoader {
 			
 
 		return value;
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    return value;
+                }
+		
 		
 	}
 
