@@ -54,15 +54,15 @@ public class LexiconLoader {
 			 
 			 subject = stmt.getSubject();
 			 
-			 // System.out.println("Processing entry "+subject.toString());
+			 // //System.out.println("Processing entry "+subject.toString());
 
 			 List<SyntacticBehaviour> behaviours = getSyntacticArguments(subject,model);
 			 
 			 List<Sense> senses = getSenseArguments(subject,model);
 			 
-			 // System.out.println(behaviours.size()+" synargs extracted");
+			 // //System.out.println(behaviours.size()+" synargs extracted");
 			 
-			 // System.out.println(senses.size()+" senses extracted");
+			 // //System.out.println(senses.size()+" senses extracted");
 			 
 			 
 			 HashMap<String,String> map;
@@ -249,19 +249,7 @@ public class LexiconLoader {
 		
 			 behaviour = new SyntacticBehaviour();
                          
-                         //#####################################
-                         
-                         System.out.println("Uri:"+stmt.getObject().toString());
-			 /*
-                         Why do we try to convert an URI into a resource?
-                         */
-                         //synBehaviour = (Resource) stmt.getObject();
-                         
-                         /*
-                         before fixing the templates (adding URI), basically this happend:
-                         */
-                         synBehaviour = (Resource) null;
-                         //#####################################
+                         synBehaviour = (Resource) stmt.getObject();
 			 
 			 StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
 					 
@@ -269,36 +257,13 @@ public class LexiconLoader {
 		    	
 				synArg = it.next();
 		    	
-                                 //#####################################
-                                
-                                System.out.println("Object:"+synArg.getObject());
-                                /*
-                                TODO: Why is the synArg.getObject here sometimes a literal, e.g. write@en ?
-                                */
-                                try{
-                                    object = (Resource) synArg.getObject();
-                                }
-			 	catch(Exception e){
-                                    e.printStackTrace();
-                                    object = (Resource) null;
-                                }
-			 	 //#####################################
+                                object = (Resource) synArg.getObject();
+                               
                                 
 			 	predicate = synArg.getPredicate();
 			 	
-                                //#####################################
-                                /*
-                                TODO: Null pointer exception is raised - why?
-                                Check if LEMON.marker is set!
-                                */
-                                try{
-                                    prepStatement = object.getProperty(LEMON.marker);
-                                }
-			 	catch(Exception e){
-                                    e.printStackTrace();
-                                    prepStatement = null;
-                                }
-                                //#####################################
+                                prepStatement = object.getProperty(LEMON.marker);
+                                
 			 	
 			 	preposition = null;
 			 
@@ -311,7 +276,7 @@ public class LexiconLoader {
 			 		{
 			 			preposition = getCanonicalForm(prepositionEntry,model);
 		    		
-			 			// System.out.print("Preposition: "+preposition+"\n");
+			 			// //System.out.print("Preposition: "+preposition+"\n");
 		    		
 			 		}
 			 		else
@@ -321,15 +286,7 @@ public class LexiconLoader {
 			 	}
 			 		
 			 	if (!predicate.toString().equals(RDF.type.toString())){
-                                    /*
-                                    TODO: Check Nullpointer exception
-                                    */
-                                    try{
                                     behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
-                                    }
-                                    catch(Exception e){
-                                    e.printStackTrace();
-                                    }
                                 }
                                     
 			 	
@@ -369,7 +326,7 @@ public class LexiconLoader {
 				}
 				else
 				{
-					// System.out.print("Entry: "+subject+" has no reference!!!\n");
+					// //System.out.print("Entry: "+subject+" has no reference!!!\n");
 					return null;
 				}
 			}
@@ -386,34 +343,22 @@ public class LexiconLoader {
 		
 		Statement stmt;
 		
-                /*
-                TODO: Check NullPointer exception
-                */
-                try{
-                    StmtIterator it = syntacticBehaviour.listProperties(RDF.type);
-		    while( it.hasNext() ) {
-		    
-		    	stmt = it.next();
-		    	
-		    	value = stmt.getObject().toString();
-		    	
-		    	if (!value.equals("http://lemon-model.net/lemon#Frame"))
-		    	{
-		    		// System.out.print(value+"\n");
-			    	return value;
-			    	
-		    	}
-		    }
-			
+                StmtIterator it = syntacticBehaviour.listProperties(RDF.type);
+                while( it.hasNext() ) {
+
+                    stmt = it.next();
+
+                    value = stmt.getObject().toString();
+
+                    if (!value.equals("http://lemon-model.net/lemon#Frame"))
+                    {
+                            // //System.out.print(value+"\n");
+                            return value;
+
+                    }
+                }
 
 		return value;
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                    return value;
-                }
-		
-		
 	}
 
 	private static String getCanonicalForm(Resource subject, Model model) {
@@ -452,7 +397,7 @@ public class LexiconLoader {
 		}
 		else
 		{
-			// System.out.print("Entry "+subject+" has no canonical form!!!\n");
+			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
 			return null;
 		}		
 	}		

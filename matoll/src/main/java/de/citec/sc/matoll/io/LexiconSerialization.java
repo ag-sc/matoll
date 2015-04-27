@@ -59,6 +59,15 @@ public class LexiconSerialization {
 				
 				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
 				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.toString()));
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                    if (synbehaviour != null)
+                                    {
+                                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+                                            model.add(model.createResource(entry.getURI()+"_Sense"),LEMON.isA,model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
+                                         }
+
+                                    }
+                                }
 			}
 			
 			if (entry.getReference() instanceof de.citec.sc.matoll.core.Restriction)
@@ -70,6 +79,16 @@ public class LexiconSerialization {
 				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.hasValue, model.createLiteral(reference.getValue()));
 				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.onProperty, model.createLiteral(reference.getProperty()));
 				model.add(model.createResource(entry.getURI()+"_Reference"), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
+                                
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                    if (synbehaviour != null)
+                                    {
+                                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+                                            model.add(model.createResource(entry.getURI()+"_Sense"),LEMON.isA,model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
+                                         }
+
+                                    }
+                                }
 				
 			}
 			
@@ -91,12 +110,11 @@ public class LexiconSerialization {
                     synbehaviour_counter+=1;
                     if (synbehaviour != null)
                     {
-			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"_SynBehaviour")+Integer.toString(synbehaviour_counter));
+			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)));
 			model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                            Resource res = model.createResource(synarc.getValue());
                             //synarc.getArgumentType();
-                            model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),res);                    
+                            model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
                          }
 			
                     }
@@ -123,6 +141,8 @@ public class LexiconSerialization {
 
                 }*/
                 
+                /*
+                Raus!
                 int sense_counter = 0;
                 for( Sense sense:entry.getSense()){
                     HashMap<String, String> argumentMap = entry.computeMappings(sense);
@@ -134,7 +154,7 @@ public class LexiconSerialization {
                         model.add(model.createResource(entry.getURI()+"_Sense"+Integer.toBinaryString(sense_counter)),model.createProperty(argumentMap.get(synArg)),res);
                         }
 
-                }
+                }*/
 		
 		
 		Provenance provenance = entry.getProvenance();
