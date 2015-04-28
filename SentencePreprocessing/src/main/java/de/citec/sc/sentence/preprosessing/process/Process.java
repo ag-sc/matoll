@@ -19,10 +19,10 @@ public class Process {
 		/*
 		 * examples for properties can be found under /src/test/resources/
 		 */
-		/*if (args.length == 0) {
+		if (args.length == 0) {
 			System.out.println("Run: java Process ontology/pathToPropertyFile");
 			System.exit(1);
-		}*/
+		}
 		String endpoint = "http://dbpedia.org/sparql";
 		Boolean with_sentences = true;
 		/*
@@ -32,16 +32,16 @@ public class Process {
 		String folderToSaveResourcesSentences = "/Users/swalter/Desktop/Resources";
 		String language = "en";
                 
-                String property_file = "/Users/swalter/Desktop/dbepdiaProperties_QALD-5.txt";
+                //String property_file = "/Users/swalter/Desktop/dbepdiaProperties_QALD-5.txt";
 		
 		IndexReader index = new IndexReader(pathToIndex,language);
 		List<List<String>> properties = new ArrayList<List<String>>();
 		try {
-			if(property_file.endsWith(".owl")){
+			if(args[0].endsWith(".owl")){
 				loadOntology(args[0],properties,language);
 			}
 			else{
-				loadPropertyList(property_file,properties,language);
+				loadPropertyList(args[0],properties,language);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
