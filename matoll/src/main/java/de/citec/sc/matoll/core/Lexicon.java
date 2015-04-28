@@ -39,7 +39,7 @@ public class Lexicon {
 	
 	public void addEntry(LexicalEntry entry)
 	{
-		LexicalEntry containedEntry;
+                
 		
 		if(!entries.contains(entry))
 		{
@@ -60,12 +60,20 @@ public class Lexicon {
 			}
 		}
 		else
-		{
+		{   
+                        /*
+                    This is the entry from the list entries, which is updated
+                    */
+                        LexicalEntry containedEntry;
 	
 			containedEntry = getLexicalEntry(entry);
 			
 			List<String> sentences = new ArrayList<String>();
-			
+                        
+                        /*
+                        Increase the frequency
+                        */
+                        containedEntry.getProvenance().increaseFrequency(entry.getProvenance().getFrequency());
 			sentences.addAll(entry.getSentences());
 			sentences.addAll(containedEntry.getSentences());
 			

@@ -11,6 +11,20 @@ public class Provenance {
 	
 	Double Confidence;
 	
+        Integer Frequency;
+
+        public Integer getFrequency() {
+            return Frequency;
+        }
+
+        public void setFrequency(Integer frequency) {
+            Frequency = frequency;
+        }
+        
+        public void increaseFrequency(Integer frequency){
+            Frequency += frequency;
+        }
+
 	public String getAgent()
 	{
 		return Agent;

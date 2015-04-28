@@ -173,6 +173,8 @@ public class LexiconSerialization {
 		
 			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
 			
+                       	if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.frequency, model.createResource(provenance.getFrequency().toString()));
+
 			
 			
 			

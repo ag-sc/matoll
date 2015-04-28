@@ -119,7 +119,7 @@ public class Matoll {
 		maxima = new HashMap<String,Double>();
 		
 		
-		Provenance provenance;
+		//Provenance provenance;
 		
 		Pattern p = Pattern.compile("^--(\\w+)=(\\w+|\\d+)$");
 		  
@@ -373,7 +373,8 @@ public class Matoll {
 
 			if (classifier.predict(vector)==1)
 			{
-				provenance = new Provenance();
+				Provenance provenance = new Provenance();
+                                
 
 				provenance.setConfidence(classifier.predict(vector, 1));
 

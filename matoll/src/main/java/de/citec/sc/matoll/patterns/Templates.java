@@ -14,6 +14,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -22,6 +23,7 @@ import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Debug;
 import de.citec.sc.matoll.utils.Lemmatizer;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Templates {
 	
@@ -62,6 +64,10 @@ public class Templates {
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
 	        		 	entry.addSense(sense);
+                                        
+                                        Provenance provenance = new Provenance();
+                                        provenance.setFrequency(1);
+                                        entry.setProvenance(provenance);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -185,6 +191,9 @@ public class Templates {
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
 	        		 	entry.addSense(sense);
+                                        Provenance provenance = new Provenance();
+                                        provenance.setFrequency(1);
+                                        entry.setProvenance(provenance);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -308,6 +317,10 @@ public class Templates {
 	           		 	sense.setReference(new SimpleReference(reference));
 	           		 	
 	        		 	entry.addSense(sense);
+                                        
+                                        Provenance provenance = new Provenance();
+                                        provenance.setFrequency(1);
+                                        entry.setProvenance(provenance);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -426,6 +439,9 @@ public class Templates {
 	           		 	sense.setReference(new SimpleReference(reference));
 	        		 	
 	        		 	entry.addSense(sense);
+                                        Provenance provenance = new Provenance();
+                                        provenance.setFrequency(1);
+                                        entry.setProvenance(provenance);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -550,6 +566,10 @@ public class Templates {
 	        		 	sense.setReference(new SimpleReference(reference));
 	        		 	
 	        		 	entry.addSense(sense);
+                                        
+                                        Provenance provenance = new Provenance();
+                                        provenance.setFrequency(1);
+                                        entry.setProvenance(provenance);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
