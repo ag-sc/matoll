@@ -11,7 +11,7 @@ public class Provenance {
 	
 	Double Confidence;
 	
-        Integer Frequency;
+        Integer Frequency = 1;
 
         public Integer getFrequency() {
             return Frequency;
