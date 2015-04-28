@@ -16,6 +16,7 @@ public class PROVO {
 	public static Property generatedBy = defaultModel.createProperty("http://www.w3.org/ns/prov#generatedBy");
 	public static Property startedAtTime = defaultModel.createProperty("http://www.w3.org/ns/prov#startedAtTime");
 	public static Property endedatTime = defaultModel.createProperty("http://www.w3.org/ns/prov#endedAtTime");
+        public static Property confidence = defaultModel.createProperty("http://www.w3.org/ns/prov#confidence");
 	
 	
 	public static Resource Activity = defaultModel.createProperty("http://www.w3.org/ns/prov#Activity");

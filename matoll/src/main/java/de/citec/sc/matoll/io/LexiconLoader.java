@@ -18,6 +18,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -25,6 +26,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
+import de.citec.sc.matoll.vocabularies.PROVO;
 
 
 public class LexiconLoader {
@@ -64,6 +66,7 @@ public class LexiconLoader {
 			 
 			 // //System.out.println(senses.size()+" senses extracted");
 			 
+                         //System.out.println("Confidence:"+getConfidence(subject,model));
 			 
 			 HashMap<String,String> map;
 			 
@@ -75,7 +78,11 @@ public class LexiconLoader {
 					 for (Sense sense: senses)
 					 { 
 						 entry = new LexicalEntry();
-						 
+                                                 
+                                                 Provenance provenance = new Provenance();
+                                                 provenance.setConfidence(Double.valueOf(getConfidence(subject,model)));
+						 entry.setProvenance(provenance);
+                                                 
 						 entry.setURI(subject.toString());
 					 
 						 entry.setCanonicalForm(getCanonicalForm(subject,model));
@@ -90,6 +97,9 @@ public class LexiconLoader {
 						 {
 							 entry.addSense(sense);
 							 //entry.setMappings(map);
+                                                         /*
+                                                         TODO: Why creating multiple entries? see test6.java (creates two entries, but should contain 1 entry)
+                                                         */
 							 lexicon.addEntry(entry);
 						 }
 					 }
@@ -369,6 +379,7 @@ public class LexiconLoader {
 		
 		Literal form;
 		
+
 		stmt = subject.getProperty(LEMON.canonicalForm);
 		
 		if (stmt != null)
@@ -400,6 +411,53 @@ public class LexiconLoader {
 			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
 			return null;
 		}		
-	}		
+	}
+        
+        private static String getConfidence(Resource subject, Model model) {
+		
+		Resource prov_activity;
+		
+		Statement stmt;
+		
+		Literal form;
+		
+                /*
+                if no confidence is given in .ttl file return 0.0
+                */
+                String return_vale = "0.0";
+
+		stmt = subject.getProperty(PROVO.generatedBy);
+		
+		if (stmt != null)
+		{
+			prov_activity = (Resource) stmt.getObject();
+			
+			if (prov_activity != null)
+			{
+				stmt = prov_activity.getProperty(PROVO.confidence);
+				
+				if (stmt != null)
+				{
+				form = (Literal) prov_activity.getProperty(PROVO.confidence).getObject();
+					return form.toString();
+				}
+				else
+				{
+					return return_vale;
+				}
+				
+			}
+			else
+			{
+				return return_vale;
+			}
+		}
+		else
+		{
+			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
+			return return_vale;
+		}
+	}
+        
 }
 

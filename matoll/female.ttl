@@ -3,10 +3,11 @@
                 <LexicalEntry_1_female> .
 
 <LexicalEntry_1_female_Activity>
-        a             <http://www.w3.org/ns/prov#Activity> ;
-        <confidence>  "0.8" ;
+        a       <http://www.w3.org/ns/prov#Activity> ;
         <http://www.w3.org/ns/prov#associatedWith>
-                <AdjectiveExtractor> .
+                <AdjectiveExtractor> ;
+        <http://www.w3.org/ns/prov#confidence>
+                "0.8" .
 
 <LexicalEntry_1_female>
         a       <http://lemon-model.net/lemon#LexicalEntry> ;
