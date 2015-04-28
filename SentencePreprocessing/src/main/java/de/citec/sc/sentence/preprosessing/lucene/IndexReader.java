@@ -86,7 +86,8 @@ public class IndexReader {
 					}
 				}
 			}
-		    int hitsPerPage = 1000;
+		    //int hitsPerPage = 1000;
+                    int hitsPerPage = 10;
 		    
 		    
 	        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);

@@ -298,6 +298,7 @@ public class LexiconEvaluation {
 	}
 
 	private static boolean checkMappings(LexicalEntry entry, LexicalEntry gold_entry) {
+            return false;
 		
             /*
             Mapping does not exist any more.
@@ -306,7 +307,7 @@ public class LexiconEvaluation {
 		//HashMap<String,String> entry_map = entry.getArgumentMap();
 		//HashMap<String,String> gold_entry_map = gold_entry.getArgumentMap();
 				
-		for (String synArg: entry_map.keySet())
+		/*for (String synArg: entry_map.keySet())
 		{
 			
 			if (!gold_entry_map.containsKey(synArg)) 
@@ -319,13 +320,14 @@ public class LexiconEvaluation {
 			}
 		}
 		
-		return true;
+		return true;*/
 		
 	}
 
 	private static boolean checkSyntax(LexicalEntry entry, LexicalEntry gold_entry) {
+            return false;
 		
-		return entry.getBehaviour().equals(gold_entry.getBehaviour());
+		//return entry.getBehaviour().equals(gold_entry.getBehaviour());
 		
 	
 	}

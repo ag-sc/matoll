@@ -70,9 +70,9 @@ public class test6 {
 		
 		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","2",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","1",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","2"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
 		entry.addSyntacticBehaviour(behaviour);
 		

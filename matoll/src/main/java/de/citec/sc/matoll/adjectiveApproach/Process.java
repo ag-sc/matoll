@@ -45,22 +45,23 @@ public class Process {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
-		String path_annotatedFiles = "/Users/swalter/Documents/annotatedAdjectives/";
-		String path_raw_files = "/Users/swalter/Documents/plainAdjectives/";
+		String path_annotatedFiles = "/Users/swalter/Backup/Documents/annotatedAdjectives/";
+		String path_raw_files = "/Users/swalter/Backup/Documents/plainAdjectives/";
 		String path_to_write_arff = "/Users/swalter/Desktop/adjective.arff";
 		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
-		String path_to_wordnet = "/Users/swalter/Software/WordNet-3.0";
+		String path_to_wordnet = "/Users/swalter/Backup/Software/WordNet-3.0";
 		String path_to_objects = "/Users/swalter/Desktop/Resources/";
 		/*
 		 * TODO: Automatically import via maven
 		 */
 		
-		String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
+		//String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
+                String path_to_tagger_model ="resources/english-caseless-left3words-distsim.tagger";
 		Classifier cls = new SMO();
 		
 		List<String> csv_output = new ArrayList<String>();
 		
-		OntologyImporter importer = new OntologyImporter("/Users/swalter/Downloads/dbpedia_2014.owl","RDF/XML");
+		OntologyImporter importer = new OntologyImporter("/Users/swalter/Backup/Downloads/dbpedia_2014.owl","RDF/XML");
 		
 		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
 		
@@ -159,14 +160,20 @@ public class Process {
 							 List<String> result = prediction.predict(current);
 							 if(result.get(0).equals("1")){
 								 counter+=1;
-								 System.out.println("Add to lexica");
+								 /*System.out.println("Add to lexica");
 								 System.out.println("Adjective:"+adjectiveObject.getAdjectiveTerm());
 								 System.out.println("Object:"+adjectiveObject.getObject());
 								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
-								 System.out.println();
-								 lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
+								 System.out.println();*/
+                                                                 try{
+                                                                    lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
 										 adjectiveObject.getFrequency(),result.get(1)));
-								 csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
+                                                                    csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
+                                                                 }
+                                                                 catch(Exception e){
+                                                                        e.printStackTrace();
+                                                                 }
+								 
 							 }						 
 						 }
 					}
@@ -217,8 +224,9 @@ public class Process {
 	}
 
 	private static LexicalEntry getLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, String distribution) {
-LexicalEntry entry;
+                LexicalEntry entry;
 		
+                //System.out.println("Create Entry with: "+adjective);
 		entry = lexicon.createNewEntry(adjective);
 		
 		entry.setCanonicalForm(adjective);
@@ -227,7 +235,7 @@ LexicalEntry entry;
 
 		sense.setReference(new Restriction(object_uri,uri));
 		
-		//entry.addSense(sense);
+		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		

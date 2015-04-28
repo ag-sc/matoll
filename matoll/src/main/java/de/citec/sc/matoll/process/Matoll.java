@@ -98,7 +98,8 @@ public class Matoll {
                 /*
                 activate debugger
                 */
-                debugger.setDebug(true);
+                debugger.setDebug(false);
+                
 
 		String directory;
 		String mode = "train";
@@ -268,6 +269,16 @@ public class Matoll {
 		LexiconSerialization serializer = new LexiconSerialization();
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
+                
+                Model model = ModelFactory.createDefaultModel();
+		
+		serializer.serialize(lexiconwithFeatures, model);
+		
+		FileOutputStream out = new FileOutputStream(new File(output_lexicon.replace(".lex","_beforeTraining.ttl")));
+		
+		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+                
+                out.close();
 		
 		FeatureVector vector;
 		logger.info("Starting "+mode.toString()+"\n");	
@@ -311,7 +322,7 @@ public class Matoll {
 				
 				if (gold.contains(entry))
 				{
-					System.out.print("Lexicon contains "+entry+"\n");
+					//System.out.print("Lexicon contains "+entry+"\n");
 					
 					trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
 					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
@@ -433,13 +444,15 @@ public class Matoll {
 		
 	
 		logger.info("Write lexicon to "+output_lexicon+"\n");
-		Model model = ModelFactory.createDefaultModel();
+		model = ModelFactory.createDefaultModel();
 		
 		serializer.serialize(lexiconwithFeatures, model);
 		
-		FileOutputStream out = new FileOutputStream(new File(output_lexicon));
+		out = new FileOutputStream(new File(output_lexicon));
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+                
+                out.close();
 		
 		// System.out.print("Lexicon: "+output.toString()+" written out\n");
 		
