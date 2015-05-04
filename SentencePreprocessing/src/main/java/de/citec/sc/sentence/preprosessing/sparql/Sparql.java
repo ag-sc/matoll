@@ -51,8 +51,8 @@ public class Sparql {
 				+ "?y <"+uri+"> ?x." 
 				+ "{?y rdfs:label ?subj. FILTER (lang(?subj) = '"+language+"')} UNION" 
                                 + "{?y rdfs:label ?subj. FILTER (lang(?subj) = 'en')}" 
-                                + "{?x rdfs:label ?obj. FILTER (lang(?subj) = '"+language+"')} UNION" 
-                                + "{?x rdfs:label ?obj. FILTER (lang(?subj) = 'en')}" 
+                                + "{?x rdfs:label ?obj. FILTER (lang(?obj) = '"+language+"')} UNION" 
+                                + "{?x rdfs:label ?obj. FILTER (lang(?obj) = 'en')}" 
 				+ "}";
                 
 		return query;
