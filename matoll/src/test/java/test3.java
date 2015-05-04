@@ -21,7 +21,7 @@ public class test3 {
 		
 		LexiconWithFeatures lexicon = new LexiconWithFeatures();
 		
-		String gold_standard_lexicon = "/Users/cimiano/GitHubSC/matoll/dbpedia_en.rdf";
+		String gold_standard_lexicon = "../lexica/dbpedia_en.rdf";
 		
 		System.out.print("Loading lexicon from: "+gold_standard_lexicon+"\n");
 		

@@ -18,19 +18,19 @@ public class test5 {
 		
 		LexiconLoader loader = new LexiconLoader();
 		
-		Lexicon gold = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf.ttl");
+		Lexicon gold = loader.loadFromFile("../lexica/foaf.ttl");
 		
-		Lexicon lexicon1 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_1.ttl");
+		Lexicon lexicon1 = loader.loadFromFile("../lexica/foaf_1.ttl");
 		
-		Lexicon lexicon2 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_2.ttl");
+		Lexicon lexicon2 = loader.loadFromFile("../lexica/foaf_2.ttl");
 		
-		Lexicon lexicon3 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_3.ttl");
+		Lexicon lexicon3 = loader.loadFromFile("../lexica/foaf_3.ttl");
 		
-		Lexicon lexicon4 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_4.ttl");
+		Lexicon lexicon4 = loader.loadFromFile("../lexica/foaf_4.ttl");
 		
-		Lexicon lexicon5 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_5.ttl");
+		Lexicon lexicon5 = loader.loadFromFile("../lexica/foaf_5.ttl");
 		
-		Lexicon lexicon6 = loader.loadFromFile("/Users/cimiano/Projects/matoll/lexica/foaf_6.ttl");
+		Lexicon lexicon6 = loader.loadFromFile("../lexica/foaf_6.ttl");
 	
 		LexiconEvaluation eval = new LexiconEvaluation();
 	

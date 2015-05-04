@@ -21,7 +21,7 @@ public class test4 {
 		
 		LexiconWithFeatures lexicon = new LexiconWithFeatures();
 		
-		String gold_standard_lexicon = "/Users/cimiano/GitHubSC/matoll/dbpedia_en.rdf";
+		String gold_standard_lexicon = "../lexica/dbpedia_en.rdf";
 		
 		System.out.print("Loading lexicon from: "+gold_standard_lexicon+"\n");
 		
@@ -37,6 +37,8 @@ public class test4 {
 		
 		vector.add("freq", 1.0);
 		vector.add("id1",5.0);
+                
+                
 		
 		for (LexicalEntry entry: marry_entries)
 		{
@@ -82,6 +84,8 @@ public class test4 {
 		System.out.print(entry);
 		
 		lexicon.add(entry,vector);
+                
+              
 		
 		for (LexicalEntry myEntry: lexicon.getEntries())
 		{

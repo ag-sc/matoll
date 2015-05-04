@@ -27,7 +27,7 @@ lemon:subjOfProp :know_arg1 ;
 lemon:objOfProp  :know_arg2.
 
 :friend_of a lemon:LexicalEntry ; 
-    lexinfo:partOfSpeech lexinfo:noun ;
+    lexinfo:partOfSpeech lexinfo:verb ;
     lemon:canonicalForm :friend_form;
     lemon:synBehavior :friend_of_nounpp;
     lemon:sense :friend_of_sense.
