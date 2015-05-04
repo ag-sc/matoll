@@ -12,27 +12,11 @@ public class LexicalEntry {
 	
 	String POS;
 	
-        /*
-        ArgumentType(uri(lexinfoSubject)) 
-        */
-	//HashMap<String,String> argumentMap;
-	/*
-        TODO: Set
-        */
-	//Sense Sense;
+
         HashSet<Sense> hashsetSense = new HashSet<Sense>();
-        
-        //HashMap<Sense,SyntacticBehaviour> sense_syntacticBehaviour = new HashMap<Sense,SyntacticBehaviour>();
-	/*
-        TODO: Set
-        */
+
 	HashSet<SyntacticBehaviour> hashsetBehaviour = new HashSet<SyntacticBehaviour>();
         
-        /*
-        * OLD TODO: Add for each sense one SyntacticBehaviour (for ArgumentMapping) and one argumentMapping?
-        Why is the argumentMapping stored seperatly, if we have the Syntactic Behaviour already? Why not computing on the fly, when accessing the entry?
-        *
-        */
 	
 	Provenance Provenance;
 	
@@ -112,9 +96,6 @@ public class LexicalEntry {
 		hashsetSense.add(sense);
 		
 	}
-        /*
-        TODO: Increase to multiple sense arguments
-        */
         /**
          * Mapping of argument types
          * @param sense
@@ -145,12 +126,7 @@ public class LexicalEntry {
 			
 		return map;
 	}
-	
-       /* //Don't we need one ArgumentMap per Sense?
-	public HashMap<String,String> getArgumentMap()
-	{
-		return this.argumentMap;
-	}*/
+
 	
 
 
@@ -280,12 +256,6 @@ public class LexicalEntry {
 	}
 
 
-	/*public Reference getReference() {
-		
-		if (Sense != null) return Sense.getReference();
-		else return null;
-		
-	}*/
         public Reference getReference() {
 		
 		if (hashsetSense!=null){
@@ -302,11 +272,6 @@ public class LexicalEntry {
 
 
         
-
-	/*public void setMappings(HashMap<String, String> map) {
-		argumentMap = map;
-		
-	}*/
 
 
 	public List<String> getSentences() {

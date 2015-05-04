@@ -9,6 +9,8 @@ import java.util.Set;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
+import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconLoader;
 
 public class LexiconEvaluation {
@@ -298,16 +300,43 @@ public class LexiconEvaluation {
 	}
 
 	private static boolean checkMappings(LexicalEntry entry, LexicalEntry gold_entry) {
-            return false;
+            
+            HashMap<String,String> mapping_entry = new HashMap<String,String>();
+            HashMap<String,String> mapping_gold_entry = new HashMap<String,String>();
+            
+            for(Sense sense : entry.getSense()){
+                mapping_entry.putAll(entry.computeMappings(sense));
+            }
+            
+            for(Sense sense : gold_entry.getSense()){
+                mapping_gold_entry.putAll(gold_entry.computeMappings(sense));
+            }
+            
+            for (String synArg: mapping_entry.keySet())
+		{
+			
+			if (!mapping_gold_entry.containsKey(synArg)) 
+			{
+				return false;
+			}
+			else
+			{
+				if (!mapping_entry.get(synArg).equals(mapping_gold_entry.get(synArg))) return false;
+			}
+		}
+            
+            return true;
 		
+            
+            
             /*
             Mapping does not exist any more.
             TODO: Solve differently
             */
-		//HashMap<String,String> entry_map = entry.getArgumentMap();
-		//HashMap<String,String> gold_entry_map = gold_entry.getArgumentMap();
+		/*HashMap<String,String> entry_map = entry.getArgumentMap();
+		HashMap<String,String> gold_entry_map = gold_entry.getArgumentMap();
 				
-		/*for (String synArg: entry_map.keySet())
+		for (String synArg: entry_map.keySet())
 		{
 			
 			if (!gold_entry_map.containsKey(synArg)) 
@@ -325,21 +354,23 @@ public class LexiconEvaluation {
 	}
 
 	private static boolean checkSyntax(LexicalEntry entry, LexicalEntry gold_entry) {
-            return false;
+            /*
+            TODO: Work on Behaviour
+            */
+            HashSet<SyntacticBehaviour> set_gold_entry = gold_entry.getBehaviours();
+            HashSet<SyntacticBehaviour> set_entry = entry.getBehaviours();
+            
+            return set_gold_entry.equals(set_entry);
 		
-		//return entry.getBehaviour().equals(gold_entry.getBehaviour());
-		
-	
 	}
 
 	private static boolean checkLemmaReference(LexicalEntry entry, LexicalEntry gold_entry) {
 	
 		boolean check = true;
 	
-		// check if one of the references is ok
-		
-//		if (entry.getReference() != null && gold_entry.getReference() != null)
-//			if (!entry.getReference().equals(gold_entry.getReference())) check=false;
+		//TODO: check if one of the references is ok
+		if (entry.getReference() != null && gold_entry.getReference() != null)
+			if (!entry.getReference().toString().equals(gold_entry.getReference().toString())) check=false;
 		
 		if (entry.getPOS() != null && gold_entry.getPOS() != null)
 			if (!entry.getPOS().equals(gold_entry.getPOS())) check=false;
