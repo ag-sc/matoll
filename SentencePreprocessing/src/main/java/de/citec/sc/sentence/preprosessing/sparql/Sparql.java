@@ -30,7 +30,7 @@ public class Sparql {
 	}
 	
 	private static String getQueryLabel(String language, String uri){
-		String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		/*String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 				+ "SELECT DISTINCT ?y ?subj ?obj ?x WHERE {"
 				+ "?y <"+uri+"> ?x." 
 				+ "?y rdfs:label ?subj." 
@@ -40,16 +40,36 @@ public class Sparql {
 				+ "?x rdfs:label ?obj."
 				+ "FILTER ((lang(?obj) = 'ja') ||"
 				+ "(lang(?obj) = 'en' && "
-				+"NOT EXISTS {?x rdfs:label ?oobj. FILTER (lang(?oobj) = '"+language+"') } ))}";
+				+"NOT EXISTS {?x rdfs:label ?oobj. FILTER (lang(?oobj) = '"+language+"') } ))}";*/
+                
+                                /*
+                                UNION in SPARQL is leftbound
+                                 */
+            
+                String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "SELECT DISTINCT ?y ?subj ?obj ?x WHERE {"
+				+ "?y <"+uri+"> ?x." 
+				+ "{?y rdfs:label ?subj. FILTER (lang(?subj) = '"+language+"')} UNION" 
+                                + "{?y rdfs:label ?subj. FILTER (lang(?subj) = 'en')}" 
+                                + "{?x rdfs:label ?obj. FILTER (lang(?subj) = '"+language+"')} UNION" 
+                                + "{?x rdfs:label ?obj. FILTER (lang(?subj) = 'en')}" 
+				+ "}";
+                
 		return query;
 	}
 	
 	private static String getQueryData(String language, String uri){
-		String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+//		String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+//				+ "SELECT DISTINCT ?y ?subj ?obj WHERE "
+//				+ "{?y <"+uri+"> ?obj. "
+//				+ "?y rdfs:label ?subj. FILTER ((lang(?subj) = '"+language+"') ||"
+//				+"(lang(?subj) = 'en' && NOT EXISTS {?y rdfs:label ?osubj. FILTER (lang(?osubj) = '"+language+"')} ))"
+//				+ "}";
+                String query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 				+ "SELECT DISTINCT ?y ?subj ?obj WHERE "
 				+ "{?y <"+uri+"> ?obj. "
-				+ "?y rdfs:label ?subj. FILTER ((lang(?subj) = '"+language+"') ||"
-				+"(lang(?subj) = 'en' && NOT EXISTS {?y rdfs:label ?osubj. FILTER (lang(?osubj) = '"+language+"')} ))"
+                                + "{?y rdfs:label ?subj. FILTER (lang(?subj) = '"+language+"')} UNION" 
+                                + "{?y rdfs:label ?subj. FILTER (lang(?subj) = 'en')}" 
 				+ "}";
 		return query;
 	}
