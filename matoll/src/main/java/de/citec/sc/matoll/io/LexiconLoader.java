@@ -72,14 +72,14 @@ public class LexiconLoader {
 			 
 			 HashMap<String,String> map;
 			 
-		
+                         
 			 if (behaviours.size() > 0)
-			 {
-				 for (SyntacticBehaviour behaviour: behaviours)
+			 {      entry = new LexicalEntry();
+				for (SyntacticBehaviour behaviour: behaviours)
 				 {
 					 for (Sense sense: senses)
 					 { 
-						 entry = new LexicalEntry();
+						 //entry = new LexicalEntry();
                                                  
                                                  Provenance provenance = new Provenance();
                                                  provenance.setConfidence(Double.valueOf(getConfidence(subject,model)));
@@ -99,14 +99,11 @@ public class LexiconLoader {
 						 {
 							 entry.addSense(sense);
 							 //entry.setMappings(map);
-                                                         /*
-                                                         TODO: Why creating multiple entries? see test6.java (creates two entries, but should contain 1 entry)
-                                                         */
-							 lexicon.addEntry(entry);
+							 //lexicon.addEntry(entry);
 						 }
 					 }
-					 
 				 }
+                                 lexicon.addEntry(entry);
 			 }
 				 
 			else
