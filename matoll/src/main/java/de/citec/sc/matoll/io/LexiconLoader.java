@@ -19,6 +19,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -26,6 +27,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
+import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 
 
@@ -219,7 +221,12 @@ public class LexiconLoader {
 		    }
 		   
 		    sen.setSenseArgs(senseArguments);
-		    sen.setReference(new SimpleReference(getReference(sense,model)));
+                    List<String> restriction = getReferenceRestriction(sense,model);
+//                    restriction.get(0) == value
+//                    restriction.get(1) == property
+                    if(restriction.size()== 0) sen.setReference(new SimpleReference(getReference(sense,model)));
+                    else sen.setReference(new Restriction(restriction.get(0),restriction.get(1)));
+                   
 		    senses.add(sen);
 		    	
 		}
@@ -327,16 +334,17 @@ public class LexiconLoader {
 			if (stmt2 != null)
 			{
 				reference =  stmt2.getObject();
-		
+                                
 				// fix this for adjectives which have a blank node as reference
 				
 				if (reference != null && !reference.isAnon())
 				{
+                                        System.out.println("reference1:"+reference.toString());
 					return reference.toString();
 				}
 				else
 				{
-					// //System.out.print("Entry: "+subject+" has no reference!!!\n");
+					System.out.print("Entry has no reference!!!\n");
 					return null;
 				}
 			}
@@ -458,6 +466,48 @@ public class LexiconLoader {
 			return return_vale;
 		}
 	}
+
+        
+    private static List<String> getReferenceRestriction(Resource sense, Model model) {
+
+        Statement lemon_restriction;
+        List<String> restriction = new ArrayList<String>();
+        Statement stmt;
+
+        Literal value;
+        Literal property;
+
+        RDFNode reference;
+
+            lemon_restriction = sense.getProperty(LEMON.reference);
+
+            if (lemon_restriction != null)
+            {
+                
+                try{
+                    //reference =  lemon_restriction.getObject();
+                    value = (Literal) lemon_restriction.getProperty(OWL.hasValue).getObject();
+                    restriction.add(value.toString());
+                    //System.out.println("Found Value:"+value.toString());
+
+                    property = (Literal) lemon_restriction.getProperty(OWL.onProperty).getObject();
+                    restriction.add(property.toString());
+                    //System.out.println("Found Property:"+property.toString());
+                }
+                catch (Exception e){
+                    restriction.clear();
+                    return restriction;
+                }
+                
+            }
+            
+        if(restriction.size()==2) return restriction;
+        else {
+            restriction.clear();
+            return restriction;
+        }
+                
+    }
         
 }
 
