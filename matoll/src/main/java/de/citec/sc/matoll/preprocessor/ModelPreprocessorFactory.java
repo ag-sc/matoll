@@ -27,6 +27,9 @@ public class ModelPreprocessorFactory {
 			
 		}
 		
+                /*
+                TODO: Adapt other languages
+                */
 		if (language.equals("DE"))
 		{
 			Set<String >pos = new HashSet<String>();

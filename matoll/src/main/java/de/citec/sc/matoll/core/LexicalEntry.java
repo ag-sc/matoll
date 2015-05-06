@@ -260,6 +260,9 @@ public class LexicalEntry {
 		
 		if (hashsetSense!=null){
                     if(hashsetSense.size()>1) System.err.println("Returns reference of the first sense!");
+                    /*
+                    TODO: return List of of references
+                    */
                     for(Sense sense: hashsetSense){
                         return sense.getReference();
                     }
