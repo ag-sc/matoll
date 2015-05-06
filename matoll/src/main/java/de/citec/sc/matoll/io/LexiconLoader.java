@@ -336,12 +336,12 @@ public class LexiconLoader {
 				
 				if (reference != null && !reference.isAnon())
 				{
-                                        System.out.println("reference1:"+reference.toString());
+                                        //System.out.println("reference1:"+reference.toString());
 					return reference.toString();
 				}
 				else
 				{
-					System.out.print("Entry has no reference!!!\n");
+					//System.out.print("Entry has no reference!!!\n");
 					return null;
 				}
 			}
