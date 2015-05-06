@@ -326,18 +326,24 @@ public class Templates {
 	        		 	
 	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
-	        			if (Lemmatizer != null)
-	        			{
-	        				String term = Lemmatizer.getLemma(adj)+"@en";
-	        				logger.info("Lemmatized cannonical form:"+term+"/n");
-                                                debugger.print("Lemmatized cannonical form:"+term, "");
-	        				entry.setCanonicalForm(term);
-	        			}
-	        			else
-	        			{
-	        				entry.setCanonicalForm(adj+"@en");
-	        			}
+                                        /*
+                                        no lemmatizer for the adjectives, in order to avoid that for example married is mapped to marry
+                                        */
+//	        			if (Lemmatizer != null)
+//	        			{
+//	        				String term = Lemmatizer.getLemma(adj)+"@en";
+//	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+//                                                debugger.print("Lemmatized cannonical form:"+term, "");
+//	        				entry.setCanonicalForm(term);
+//	        			}
+//	        			else
+//	        			{
+//	        				entry.setCanonicalForm(adj+"@en");
+//	        			}
 	        				
+                                        
+                                        entry.setCanonicalForm(adj+"@en");
+                                        
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicateFrame");
