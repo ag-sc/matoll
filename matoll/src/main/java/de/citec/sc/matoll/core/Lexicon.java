@@ -24,6 +24,8 @@ public class Lexicon {
 		map = new HashMap<String,List<LexicalEntry>>();
 		
 		references = new HashSet<Reference>();
+                
+                this.baseURI = "http://dblexipedia.org/lexicon/";
 	}
 	
 	public Lexicon(String baseURI)

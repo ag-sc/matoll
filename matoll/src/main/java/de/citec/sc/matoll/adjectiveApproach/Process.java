@@ -82,7 +82,7 @@ public class Process {
 		/*
 		 * Lexicon
 		 */
-		Lexicon lexicon = new Lexicon();
+		Lexicon lexicon = new Lexicon("http://dblexipedia.org/lexicon/");
 		
 		
 		/*
