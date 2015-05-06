@@ -2,11 +2,11 @@ package de.citec.sc.matoll.core;
 
 public class SimpleReference implements Reference {
 
-	String Reference;
+	String reference;
 	
 	public SimpleReference(String reference)
 	{
-		Reference = reference;
+		this.reference = reference;
 	}
 	
 	
@@ -15,7 +15,7 @@ public class SimpleReference implements Reference {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((Reference == null) ? 0 : Reference.hashCode());
+				+ ((reference == null) ? 0 : reference.hashCode());
 		return result;
 	}
 
@@ -29,18 +29,21 @@ public class SimpleReference implements Reference {
 		if (getClass() != obj.getClass())
 			return false;
 		SimpleReference other = (SimpleReference) obj;
-		if (Reference == null) {
-			if (other.Reference != null)
+		if (reference == null) {
+			if (other.reference != null)
 				return false;
-		} else if (!Reference.equals(other.Reference))
+		} else if (!reference.equals(other.reference))
 			return false;
 		return true;
 	}
 
+        public String getURI() {
+               return reference;
+        }
 
 	public String toString()
 	{
-		return Reference;
+		return reference;
 	}
 
 }

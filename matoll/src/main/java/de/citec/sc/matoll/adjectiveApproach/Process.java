@@ -30,6 +30,8 @@ import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
 import weka.core.Instance;
@@ -166,7 +168,7 @@ public class Process {
 								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
 								 System.out.println();*/
                                                                  try{
-                                                                    lexicon.addEntry(getLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
+                                                                    lexicon.addEntry(createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
 										 adjectiveObject.getFrequency(),result.get(1)));
                                                                     csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                                                  }
@@ -223,7 +225,7 @@ public class Process {
 		
 	}
 
-	private static LexicalEntry getLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, String distribution) {
+	private static LexicalEntry createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, String distribution) {
                 LexicalEntry entry;
 		
                 //System.out.println("Create Entry with: "+adjective);
@@ -233,7 +235,7 @@ public class Process {
 		
 		Sense sense = new Sense();
 
-		sense.setReference(new Restriction(object_uri,uri));
+		sense.setReference(new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(object_uri),object_uri,uri));
 		
 		entry.addSense(sense);
 		
@@ -393,5 +395,17 @@ public class Process {
 		 
 		
 	}
+        
+        private static String frag(String uri) {
+            
+            String  pattern =  ".+(/|#)(\\w+)";
+            Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
+        
+            while (matcher.find()) {
+                  return matcher.group(2);
+            }
+            
+            return uri;
+        }
 
 }

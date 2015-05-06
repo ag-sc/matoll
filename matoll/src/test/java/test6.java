@@ -37,7 +37,7 @@ public class test6 {
 		
 		Sense sense = new Sense();
 		
-		sense.setReference(new Restriction("http://dbpedia.org/ontology/gender","http://dbpedia.org/resource/Female"));
+		sense.setReference(new Restriction(lexicon.getBaseURI()+"RestrictionClass_gender_Female","http://dbpedia.org/ontology/gender","http://dbpedia.org/resource/Female"));
 		
 		entry.addSense(sense);
 		

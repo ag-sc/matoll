@@ -218,19 +218,28 @@ public class LexiconLoader {
 		    }
 		   
 		    sen.setSenseArgs(senseArguments);
-                    List<String> restriction = getReferenceRestriction(sense,model);
-//                    restriction.get(0) == value
-//                    restriction.get(1) == property
-                    if(restriction.size()== 0) sen.setReference(new SimpleReference(getReference(sense,model)));
-                    else sen.setReference(new Restriction(restriction.get(0),restriction.get(1)));
+                    
+                    Resource reference = getReference(sense,model);
+                    
+                    if (reference != null) {
+                        
+                        // check whether it's a restriction class
+                        String property = getPropertyObject(reference,OWL.onProperty);
+                        String value    = getPropertyObject(reference,OWL.hasValue);
+                        
+                        if (property != null && value != null) {
+                            sen.setReference(new Restriction(reference.toString(),property,value));
+                        }
+                        else {
+                            sen.setReference(new SimpleReference(reference.toString()));
+                        }
+                    }
                    
 		    senses.add(sen);
 		    	
 		}
 	
-		return senses;
-		
-		
+		return senses;	
 	}
 
 	private static List<SyntacticBehaviour> getSyntacticArguments(Resource subject, Model model) {
@@ -320,37 +329,35 @@ public class LexiconLoader {
 	}
 	
 
-	private static String getReference(Resource sense, Model model) {
-		
-		    Statement stmt2;
-		    
-		    RDFNode reference;
-			
-			stmt2 = sense.getProperty(LEMON.reference);
-			
-			if (stmt2 != null)
-			{
-				reference =  stmt2.getObject();
-                                
-				// fix this for adjectives which have a blank node as reference
-				
-				if (reference != null && !reference.isAnon())
-				{
-                                        //System.out.println("reference1:"+reference.toString());
-					return reference.toString();
-				}
-				else
-				{
-					//System.out.print("Entry has no reference!!!\n");
-					return null;
-				}
-			}
-			else
-			{
-				return null;
-			}
-		
-		}	
+	private static Resource getReference(Resource sense, Model model) {
+
+            Resource uri; 
+            
+            try {
+                uri = (Resource) sense.getProperty(LEMON.reference).getObject();
+                
+                if (uri.isAnon()) {
+                   return null;
+                } 
+                else {
+                   return uri;
+                }
+            } 
+            catch (Exception e) {
+                return null;
+            }
+        }
+            
+        private static String getPropertyObject(Resource r, Property p) {
+            
+            try {
+                return r.getProperty(p).getObject().toString();
+            }
+            catch (Exception e) {
+                return null;
+            }
+        }
+	
 
 	private static String getFrame(Resource syntacticBehaviour, Model model) {
 				
@@ -463,48 +470,6 @@ public class LexiconLoader {
 			return return_vale;
 		}
 	}
-
-        
-    private static List<String> getReferenceRestriction(Resource sense, Model model) {
-
-        Statement lemon_restriction;
-        List<String> restriction = new ArrayList<String>();
-        Statement stmt;
-
-        Literal value;
-        Literal property;
-
-        RDFNode reference;
-
-            lemon_restriction = sense.getProperty(LEMON.reference);
-
-            if (lemon_restriction != null)
-            {
-                
-                try{
-                    //reference =  lemon_restriction.getObject();
-                    value = (Literal) lemon_restriction.getProperty(OWL.hasValue).getObject();
-                    restriction.add(value.toString());
-                    //System.out.println("Found Value:"+value.toString());
-
-                    property = (Literal) lemon_restriction.getProperty(OWL.onProperty).getObject();
-                    restriction.add(property.toString());
-                    //System.out.println("Found Property:"+property.toString());
-                }
-                catch (Exception e){
-                    restriction.clear();
-                    return restriction;
-                }
-                
-            }
-            
-        if(restriction.size()==2) return restriction;
-        else {
-            restriction.clear();
-            return restriction;
-        }
-                
-    }
         
 }
 

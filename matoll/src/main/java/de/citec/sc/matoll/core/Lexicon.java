@@ -89,6 +89,11 @@ public class Lexicon {
 			
 	}
 
+        public String getBaseURI() 
+        {
+               return baseURI;
+        }
+        
 	public List<LexicalEntry> getEntries()
 	{
 		return entries;

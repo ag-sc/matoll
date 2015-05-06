@@ -2,19 +2,25 @@ package de.citec.sc.matoll.core;
 
 public class Restriction implements Reference {
 
+        String uri;
 	String hasValue;
 	String onProperty;
 	
-	public Restriction(String value, String property)
+	public Restriction(String uri, String value, String property)
 	{
-		hasValue = value;
+                this.uri   = uri;
+		hasValue   = value;
 		onProperty = property;
 	}
+        
+        public String getURI() {
+               return uri;
+        }
 
 	@Override
 	public String toString() {
-		return "Restriction [hasValue=" + hasValue + ", onProperty="
-				+ onProperty + "]";
+		return "Restriction [hasValue=" + hasValue 
+                                + ", onProperty=" + onProperty + "]";
 	}
 
 	@Override
