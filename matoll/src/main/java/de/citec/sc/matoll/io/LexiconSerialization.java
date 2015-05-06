@@ -75,10 +75,10 @@ public class LexiconSerialization {
 				Restriction reference = (Restriction) entry.getReference();
 				
 				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
-				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(entry.getURI()+"_Reference"));
-				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.hasValue, model.createLiteral(reference.getValue()));
-				model.add(model.createResource(entry.getURI()+"_Reference"), OWL.onProperty, model.createLiteral(reference.getProperty()));
-				model.add(model.createResource(entry.getURI()+"_Reference"), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
+				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.getURI()));
+				model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
+				model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
+				model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
                                 
                                 for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
                                     if (synbehaviour != null)
