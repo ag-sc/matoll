@@ -11,10 +11,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import de.citec.sc.matoll.coreference.Coreference;
-import de.citec.sc.matoll.coreference.EnglishCoreference;
-import de.citec.sc.matoll.coreference.GermanCoreference;
-import de.citec.sc.matoll.coreference.JapaneseCoreference;
-import de.citec.sc.matoll.coreference.SpanishCoreference;
+
 
 public class ModelPreprocessor {
 
@@ -26,29 +23,24 @@ public class ModelPreprocessor {
 	HashMap<String,Integer> Node2IntMapping;
 	
 	HashMap<String,String> senseArgs;
+
+    
         
         Coreference coreference;
 	
 	Set<String> POS;
+        
+        public Coreference getCoreference() {
+            return coreference;
+        }
+
+        public void setCoreference(Coreference coreference) {
+            this.coreference = coreference;
+        }
 	
-	public ModelPreprocessor(String language)
+	public ModelPreprocessor()
 	{
 		POS = new HashSet<String>();
-                if(language.equals("EN")){
-                    coreference = new EnglishCoreference();
-                }
-                
-                if(language.equals("DE")){
-                    coreference = new GermanCoreference();
-                }
-                
-                if(language.equals("ES")){
-                    coreference = new SpanishCoreference();
-                }
-                
-                if(language.equals("JA")){
-                    coreference = new JapaneseCoreference();
-                }
 	}
 	
 	boolean coref = false;

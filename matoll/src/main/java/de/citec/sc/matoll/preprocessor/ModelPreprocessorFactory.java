@@ -1,5 +1,9 @@
 package de.citec.sc.matoll.preprocessor;
 
+import de.citec.sc.matoll.coreference.EnglishCoreference;
+import de.citec.sc.matoll.coreference.GermanCoreference;
+import de.citec.sc.matoll.coreference.JapaneseCoreference;
+import de.citec.sc.matoll.coreference.SpanishCoreference;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +23,10 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor(language);
+			ModelPreprocessor processor = new ModelPreprocessor();
 			
+                        processor.setCoreference(new EnglishCoreference());
+               
 			processor.setPOS(pos);
 			
 			return processor;
@@ -38,8 +44,10 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor(language);
+			ModelPreprocessor processor = new ModelPreprocessor();
 			
+                        processor.setCoreference(new GermanCoreference());
+                        
 			processor.setPOS(pos);
 			
 			return processor;
@@ -53,7 +61,9 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor(language);
+			ModelPreprocessor processor = new ModelPreprocessor();
+                        
+                        processor.setCoreference(new SpanishCoreference());
 			
 			processor.setPOS(pos);
 			
