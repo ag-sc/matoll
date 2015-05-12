@@ -10,6 +10,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.coreference.Coreference;
+import de.citec.sc.matoll.coreference.EnglishCoreference;
+import de.citec.sc.matoll.coreference.GermanCoreference;
+import de.citec.sc.matoll.coreference.JapaneseCoreference;
+import de.citec.sc.matoll.coreference.SpanishCoreference;
 
 public class ModelPreprocessor {
 
@@ -21,12 +26,29 @@ public class ModelPreprocessor {
 	HashMap<String,Integer> Node2IntMapping;
 	
 	HashMap<String,String> senseArgs;
+        
+        Coreference coreference;
 	
 	Set<String> POS;
 	
-	public ModelPreprocessor()
+	public ModelPreprocessor(String language)
 	{
 		POS = new HashSet<String>();
+                if(language.equals("EN")){
+                    coreference = new EnglishCoreference();
+                }
+                
+                if(language.equals("DE")){
+                    coreference = new GermanCoreference();
+                }
+                
+                if(language.equals("ES")){
+                    coreference = new SpanishCoreference();
+                }
+                
+                if(language.equals("JA")){
+                    coreference = new JapaneseCoreference();
+                }
 	}
 	
 	boolean coref = false;
@@ -91,7 +113,7 @@ public class ModelPreprocessor {
 			}
 		}
 		
-		if (coref) computeCoreference(model);
+		if (coref) coreference.computeCoreference(model, Resource2Lemma, Int2NodeMapping, Node2IntMapping, senseArgs);
 				
 	}
         /**
@@ -125,59 +147,7 @@ public class ModelPreprocessor {
 		}
 		
 	}
-        /**
-         * 
-         * @param model 
-         */
-	private void computeCoreference(Model model) {
-		
-		String lemma;
-		Integer number;
-		
-		// System.out.print("Computing coreference!!!\n");
-		
-		for (String resource: Resource2Lemma.keySet())
-		{
-			lemma = Resource2Lemma.get(resource);
-			
-			if (lemma.equals("which") || lemma.equals("who"))
-			{
-				// System.out.print("Contains "+lemma+"\n");
-				
-				number = Node2IntMapping.get(resource);
-				
-				// System.out.print("... at position "+number+"\n");
-				
-				if (number > 1)
-				{
-					if (Resource2Lemma.get(Int2NodeMapping.get(number -1)).equals(","))
-					{
-						
-						// System.out.print("... previous one is a comma "+(number-1)+"\n");
-						if (number > 2 && senseArgs.containsKey(Int2NodeMapping.get(number -2)))
-						{
-							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -2))));
-							// System.out.print("Relative pronoun" + lemma + " resolved to "+(number-2)+"!!!\n");
-						}
-						
-					}
-					else
-					{
-						if (senseArgs.containsKey(Int2NodeMapping.get(number -1)))
-						{
-							model.add(model.getResource(resource), model.createProperty("own:senseArg"), model.createResource(senseArgs.get(Int2NodeMapping.get(number -1))));
-							// System.out.print("Relative pronoun" + lemma + " resolved to "+(number-1)+"!!!\n");
-						}
-					}
-				}
-				
-				
-			}
-			
-		}
-		
-		
-	}
+
         /**
          * 
          * @param resources

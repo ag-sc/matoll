@@ -19,7 +19,7 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor();
+			ModelPreprocessor processor = new ModelPreprocessor(language);
 			
 			processor.setPOS(pos);
 			
@@ -38,7 +38,7 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor();
+			ModelPreprocessor processor = new ModelPreprocessor(language);
 			
 			processor.setPOS(pos);
 			
@@ -53,7 +53,7 @@ public class ModelPreprocessorFactory {
 			pos.add("nn");
 			pos.add("dobj");
 			
-			ModelPreprocessor processor = new ModelPreprocessor();
+			ModelPreprocessor processor = new ModelPreprocessor(language);
 			
 			processor.setPOS(pos);
 			
