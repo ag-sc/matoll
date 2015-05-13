@@ -112,8 +112,19 @@ public class LexiconEvaluation {
 					update(entries,"lemma",1.0);
 					update(entries,"syntactic",1.0);
 					update(entries,"mapping",1.0);
-
-
+                                        /*
+                                        TODO: Check ../lexica/dbpedia_en.rdf There seems to be entries without POS
+                                        Example: 
+                                        Lexical Entry: TV host@en (http://github.com/cunger/lemon.dbpedia/target/dbpedia_en_3#TV+host__noun)
+                                        POS: null
+                                        Frame:http://www.lexinfo.net/ontology/2.0/lexinfo#NounPredicateFrame
+                                                 Syntactic Argument: http://www.lexinfo.net/ontology/2.0/lexinfo#subject (null)
+                                        Reference: http://dbpedia.org/ontology/TelevisionHost
+                                                 SenseArg: http://lemon-model.net/lemon#isA
+                                        
+                                        => Check in lexicon Loader and if neccesary raise error! (very ugly)
+                                        */
+                                        //System.out.println(entry.toString());
 					if (entry.getPOS().equals(("http://www.lexinfo.net/ontology/2.0/lexinfo#verb"))) 
 					{
 						update(entries,"lemma_verb",1.0);

@@ -103,7 +103,14 @@ public class LexiconLoader {
 						 }
 					 }
 				 }
-                                 lexicon.addEntry(entry);
+                                try{
+                                    //make sure, POS is set (very ugly)
+                                    entry.getPOS().equals("");
+                                    lexicon.addEntry(entry);
+                                }
+                                 catch (Exception e){
+                                     //ignore entries without POS
+                                 }
 			 }
 				 
 			else
@@ -121,6 +128,14 @@ public class LexiconLoader {
 				 {
 					 entry.addSense(sense);
 				 }
+                                 try{
+                                    //make sure, POS is set (very ugly)
+                                    entry.getPOS().equals("");
+                                    lexicon.addEntry(entry);
+                                }
+                                 catch (Exception e){
+                                     //ignore entries without POS
+                                 }
 			 				
 			}
 				 
