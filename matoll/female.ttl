@@ -21,11 +21,11 @@
         <http://lemon-model.net/lemon#sense>
                 <http://dblexipedia.org/lexicon/LexicalEntry_1_female_Sense> ;
         <http://lemon-model.net/lemon#synBehavior>
-                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour2> , <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour1> ;
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour1> , <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour2> ;
         <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech>
                 <http://www.lexinfo.net/ontology/2.0/lexinfo#adjective> ;
         <http://www.w3.org/2002/07/owl#sameAs>
-                <http://kaiko.getalp.org/dbnary/eng/female__Adjective__1> ;
+                <http://lemon-model.net/lexica/uby/ow_eng/OW_eng_LexicalEntry_165> , <http://kaiko.getalp.org/dbnary/eng/female__Adjective__1> , <http://lemon-model.net/lexica/uby/WktEN/WktEN_lexicalEntry_3222> , <http://lemon-model.net/lexica/uby/wn/WN_LexicalEntry_133179> ;
         <http://www.w3.org/ns/prov#generatedBy>
                 <http://dblexipedia.org/lexicon/LexicalEntry_1_female_Activity> .
 
