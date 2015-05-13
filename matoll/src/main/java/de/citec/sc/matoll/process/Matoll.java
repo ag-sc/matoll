@@ -266,7 +266,7 @@ public class Matoll {
 		logger.info("Extracted all entries \n");
 		logger.info("Lexicon contains "+Integer.toString(lexiconwithFeatures.getEntries().size())+" entries\n");
 		
-		LexiconSerialization serializer = new LexiconSerialization();
+		LexiconSerialization serializer = new LexiconSerialization(language);
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
                 

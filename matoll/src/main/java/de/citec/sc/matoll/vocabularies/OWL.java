@@ -16,6 +16,6 @@ public class OWL {
 	
 	public static Property onProperty = defaultModel.createProperty("http://www.w3.org/2002/07/owl#hasValue");
 	public static Property hasValue = defaultModel.createProperty("http://www.w3.org/2002/07/owl#onProperty");
-	
+	public static Property sameAs = defaultModel.createProperty("http://www.w3.org/2002/07/owl#sameAs");
       
 }

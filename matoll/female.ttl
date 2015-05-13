@@ -1,50 +1,54 @@
 <Lexicon>  a    <http://lemon-model.net/lemon#Lexicon> ;
         <http://lemon-model.net/lemon#entry>
-                <LexicalEntry_1_female> .
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female> .
 
-<LexicalEntry_1_female_Activity>
-        a       <http://www.w3.org/ns/prov#Activity> ;
-        <http://www.w3.org/ns/prov#associatedWith>
-                <AdjectiveExtractor> ;
-        <http://www.w3.org/ns/prov#confidence>
-                "0.8" .
-
-<LexicalEntry_1_female>
-        a       <http://lemon-model.net/lemon#LexicalEntry> ;
-        <http://lemon-model.net/lemon#canonicalForm>
-                <LexicalEntry_1_female_CanonicalForm> ;
-        <http://lemon-model.net/lemon#sense>
-                <LexicalEntry_1_female_Sense> ;
-        <http://lemon-model.net/lemon#synBehavior>
-                <LexicalEntry_1_female_SynBehaviour2> , <LexicalEntry_1_female_SynBehaviour1> ;
-        <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech>
-                <http://www.lexinfo.net/ontology/2.0/lexinfo#adjective> ;
-        <http://www.w3.org/ns/prov#generatedBy>
-                <LexicalEntry_1_female_Activity> .
-
-<LexicalEntry_1_female_Reference>
+<http://dblexipedia.org/lexicon/RestrictionClass_gender_Female>
         a       <http://www.w3.org/2002/07/owl#Restriction> ;
         <http://www.w3.org/2002/07/owl#hasValue>
                 "http://dbpedia.org/resource/Female" ;
         <http://www.w3.org/2002/07/owl#onProperty>
                 "http://dbpedia.org/ontology/gender" .
 
-<LexicalEntry_1_female_SynBehaviour2>
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour2>
         a       <http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicativeFrame> ;
         <http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject>
-                <LexicalEntry_1_female_arg1> .
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_arg1> .
 
-<LexicalEntry_1_female_CanonicalForm>
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female>
+        a       <http://lemon-model.net/lemon#LexicalEntry> ;
+        <http://lemon-model.net/lemon#canonicalForm>
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_CanonicalForm> ;
+        <http://lemon-model.net/lemon#sense>
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_Sense> ;
+        <http://lemon-model.net/lemon#synBehavior>
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour2> , <http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour1> ;
+        <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/2.0/lexinfo#adjective> ;
+        <http://www.w3.org/2002/07/owl#sameAs>
+                <http://kaiko.getalp.org/dbnary/eng/female__Adjective__1> ;
+        <http://www.w3.org/ns/prov#generatedBy>
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_Activity> .
+
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female_Sense>
+        <http://lemon-model.net/lemon#isA>
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_arg1> ;
+        <http://lemon-model.net/lemon#reference>
+                <http://dblexipedia.org/lexicon/RestrictionClass_gender_Female> .
+
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female_CanonicalForm>
         <http://lemon-model.net/lemon#writtenRep>
                 "female" .
 
-<LexicalEntry_1_female_SynBehaviour1>
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female_Activity>
+        a       <http://www.w3.org/ns/prov#Activity> ;
+        <http://www.w3.org/ns/prov#associatedWith>
+                <AdjectiveExtractor> ;
+        <http://www.w3.org/ns/prov#confidence>
+                "0.8" ;
+        <http://www.w3.org/ns/prov#frequency>
+                <2> .
+
+<http://dblexipedia.org/lexicon/LexicalEntry_1_female_SynBehaviour1>
         a       <http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame> ;
         <http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg>
-                <LexicalEntry_1_female_arg1> .
-
-<LexicalEntry_1_female_Sense>
-        <http://lemon-model.net/lemon#isA>
-                <LexicalEntry_1_female_arg1> ;
-        <http://lemon-model.net/lemon#reference>
-                <LexicalEntry_1_female_Reference> .
+                <http://dblexipedia.org/lexicon/LexicalEntry_1_female_arg1> .

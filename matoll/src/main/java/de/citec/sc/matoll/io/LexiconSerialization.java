@@ -17,12 +17,18 @@ import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.utils.Dbnary;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 
 public class LexiconSerialization {
+    Dbnary dbnary = null;
+    
+        public LexiconSerialization(String language){
+            this.dbnary = new Dbnary(language);
+        }
 
 	public void serialize(Lexicon lexicon, Model model) {
 		
@@ -40,6 +46,11 @@ public class LexiconSerialization {
 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
 		
+                String dbnary_uri = dbnary.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
+                if(!dbnary_uri.equals("")){
+                    model.add(model.createResource(entry.getURI()), OWL.sameAs, model.createResource(dbnary_uri));
+
+                }
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"_CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
