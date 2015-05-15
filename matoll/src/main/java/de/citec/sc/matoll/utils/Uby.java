@@ -22,9 +22,10 @@ import java.util.logging.Logger;
 public class Uby {
     
     private final HashMap<String,List<DbnaryObject>> uby_list = new HashMap<String,List<DbnaryObject>>();
-    
+    private String language = "";
     public Uby(String language){
         if(language.equals("EN")) loadUby("resources/uby.en");
+        this.language = language;
     }
     
     
