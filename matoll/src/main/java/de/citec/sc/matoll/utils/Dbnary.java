@@ -21,12 +21,13 @@ import java.util.logging.Logger;
 public class Dbnary {
     
     private final HashMap<String,List<DbnaryObject>> dbnaryList = new HashMap<String,List<DbnaryObject>>();
-    
+    private String language = "";
     public Dbnary(String language){
         if(language.equals("EN")) loadDbnary("resources/dbnary.en");
         if(language.equals("DE")) loadDbnary("resources/dbnary.de");
         if(language.equals("JA")) loadDbnary("resources/dbnary.ja");
         if(language.equals("ES")) loadDbnary("resources/dbnary.es");
+        this.language = language;
         
     }
     
@@ -54,6 +55,8 @@ public class Dbnary {
     
     public String getURI(String label, String pos){
         String uri = "";
+        pos = pos.replace("commonNoun", "noun");
+        label = label.replace("@"+language.toLowerCase(), "");
         System.out.println("Input:"+label+" "+pos);
         if(dbnaryList.containsKey(label)){
             List<DbnaryObject> value = dbnaryList.get(label);

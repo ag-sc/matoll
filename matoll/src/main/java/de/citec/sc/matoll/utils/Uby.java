@@ -52,6 +52,8 @@ public class Uby {
     
     public HashSet<String> getURI(String label, String pos){
         HashSet<String> uri = new HashSet<String>();
+        pos = pos.replace("commonNoun", "noun");
+        label = label.replace("@"+language.toLowerCase(), "");
         System.out.println("Input Uby:"+label+" "+pos);
         if(uby_list.containsKey(label)){
             List<DbnaryObject> value = uby_list.get(label);
