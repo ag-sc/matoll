@@ -54,10 +54,10 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-                                        Calendar calendar = Calendar.getInstance();
-                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+Long.toString(timestamp)+"_LexicalEntry_Noun_"+noun);
+//                                        Calendar calendar = Calendar.getInstance();
+//                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_Noun_"+noun);
                                         
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -182,10 +182,10 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-	        			Calendar calendar = Calendar.getInstance();
-                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+Long.toString(timestamp)+"_LexicalEntry_NounWithPrep_"+noun);
+//	        			Calendar calendar = Calendar.getInstance();
+//                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_NounWithPrep_"+noun);
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
@@ -307,10 +307,10 @@ public class Templates {
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-                                        Calendar calendar = Calendar.getInstance();
-                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+Long.toString(timestamp)+"_LexicalEntry_Adjective_"+adj);
+//                                        Calendar calendar = Calendar.getInstance();
+//                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_Adjective_"+adj);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -435,10 +435,10 @@ public class Templates {
                                  debugger.print("e2_arg: "+e2_arg, "");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-                                        Calendar calendar = Calendar.getInstance();
-                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+Long.toString(timestamp)+"_LexicalEntry_TransitiveVerb_"+verb);
+//                                        Calendar calendar = Calendar.getInstance();
+//                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_TransitiveVerb_"+verb);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -562,10 +562,10 @@ public class Templates {
 	        		 
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry();
-                                        Calendar calendar = Calendar.getInstance();
-                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+Long.toString(timestamp)+"_LexicalEntry_IntransitiveVerb_"+verb);
+//                                        Calendar calendar = Calendar.getInstance();
+//                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//	        			long timestamp = currentTimestamp.getTime();
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_IntransitiveVerb_"+verb);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
