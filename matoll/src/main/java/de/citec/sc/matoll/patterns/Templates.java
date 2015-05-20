@@ -185,7 +185,7 @@ public class Templates {
 //	        			Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_NounWithPrep_"+noun);
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_NounWithPrep_"+noun+"_"+prep);
 	        		 	Sense sense = new Sense();
 	        		 	
 	           		 	sense.setReference(new SimpleReference(reference));
@@ -310,7 +310,7 @@ public class Templates {
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_Adjective_"+adj);
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_Adjective_"+adj+"_"+prep);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
@@ -565,7 +565,7 @@ public class Templates {
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
-                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_IntransitiveVerb_"+verb);
+                                        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_IntransitiveVerb_"+verb+"_"+prep);
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
