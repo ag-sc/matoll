@@ -146,6 +146,10 @@ public class LexicalEntry {
 		
 		// System.out.print("I am in equals (LexicalEntry)\n");
 		
+                LexicalEntry other = (LexicalEntry) obj;
+                //now URIs are even so if the URI is not equal, return false and do not check other options
+                if(!this.getURI().equals(other.getURI())) return false;
+                
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -156,7 +160,7 @@ public class LexicalEntry {
 			System.out.print(getClass() +" vs. "+obj.getClass()+"\n");
 			return false;
 		}
-		LexicalEntry other = (LexicalEntry) obj;
+		
 		if (hashsetBehaviour.isEmpty()) {
 			// System.out.print("Behaviour is null!\n");
 			if (!other.hashsetBehaviour.isEmpty())
