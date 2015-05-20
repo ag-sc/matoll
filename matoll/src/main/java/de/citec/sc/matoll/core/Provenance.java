@@ -22,7 +22,7 @@ public class Provenance {
         }
         
         public void increaseFrequency(Integer frequency){
-            Frequency += frequency;
+            this.Frequency += frequency;
         }
 
 	public String getAgent()
