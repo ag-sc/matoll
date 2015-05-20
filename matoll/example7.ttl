@@ -1,0 +1,29 @@
+<Lexicon>  a    <http://lemon-model.net/lemon#Lexicon> ;
+        <http://lemon-model.net/lemon#entry>
+                <dblexipedia.org/lexica/TransitiveFrame_marry> .
+
+<dblexipedia.org/lexica/TransitiveFrame_marry_CanonicalForm>
+        <http://lemon-model.net/lemon#writtenRep>
+                "marry" .
+
+<dblexipedia.org/lexica/TransitiveFrame_marry_Sense>
+        <http://lemon-model.net/lemon#reference>
+                <http://dbpedia.org/ontology/spouse> .
+
+<dblexipedia.org/lexica/TransitiveFrame_marry>
+        a       <http://lemon-model.net/lemon#LexicalEntry> ;
+        <http://lemon-model.net/lemon#canonicalForm>
+                <dblexipedia.org/lexica/TransitiveFrame_marry_CanonicalForm> ;
+        <http://lemon-model.net/lemon#sense>
+                <dblexipedia.org/lexica/TransitiveFrame_marry_Sense> ;
+        <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/2.0/lexinfo#verb> ;
+        <http://www.w3.org/2002/07/owl#sameAs>
+                <http://lemon-model.net/lexica/uby/wn/WN_LexicalEntry_61819> , <http://lemon-model.net/lexica/uby/fn/FN_LexicalEntry_6409> , <http://lemon-model.net/lexica/uby/WktEN/WktEN_lexicalEntry_11798> , <http://kaiko.getalp.org/dbnary/eng/marry__Verb__1> , <http://lemon-model.net/lexica/uby/ow_eng/OW_eng_LexicalEntry_40637> , <http://lemon-model.net/lexica/uby/vn/VN_LexicalEntry_2846> ;
+        <http://www.w3.org/ns/prov#generatedBy>
+                <dblexipedia.org/lexica/TransitiveFrame_marry_Activity> .
+
+<dblexipedia.org/lexica/TransitiveFrame_marry_Activity>
+        a       <http://www.w3.org/ns/prov#Activity> ;
+        <http://www.w3.org/ns/prov#frequency>
+                <3> .
