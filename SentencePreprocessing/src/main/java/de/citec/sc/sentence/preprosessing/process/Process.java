@@ -55,7 +55,7 @@ public class Process {
 		
 		
 		if(with_sentences){
-			String pathWriteSentences = folderToSaveResourcesSentences+"Sentences/";
+			String pathWriteSentences = folderToSaveResourcesSentences+"Sentences_"+language+"/";
 			if(checkFolder(pathWriteSentences)){
 				for (List<String> property: properties){
 					try {
