@@ -148,63 +148,64 @@ public class LexicalEntry {
 		
                 LexicalEntry other = (LexicalEntry) obj;
                 //now URIs are even so if the URI is not equal, return false and do not check other options
-                if(!this.getURI().equals(other.getURI())) return false;
+                if(this.getURI().equals(other.getURI()) && this.getReference().equals(other.getReference())) return true;
+                else return false;
                 
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		// System.out.print("Checking class equivalence!!!\n");
-		if (getClass() != obj.getClass())
-		{
-			System.out.print(getClass() +" vs. "+obj.getClass()+"\n");
-			return false;
-		}
-		
-		if (hashsetBehaviour.isEmpty()) {
-			// System.out.print("Behaviour is null!\n");
-			if (!other.hashsetBehaviour.isEmpty())
-				return false;
-		} /*else if (!Behaviour.equals(other.Behaviour))
-			return false;*/
-                else if (!hashsetBehaviour.equals(other.hashsetBehaviour))
-			return false;
-				
-		if (CanonicalForm == null) {
-			if (other.CanonicalForm != null)
-				return false;
-		} else if (!CanonicalForm.equals(other.CanonicalForm))
-			return false;
-		if (POS == null) {
-			if (other.POS != null)
-				return false;
-		} else if (!POS.equals(other.POS))
-			return false;
-		if (hashsetSense.isEmpty()) {
-			if (!other.hashsetSense.isEmpty())
-				return false;
-		} /*else if (!Sense.equals(other.Sense))
-			return false;*/
-                else if (!hashsetSense.equals(other.hashsetSense))
-			return false;
-		
-		/*if (argumentMap == null) {
-			if (other.argumentMap != null)
-				return false;
-		} */
-                /*else 
-		{
-			for (String synArg: this.getArgumentMap().keySet())	
-			{
-				if (!other.getArgumentMap().containsKey(synArg)) return false;
-				else
-				{
-					if (!other.getArgumentMap().get(synArg).equals(this.getArgumentMap().get(synArg))) return false;
-				}
-					
-			}
-		}*/
-		return true;
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		// System.out.print("Checking class equivalence!!!\n");
+//		if (getClass() != obj.getClass())
+//		{
+//			System.out.print(getClass() +" vs. "+obj.getClass()+"\n");
+//			return false;
+//		}
+//		
+//		if (hashsetBehaviour.isEmpty()) {
+//			// System.out.print("Behaviour is null!\n");
+//			if (!other.hashsetBehaviour.isEmpty())
+//				return false;
+//		} /*else if (!Behaviour.equals(other.Behaviour))
+//			return false;*/
+//                else if (!hashsetBehaviour.equals(other.hashsetBehaviour))
+//			return false;
+//				
+//		if (CanonicalForm == null) {
+//			if (other.CanonicalForm != null)
+//				return false;
+//		} else if (!CanonicalForm.equals(other.CanonicalForm))
+//			return false;
+//		if (POS == null) {
+//			if (other.POS != null)
+//				return false;
+//		} else if (!POS.equals(other.POS))
+//			return false;
+//		if (hashsetSense.isEmpty()) {
+//			if (!other.hashsetSense.isEmpty())
+//				return false;
+//		} /*else if (!Sense.equals(other.Sense))
+//			return false;*/
+//                else if (!hashsetSense.equals(other.hashsetSense))
+//			return false;
+//		
+//		/*if (argumentMap == null) {
+//			if (other.argumentMap != null)
+//				return false;
+//		} */
+//                /*else 
+//		{
+//			for (String synArg: this.getArgumentMap().keySet())	
+//			{
+//				if (!other.getArgumentMap().containsKey(synArg)) return false;
+//				else
+//				{
+//					if (!other.getArgumentMap().get(synArg).equals(this.getArgumentMap().get(synArg))) return false;
+//				}
+//					
+//			}
+//		}*/
+//		return true;
 	}
 
 

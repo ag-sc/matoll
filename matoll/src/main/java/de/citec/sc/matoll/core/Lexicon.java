@@ -1,4 +1,5 @@
 package de.citec.sc.matoll.core;
+import static de.citec.sc.matoll.vocabularies.LEMON.sense;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,6 +67,7 @@ public class Lexicon {
                         /*
                     This is the entry from the list entries, which is updated
                     */
+                        //System.out.println("Update entry");
                         LexicalEntry containedEntry;
 	
 			containedEntry = getLexicalEntry(entry);
@@ -80,7 +82,14 @@ public class Lexicon {
 			sentences.addAll(containedEntry.getSentences());
 			
 			containedEntry.setSentences(sentences);
-			
+                        
+                        for(Sense sense : entry.getSense()) containedEntry.addSense(sense);
+			for( SyntacticBehaviour behaviours : entry.getBehaviours()) containedEntry.addSyntacticBehaviour(behaviours);
+                        
+                        //System.out.println(containedEntry.toString());
+                        
+                        
+                        
 			
 		}
 	

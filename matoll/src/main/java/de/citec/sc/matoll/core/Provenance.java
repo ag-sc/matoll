@@ -23,6 +23,7 @@ public class Provenance {
         
         public void increaseFrequency(Integer frequency){
             this.Frequency += frequency;
+            //System.out.println("New Frequency:"+Frequency);
         }
 
 	public String getAgent()
