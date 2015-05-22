@@ -76,7 +76,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@en";
-	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
@@ -110,7 +110,7 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.setWait(true);
                                                 debugger.printWaiter();
                                                 debugger.setWait(false);
@@ -128,12 +128,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}
 	        			else{
-	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 debugger.printWaiter();
 	        			}
 	        			 
@@ -202,7 +202,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@en";
-	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
@@ -236,7 +236,7 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}	
@@ -252,12 +252,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}
 	        			else{
-	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 debugger.printWaiter();
 	        			}
 	        			 
@@ -332,7 +332,7 @@ public class Templates {
 //	        			if (Lemmatizer != null)
 //	        			{
 //	        				String term = Lemmatizer.getLemma(adj)+"@en";
-//	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+//	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 //                                                debugger.print("Lemmatized cannonical form:"+term, "");
 //	        				entry.setCanonicalForm(term);
 //	        			}
@@ -369,7 +369,7 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}	
@@ -385,12 +385,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}
 	        			else{
-	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 debugger.printWaiter();
 	        			}
 	        			 
@@ -456,7 +456,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@en";
-	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
@@ -488,7 +488,7 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}	
@@ -504,12 +504,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}
 	        			else{
-	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 debugger.printWaiter();
 	        			}
 	        		 
@@ -584,7 +584,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@en";
-	        				logger.info("Lemmatized cannonical form:"+term+"/n");
+	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 debugger.print("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
@@ -616,7 +616,7 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}	
@@ -632,12 +632,12 @@ public class Templates {
 	        			
 	        				lexicon.add(entry, vector);
 	        				
-	        				logger.info("Found entry:"+entry+"\n");
+	        				logger.debug("Found entry:"+entry+"\n");
                                                 debugger.printWaiter();
 	        				
 	        			}	
 	        			else{
-	        				logger.info("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 debugger.printWaiter();
 	        			}
 	        		 

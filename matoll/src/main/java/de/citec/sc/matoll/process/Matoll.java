@@ -2,6 +2,7 @@ package de.citec.sc.matoll.process;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,24 +22,6 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
 
 //import learning.SVMClassifier;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //import core.
@@ -79,7 +62,11 @@ import de.citec.sc.matoll.utils.Debug;
 
 public class Matoll {
  
+        
 	private static Logger logger = LogManager.getLogger(Matoll.class.getName());
+        
+        
+        
 	/**
          * 
          * @param args
@@ -230,12 +217,17 @@ public class Matoll {
 		String reference = null;
 		
 		List<Model> sentences;
-		
-		for (final File file : folder.listFiles()) {
+		File[] files = folder.listFiles();
+;
+                int file_counter = 0;
+		for (final File file : files) {
 			
-			if (file.isFile() && file.toString().endsWith(".ttl")) {	
+			if (file.isFile() && file.toString().endsWith(".ttl")) {
+                            
+                                file_counter+=1;
 
-				logger.info("Processing: "+file.toString()+"\n");	
+				logger.info("Processing: "+file.toString()+"  "+file_counter+"/"+files.length);
+                                
 								
 				Model model = RDFDataMgr.loadModel(file.toString());
 			 
@@ -325,7 +317,7 @@ public class Matoll {
 					//System.out.print("Lexicon contains "+entry+"\n");
 					
 					trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
-					logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+					logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
 					numPos++;
 				
 				}
@@ -338,7 +330,7 @@ public class Matoll {
 					{
 						trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
 						// logger.info("Adding training example: "+entry.toString()+"\n");
-						logger.info("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
+						logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
 						numNeg++;
 					}
 				}
@@ -475,7 +467,7 @@ public class Matoll {
 		for (Reference ref: references)
 		{
 			String filename = ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
-			logger.info("Write lexicon for reference "+ref.toString()+" to "+filename);
+			logger.debug("Write lexicon for reference "+ref.toString()+" to "+filename);
 			writer = new FileWriter(filename);
 			entries = lexicon.getEntriesForReference(ref.toString());
 			

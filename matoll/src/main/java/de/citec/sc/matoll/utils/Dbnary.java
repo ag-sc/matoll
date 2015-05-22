@@ -57,7 +57,6 @@ public class Dbnary {
         String uri = "";
         pos = pos.replace("commonNoun", "noun");
         label = label.replace("@"+language.toLowerCase(), "");
-        System.out.println("Input:"+label+" "+pos);
         if(dbnaryList.containsKey(label)){
             List<DbnaryObject> value = dbnaryList.get(label);
             
@@ -70,7 +69,6 @@ public class Dbnary {
             
         }
         
-        System.out.println("Output:"+uri);
         return uri;
         
        

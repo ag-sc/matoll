@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <Console name="STDOUT" target="SYSTEM_OUT">
+        <File name="file" fileName="matoll.log">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </File>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%m%n"/>
         </Console>
     </Appenders>
     <Loggers>
     <Logger name="org.apache.log4j.xml" level="info"/>
-        <Root level="debug">
-            <AppenderRef ref="STDOUT"/>
+        <!--<Root level="debug">
+            <AppenderRef ref="file"/>
+        </Root>-->
+        <Root level="trace">
+            <AppenderRef ref="file" level="DEBUG"/>
+            <AppenderRef ref="STDOUT" level="INFO"/>
         </Root>
     </Loggers>
 </Configuration>
