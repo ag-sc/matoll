@@ -104,9 +104,10 @@ public class LexiconEvaluation {
 			foundSyntax = false;
 			foundMapping = false;
 			
-			if (entry.getReference() != null) 
+			if (entry.getReferences().size()>0) 
 			{
-				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.contains(entry.getReference())) || (onlyGoldReferences && gold.getReferences().contains(entry.getReference())))
+                                System.out.println(entry.getReferences().toString());
+				if ((!filterReferences & !onlyGoldReferences) || (filterReferences && references.containsAll(entry.getReferences())) || (onlyGoldReferences && gold.getReferences().containsAll(entry.getReferences())))
 				{
 
 					update(entries,"lemma",1.0);
@@ -217,9 +218,9 @@ public class LexiconEvaluation {
 			foundSyntax = false;
 			foundMapping = false;
 			
-			if (gold_entry.getReference() != null) 
+			if (gold_entry.getReferences() != null) 
 			{
-				if (!filterReferences || (filterReferences && references.contains(gold_entry.getReference())))
+				if (!filterReferences || (filterReferences && references.contains(gold_entry.getReferences())))
 				{
 				
 					update(gold_entries,"lemma",1.0);
@@ -380,8 +381,8 @@ public class LexiconEvaluation {
 		boolean check = true;
 	
 		//TODO: check if one of the references is ok
-		if (entry.getReference() != null && gold_entry.getReference() != null)
-			if (!entry.getReference().toString().equals(gold_entry.getReference().toString())) check=false;
+		if (entry.getReferences() != null && gold_entry.getReferences() != null)
+			if (!entry.getReferences().toString().equals(gold_entry.getReferences().toString())) check=false;
 		
 		if (entry.getPOS() != null && gold_entry.getPOS() != null)
 			if (!entry.getPOS().equals(gold_entry.getPOS())) check=false;

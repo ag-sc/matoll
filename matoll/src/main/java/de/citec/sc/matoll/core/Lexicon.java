@@ -94,9 +94,7 @@ public class Lexicon {
 		}
 	
 		if (entry.getSense() != null)
-		
-			//references.add(entry.getSense().getReference());
-                        references.add(entry.getReference());
+                    for( Reference reference : entry.getReferences()) references.add(reference);
 			
 	}
 
@@ -193,7 +191,7 @@ public class Lexicon {
 		
 		for (LexicalEntry entry: this.entries)
 		{
-			if (entry.getReference().toString().equals(ref))
+			if (entry.getReferences().toString().equals(ref))
 				entries.add(entry);
 		}
 		

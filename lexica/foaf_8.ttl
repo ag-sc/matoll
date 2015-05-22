@@ -1,0 +1,124 @@
+# This is a small lexicon for foaf, it only uses the properties foaf:knows and foaf:member as well as the classes foaf:Person and foaf:Project
+
+@prefix lemon: <http://lemon-model.net/lemon#> .
+@prefix lexinfo: <http://www.lexinfo.net/ontology/2.0/lexinfo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+
+@prefix : <> .
+
+:know a lemon:LexicalEntry ; 
+    lexinfo:partOfSpeech lexinfo:verb;
+    lemon:canonicalForm :know_canonical_form;
+    lemon:synBehavior :know_transitive_pp;
+    lemon:sense :know_sense.
+
+:know_canonical_form lemon:writtenRep "know"@en.
+
+:know_transitive_pp a lexinfo:TransitiveFrame;
+lexinfo:subject  :know_arg1 ;
+lexinfo:directObject :know_arg2.
+
+:know_sense lemon:reference  foaf:friend;
+lemon:subjOfProp :know_arg1 ;
+lemon:objOfProp  :know_arg2.
+
+:friend_of a lemon:LexicalEntry ; 
+    lexinfo:partOfSpeech lexinfo:noun ;
+    lemon:canonicalForm :friend_form;
+    lemon:synBehavior :friend_of_nounpp, :friend_of_nounpp2;
+lemon:sense :friend_of_sense1 , :friend_of_sense2 .
+
+:friend_form a lemon:Form;
+lemon:writtenRep "friend"@en.
+
+:friend_of_nounpp a lexinfo:NounPPFrame;
+lexinfo:coplativeArg :friend_of_nounpp_arg1;
+lexinfo:prepositionalObj :friend_of_nounpp_arg2.
+
+:friend_of_nounpp2 a lexinfo:NounPPFrame;
+lexinfo:coplativeArg :friend_of_nounpp_arg1.
+
+
+:friend_of_sense1 lemon:reference foaf:nofriend;
+lemon:subjOfProp :friend_of_nounpp_arg2;
+lemon:objOfProp  :friend_of_nounpp_arg1.
+
+:friend_of_sense2 lemon:reference foaf:know;
+lemon:subjOfProp :friend_of_nounpp_arg1;
+lemon:objOfProp  :friend_of_nounpp_arg2.
+
+
+:friend_of_nounpp_arg2 lemon:marker :of ; 
+                   lemon:optional "false"^^xsd:boolean .
+
+:of a lemon:LexicalEntry ;
+  lemon:canonicalForm :of_form .
+
+:of_form lemon:writtenRep "of"@en .
+
+:member_of a lemon:LexicalEntry ;
+    lexinfo:partOfSpeech lexinfo:noun ;
+    lemon:canonicalForm :member_form;
+    lemon:synBehavior :member_of_nounpp;
+    lemon:sense :member_of_sense.
+
+:member_form a lemon:Form;
+lemon:writtenRep "member"@en.
+
+:member_of_nounpp a lexinfo:NounPPFrame;
+lexinfo:coplativeArg :member_of_nounpp_arg1;
+lexinfo:prepositionalObj :member_of_nounpp_arg2.
+
+:member_of_sense lemon:reference foaf:member;
+lemon:subjOfProp :member_of_nounpp_arg2;
+lemon:objOfProp  :member_of_nounpp_arg1.
+
+:member_of_nounpp_arg2 lemon:marker :of ;
+                   lemon:optional "false"^^xsd:boolean .
+
+:acquainted_with a lemon:LexicalEntry ;
+    lexinfo:partOfSpeech lexinfo:adjective ;
+    lemon:canonicalForm :acquainted_form;
+    lemon:synBehavior :acquainted_adjective_frame;
+    lemon:sense :acquainted_with_sense.
+
+:acquainted_form a lemon:Form;
+lemon:writtenRep "acquainted"@en.
+
+:acquainted_adjective_frame a lexinfo:AdjectivePPFrame;
+lexinfo:coplativeArg :acquainted_adjective_arg1;
+lexinfo:prepositionalObj :acquainted_adjective_arg2.  
+
+:acquainted_with_sense lemon:reference foaf:friend;
+lemon:subjOfProp :acquainted_adjective_arg1;
+lemon:objOfProp  :acquainted_adjective_arg2. 
+
+:acquainted_adjective_arg2 lemon:marker :with ;
+                   lemon:optional "false"^^xsd:boolean .
+
+:with a lemon:LexicalEntry ;
+  lemon:canonicalForm :with_form .
+
+:with_form lemon:writtenRep "with"@en .
+
+:person a lemon:LexicalEntry ;
+    lexinfo:partOfSpeech lexinfo:noun ;
+    lemon:canonicalForm :person_form;
+    lemon:sense :person_sense.
+
+:person_sense lemon:reference foaf:Person.
+
+:person_form a lemon:Form;
+lemon:writtenRep "person"@en.
+
+:project a lemon:LexicalEntry ;
+    lexinfo:partOfSpeech lexinfo:noun ;
+    lemon:canonicalForm :project_form;
+    lemon:sense :project_sense.
+
+:project_sense lemon:reference foaf:Project.
+
+:project_form a lemon:Form;
+lemon:writtenRep "project"@en.

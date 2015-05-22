@@ -35,7 +35,7 @@ public class test7 {
 		sense1.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
 		entry1.addSense(sense1);
-                entry1.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
+                entry1.setURI("http://localhost:8080/TransitiveFrame_marry");
 		
 		entry1.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -57,7 +57,8 @@ public class test7 {
 		LexicalEntry entry2 = new LexicalEntry();
 		
 		entry2.setCanonicalForm("marry");
-                entry2.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
+                //entry2.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
+                entry2.setURI("http://localhost:8080/TransitiveFrame_marry");
 		
 		Sense sense2 = new Sense();
 		
@@ -109,7 +110,8 @@ public class test7 {
 		sense3.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 
 		entry3.addSense(sense3);
-                entry3.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
+                //entry3.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
+                entry3.setURI("http://localhost:8080/TransitiveFrame_marry");
 		
 		entry3.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		

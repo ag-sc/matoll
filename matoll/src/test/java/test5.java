@@ -10,6 +10,7 @@ import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.evaluation.LexiconEvaluation;
+import de.citec.sc.matoll.evaluation.LexiconEvaluationSimple;
 import de.citec.sc.matoll.io.LexiconLoader;
 
 public class test5 {
@@ -31,8 +32,13 @@ public class test5 {
 		Lexicon lexicon5 = loader.loadFromFile("../lexica/foaf_5.ttl");
 		
 		Lexicon lexicon6 = loader.loadFromFile("../lexica/foaf_6.ttl");
+                
+                Lexicon lexicon7 = loader.loadFromFile("../lexica/foaf_7.ttl");
+                
+                Lexicon lexicon8 = loader.loadFromFile("../lexica/foaf_8.ttl");
 	
-		LexiconEvaluation eval = new LexiconEvaluation();
+		//LexiconEvaluation eval = new LexiconEvaluation();
+                LexiconEvaluationSimple eval = new LexiconEvaluationSimple();
 	
 		System.out.print("Evaluating foaf.ttl against foaf.ttl All measures should be 1.0...\n");
 		
@@ -117,7 +123,7 @@ public class test5 {
 		
 		System.out.print("Evaluating foaf_6.ttl against foaf.ttl. Syntactic precision and recall should be 0.75 \n");
 		
-		System.out.print("foaf_6.ttl has the following: "+lexicon5.size()+" entries...\n");
+		System.out.print("foaf_6.ttl has the following: "+lexicon6.size()+" entries...\n");
 		
 		for (LexicalEntry entry: lexicon6.getEntries())
 		{
@@ -125,6 +131,38 @@ public class test5 {
 		}
 		
 		eval.evaluate(lexicon6, gold);
+		
+		System.out.print("Precision (lemma): "+eval.getPrecision("lemma")+"\nRecall(lemma): "+eval.getRecall("lemma")+"\nF-Measure(lemma): "+eval.getFMeasure("lemma")+"\nPrecision(syntactic): "+eval.getPrecision("syntactic")+"\nRecall(syntactic): "+eval.getRecall("syntactic")+"\nF-Measure(syntactic): "+eval.getFMeasure("syntactic")+"\nPrecision(mapping): "+eval.getPrecision("mapping")+"\nRecall(mapping): "+eval.getRecall("mapping")+"\nF-Measure(mapping): "+eval.getFMeasure("mapping")+"\n");
+		
+                
+                System.out.print("\n======================\n\n");
+		
+		System.out.print("Evaluating foaf_7.ttl against foaf.ttl. Everything should be 1.0 \n");
+		
+		System.out.print("foaf_7.ttl has the following: "+lexicon7.size()+" entries...\n");
+		
+		for (LexicalEntry entry: lexicon7.getEntries())
+		{
+			System.out.print(entry.getCanonicalForm()+"("+entry.getPOS()+")\n");
+		}
+		
+		eval.evaluate(lexicon7, gold);
+		
+		System.out.print("Precision (lemma): "+eval.getPrecision("lemma")+"\nRecall(lemma): "+eval.getRecall("lemma")+"\nF-Measure(lemma): "+eval.getFMeasure("lemma")+"\nPrecision(syntactic): "+eval.getPrecision("syntactic")+"\nRecall(syntactic): "+eval.getRecall("syntactic")+"\nF-Measure(syntactic): "+eval.getFMeasure("syntactic")+"\nPrecision(mapping): "+eval.getPrecision("mapping")+"\nRecall(mapping): "+eval.getRecall("mapping")+"\nF-Measure(mapping): "+eval.getFMeasure("mapping")+"\n");
+		
+                
+                System.out.print("\n======================\n\n");
+		
+		System.out.print("Evaluating foaf_8.ttl against foaf.ttl. Everything shoul be 0.0 \n");
+		
+		System.out.print("foaf_8.ttl has the following: "+lexicon8.size()+" entries...\n");
+		
+		for (LexicalEntry entry: lexicon8.getEntries())
+		{
+			System.out.print(entry.getCanonicalForm()+"("+entry.getPOS()+")\n");
+		}
+		
+		eval.evaluate(lexicon8, gold);
 		
 		System.out.print("Precision (lemma): "+eval.getPrecision("lemma")+"\nRecall(lemma): "+eval.getRecall("lemma")+"\nF-Measure(lemma): "+eval.getFMeasure("lemma")+"\nPrecision(syntactic): "+eval.getPrecision("syntactic")+"\nRecall(syntactic): "+eval.getRecall("syntactic")+"\nF-Measure(syntactic): "+eval.getFMeasure("syntactic")+"\nPrecision(mapping): "+eval.getPrecision("mapping")+"\nRecall(mapping): "+eval.getRecall("mapping")+"\nF-Measure(mapping): "+eval.getFMeasure("mapping")+"\n");
 		

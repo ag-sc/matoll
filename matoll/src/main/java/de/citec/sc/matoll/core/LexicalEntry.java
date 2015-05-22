@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LexicalEntry {
 
@@ -148,7 +149,7 @@ public class LexicalEntry {
 		
                 LexicalEntry other = (LexicalEntry) obj;
                 //now URIs are even so if the URI is not equal, return false and do not check other options
-                if(this.getURI().equals(other.getURI()) && this.getReference().equals(other.getReference())) return true;
+                if(this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences())) return true;
                 else return false;
                 
 //		if (this == obj)
@@ -261,20 +262,17 @@ public class LexicalEntry {
 	}
 
 
-        public Reference getReference() {
+        public Set<Reference> getReferences() {
 		
+            Set<Reference> references = new HashSet<Reference>();
 		if (hashsetSense!=null){
-                    if(hashsetSense.size()>1) System.err.println("Returns reference of the first sense!");
-                    /*
-                    TODO: return List of of references
-                    */
                     for(Sense sense: hashsetSense){
-                        return sense.getReference();
+                        references.add(sense.getReference());
                     }
                     
                 }
-		else return null;
-            return null;
+		
+            return references;
 		
 	}
 

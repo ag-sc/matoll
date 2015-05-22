@@ -67,7 +67,7 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
 
-		if (entry.getReference() != null)
+		if (entry.getReferences() != null)
 		{
 			
 			// <rdf:Description rdf:about="http://github.com/cunger/lemon.dbpedia/target/dbpedia_en_9#female__adjective/reference">
@@ -76,9 +76,9 @@ public class LexiconSerialization {
 			// <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/></rdf:Description>
 			
 		
-			if (entry.getReference() instanceof de.citec.sc.matoll.core.SimpleReference)
+			if (entry.getReferences() instanceof de.citec.sc.matoll.core.SimpleReference)
 			{
-				SimpleReference reference = (SimpleReference) entry.getReference();
+				SimpleReference reference = (SimpleReference) entry.getReferences();
 				
 				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
 				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.toString()));
@@ -93,9 +93,9 @@ public class LexiconSerialization {
                                 }
 			}
 			
-			if (entry.getReference() instanceof de.citec.sc.matoll.core.Restriction)
+			if (entry.getReferences() instanceof de.citec.sc.matoll.core.Restriction)
 			{
-				Restriction reference = (Restriction) entry.getReference();
+				Restriction reference = (Restriction) entry.getReferences();
 				
 				model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
 				model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.getURI()));
