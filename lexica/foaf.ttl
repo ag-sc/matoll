@@ -28,7 +28,7 @@ lemon:objOfProp  :know_arg2.
     lexinfo:partOfSpeech lexinfo:noun ;
     lemon:canonicalForm :friend_form;
     lemon:synBehavior :friend_of_nounpp;
-    lemon:sense :friend_of_sense.
+lemon:sense :friend_of_sense1 , :friend_of_sense2 .
 
 :friend_form a lemon:Form;
 lemon:writtenRep "friend"@en.
@@ -37,9 +37,14 @@ lemon:writtenRep "friend"@en.
 lexinfo:coplativeArg :friend_of_nounpp_arg1;
 lexinfo:prepositionalObj :friend_of_nounpp_arg2.
 
-:friend_of_sense lemon:reference foaf:friend;
+:friend_of_sense1 lemon:reference foaf:friend;
 lemon:subjOfProp :friend_of_nounpp_arg2;
 lemon:objOfProp  :friend_of_nounpp_arg1.
+
+:friend_of_sense2 lemon:reference foaf:know;
+lemon:subjOfProp :friend_of_nounpp_arg1;
+lemon:objOfProp  :friend_of_nounpp_arg2.
+
 
 :friend_of_nounpp_arg2 lemon:marker :of ; 
                    lemon:optional "false"^^xsd:boolean .

@@ -66,7 +66,7 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"_CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
-                System.out.println("entry.getReferences().size():"+entry.getReferences().size());
+                //System.out.println("entry.getReferences().size():"+entry.getReferences().size());
 		if (entry.getReferences().size()>0)
 		{
 			
