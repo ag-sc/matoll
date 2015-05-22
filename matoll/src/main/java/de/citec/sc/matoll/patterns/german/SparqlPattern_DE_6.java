@@ -129,7 +129,7 @@ sentence:Der Big Stone Lake ist die Quelle des Minnesota River , einem 534 km la
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNoun(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(), this.getDebugger());
+		Templates.getNoun(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 		
 		
 		

@@ -58,7 +58,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import de.citec.sc.matoll.utils.Debug;
 
 public class Matoll {
  
@@ -81,11 +80,6 @@ public class Matoll {
 			
 		//Logger logger = LogManager.getLogger(Matoll.class.getName());
 
-		Debug debugger = new Debug(logger);
-                /*
-                activate debugger
-                */
-                debugger.setDebug(false);
                 
 
 		String directory;
@@ -204,7 +198,7 @@ public class Matoll {
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 
-		PatternLibrary library = new PatternLibrary(debugger);
+		PatternLibrary library = new PatternLibrary();
 		StanfordLemmatizer sl = new StanfordLemmatizer(language);
 		library.setLemmatizer(sl);
 		

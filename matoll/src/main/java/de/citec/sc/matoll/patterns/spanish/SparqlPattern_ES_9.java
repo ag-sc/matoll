@@ -75,7 +75,7 @@ Neuer parse:
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(), this.getDebugger());
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 		
 		
 	}

@@ -82,7 +82,7 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(), this.getDebugger());
+		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 		
 	}
 

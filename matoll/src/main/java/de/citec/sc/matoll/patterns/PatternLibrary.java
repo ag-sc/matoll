@@ -6,7 +6,6 @@ import java.util.List;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.LexiconWithFeatures;
-import de.citec.sc.matoll.utils.Debug;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class PatternLibrary {
@@ -16,17 +15,15 @@ public class PatternLibrary {
 
 	Lemmatizer Lemmatizer;
         
-        private static Debug debugger;
 	
         /**
          * Initialization of PatternLibrary 
          * @param debugger 
          */
-	public PatternLibrary(Debug debugger)
+	public PatternLibrary()
 	{
 		Patterns = new ArrayList<SparqlPattern>();
 		Lemmatizer = null;
-                PatternLibrary.debugger=debugger;
                 
 	}
 
@@ -47,11 +44,9 @@ public class PatternLibrary {
 	public void addPattern(SparqlPattern pattern)
 	{
 		Patterns.add(pattern);
-                debugger.print("add pattern "+pattern.toString(), PatternLibrary.class.getName());
 		
 		if (Lemmatizer != null)
 			pattern.setLemmatizer(Lemmatizer);
-                pattern.setDebugger(debugger);
 	}
 	
         /**
@@ -64,10 +59,8 @@ public class PatternLibrary {
 	{
 		for (SparqlPattern pattern: Patterns)
 		{
-                        debugger.print("Running: "+pattern.getID(), PatternLibrary.class.getName());
 			if (Lemmatizer != null)
 				pattern.setLemmatizer(Lemmatizer);
-                        pattern.setDebugger(debugger);
 			pattern.extractLexicalEntries(model, lexicon);
 		}
 		

@@ -73,7 +73,7 @@ sentence:Yangtze River Express wurde am 15. Januar 2003 gegründet .
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(), this.getDebugger());
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
 		
 	}
 
