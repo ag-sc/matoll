@@ -148,10 +148,8 @@ public class LexicalEntry {
 		// System.out.print("I am in equals (LexicalEntry)\n");
 		
                 LexicalEntry other = (LexicalEntry) obj;
-                //now URIs are even so if the URI is not equal, return false and do not check other options
-                if(this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences())) return true;
-                else return false;
-                
+            //now URIs are even so if the URI is not equal, return false and do not check other options
+            return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
 //		if (this == obj)
 //			return true;
 //		if (obj == null)
