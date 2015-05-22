@@ -10,54 +10,47 @@ import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconLoader;
+import java.util.Map;
 
 public class LexiconEvaluationSimple {
-
-	static Set<String> references;
-	
-	static boolean onlyGoldReferences = false;
-	static boolean filterReferences = false;
+    
+        static Set<String> references;
+       
+        static double recall_sum_lemma = 0.0;
+        static double precision_sum_lemma = 0.0;
         
-        static double recall_lemma = 0.0;
-        static double precision_lemma = 0.0;
+        static double recall_sum_syntactic = 0.0;
+        static double precision_sum_syntactic = 0.0;
         
-        static double recall_syntactic = 0.0;
-        static double precision_syntactic = 0.0;
+        static double recall_sum_mapping = 0.0;
+        static double precision_sum_mapping = 0.0;
 
-        static double syntactic_counter = 0;
+        static int total = 0;
+        static int gold_total = 0;
+        static int comparisons = 0;
+        
 	
-
-	
-	public static void main(String[] args) throws IOException {
-		
+	public static void main(String[] args) throws IOException {	
 		
 		if (args.length < 2)
 		{
-			System.out.print("Usage: LexiconEvaluation <Lexicon.rdf> <GoldLexicon.rdf> (--onlyGoldReferences|<FileWithReferences>)?\n");
+			System.out.print("Usage: LexiconEvaluation <Lexicon.rdf> <GoldLexicon.rdf> (--onlyReferences <FileWithReferences>)?\n");
 			return;
 		}
-		
-		String referenceFile = null;
-		
-		if (args.length >2)
+				
+		if (args.length > 2)
 		{
-			if (args[2].equals("--onlyGoldReferences"))
+			if (args[2].equals("--onlyReferences"))
 			{
-				onlyGoldReferences = true;
-			}
-			else
-			{
-				referenceFile = args[2];
-				filterReferences = true;
-				references = readReferenceFile(referenceFile);
+				String referenceFile = args[3];
+				readReferenceFile(referenceFile);
 			}
 		}
-		
-		
-		
+			
 		String lexiconFile = args[0];
 		String goldFile = args[1];
 		
@@ -70,65 +63,56 @@ public class LexiconEvaluationSimple {
 		
 	}
 
-	private static Set<String> readReferenceFile(String referenceFile) throws IOException {
-		
-		Set<String> references = new HashSet<String>();
-		
+	private static void readReferenceFile(String referenceFile) throws IOException {
+				
 		BufferedReader br = new BufferedReader(new FileReader(referenceFile));
-        String line;
-        while((line = br.readLine()) != null) {
-             references.add(line);
+                String line;
+                while ((line = br.readLine()) != null) {
+                        references.add(line);
+                }
         }
-        return references;
-	}
 
 	public static void evaluate(Lexicon lexicon, Lexicon gold) {
-                int correct_entries = 0;
+            
+                total = lexicon.size();
+                gold_total = gold.size();
+            
                 double recall_sum = 0.0;
                 
 		for (LexicalEntry entry : lexicon.getEntries()){
+                    
                     String pos = entry.getPOS();
                     String cannonicalForm = entry.getCanonicalForm();
-                    Set<Reference> references = entry.getReferences();
+                    Set<Reference> refs = entry.getReferences();
+                    
                     for (LexicalEntry gold_entry : gold.getEntries()){
+                        
                         String pos_gold = gold_entry.getPOS();
                         String cannonicalForm_gold = gold_entry.getCanonicalForm();
                         Set<Reference> references_gold = gold_entry.getReferences();
-                        /*
-                        What if references_gold.isEmty()?
-                        */
-                        if(pos_gold.equals(pos)&&cannonicalForm_gold.equals(cannonicalForm)){
+
+                        if (pos_gold.equals(pos) && cannonicalForm_gold.equals(cannonicalForm)) {
                             
                             int counter = 0;
-                            for(Reference reference:references){
-                                if(references_gold.contains(reference)) counter +=1;
+                            for (Reference reference : refs){
+                                if (references_gold.contains(reference)) counter +=1;
                             }
-                            recall_sum += (double) counter/references_gold.size();
+                            if (!references_gold.isEmpty()) {
+                                recall_sum += (double) counter/references_gold.size();
+                            }
                             
-                            
-                            
-                            /*
-                            Mapping and SynBehaviour
-                            */
-                            if(counter>0){
-                                //evaluateMapping(entry,gold_entry);
+                            if (counter > 0) {
                                 evaluateSyntactic(entry,gold_entry);
-                            }
-                            
+                                evaluateMapping(entry,gold_entry);
+                                comparisons++;
+                            } 
                         }
-                    }
-                    
+                    }   
                 }
                 
-                recall_lemma = recall_sum/gold.size();
-                precision_lemma = recall_sum/lexicon.size();
-
-			
+                recall_sum_lemma = recall_sum;
+                precision_sum_lemma = recall_sum;			
         }
-
-//    private static void evaluateMapping(LexicalEntry entry, LexicalEntry gold_entry) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     private static void evaluateSyntactic(LexicalEntry entry, LexicalEntry gold_entry) {
         int correct_behaviours = 0;
@@ -149,64 +133,100 @@ public class LexiconEvaluationSimple {
                         gold_args.add(new SyntacticArgument(gold_arg.getArgumentType(),"",gold_arg.getPreposition()));
                    }
                    
-                   if (args.equals(gold_args)) correct_behaviours += 1;
-                    
+                   if (args.equals(gold_args)) correct_behaviours += 1;                   
                 }
             }
-                    
+                      
         }
+        
         double recall = 0.0;
         double precision = 0.0;
-        if(correct_behaviours>0){
-            recall = (double)correct_behaviours/gold_entry.getBehaviours().size();
-        
-            precision = (double)correct_behaviours/entry.getBehaviours().size();
-            syntactic_counter+=1;
-        }
-        
-        recall_syntactic += recall;
-        precision_syntactic += precision;
-        
+        if (correct_behaviours > 0) {
+            recall = (double) correct_behaviours/gold_entry.getBehaviours().size();
+            precision = (double) correct_behaviours/entry.getBehaviours().size();            
+        } 
+        recall_sum_syntactic += recall;
+        precision_sum_syntactic += precision;
     }
     
-    
+    private static void evaluateMapping(LexicalEntry entry, LexicalEntry gold_entry) {
+
+        int correctlyMappedSynBehaviours = 0;
+        
+        // determine variable mappings (entry -> gold_entry), based on senses
+        
+        Map<String,String> mapping = new HashMap<String,String>();
+        
+        for (Sense sense : entry.getSenses()) {
+             String reference = sense.getReference().getURI();
+             for (Sense gold_sense : gold_entry.getSenses()) {
+                  if (gold_sense.getReference().getURI().equals(reference)) {
+                      for (SenseArgument arg : sense.getSenseArgs()) {
+                           for (SenseArgument gold_arg : gold_sense.getSenseArgs()) {
+                                if (gold_arg.getArgumenType().equals(arg.getArgumenType())) {
+                                    mapping.put(arg.getValue(),gold_arg.getValue());
+                                }
+                           }
+                      }
+                  }
+             }
+        }
+        
+        // check for each synBehaviour in entry, whether renamed synBehaviour is in gold
+        // (if so, mapping is correct)
+
+        loop:
+        for (SyntacticBehaviour syn : entry.getBehaviours()) {
+             SyntacticBehaviour renamed_syn = new SyntacticBehaviour();
+             renamed_syn.setFrame(syn.getFrame());
+             for (SyntacticArgument arg : syn.getSynArgs()) {
+                  if (!mapping.containsKey(arg.getValue())) {
+                      continue loop;
+                  }
+                  renamed_syn.add(new SyntacticArgument(arg.getArgumentType(),mapping.get(arg.getValue()),arg.getPreposition()));
+             }
+             if (gold_entry.getBehaviours().contains(renamed_syn)) {
+                 correctlyMappedSynBehaviours += 1;
+             }
+        }
+
+        double recall = 0.0;
+        double precision = 0.0;
+        if (correctlyMappedSynBehaviours > 0) {
+            recall = (double) correctlyMappedSynBehaviours/gold_entry.getBehaviours().size();
+            precision = (double) correctlyMappedSynBehaviours/entry.getBehaviours().size();
+            
+        }
+        recall_sum_mapping += recall;
+        precision_sum_mapping += precision;   
+    }
+
 
 	public double getFMeasure(String key) {
-            if(key.equals("lemma")) {
-                 return (2*recall_lemma*precision_lemma)/(precision_lemma+recall_lemma);
+            
+            double precision = getPrecision(key);
+            double recall    = getRecall(key);
+            
+            if (precision == 0.0 || recall == 0.0) {
+                return 0.0;
             }
-            
-            if(key.equals("syntactic")) {
-                 return (2*recall_syntactic/syntactic_counter*precision_syntactic/syntactic_counter)/(precision_syntactic/syntactic_counter+recall_syntactic/syntactic_counter);
-            }
-            
-            
-            
-            return 0.0;
-		
+            return (2*recall*precision)/(recall+precision);	
 	}
 	
 	public double getPrecision(String key) {
-            if(key.equals("lemma")) return precision_lemma;
-            if(key.equals("syntactic")) {
-                System.out.println("syntactic_counter:"+syntactic_counter);
-                System.out.println("precision_syntactic:"+precision_syntactic);
-                return precision_syntactic/syntactic_counter;
-            }
-            
+                        
+            if (key.equals("lemma"))     return precision_sum_lemma/total;
+            if (key.equals("syntactic")) return precision_sum_syntactic/comparisons;
+            if (key.equals("mapping"))   return precision_sum_mapping/comparisons;          
             return 0.0;
-		
 	}
 	
 	public double getRecall(String key) {
-            if(key.equals("lemma")) return recall_lemma;
-            
-            if(key.equals("syntactic")) return recall_syntactic/syntactic_counter;
-            
-            return 0.0;
-		
+
+            if (key.equals("lemma"))     return recall_sum_lemma/gold_total;            
+            if (key.equals("syntactic")) return recall_sum_syntactic/comparisons;
+            if (key.equals("apping"))    return recall_sum_mapping/comparisons;
+            return 0.0;	
 	}
         
-
-	
 }

@@ -316,11 +316,11 @@ public class LexiconEvaluation {
             HashMap<String,String> mapping_entry = new HashMap<String,String>();
             HashMap<String,String> mapping_gold_entry = new HashMap<String,String>();
             
-            for(Sense sense : entry.getSense()){
+            for(Sense sense : entry.getSenses()){
                 mapping_entry.putAll(entry.computeMappings(sense));
             }
             
-            for(Sense sense : gold_entry.getSense()){
+            for(Sense sense : gold_entry.getSenses()){
                 mapping_gold_entry.putAll(gold_entry.computeMappings(sense));
             }
             

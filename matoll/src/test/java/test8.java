@@ -21,29 +21,33 @@ public class test8 {
 		
 		Lexicon gold = loader.loadFromFile("../lexica/foaf.ttl");
 		
-                
                 Lexicon lexicon7 = loader.loadFromFile("../lexica/foaf_7.ttl");
-                
                 Lexicon lexicon8 = loader.loadFromFile("../lexica/foaf_8.ttl");
 	
 		LexiconEvaluationSimple eval = new LexiconEvaluationSimple();
 	
-		System.out.print("T=P=1.0");
-		
+		System.out.print("\nExpected: R=P=1.0 \n");		
 		eval.evaluate(gold, gold);
-		
+                showResults(eval);
                 
+                System.out.print("\nExpected: R=P=1.0 \n");
 		eval.evaluate(lexicon7, gold);
+                showResults(eval);
 		
-
-		
-
-		eval.evaluate(lexicon8, gold);
-		
-
-		
-
+                System.out.print("\nExpected: R=P!=1.0 \n");
+                eval.evaluate(lexicon8, gold);
+                showResults(eval);
 	}
-	
-
+        
+        private static void showResults(LexiconEvaluationSimple eval) {
+                System.out.println("P_lemma:     "+ eval.getPrecision("lemma"));
+                System.out.println("R_lemma:     "+ eval.getRecall("lemma"));
+                System.out.println("F_lemma:     "+ eval.getFMeasure("lemma"));
+                System.out.println("P_syntactic: "+ eval.getPrecision("syntactic"));
+                System.out.println("R_syntactic: "+ eval.getRecall("syntactic"));
+                System.out.println("F_syntactic: "+ eval.getFMeasure("syntactic"));
+                System.out.println("P_mapping:   "+ eval.getPrecision("mapping"));
+                System.out.println("R_mapping:   "+ eval.getRecall("mapping"));
+                System.out.println("F_mapping:   "+ eval.getFMeasure("mapping"));
+        }        
 }

@@ -87,7 +87,7 @@ public class LexicalEntry {
 
 
 	
-	public HashSet<Sense> getSense()
+	public HashSet<Sense> getSenses()
 	{
 		return hashsetSense;
 	}

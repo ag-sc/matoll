@@ -83,7 +83,7 @@ public class Lexicon {
 			
 			containedEntry.setSentences(sentences);
                         
-                        for(Sense sense : entry.getSense()) containedEntry.addSense(sense);
+                        for(Sense sense : entry.getSenses()) containedEntry.addSense(sense);
 			for( SyntacticBehaviour behaviours : entry.getBehaviours()) containedEntry.addSyntacticBehaviour(behaviours);
                         
                         //System.out.println(containedEntry.toString());
@@ -93,7 +93,7 @@ public class Lexicon {
 			
 		}
 	
-		if (entry.getSense() != null)
+		if (entry.getSenses() != null)
                     for( Reference reference : entry.getReferences()) references.add(reference);
 			
 	}
@@ -124,7 +124,7 @@ public class Lexicon {
 		
 		for (LexicalEntry entry: entries)
 		{   
-                    for (Sense sense : entry.getSense())
+                    for (Sense sense : entry.getSenses())
                             references.add(sense.getReference());
 		}
 		
