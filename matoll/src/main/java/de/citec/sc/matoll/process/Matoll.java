@@ -241,7 +241,7 @@ public class Matoll {
 					//logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
 					library.extractLexicalEntries(sentence, lexiconwithFeatures);
 				}
-			
+                                model.close();
 				// FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 			
 				// RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
