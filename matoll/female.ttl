@@ -16,6 +16,8 @@
 
 <http://dblexipedia.org/lexicon/LexicalEntry_1_female>
         a       <http://lemon-model.net/lemon#LexicalEntry> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                <female> ;
         <http://lemon-model.net/lemon#canonicalForm>
                 <http://dblexipedia.org/lexicon/LexicalEntry_1_female_CanonicalForm> ;
         <http://lemon-model.net/lemon#sense>
