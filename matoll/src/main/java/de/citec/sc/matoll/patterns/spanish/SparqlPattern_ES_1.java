@@ -63,7 +63,7 @@ x verb y - ohne preposition
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());
+		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"es");
 		
 		
 	}

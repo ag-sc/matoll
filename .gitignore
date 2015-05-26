@@ -19,3 +19,10 @@ matoll/nbactions.xml
 
 matoll/nb-configuration.xml
 /nbproject/private/
+*.log
+
+*.sh
+
+*.sh
+
+matoll/run.sh

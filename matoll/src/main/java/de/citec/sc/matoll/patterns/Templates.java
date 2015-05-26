@@ -27,7 +27,7 @@ import java.util.Date;
 public class Templates {
 	
 	public static void getNoun(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String noun = "";
@@ -74,14 +74,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(noun)+"@en";
+	        				String term = Lemmatizer.getLemma(noun)+"@"+language;
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
-                                                logger.debug("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(noun+"@en");
+	        				entry.setCanonicalForm(noun+"@"+language);
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -106,10 +105,15 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
-	        			
-	        				lexicon.add(entry, vector);
+                                                if(isAlpha(noun)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                }
+	        				
                                                 
                                                 
                                                 
@@ -125,9 +129,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(noun)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                }
                                                 
 	        				
 	        			}
@@ -152,7 +161,7 @@ public class Templates {
 	
 	
 	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String prep = "";
@@ -200,14 +209,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(noun)+"@en";
+	        				String term = Lemmatizer.getLemma(noun)+"@"+language;
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
-                                                logger.debug("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(noun+"@en");
+	        				entry.setCanonicalForm(noun+"@"+language);
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -233,9 +241,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(noun)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                }
                                                 
 	        				
 	        			}	
@@ -249,9 +262,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(noun)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                }
                                                 
 	        				
 	        			}
@@ -275,7 +293,7 @@ public class Templates {
 	
 	
 	public static void getAdjective(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
 		//TODO: Check this entry
 	    String e1_arg ="";
 	    String e2_arg = "";
@@ -330,18 +348,18 @@ public class Templates {
                                         */
 //	        			if (Lemmatizer != null)
 //	        			{
-//	        				String term = Lemmatizer.getLemma(adj)+"@en";
+//	        				String term = Lemmatizer.getLemma(adj)+"@"+language;
 //	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 //                                                logger.debug("Lemmatized cannonical form:"+term, "");
 //	        				entry.setCanonicalForm(term);
 //	        			}
 //	        			else
 //	        			{
-//	        				entry.setCanonicalForm(adj+"@en");
+//	        				entry.setCanonicalForm(adj+"@"+language);
 //	        			}
 	        				
                                         
-                                        entry.setCanonicalForm(adj+"@en");
+                                        entry.setCanonicalForm(adj+"@"+language);
                                         
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 	        			
@@ -366,9 +384,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(adj)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+adj);
+                                                }
                                                 
 	        				
 	        			}	
@@ -382,9 +405,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(adj)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+adj);
+                                                }
                                                 
 	        				
 	        			}
@@ -410,7 +438,7 @@ public class Templates {
 	
 	
 	public static void getTransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -454,14 +482,14 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(verb)+"@en";
+	        				String term = Lemmatizer.getLemma(verb)+"@"+language;
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
-                                                logger.debug("Lemmatized cannonical form:"+term, "");
+                                                verb = term;
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@en");
+	        				entry.setCanonicalForm(verb+"@"+language);
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -485,9 +513,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(verb)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                }
                                                 
 	        				
 	        			}	
@@ -501,9 +534,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(verb)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                }
                                                 
 	        				
 	        			}
@@ -530,7 +568,7 @@ public class Templates {
 	
 	
 	public static void getIntransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -582,14 +620,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(verb)+"@en";
+	        				String term = Lemmatizer.getLemma(verb)+"@"+language;
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
-                                                logger.debug("Lemmatized cannonical form:"+term, "");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@en");
+	        				entry.setCanonicalForm(verb+"@"+language);
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -613,9 +650,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(verb)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                }
                                                 
 	        				
 	        			}	
@@ -629,9 +671,14 @@ public class Templates {
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 	        			
-	        				lexicon.add(entry, vector);
+	        				if(isAlpha(verb)){
+                                                    lexicon.add(entry, vector);
 	        				
-	        				logger.debug("Found entry:"+entry+"\n");
+                                                    logger.debug("Found entry:"+entry+"\n");
+                                                }
+                                                else{
+                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                }
                                                 
 	        				
 	        			}	
@@ -654,6 +701,19 @@ public class Templates {
 	    qExec.close() ;
 
 	}
+        
+        
+        private static boolean isAlpha(String label) {
+            char[] chars = label.toCharArray();
+
+            for (char c : chars) {
+                if(!Character.isLetter(c)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 	
 
 }

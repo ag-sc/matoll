@@ -136,7 +136,7 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer());	
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"es");	
 		
 	}
 
