@@ -13,6 +13,7 @@ import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import static de.citec.sc.matoll.evaluation.LexiconEvaluation.references;
 import de.citec.sc.matoll.io.LexiconLoader;
 import java.util.Map;
 
@@ -213,6 +214,10 @@ public class LexiconEvaluationSimple {
             return (2*recall*precision)/(recall+precision);	
 	}
 	
+        public void setReferences(Set<Reference> set) {
+		this.references = references;
+		
+	}
 	public double getPrecision(String key) {
                         
             if (key.equals("lemma"))     return precision_sum_lemma/total;
