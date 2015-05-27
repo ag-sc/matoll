@@ -185,14 +185,19 @@ public class Lexicon {
 		return string;
 	}
 
-	public List<LexicalEntry> getEntriesForReference(String ref) {
+	public List<LexicalEntry> getEntriesForReference(String input_ref) {
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
 		
 		for (LexicalEntry entry: this.entries)
 		{
-			if (entry.getReferences().toString().equals(ref))
-				entries.add(entry);
+                    for(Reference ref: entry.getReferences()){
+                        if (ref.toString().equals(input_ref)) {
+                            entries.add(entry);
+                            break;
+                        }
+                    }
+			
 		}
 		
 		return entries;

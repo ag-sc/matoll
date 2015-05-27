@@ -306,6 +306,13 @@ public class Matoll {
 				
 				List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
 				
+                                /*
+                                TODO:
+                                the contains function does not work here.
+                                why?
+                                Because the euqals methode is set in the lexical entry, but there it is also check on the URI level, if the entry is equals or not.
+                                This works perfect for creating and checking entries created by M-ATOLL, but not for lexica, like gold, with a different namespace etc.
+                                */
 				if (gold.contains(entry))
 				{
 					//System.out.print("Lexicon contains "+entry+"\n");
@@ -337,10 +344,8 @@ public class Matoll {
 			
 			else
 			{
-				System.out.print("Can not train classifier as there are no training instances\n");
 				logger.info("Can not train classifier as there are no training instances\n");
 				writeByReference(lexiconwithFeatures);
-				System.out.print("Exit MATOLL\n");
 				logger.info("Exit MATOLL\n");
 				return;
 				
@@ -455,13 +460,12 @@ public class Matoll {
 		List<LexicalEntry> entries;
 		FileWriter writer;
 		Set<Reference> references = lexicon.getReferences();
-	
 		
 		
 		for (Reference ref: references)
 		{
 			String filename = ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
-			logger.debug("Write lexicon for reference "+ref.toString()+" to "+filename);
+			System.out.println("Write lexicon for reference "+ref.toString()+" to "+filename);
 			writer = new FileWriter(filename);
 			entries = lexicon.getEntriesForReference(ref.toString());
 			
