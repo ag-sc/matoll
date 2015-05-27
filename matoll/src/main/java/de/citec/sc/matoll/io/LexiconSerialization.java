@@ -194,11 +194,11 @@ public class LexiconSerialization {
 			
 			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
 			
-			if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.confidence, model.createLiteral(provenance.getConfidence().toString()));
+                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
 		
 			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
-			
-                       	if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.frequency, model.createResource(provenance.getFrequency().toString()));
+
+                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
 
 			
 			

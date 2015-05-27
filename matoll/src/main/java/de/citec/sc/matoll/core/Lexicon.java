@@ -54,6 +54,13 @@ public class Lexicon {
 			{
 				list = (ArrayList<LexicalEntry>) map.get(entry.getCanonicalForm());
 				list.add(entry);
+                                /*
+                                TODO:Do I have to add the line map.put(entry..)?
+                                */
+                                /*
+                                TODO: Maybe we can later remove this map, as it increases the cost, as bigger the lexicon gets.
+                                */
+
 			}
 			else
 			{
@@ -84,7 +91,7 @@ public class Lexicon {
 			containedEntry.setSentences(sentences);
                         
                         for(Sense sense : entry.getSenses()) containedEntry.addSense(sense);
-			for( SyntacticBehaviour behaviours : entry.getBehaviours()) containedEntry.addSyntacticBehaviour(behaviours);
+			for( SyntacticBehaviour behaviours : entry.getBehaviours())  containedEntry.addSyntacticBehaviour(behaviours);
                         
                         //System.out.println(containedEntry.toString());
                         
