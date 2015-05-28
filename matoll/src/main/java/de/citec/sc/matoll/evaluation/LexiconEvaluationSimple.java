@@ -15,6 +15,8 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import static de.citec.sc.matoll.evaluation.LexiconEvaluation.references;
 import de.citec.sc.matoll.io.LexiconLoader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class LexiconEvaluationSimple {
@@ -83,29 +85,56 @@ public class LexiconEvaluationSimple {
 		for (LexicalEntry entry : lexicon.getEntries()){
                     
                     String pos = entry.getPOS();
-                    String cannonicalForm = entry.getCanonicalForm();
+                    pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun", "http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+                    String cannonicalForm = entry.getCanonicalForm().replace("@en","");
                     Set<Reference> refs = entry.getReferences();
+                    
+                    boolean occursInGold = false; 
                     
                     for (LexicalEntry gold_entry : gold.getEntries()){
                         
                         String pos_gold = gold_entry.getPOS();
-                        String cannonicalForm_gold = gold_entry.getCanonicalForm();
+                        pos_gold = pos_gold.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun", "http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+                        String cannonicalForm_gold = gold_entry.getCanonicalForm().replace("@en","");
+//                        System.out.println("cannonicalForm_gold:"+cannonicalForm_gold);
+//                        System.out.println("cannonicalForm:"+cannonicalForm);
+//                        System.out.println("pos_gold:"+pos_gold);
+//                        System.out.println("pos:"+pos);
+//                        System.out.println();
                         Set<Reference> references_gold = gold_entry.getReferences();
+                        List<String> refs_gold_string = new ArrayList<String>();
+                        for (Reference reference : references_gold){
+                            try{
+                                refs_gold_string.add(reference.getURI());
+                            }
+                            catch(Exception e){
+
+                            }
+                        }
 
                         if (pos_gold.equals(pos) && cannonicalForm_gold.equals(cannonicalForm)) {
                             
                             int counter = 0;
                             for (Reference reference : refs){
-                                if (references_gold.contains(reference)) counter +=1;
+                                try{
+                                    if (refs_gold_string.contains(reference.getURI())) counter +=1; occursInGold = true;
+                                }
+                                catch (Exception e){
+                                    System.out.println("Reference missing");
+                                }
+                                
                             }
-                            if (!references_gold.isEmpty()) {
-                                recall_sum += (double) counter/references_gold.size();
+                            
+                            if (!refs_gold_string.isEmpty()) {
+                                //System.out.println((double) counter/refs_gold_string.size());
+                                recall_sum += (double) counter/refs_gold_string.size();
                             }
                             
                             if (counter > 0) {
-                                evaluateSyntactic(entry,gold_entry);
-                                evaluateMapping(entry,gold_entry);
+                                //evaluateSyntactic(entry,gold_entry);
+                                //evaluateMapping(entry,gold_entry);
                                 comparisons++;
+                                //break;
                             } 
                         }
                     }   
@@ -227,7 +256,11 @@ public class LexiconEvaluationSimple {
 	}
 	
 	public double getRecall(String key) {
-
+            System.out.println("##########");
+            System.out.println("recall_sum_lemma:"+recall_sum_lemma);
+            System.out.println("gold_total:"+gold_total);
+            System.out.println("comparisons:"+comparisons);
+            System.out.println("##########");
             if (key.equals("lemma"))     return recall_sum_lemma/gold_total;            
             if (key.equals("syntactic")) return recall_sum_syntactic/comparisons;
             if (key.equals("apping"))    return recall_sum_mapping/comparisons;
