@@ -84,6 +84,7 @@ public class LexiconLoader {
                                                  
                                                  Provenance provenance = new Provenance();
                                                  provenance.setConfidence(Double.valueOf(getConfidence(subject,model)));
+                                                 provenance.setFrequency(getFrequency(subject,model));
 						 entry.setProvenance(provenance);
                                                  
 						 entry.setURI(subject.toString());
@@ -447,7 +448,7 @@ public class LexiconLoader {
 		}		
 	}
         
-        private static String getConfidence(Resource subject, Model model) {
+        private static double getConfidence(Resource subject, Model model) {
 		
 		Resource prov_activity;
 		
@@ -458,7 +459,7 @@ public class LexiconLoader {
                 /*
                 if no confidence is given in .ttl file return 0.0
                 */
-                String return_vale = "0.0";
+                double return_vale = 0.0;
 
 		stmt = subject.getProperty(PROVO.generatedBy);
 		
@@ -472,8 +473,7 @@ public class LexiconLoader {
 				
 				if (stmt != null)
 				{
-				form = (Literal) prov_activity.getProperty(PROVO.confidence).getObject();
-					return form.toString();
+				return prov_activity.getProperty(PROVO.confidence).getDouble();
 				}
 				else
 				{
@@ -492,6 +492,54 @@ public class LexiconLoader {
 			return return_vale;
 		}
 	}
+        
+        private static int getFrequency(Resource subject, Model model) {
+		
+		Resource prov_activity;
+		
+		Statement stmt;
+		
+		Literal form;
+		
+                /*
+                if no confidence is given in .ttl file return 0.0
+                */
+                int return_vale = 0;
+
+		stmt = subject.getProperty(PROVO.generatedBy);
+		
+		if (stmt != null)
+		{
+			prov_activity = (Resource) stmt.getObject();
+			
+			if (prov_activity != null)
+			{
+				stmt = prov_activity.getProperty(PROVO.frequency);
+				
+				if (stmt != null)
+				{
+				return prov_activity.getProperty(PROVO.frequency).getInt();
+					//return form.toString();
+				}
+				else
+				{
+					return return_vale;
+				}
+				
+			}
+			else
+			{
+				return return_vale;
+			}
+		}
+		else
+		{
+			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
+			return return_vale;
+		}
+	}
+        
+        
         
 }
 
