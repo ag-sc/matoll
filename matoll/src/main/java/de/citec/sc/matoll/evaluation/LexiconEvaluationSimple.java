@@ -131,10 +131,10 @@ public class LexiconEvaluationSimple {
                             }
                             
                             if (counter > 0) {
-                                //evaluateSyntactic(entry,gold_entry);
-                                //evaluateMapping(entry,gold_entry);
+                                evaluateSyntactic(entry,gold_entry);
+                                evaluateMapping(entry,gold_entry);
                                 comparisons++;
-                                //break;
+                                break;
                             } 
                         }
                     }   
@@ -256,11 +256,11 @@ public class LexiconEvaluationSimple {
 	}
 	
 	public double getRecall(String key) {
-            System.out.println("##########");
-            System.out.println("recall_sum_lemma:"+recall_sum_lemma);
-            System.out.println("gold_total:"+gold_total);
-            System.out.println("comparisons:"+comparisons);
-            System.out.println("##########");
+//            System.out.println("##########");
+//            System.out.println("recall_sum_lemma:"+recall_sum_lemma);
+//            System.out.println("gold_total:"+gold_total);
+//            System.out.println("comparisons:"+comparisons);
+//            System.out.println("##########");
             if (key.equals("lemma"))     return recall_sum_lemma/gold_total;            
             if (key.equals("syntactic")) return recall_sum_syntactic/comparisons;
             if (key.equals("apping"))    return recall_sum_mapping/comparisons;

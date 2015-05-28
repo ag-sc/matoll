@@ -19,6 +19,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
@@ -103,8 +104,16 @@ public class LexiconLoader {
 						 }
 					 }
 				 }
-                                if(entry.getPOS()!=null){
-                                    lexicon.addEntry(entry);
+                                if(entry.getPOS()!=null && entry.getReferences().size()>0){
+                                    boolean add_entry = true;
+                                    for(Reference ref : entry.getReferences()){
+                                        try{
+                                            if(ref.getURI()==null)add_entry = false;
+                                        }
+                                        catch (Exception ex){ add_entry = false;};
+                                        
+                                    }
+                                    if(add_entry)lexicon.addEntry(entry);
                                 }
 			 }
 				 
@@ -123,8 +132,16 @@ public class LexiconLoader {
 				 {
 					 entry.addSense(sense);
 				 }
-                                 if(entry.getPOS()!=null){
-                                    lexicon.addEntry(entry);
+                                 if(entry.getPOS()!=null && entry.getReferences().size()>0){
+                                    boolean add_entry = true;
+                                    for(Reference ref : entry.getReferences()){
+                                        try{
+                                            if(ref.getURI()==null)add_entry = false;
+                                        }
+                                        catch (Exception ex){ add_entry = false;};
+                                        
+                                    }
+                                    if(add_entry)lexicon.addEntry(entry);
                                 }
 			 				
 			}
