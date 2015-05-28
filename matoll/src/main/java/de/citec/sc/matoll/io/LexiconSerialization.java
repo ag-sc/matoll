@@ -63,8 +63,8 @@ public class LexiconSerialization {
                 }
                 model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createResource(entry.getCanonicalForm()));
                 
-		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"_CanonicalForm"));
-		model.add(model.createResource(entry.getURI()+"_CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
+		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
+		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
                 //System.out.println("entry.getReferences().size():"+entry.getReferences().size());
 		if (entry.getReferences().size()>0)
@@ -75,13 +75,13 @@ public class LexiconSerialization {
 			{
                             SimpleReference reference = (SimpleReference) ref;
 
-                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
-                            model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.toString()));
+                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"));
+                            model.add(model.createResource(entry.getURI()+"#Sense"), LEMON.reference, model.createResource(reference.toString()));
                             for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
                                 if (synbehaviour != null)
                                 {
                                     for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                                        model.add(model.createResource(entry.getURI()+"_Sense"),LEMON.isA,model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
+                                        model.add(model.createResource(entry.getURI()+"#Sense"),LEMON.isA,model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
                                      }
 
                                 }
@@ -95,8 +95,8 @@ public class LexiconSerialization {
                             
                             Restriction reference = (Restriction) ref;
 
-                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"_Sense"));
-                            model.add(model.createResource(entry.getURI()+"_Sense"), LEMON.reference, model.createResource(reference.getURI()));
+                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"));
+                            model.add(model.createResource(entry.getURI()+"#Sense"), LEMON.reference, model.createResource(reference.getURI()));
                             model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
                             model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
                             model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
@@ -105,7 +105,7 @@ public class LexiconSerialization {
                                 if (synbehaviour != null)
                                 {
                                     for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                                        model.add(model.createResource(entry.getURI()+"_Sense"),LEMON.isA,model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
+                                        model.add(model.createResource(entry.getURI()+"#Sense"),LEMON.isA,model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
                                      }
 
                                 }
@@ -135,51 +135,16 @@ public class LexiconSerialization {
                     synbehaviour_counter+=1;
                     if (synbehaviour != null)
                     {
-			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)));
-			model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)));
+			model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
                             //synarc.getArgumentType();
-                            model.add(model.createResource(entry.getURI()+"_SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"_arg"+synarc.getValue()));                    
+                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
                          }
 			
                     }
                 }
 		
-	
-                /*
-                this has to be run under Syntactic Behaviour
-                */
-                /*for( Sense sense:entry.getSense()){
-                    HashMap<String, String> argumentMap = entry.computeMappings(sense);
-                    
-                    //entry.setMappings(argumentMa);
-
-                    Resource res;
-                    
-                    for (String synArg: argumentMap.keySet())
-                        {
-                        res = model.createResource();
-
-                        //TODO: Put this to syntactic behavioir  model.add(model.createResource(entry.getURI()+"_SynBehaviour"),model.createProperty(synArg),res);
-                        model.add(model.createResource(entry.getURI()+"_Sense"),model.createProperty(argumentMap.get(synArg)),res);
-                        }
-
-                }*/
-                
-                /*
-                Raus!
-                int sense_counter = 0;
-                for( Sense sense:entry.getSense()){
-                    HashMap<String, String> argumentMap = entry.computeMappings(sense);
-                    Resource res;
-                    sense_counter+=1;
-                    for (String synArg: argumentMap.keySet())
-                        {
-                        res = model.createResource(synArg);
-                        model.add(model.createResource(entry.getURI()+"_Sense"+Integer.toBinaryString(sense_counter)),model.createProperty(argumentMap.get(synArg)),res);
-                        }
-
-                }*/
 		
 		
 		Provenance provenance = entry.getProvenance();
@@ -187,18 +152,18 @@ public class LexiconSerialization {
 		if (provenance != null)
 		{
 			SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
-			model.add(model.createResource(entry.getURI()), PROVO.generatedBy, model.createResource(entry.getURI()+"_Activity"));
-			model.add(model.createResource(entry.getURI()+"_Activity"), RDF.type, PROVO.Activity);
+			model.add(model.createResource(entry.getURI()), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"));
+			model.add(model.createResource(entry.getURI()+"#Activity"), RDF.type, PROVO.Activity);
 			
-			if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
+			if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
 			
-			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
+			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
 			
-                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
+                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
 		
-			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
+			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
 
-                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"_Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
+                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
 
 			
 			
