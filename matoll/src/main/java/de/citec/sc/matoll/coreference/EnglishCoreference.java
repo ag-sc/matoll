@@ -18,7 +18,7 @@ public class EnglishCoreference implements Coreference{
 		
 		String lemma;
 		Integer number;
-		
+                
 		// System.out.print("Computing coreference!!!\n");
 		
 		for (String resource: Resource2Lemma.keySet())

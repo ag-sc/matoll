@@ -1,4 +1,4 @@
-package de.citec.sc.sentence.preprosessing.process;
+package de.citec.sc.sentence.preprocessing.process;
 
 import java.util.HashSet;
 

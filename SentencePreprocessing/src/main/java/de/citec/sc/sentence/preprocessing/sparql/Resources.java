@@ -1,4 +1,4 @@
-package de.citec.sc.sentence.preprosessing.sparql;
+package de.citec.sc.sentence.preprocessing.sparql;
 
 import java.io.File;
 import java.io.FileInputStream;

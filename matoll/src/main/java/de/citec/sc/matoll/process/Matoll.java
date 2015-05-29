@@ -205,14 +205,14 @@ public class Matoll {
 		library.setPatterns(config.getPatterns());
 		
 	
-		String subj = null;
-		String obj = null;
+		String subj;
+		String obj;
 		
 		String reference = null;
 		
 		List<Model> sentences;
 		File[] files = folder.listFiles();
-;
+
                 int file_counter = 0;
 		for (final File file : files) {
 			
