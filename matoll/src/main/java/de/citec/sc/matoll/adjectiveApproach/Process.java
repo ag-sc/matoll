@@ -236,9 +236,9 @@ public class Process {
 		Sense sense = new Sense();
 
 		sense.setReference(new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(object_uri),object_uri,uri));
-		
-		entry.addSense(sense);
-		
+                
+                entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_AdjectiveRestriction");
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
 		SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -258,15 +258,10 @@ public class Process {
 		
 		provenance.setAgent("Frequency");
 		provenance.setConfidence((double) frequency);
+                provenance.setFrequency(frequency);
 		
 		entry.setProvenance(provenance);
-		
-		//entry = lexicon.createNewEntry(adjective);
-		
-		entry.addSense(sense);
-		
-		//entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
-
+				
 		behaviour = new SyntacticBehaviour();
 		
 		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
@@ -276,6 +271,8 @@ public class Process {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
 		entry.addSyntacticBehaviour(behaviour);
+                
+                entry.addSense(sense);
 		
 		
 		//entry.setProvenance(provenance);

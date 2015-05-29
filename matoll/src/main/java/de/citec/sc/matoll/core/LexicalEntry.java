@@ -149,7 +149,10 @@ public class LexicalEntry {
 		
                 LexicalEntry other = (LexicalEntry) obj;
             //now URIs are even so if the URI is not equal, return false and do not check other options
-            return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
+                if(this.getURI()==null || this.getReferences().isEmpty()) {
+                    return false;
+                }
+                else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
 //		if (this == obj)
 //			return true;
 //		if (obj == null)
