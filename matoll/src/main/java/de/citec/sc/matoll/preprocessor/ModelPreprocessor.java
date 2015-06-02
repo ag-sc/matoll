@@ -25,25 +25,21 @@ public class ModelPreprocessor {
 	HashMap<String,String> senseArgs;
 
     
-        
+        boolean     doCoref;
         Coreference coreference;
 	
-	Set<String> POS;
+        String      language;
         
-        public Coreference getCoreference() {
-            return coreference;
-        }
+	Set<String> POS;
 
-        public void setCoreference(Coreference coreference) {
-            this.coreference = coreference;
-        }
 	
-	public ModelPreprocessor()
+	public ModelPreprocessor(String language)
 	{
+                this.language = language; 
 		POS = new HashSet<String>();
+                doCoref = false;
 	}
-	
-	boolean coref = false;
+	        
 	/**
          * @param model
          * @param subjectEntity
@@ -105,7 +101,7 @@ public class ModelPreprocessor {
 			}
 		}
 		
-		if (coref) coreference.computeCoreference(model, Resource2Lemma, Int2NodeMapping, Node2IntMapping, senseArgs);
+		if (doCoref) coreference.computeCoreference(model,language);
 				
 	}
         /**
@@ -307,13 +303,15 @@ public class ModelPreprocessor {
 	}
 
 	public void setCoreferenceResolution(boolean b) {
-		coref = b;
-		
+		doCoref = b;	
 	}
 
 	public void setPOS(Set<String> pos) {
-		POS = pos;
-		
+		POS = pos;		
 	}
+        
+        public void setLanguage(String l) {
+               language = l;
+        }
 
 }

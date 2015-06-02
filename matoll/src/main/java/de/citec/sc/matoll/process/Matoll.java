@@ -45,7 +45,6 @@ import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
-import de.citec.sc.matoll.preprocessor.ModelPreprocessorFactory;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
 
 import org.apache.jena.riot.RDFDataMgr;
@@ -189,12 +188,11 @@ public class Matoll {
 		
 		Lexicon lexicon;
 		
-		// Creating preprocessor and setting coreference
+		// Creating preprocessor
 		
-		ModelPreprocessor preprocessor = ModelPreprocessorFactory.getPreprocessor(language);
-		
-		preprocessor.setCoreferenceResolution(coreference);
-		
+		ModelPreprocessor preprocessor = new ModelPreprocessor(language);
+                preprocessor.setCoreferenceResolution(coreference);
+				
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
 		
 

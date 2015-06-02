@@ -1,7 +1,11 @@
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import de.citec.sc.matoll.coreference.Coreference;
 import de.citec.sc.matoll.coreference.RelativeClauses;
-import org.apache.jena.riot.RDFDataMgr;
+import java.util.Set;
+
 
 /**
  *
@@ -9,18 +13,27 @@ import org.apache.jena.riot.RDFDataMgr;
  */
 public class CoreferenceTest {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    Model model; 
+    String lang;
         
-        RelativeClauses coref = new RelativeClauses();
+    public CoreferenceTest(String language) {
         
-        String f = "matoll/src/test/resources/coref/coref_en_ex1.ttl";
+        lang  = language;        
+    }
+    
+    public void loadTestFile(String filename) {
+
+        model = ModelFactory.createDefaultModel();
+        model.read(this.getClass().getResourceAsStream(filename),null,"TTL");
+    }
+    
+    public void run() {
         
-        Model model = RDFDataMgr.loadModel(f);
-        coref.computeCoreference(model,"en");
+        Coreference coref = new Coreference();
         
+        coref.computeCoreference(model,lang);
+
+        System.out.println(model.toString());
     }
     
 }

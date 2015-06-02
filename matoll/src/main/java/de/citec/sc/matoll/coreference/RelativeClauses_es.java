@@ -6,15 +6,16 @@
 package de.citec.sc.matoll.coreference;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import java.util.HashMap;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import java.util.Set;
 
 /**
  *
- * @author swalter
+ * @author cunger
  */
-public class SpanishCoreference implements Coreference{
+public class RelativeClauses_es implements CorefResolver {
 
-    public void computeCoreference(Model model, HashMap<String, String> Resource2Lemma, HashMap<Integer, String> Int2NodeMapping, HashMap<String, Integer> Node2IntMapping, HashMap<String, String> senseArgs) {
+    public Set<Set<RDFNode>> getCoreferenceSets(Model model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

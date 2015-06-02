@@ -1,20 +1,35 @@
 package de.citec.sc.matoll.coreference;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import java.util.Set;
 
 /**
  *
  * @author cunger
  */
-public class RelativeClauses { // TODO implements Coreference
+public class RelativeClauses { 
    
-    // TODO This should be a factory?
-   
-    public void computeCoreference(Model model, String language) {
-        
-        // 1. Read SPARQL queries from file: "RelativeClause_" + language + ".sparql"
-        
-        // 2. Execute each query against model and copy senseArgs between corefering tokens
+    CorefResolver coref;
+    
+    public RelativeClauses(String language) {
+                  
+        switch (language) {
+            case "EN": coref = new RelativeClauses_en();
+                       break;
+            case "DE": coref = new RelativeClauses_de();
+                       break;
+            case "ES": coref = new RelativeClauses_es();
+                       break;
+            case "JP": coref = new RelativeClauses_jp();
+                       break;
+        }
+
+    }
+    
+    public Set<Set<RDFNode>> computeCoreference(Model model) {
+ 
+        return coref.getCoreferenceSets(model);
         
     }
 }

@@ -1,19 +1,72 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.citec.sc.matoll.coreference;
 
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
-import java.util.HashMap;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
- * @author swalter
+ * @author cunger
  */
-public interface Coreference {
+public class Coreference {
     
-    void computeCoreference(Model model, HashMap<String,String> Resource2Lemma, HashMap<Integer,String> Int2NodeMapping, HashMap<String,Integer> Node2IntMapping, HashMap<String,String> senseArgs);
+    public void computeCoreference(Model model, String language) {
+    
+        Set<Set<RDFNode>> coreferenceSets = new HashSet<Set<RDFNode>>();
+        
+        // 1. Select corefering tokens
+        
+        // Relative clauses 
+        
+        RelativeClauses relcl = new RelativeClauses(language);
+        
+        coreferenceSets.addAll(relcl.computeCoreference(model));
+        
+        // Anaphora 
+        
+        // ... 
+        
+        // 2. Copy senseArg annotations between them
+        
+        for (Set<RDFNode> coreferenceSet : coreferenceSets) {
+
+             Set<RDFNode> senseArgs = new HashSet<RDFNode>();
+
+             for (RDFNode token : coreferenceSet) {
+
+                  String sparql = "SELECT ?senseArg WHERE { "
+                         + "<"+token.toString()+">" + " <own:senseArg> ?senseArg . "
+                         + " }";
+                                    
+                  Query query = QueryFactory.create(sparql);
+                  QueryExecution qe = QueryExecutionFactory.create(query,model);
+                  ResultSet results = qe.execSelect();
+
+                  while (results.hasNext()) {
+           
+                    QuerySolution solution = results.nextSolution();
+                    senseArgs.add(solution.get("senseArg"));
+                  }
+             }
+             
+             for (RDFNode token : coreferenceSet) {
+                for (RDFNode senseArg : senseArgs) {
+                     Statement s = ResourceFactory.createStatement(token.asResource(), model.createProperty("<own:senseArg>"), senseArg);
+                     if (!model.contains(s)) {
+                          model.add(s);
+                     }
+                }
+             }    
+        }
+    }
     
 }
