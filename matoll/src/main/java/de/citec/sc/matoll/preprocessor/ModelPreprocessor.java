@@ -26,7 +26,7 @@ public class ModelPreprocessor {
 
     
         boolean     doCoref;
-        Coreference coreference;
+        Coreference coreference = new Coreference();
 	
         String      language;
         
@@ -100,7 +100,6 @@ public class ModelPreprocessor {
 				}	
 			}
 		}
-		
 		if (doCoref) coreference.computeCoreference(model,language);
 				
 	}

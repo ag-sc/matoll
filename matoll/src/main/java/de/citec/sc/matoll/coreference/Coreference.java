@@ -26,7 +26,6 @@ public class Coreference {
         // 1. Select corefering tokens
         
         // Relative clauses 
-        
         RelativeClauses relcl = new RelativeClauses(language);
         
         coreferenceSets.addAll(relcl.computeCoreference(model));
@@ -42,7 +41,6 @@ public class Coreference {
              Set<RDFNode> senseArgs = new HashSet<RDFNode>();
 
              for (RDFNode token : coreferenceSet) {
-
                   String sparql = "SELECT ?senseArg WHERE { "
                          + "<"+token.toString()+">" + " <own:senseArg> ?senseArg . "
                          + " }";
