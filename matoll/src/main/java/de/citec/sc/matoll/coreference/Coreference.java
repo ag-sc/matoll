@@ -10,6 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
+import de.citec.sc.matoll.core.Language;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import java.util.Set;
  */
 public class Coreference {
     
-    public void computeCoreference(Model model, String language) throws Exception {
+    public void computeCoreference(Model model, Language language) throws Exception {
     
         Set<Set<RDFNode>> coreferenceSets = new HashSet<Set<RDFNode>>();
         

@@ -7,6 +7,7 @@ package de.citec.sc.matoll.evaluation;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
@@ -236,7 +237,7 @@ public class RunPartialEvaluation {
     }
 
     private static void writeLexicon(Lexicon lexicon, String name) throws FileNotFoundException {
-        LexiconSerialization serializer = new LexiconSerialization("en");
+        LexiconSerialization serializer = new LexiconSerialization(Language.EN);
 		
         Model model = ModelFactory.createDefaultModel();
 

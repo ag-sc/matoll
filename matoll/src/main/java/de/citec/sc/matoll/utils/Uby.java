@@ -5,6 +5,7 @@
  */
 package de.citec.sc.matoll.utils;
 
+import de.citec.sc.matoll.core.Language;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,9 +23,10 @@ import java.util.logging.Logger;
 public class Uby {
     
     private final HashMap<String,List<DbnaryObject>> uby_list = new HashMap<String,List<DbnaryObject>>();
-    private String language = "";
-    public Uby(String language){
-        if(language.equals("EN")) loadUby("resources/uby.en");
+    private Language language;
+    
+    public Uby(Language language){
+        if(language.equals(Language.EN)) loadUby("resources/uby.en");
         this.language = language;
     }
     
@@ -54,7 +56,7 @@ public class Uby {
     public HashSet<String> getURI(String label, String pos){
         HashSet<String> uri = new HashSet<String>();
         pos = pos.replace("commonNoun", "noun");
-        label = label.replace("@"+language.toLowerCase(), "");
+        label = label.replace("@"+language.toString().toLowerCase(), "");
         if(uby_list.containsKey(label)){
             List<DbnaryObject> value = uby_list.get(label);
             

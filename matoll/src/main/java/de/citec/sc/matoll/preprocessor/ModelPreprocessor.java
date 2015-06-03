@@ -10,6 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.coreference.Coreference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,12 +31,12 @@ public class ModelPreprocessor {
         boolean     doCoref;
         Coreference coreference = new Coreference();
 	
-        String      language;
+        Language    language;
         
 	Set<String> POS;
 
 	
-	public ModelPreprocessor(String language)
+	public ModelPreprocessor(Language language)
 	{
                 this.language = language; 
 		POS = new HashSet<String>();
@@ -316,7 +317,7 @@ public class ModelPreprocessor {
 		POS = pos;		
 	}
         
-        public void setLanguage(String l) {
+        public void setLanguage(Language l) {
                language = l;
         }
 

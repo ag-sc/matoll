@@ -57,6 +57,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.core.Language;
 
 public class Matoll {
  
@@ -75,7 +76,7 @@ public class Matoll {
          * @throws IllegalAccessException
          * @throws ClassNotFoundException 
          */
-	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 			
 		//Logger logger = LogManager.getLogger(Matoll.class.getName());
 
@@ -87,7 +88,7 @@ public class Matoll {
 		String model_file = "model";
 		String output_lexicon;
 		String configFile;
-		String language;
+		Language language;
 		String classi;
 		Config config = null;
 		boolean coreference = false;
@@ -132,13 +133,6 @@ public class Matoll {
 		coreference = config.getCoreference();
 		
 		language = config.getLanguage();
-		
-		if (language == null)
-		{
-			System.out.print("Set language to EN, DE or ES in config file\n");
-			return;
-		}
-		
 				
 		for (int i=0; i < args.length; i++)
 		{

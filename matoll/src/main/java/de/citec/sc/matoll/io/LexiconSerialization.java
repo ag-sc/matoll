@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
+import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -29,7 +30,7 @@ public class LexiconSerialization {
     Dbnary dbnary = null;
     Uby uby = null;
     
-        public LexiconSerialization(String language){
+        public LexiconSerialization(Language language){
             this.dbnary = new Dbnary(language);
             this.uby = new Uby(language);
         }

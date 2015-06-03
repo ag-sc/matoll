@@ -1,5 +1,6 @@
 package de.citec.sc.matoll.utils;
 
+import de.citec.sc.matoll.core.Language;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -17,7 +18,7 @@ public class StanfordLemmatizer implements Lemmatizer {
 	
 	protected StanfordCoreNLP pipeline;
 	
-	public StanfordLemmatizer(String language){
+	public StanfordLemmatizer(Language language){
 	    // Create StanfordCoreNLP object properties, with POS tagging
         // (required for lemmatization), and lemmatization
         Properties props;
@@ -27,17 +28,17 @@ public class StanfordLemmatizer implements Lemmatizer {
         /*
          * TODO: Get different languages working
          */
-        /*if(language.equals("en")){
+        /*if(language.equals(EN)){
         	
             //use default
         }
-        if(language.equals("es")){
+        if(language.equals(ES)){
         	//props.put("pos.model", "resources/spanish.tagger");
         	//props.put("pos.maxlen", "30");
         	props.put("lemma.model", "resources/spanishPCFG.ser.gz");
         	props.put("encoding", "utf-8");
         }
-        if(language.equals("de")){
+        if(language.equals(DE)){
         	System.out.println("in German");
         	props.put("tokenize.model", "resources/german-fast-caseless.tagger");
         	props.put("pos.model", "resources/german-fast-caseless.tagger");

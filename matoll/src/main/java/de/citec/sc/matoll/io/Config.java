@@ -1,6 +1,11 @@
 package de.citec.sc.matoll.io;
 
 
+import de.citec.sc.matoll.core.Language;
+import static de.citec.sc.matoll.core.Language.DE;
+import static de.citec.sc.matoll.core.Language.EN;
+import static de.citec.sc.matoll.core.Language.ES;
+import static de.citec.sc.matoll.core.Language.JA;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +66,7 @@ public class Config {
 	String Output = "eval";
 	Boolean Coreference = false;
 	String Classifier = "de.citec.sc.matoll.classifiers.FreqClassifier";
-	String Language = "EN";
+	Language Language = EN;
 	Integer numItems;
 	String Frequency;
 	
@@ -71,7 +76,7 @@ public class Config {
 	{
 	}
 	
-	public void loadFromFile(String configFile) throws ParserConfigurationException, SAXException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, DOMException {
+	public void loadFromFile(String configFile) throws ParserConfigurationException, SAXException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, DOMException, Exception {
 	
 		// add logger here...
 		System.out.print("Reading configuration from: "+configFile+"\n");
@@ -96,9 +101,9 @@ public class Config {
 									
 			if (node.getNodeName().equals("Language"))
 			{
-				this.Language = node.getTextContent();
+				this.Language = mapToLanguage(node.getTextContent());
 				
-				if (Language.equals("EN"))
+				if (Language.equals(EN))
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
@@ -114,7 +119,7 @@ public class Config {
 					
 					logger.info("Adding patterns 1-8 (EN) to pattern library \n");
 				}
-				if (Language.equals("DE"))
+				if (Language.equals(DE))
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
@@ -132,7 +137,7 @@ public class Config {
 					logger.info("Adding patterns 1-10 (DE) to pattern library \n");
 				}
 				
-				if (Language.equals("ES"))
+				if (Language.equals(ES))
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
@@ -215,6 +220,15 @@ public class Config {
 		
 	}
 
+        
+        private Language mapToLanguage(String s) throws Exception {
+            
+            if      (s.toLowerCase().equals("en") || s.toLowerCase().equals("eng")) return EN;
+            else if (s.toLowerCase().equals("de") || s.toLowerCase().equals("ger")) return DE;
+            else if (s.toLowerCase().equals("es") || s.toLowerCase().equals("spa")) return ES;
+            else if (s.toLowerCase().equals("ja") || s.toLowerCase().equals("jpn")) return JA;
+            else throw new Exception("Language '" + s + "' unknown.");
+        }
 	
 
 	public String getModel() {
@@ -280,13 +294,13 @@ public class Config {
 
 
 
-	public String getLanguage() {
+	public Language getLanguage() {
 		return Language;
 	}
 
 
 
-	public void setLanguage(String language) {
+	public void setLanguage(Language language) {
 		Language = language;
 	}
 

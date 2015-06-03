@@ -1,6 +1,7 @@
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.coreference.Coreference;
 
 
@@ -11,9 +12,9 @@ import de.citec.sc.matoll.coreference.Coreference;
 public class CoreferenceTest {
 
     Model model; 
-    String lang;
+    Language lang;
         
-    public CoreferenceTest(String language) {
+    public CoreferenceTest(Language language) {
         
         lang  = language;        
     }

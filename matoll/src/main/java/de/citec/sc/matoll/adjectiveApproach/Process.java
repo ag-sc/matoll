@@ -17,6 +17,7 @@ import org.apache.jena.riot.RDFFormat;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -188,7 +189,7 @@ public class Process {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		LexiconSerialization serializer = new LexiconSerialization("EN");
+		LexiconSerialization serializer = new LexiconSerialization(Language.EN);
 		
 		serializer.serialize(lexicon, model);
 		
