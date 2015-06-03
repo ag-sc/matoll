@@ -1,10 +1,7 @@
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import de.citec.sc.matoll.coreference.Coreference;
-import de.citec.sc.matoll.coreference.RelativeClauses;
-import java.util.Set;
 
 
 /**
@@ -27,13 +24,15 @@ public class CoreferenceTest {
         model.read(this.getClass().getResourceAsStream(filename),null,"TTL");
     }
     
-    public void run() {
+    public void run() throws Exception {
         
         Coreference coref = new Coreference();
         
+        System.out.println("Old model (" + model.size() + "):\n" + model.toString());
+        
         coref.computeCoreference(model,lang);
-
-        System.out.println(model.toString());
+        
+        System.out.println("New model (" + model.size() + "):\n" + model.toString());
     }
     
 }

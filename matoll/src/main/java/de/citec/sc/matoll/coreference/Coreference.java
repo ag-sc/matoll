@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class Coreference {
     
-    public void computeCoreference(Model model, String language) {
+    public void computeCoreference(Model model, String language) throws Exception {
     
         Set<Set<RDFNode>> coreferenceSets = new HashSet<Set<RDFNode>>();
         
@@ -59,7 +59,7 @@ public class Coreference {
              for (RDFNode token : coreferenceSet) {
                 for (RDFNode senseArg : senseArgs) {
                      Statement s = ResourceFactory.createStatement(token.asResource(), model.createProperty("<own:senseArg>"), senseArg);
-                     if (!model.contains(s)) {
+                     if (!model.contains(s)) { 
                           model.add(s);
                      }
                 }

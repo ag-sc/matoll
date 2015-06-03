@@ -11,6 +11,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import de.citec.sc.matoll.coreference.Coreference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ModelPreprocessor {
@@ -100,7 +102,12 @@ public class ModelPreprocessor {
 				}	
 			}
 		}
-		if (doCoref) coreference.computeCoreference(model,language);
+		
+                if (doCoref) try {
+                    coreference.computeCoreference(model,language);
+                } catch (Exception ex) {
+                    Logger.getLogger(ModelPreprocessor.class.getName()).log(Level.SEVERE, null, ex);
+                }
 				
 	}
         /**

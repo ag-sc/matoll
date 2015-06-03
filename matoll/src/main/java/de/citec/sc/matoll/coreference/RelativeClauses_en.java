@@ -18,7 +18,9 @@ import java.util.Set;
 public class RelativeClauses_en implements CorefResolver {
     
     String sparql = "SELECT ?noun ?pron WHERE { "
-            + " ?v <conll:deprel> \"relcl\" . "
+            + " { ?v <conll:deprel> \"rcmod\" . }"
+            + " UNION "
+            + " { ?v <conll:deprel> \"relcl\" . } "
             + " ?v <conll:head> ?noun . "
             + " ?pron <conll:deprel> ?deprel ."
             + " FILTER regex(?deprel,\"subj\",\"i\") "

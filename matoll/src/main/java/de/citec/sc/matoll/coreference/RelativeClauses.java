@@ -12,13 +12,13 @@ public class RelativeClauses {
    
     CorefResolver coref;
     
-    public RelativeClauses(String language) {
+    public RelativeClauses(String language) throws Exception {
                   
-        if(language.equals("EN")) coref = new RelativeClauses_en();
-        else if(language.equals("DE")) coref = new RelativeClauses_de();
-        else if(language.equals("ES")) coref = new RelativeClauses_es();
-        else if(language.equals("JA")) coref = new RelativeClauses_ja();
-
+        if      (language.toLowerCase().equals("en")) coref = new RelativeClauses_en();
+        else if (language.toLowerCase().equals("de")) coref = new RelativeClauses_de();
+        else if (language.toLowerCase().equals("es")) coref = new RelativeClauses_es();
+        else if (language.toLowerCase().equals("ja")) coref = new RelativeClauses_ja();
+        else throw new Exception("Language is '" + language + "' and RelativeClauses doesn't know it.");
     }
     
     public Set<Set<RDFNode>> computeCoreference(Model model) {
