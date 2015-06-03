@@ -14,16 +14,10 @@ public class RelativeClauses {
     
     public RelativeClauses(String language) {
                   
-        switch (language) {
-            case "EN": coref = new RelativeClauses_en();
-                       break;
-            case "DE": coref = new RelativeClauses_de();
-                       break;
-            case "ES": coref = new RelativeClauses_es();
-                       break;
-            case "JP": coref = new RelativeClauses_jp();
-                       break;
-        }
+        if(language.equals("EN")) coref = new RelativeClauses_en();
+        else if(language.equals("DE")) coref = new RelativeClauses_de();
+        else if(language.equals("ES")) coref = new RelativeClauses_es();
+        else if(language.equals("JA")) coref = new RelativeClauses_ja();
 
     }
     

@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author cunger
  */
-public class RelativeClauses_jp implements CorefResolver {
+public class RelativeClauses_ja implements CorefResolver {
 
     public Set<Set<RDFNode>> getCoreferenceSets(Model model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
