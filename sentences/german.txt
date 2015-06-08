@@ -1,0 +1,3 @@
+put archive together with:
+
+cat split-GermanSentences.tar.* > GermanSentences.tar.gz 
