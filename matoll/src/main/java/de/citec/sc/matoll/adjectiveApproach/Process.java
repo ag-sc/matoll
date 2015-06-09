@@ -31,6 +31,7 @@ import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import weka.classifiers.Classifier;
@@ -60,7 +61,9 @@ public class Process {
 		
 		//String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
                 String path_to_tagger_model ="resources/english-caseless-left3words-distsim.tagger";
-		Classifier cls = new SMO();
+		SMO smo = new SMO();
+                smo.setOptions(weka.core.Utils.splitOptions("-M"));
+                Classifier cls = smo; 
 		
 		List<String> csv_output = new ArrayList<String>();
 		
@@ -160,8 +163,9 @@ public class Process {
 							 /*
 							  * predict
 							  */
-							 List<String> result = prediction.predict(current);
-							 if(result.get(0).equals("1")){
+							 HashMap<Integer, Double> result = prediction.predict(current);
+                                                         for(int key : result.keySet()){
+                                                            if(key==1){
 								 counter+=1;
 								 /*System.out.println("Add to lexica");
 								 System.out.println("Adjective:"+adjectiveObject.getAdjectiveTerm());
@@ -170,14 +174,17 @@ public class Process {
 								 System.out.println();*/
                                                                  try{
                                                                     lexicon.addEntry(createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
-										 adjectiveObject.getFrequency(),result.get(1)));
+										 adjectiveObject.getFrequency(),result.get(key)));
                                                                     csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                                                  }
                                                                  catch(Exception e){
                                                                         e.printStackTrace();
                                                                  }
 								 
-							 }						 
+							 } 
+                                                         }
+                                                         
+							 						 
 						 }
 					}
 				}
@@ -226,7 +233,7 @@ public class Process {
 		
 	}
 
-	private static LexicalEntry createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, String distribution) {
+	private static LexicalEntry createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
                 LexicalEntry entry;
 		
                 //System.out.println("Create Entry with: "+adjective);
@@ -255,10 +262,9 @@ public class Process {
 		Provenance provenance = new Provenance();
 		
 		provenance.setAgent("Distribution");
-		provenance.setConfidence(Double.valueOf(distribution));
+		provenance.setConfidence(distribution);
 		
-		provenance.setAgent("Frequency");
-		provenance.setConfidence((double) frequency);
+		//provenance.setAgent("Frequency");
                 provenance.setFrequency(frequency);
 		
 		entry.setProvenance(provenance);
