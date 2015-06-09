@@ -12,6 +12,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Sense;
@@ -118,7 +119,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"en");
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN);
 		
 	}
 

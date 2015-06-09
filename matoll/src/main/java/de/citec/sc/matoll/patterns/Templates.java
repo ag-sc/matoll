@@ -12,6 +12,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
@@ -27,7 +28,7 @@ import java.util.Date;
 public class Templates {
 	
 	public static void getNoun(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String noun = "";
@@ -52,7 +53,7 @@ public class Templates {
                                  
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
-	        		 	LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry(language);
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
@@ -161,7 +162,7 @@ public class Templates {
 	
 	
 	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String prep = "";
@@ -189,7 +190,7 @@ public class Templates {
 	        		 logger.debug("prep: "+prep, "");
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
-	        		 	LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry(language);
 //	        			Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
@@ -293,7 +294,7 @@ public class Templates {
 	
 	
 	public static void getAdjective(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
 		//TODO: Check this entry
 	    String e1_arg ="";
 	    String e2_arg = "";
@@ -323,7 +324,7 @@ public class Templates {
 	        		 
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
-	        		 	LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry(language);
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
@@ -438,7 +439,7 @@ public class Templates {
 	
 	
 	public static void getTransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -461,7 +462,7 @@ public class Templates {
                                  logger.debug("e1_arg: "+e1_arg, "");
                                  logger.debug("e2_arg: "+e2_arg, "");
 	        		 
-	        		 	LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry(language);
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();
@@ -568,7 +569,7 @@ public class Templates {
 	
 	
 	public static void getIntransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, String language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -598,7 +599,7 @@ public class Templates {
                                  logger.debug("dobj_form: "+dobj_form, "");
 	        		 
 	        		 
-	        		 	LexicalEntry entry = new LexicalEntry();
+	        		 	LexicalEntry entry = new LexicalEntry(language);
 //                                        Calendar calendar = Calendar.getInstance();
 //                                        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 //	        			long timestamp = currentTimestamp.getTime();

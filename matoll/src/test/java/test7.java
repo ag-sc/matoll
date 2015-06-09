@@ -27,7 +27,7 @@ public class test7 {
 		
 		Lexicon lexicon = new Lexicon();
 		
-		LexicalEntry entry1 = new LexicalEntry();
+		LexicalEntry entry1 = new LexicalEntry(Language.EN);
 		
 		entry1.setCanonicalForm("marry");
 		
@@ -55,7 +55,7 @@ public class test7 {
 		
 		lexicon.addEntry(entry1);
 		
-		LexicalEntry entry2 = new LexicalEntry();
+		LexicalEntry entry2 = new LexicalEntry(Language.EN);
 		
 		entry2.setCanonicalForm("marry");
                 //entry2.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
@@ -102,7 +102,7 @@ public class test7 {
                 lexicon.addEntry(entry2);
                 
                 
-                LexicalEntry entry3 = new LexicalEntry();
+                LexicalEntry entry3 = new LexicalEntry(Language.EN);
 		
 		entry3.setCanonicalForm("marry");
 		

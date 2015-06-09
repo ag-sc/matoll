@@ -15,6 +15,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
+import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -72,10 +73,12 @@ public class LexiconLoader {
                          //System.out.println("Confidence:"+getConfidence(subject,model));
 			 
 			 HashMap<String,String> map;
+                         
+                         Language language = getLanguage(subject,model);
 			 
                          
 			 if (behaviours.size() > 0)
-			 {      entry = new LexicalEntry();
+			 {      entry = new LexicalEntry(language);
 				for (SyntacticBehaviour behaviour: behaviours)
 				 {
 					 for (Sense sense: senses)
@@ -121,7 +124,7 @@ public class LexiconLoader {
 			else
 			{
 				
-				 entry = new LexicalEntry();
+				 entry = new LexicalEntry(language);
 				 
 				 entry.setURI(subject.toString());
 			 
@@ -538,6 +541,14 @@ public class LexiconLoader {
 			return return_vale;
 		}
 	}
+
+    private Language getLanguage(Resource subject, Model model) {
+        /*
+        TODO: implement function;
+        return as default EN
+        */
+        return Language.EN;
+    }
         
         
         

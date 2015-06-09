@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
@@ -94,7 +95,7 @@ FeatureVector vector = new FeatureVector();
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"de");
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE);
 		
 		
 	}

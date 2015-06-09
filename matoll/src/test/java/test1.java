@@ -1,6 +1,7 @@
 
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Sense;
@@ -16,7 +17,7 @@ public class test1 {
 		
 		LexiconWithFeatures lexicon = new LexiconWithFeatures();
 		
-		LexicalEntry entry = new LexicalEntry();
+		LexicalEntry entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry");
 		
@@ -40,7 +41,7 @@ public class test1 {
 		
 		lexicon.add(entry, new FeatureVector());
 		
-		entry = new LexicalEntry();
+		entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry");
 		
@@ -71,7 +72,7 @@ public class test1 {
 		
 		// Let's changed the lemma
 		
-		entry = new LexicalEntry();
+		entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("casar");
 		
@@ -100,7 +101,7 @@ public class test1 {
 		
 		// Let's change the frame type
 		
-		entry = new LexicalEntry();
+		entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry");
 		
@@ -129,7 +130,7 @@ public class test1 {
 		
 		// Let's change the mappings
 		
-		entry = new LexicalEntry();
+		entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry");
 		

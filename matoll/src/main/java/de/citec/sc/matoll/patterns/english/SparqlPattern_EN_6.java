@@ -17,6 +17,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
@@ -97,7 +98,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"en");
+		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN);
 
 	}
 	

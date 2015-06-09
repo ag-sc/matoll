@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
@@ -53,7 +54,7 @@ public class test4 {
 		
 		System.out.print("Lexicon has "+lexicon.size()+" entries\n");
 		
-		LexicalEntry entry = new LexicalEntry();
+		LexicalEntry entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry@en");
 		

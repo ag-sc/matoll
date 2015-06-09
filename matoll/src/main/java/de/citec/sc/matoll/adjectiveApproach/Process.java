@@ -237,7 +237,7 @@ public class Process {
                 LexicalEntry entry;
 		
                 //System.out.println("Create Entry with: "+adjective);
-		entry = lexicon.createNewEntry(adjective);
+		entry = lexicon.createNewEntry(adjective,Language.EN);
 		
 		entry.setCanonicalForm(adjective);
 		

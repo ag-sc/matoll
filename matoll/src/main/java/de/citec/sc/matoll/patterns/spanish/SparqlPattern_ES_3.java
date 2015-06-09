@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
@@ -69,7 +70,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"es");
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES);
 		
 	}
 

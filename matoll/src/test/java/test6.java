@@ -32,7 +32,7 @@ public class test6 {
 		
 		LexicalEntry entry;
 		
-		entry = lexicon.createNewEntry("female");
+		entry = lexicon.createNewEntry("female",Language.EN);
 		
 		entry.setCanonicalForm("female");
 		
