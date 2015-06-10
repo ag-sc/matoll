@@ -75,13 +75,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(noun)+"@"+language;
+	        				String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(noun+"@"+language);
+	        				entry.setCanonicalForm(noun+"@"+language.toString().toLowerCase());
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -210,13 +210,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(noun)+"@"+language;
+	        				String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(noun+"@"+language);
+	        				entry.setCanonicalForm(noun+"@"+language.toString().toLowerCase());
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -349,18 +349,18 @@ public class Templates {
                                         */
 //	        			if (Lemmatizer != null)
 //	        			{
-//	        				String term = Lemmatizer.getLemma(adj)+"@"+language;
+//	        				String term = Lemmatizer.getLemma(adj)+"@"+language.toString().toLowerCase();
 //	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 //                                                logger.debug("Lemmatized cannonical form:"+term, "");
 //	        				entry.setCanonicalForm(term);
 //	        			}
 //	        			else
 //	        			{
-//	        				entry.setCanonicalForm(adj+"@"+language);
+//	        				entry.setCanonicalForm(adj+"@"+language.toString().toLowerCase());
 //	        			}
 	        				
                                         
-                                        entry.setCanonicalForm(adj+"@"+language);
+                                        entry.setCanonicalForm(adj+"@"+language.toString().toLowerCase());
                                         
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 	        			
@@ -483,14 +483,14 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(verb)+"@"+language;
+	        				String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 verb = term;
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@"+language);
+	        				entry.setCanonicalForm(verb+"@"+language.toString().toLowerCase());
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -621,13 +621,13 @@ public class Templates {
 	        			
 	        			if (Lemmatizer != null)
 	        			{
-	        				String term = Lemmatizer.getLemma(verb)+"@"+language;
+	        				String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
 	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
 	        			{
-	        				entry.setCanonicalForm(verb+"@"+language);
+	        				entry.setCanonicalForm(verb+"@"+language.toString().toLowerCase());
 	        			}
 	        				
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
