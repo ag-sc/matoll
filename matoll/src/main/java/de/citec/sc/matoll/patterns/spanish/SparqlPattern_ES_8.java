@@ -17,6 +17,8 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_8.class.getName());
 	
 	
+	// should be subsumed by 3 or 4 or 6...
+	
 	/*
 	 * PropSubj:Theo de Raadt
 PropObj:Calgary

@@ -86,41 +86,30 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 	äquivalent zu englisch query 2
 	 */
 			String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-					+ "?y <conll:cpostag> ?lemma_pos . "
-					+ "{?y <conll:deprel> \"_\"."
-					+ "?y <conll:postag> \"NCFS000\".}"
-					//for marido example
-					+ "UNION"
-					+ "{?y <conll:deprel> \"COMP\"."
-					+ "?y <conll:postag> \"NCMS000\".}"
-					+ "UNION"
-					+ "{?y <conll:postag> \"NCFS000\". ?y <conll:deprel> \"_\". ?e1 <conll:deprel> \"_\".}"
-					+ "UNION"
-					+ "{?y <conll:postag> \"NCFS000\". ?y <conll:deprel> \"CONJ\". ?e1 <conll:deprel> \"_\".}"
-					+ "?y <conll:form> ?lemma . "
-					+ "?y <conll:deprel> ?lemma_grammar. "
-					+ "?y <conll:cpostag> \"n\" . "
-					+ "?y <conll:head> ?e1 . "
-					+ "?e1 <conll:cpostag> \"n\" . "
-					+ "?e1 <conll:form> ?e1_form . "
-					+ "?e1 <conll:deprel> ?e1_grammar . "
-					//argument to which the lemma points (e1) can not be root in a correct parse tree and also not a conjunction)
-					+ "FILTER( STR(?e1_grammar) != \"ROOT\"). "
-					+ "FILTER( STR(?e1_grammar) != \"CONJ\"). "
-					+ "?p <conll:head> ?y . "
-					+ "{?p <conll:deprel> \"COMP\" . }"
-					+ " UNION "
-					+ "{?p <conll:deprel> \"MOD\" . }"
-					+ "?p <conll:form> ?prep . "
-					+ "?p <conll:postag> \"SPS00\" . "
-					+ "?e2 <conll:head> ?p . "
-					+ "?e2 <conll:deprel> ?e2_grammar . "
-					+ "?e2 <conll:form> ?e2_form . "
-					+ "?e2 <conll:deprel>  \"COMP\". "
-					+ "?e2 <conll:cpostag> \"n\" . "
-					+ "?e1 <own:senseArg> ?e1_arg. "
-					+ "?e2 <own:senseArg> ?e2_arg. "
-					+ "}";
+					
+			+ "?e1 <conll:head> ?e1."
+			
+			+ "?comma <conll:lemma> \",\". "
+			+ "?comma <conll:deprel> \"punct\". "
+			+ "?comma <conll:head> ?e1 ."		
+					
+			+ "?noun <conll:postag> ?lemma_pos . "
+			+ "FILTER regex(?lemma_pos, \"NC\") ."
+			+ "?noun <conll:form> ?noun_lemma . "
+			+ "?noun <conll:head> ?e1 ."
+			
+			+ "?prep <conll:head> ?noun ."
+			+ "?prep <conll:postag> ?prep_pos ."
+			+ "FILTER regex(?prep_pos, \"SPS\") ."
+			+ "?prep <conll:form> ?prep_form ."
+			
+			+ "?e2 <conll:head> ?prep ."
+			+ "?e2 <conll:deprel> ?e1_deprel ."
+			+ "FILTER regex(?e1_deprel, \"COMP\") ."
+			
+			+ "?e1 <own:senseArg> ?e1_arg. "
+			+ "?e2 <own:senseArg> ?e2_arg. "
+			+ "}";
 			
 	@Override
 	public String getID() {

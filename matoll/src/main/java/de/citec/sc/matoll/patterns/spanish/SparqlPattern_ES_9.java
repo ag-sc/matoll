@@ -41,22 +41,27 @@ Neuer parse:
 
 
 	 */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			+ "?y <conll:postag> ?lemma_pos . "
-			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
+	
+	// eigentlich estar casado con....
+	
+	String query = "SELECT ?verb_lemma ?e1_arg ?e2_arg ?prep:form  WHERE {"
+			+ "?verb <conll:postag> ?verb_pos . "
 			+ "FILTER regex(?lemma_pos, \"VMIP\") ."
-			+ "?y <conll:deprel> \"ROOT\" ."
-			+ "?y <conll:form> ?lemma . "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:postag> \"NP00000\". "
-			+ "FILTER regex(?deprel, \"SUBJ\") ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:postag> \"SPS00\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?p <conll:deprel> \"MOD\" . "
-			+ "?e2 <conll:head> ?p . "
+			+ "?verb <conll:form> ?verb_lemma . "
+			
+			+ "?e1 <conll:head> ?verb . "
+			+ "?e1 <conll:deprel> ?e1_deprel. "
+			+ "FILTER regex(?e1_deprel, \"SUBJ\") ."
+			
+			+ "?prep <conll:head> ?verb . "
+			+ "?prep <conll:postag> ?prep_pos . "
+			+ "FILTER regex(?prep_pos, \"SPS\") ."
+			+ "?prep <conll:form> ?prep_form . "
+			+ "?prep <conll:deprel> \"OBLC\" . "
+			
+			+ "?e2 <conll:head> ?prep . "
 			+ "?e2 <conll:deprel> \"COMP\" . "
-			+ "?e2 <conll:postag> \"NP00000\". "
+			
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";

@@ -31,6 +31,9 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 6	de	de	s	SPS00	_	4	MOD
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
+	
+	// same as query 3 but with adjective modifier
+	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?y <conll:form> ?lemma . "
 			+ "?y <conll:head> ?blank . "

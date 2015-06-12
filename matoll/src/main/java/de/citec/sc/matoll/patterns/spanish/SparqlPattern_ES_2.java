@@ -29,27 +29,34 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 	//query2 auch ok nach neuem Parse
 
 	 */
-			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-					+ "?y <conll:form> ?lemma . "
-					+ "?y <conll:head> ?verb . "
-					+ "?y <conll:deprel> \"ATR\" . "
-					+ "?p <conll:postag> \"SPS00\" ."
-					+ "?y <conll:cpostag> \"n\" . "
-					+" ?y <conll:postag> \"NCFS000\" ."
-					+ "?p <conll:deprel> \"MOD\" . "
-					+ "?verb <conll:postag> ?verb_pos . "
-					+ "FILTER regex(?verb_pos, \"VS\") ."
-					+ "?e1 <conll:head> ?verb . "
-					+ "?e1 <conll:deprel> ?e1_grammar . "
-					+ "FILTER regex(?e1_grammar, \"SUBJ\") ."
-					+ "?p <conll:head> ?y . "
-					+ "?p <conll:form> ?prep . "
-					+ "?e2 <conll:head> ?p . "
-					+ "?e2 <conll:postag> \"NP00000\" . "
-					+ "?e2 <conll:deprel> ?e2_grammar . "
+			String query = "SELECT ?lemma ?subj_arg ?pobj_arg ?prep_form  WHERE {"
+					+ "?noun <conll:form> ?lemma . "
+					+ "?noun <conll:head> ?copula . "
+					+ "?noun <conll:cpostag> \"n\" . "
+					+ "?noun <conll:deprel \"ATR\""
+					
+					+ "?prep <conll:deprel> \"MOD\" . "
+					+ "?prep <conll:postag> ?prep_pos ."
+					+ "FILTER regex(?prep_pos, \"SPS\") ."
+					+ "?prep <conll:head> ?noun . "
+					+ "?prep <conll:form> ?prep_form . "
+					
+					+ "?copula <conll:postag> ?pos . "
+					+ "FILTER regex(?pos, \"VSIP\") ."
+					+ "?copula <conll:lemma> \"ser\" "
+					
+					+ "?subj <conll:head> ?copula . "
+					+ "?subj <conll:deprel> ?dep . "
+					+ "FILTER regex(?dep, \"SUBJ\") ."
+					
+					
+					+ "?pobj <conll:head> ?prep . "
+					+ "?pobj <conll:postag> \"NP00000\" . "
+					+ "?pobj <conll:deprel> ?e2_grammar . "
 					+ "FILTER regex(?e2_grammar, \"COMP\") ."
-					+ "?e1 <own:senseArg> ?e1_arg. "
-					+ "?e2 <own:senseArg> ?e2_arg. "
+					
+					+ "?subj <own:senseArg> ?subj_arg. "
+					+ "?pobj <own:senseArg> ?pobj_arg. "
 					+ "}";
 	
 	@Override

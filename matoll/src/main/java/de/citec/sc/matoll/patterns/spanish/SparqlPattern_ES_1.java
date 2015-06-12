@@ -33,20 +33,18 @@ public class SparqlPattern_ES_1 extends SparqlPattern{
 
 x verb y - ohne preposition
 	 */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
-			+ "?y <conll:postag> ?lemma_pos . "
+	String query = "SELECT ?lemma ?subj_arg ?obj_arg  WHERE {"
+			+ "?verb <conll:postag> ?pos . "
 			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
-			+ "FILTER regex(?lemma_pos, \"VMIP\") ."
-			+ "?y <conll:deprel> \"ROOT\" ."
-			+ "?y <conll:form> ?lemma . "
-			+ "?y <conll:deprel> ?lemma_grammar. "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> ?deprel. "
-			+ "FILTER regex(?deprel, \"SUBJ\") ."
-			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> \"DO\" . "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
+			+ "FILTER regex(?pos, \"VMIP\") ."
+			+ "?verb <conll:deprel> \"ROOT\" ."
+			+ "?verb <conll:form> ?lemma . "
+			+ "?subj <conll:head> ?verb . "
+			+ "?subj <conll:deprel> \"SUBJ\". "
+			+ "?dobj <conll:head> ?verb . "
+			+ "?dobj <conll:deprel> \"DO\" . "
+			+ "?subj <own:senseArg> ?subj_arg. "
+			+ "?dobj <own:senseArg> ?obj_arg. "
 			+ "}";
 	
 	@Override
