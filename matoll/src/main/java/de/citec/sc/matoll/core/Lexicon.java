@@ -143,9 +143,9 @@ public class Lexicon {
 		return "";
 	}
 
-	public LexicalEntry createNewEntry(String canonicalForm) {
+	public LexicalEntry createNewEntry(String canonicalForm, Language language) {
 		
-		LexicalEntry entry = new LexicalEntry();
+		LexicalEntry entry = new LexicalEntry(language);
 		
 		entry.setCanonicalForm(canonicalForm);
 		

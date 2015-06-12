@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
@@ -64,7 +65,7 @@ Assuming Board is obj
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"de");
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE);
 		
 	}
 

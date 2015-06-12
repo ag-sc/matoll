@@ -63,7 +63,8 @@ public class LexiconSerialization {
                     }
                 }
                 model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createResource(entry.getCanonicalForm()));
-                
+                model.add(model.createResource(entry.getURI()), LEMON.language, model.createResource(entry.getLanguage().toString().toLowerCase()));
+
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		

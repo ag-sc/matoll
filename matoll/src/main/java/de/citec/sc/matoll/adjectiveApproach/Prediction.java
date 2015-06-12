@@ -1,6 +1,7 @@
 package de.citec.sc.matoll.adjectiveApproach;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import weka.classifiers.Classifier;
@@ -21,8 +22,10 @@ public class Prediction {
         this.cls = (Classifier) weka.core.SerializationHelper.read(path_to_model);
 	}
 	
+        
 	
-	public List<String> predict(Instance current) throws Exception{
+	public HashMap<Integer, Double> predict(Instance current) throws Exception{
+            HashMap<Integer,Double> hm = new HashMap<Integer,Double>();
 		/*
 		 * value_to_predict
 		 * can be only 0 or 1, as only two classes are given 
@@ -36,30 +39,16 @@ public class Prediction {
 	    //get the prediction percentage or distribution
 	    //double[] percentage=cls.distributionForInstance(current.instance(value_to_predict));
 	    double[] percentage=cls.distributionForInstance(current);
-	    String distribution = Double.toString(percentage[(int) value]);
-	    //get the name of the class value
-	    String prediction=current.classAttribute().value((int)value); 
-	    
-	   /* if(value==0.0){
-	    	System.out.println("value:"+value);
-	    	System.out.println("Prediction:"+prediction);
-	    	System.out.println("distribution:"+distribution);
-	    	System.out.println();
-	    }*/
+//	    String distribution = Double.toString(percentage[(int) value]);
+//	    String prediction=current.classAttribute().value((int)value); 
 	    
 
         List<String> result = new ArrayList<String>();
-        /*
-         * add prediction
-         */
-        result.add(prediction);
+        int prediction = (int)value;
+        double distribution = percentage[(int) value];
+        hm.put(prediction, distribution);
         
-        /*
-         * add distribution
-         */
-        result.add(distribution);
-        
-        return result;
+        return hm;
 	}
 
 

@@ -12,6 +12,13 @@ public class LexicalEntry {
 	String CanonicalForm;
 	
 	String POS;
+        
+        /*
+        Set default to English
+        */
+        Language language = Language.EN;
+
+        
 	
 
         HashSet<Sense> hashsetSense = new HashSet<Sense>();
@@ -23,18 +30,20 @@ public class LexicalEntry {
 	
 	List<String> Sentences;
 	
-	public LexicalEntry()
+	public LexicalEntry(Language language)
 	{
 		//argumentMap = new HashMap<String,String>();
 		Sentences  = new ArrayList<String>();
+                this.language = language;
 			
 	}
 	
 	
-	public LexicalEntry(String uri) {
+	public LexicalEntry(String uri, Language language) {
 		URI = uri;
 		//argumentMap = new HashMap<String,String>();
 		Sentences  = new ArrayList<String>();
+                this.language = language;
 	}
 	
 
@@ -56,7 +65,9 @@ public class LexicalEntry {
 	}
 
 	
-	
+	public Language getLanguage() {
+            return language;
+        }
 	
 	public String toString()
 	{

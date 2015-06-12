@@ -1,3 +1,4 @@
+import de.citec.sc.matoll.core.Language;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class test2 {
 		
 		System.out.print("Lexicon has "+lexicon.size()+" entries\n");
 		
-		LexicalEntry entry = new LexicalEntry();
+		LexicalEntry entry = new LexicalEntry(Language.EN);
 		
 		entry.setCanonicalForm("marry@en");
 		
