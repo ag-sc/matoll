@@ -120,7 +120,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
     
 
 
-	 */
+
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep_form  WHERE {"
 			+ "?verb <conll:cpostag> ?verb_pos ."
 			+ "FILTER regex(?deprel, \"VMIS\") ."

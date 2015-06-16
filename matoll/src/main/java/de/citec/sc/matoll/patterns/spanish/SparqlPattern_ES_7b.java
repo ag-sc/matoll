@@ -8,13 +8,14 @@ import org.apache.logging.log4j.Logger;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.bimmel.core.FeatureVector;
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class CopyOfSparqlPattern_ES_7b extends SparqlPattern{
+public class SparqlPattern_ES_7b extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(CopyOfSparqlPattern_ES_7b.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_7b.class.getName());
 	
 	// X y Y se casaron
 	
@@ -139,7 +140,7 @@ public class CopyOfSparqlPattern_ES_7b extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),"es");
+		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES);
 		
 		
 	}
