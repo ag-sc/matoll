@@ -84,7 +84,7 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE);
+		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
 		
 		
 	}

@@ -112,7 +112,7 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNoun(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE);
+		Templates.getNoun(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
 		
 		
 	}

@@ -76,7 +76,7 @@ sentence:Haywood war zudem mit dem Model Iman Abdulmajid , der heutigen Ehefrau 
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE);
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
 		
 	}
 

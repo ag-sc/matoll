@@ -1,5 +1,6 @@
 package de.citec.sc.matoll.core;
 import java.util.Date;
+import java.util.HashSet;
 
 
 public class Provenance {
@@ -12,7 +13,24 @@ public class Provenance {
 	Double Confidence;
 	
         Integer Frequency = 1;
+        HashSet<String> patternset = new HashSet<String>();
 
+    public HashSet<String> getPatternset() {
+        return patternset;
+    }
+
+    public void setPatternset(HashSet<String> pattern) {
+        this.patternset = pattern;
+    }
+
+    public void addPattern(String pattern) {
+        this.patternset.add(pattern);
+    }
+    
+    public void addAllPattern(HashSet<String> patternlist) {
+        this.patternset.addAll(patternlist);
+    }
+    
         public Integer getFrequency() {
             return Frequency;
         }

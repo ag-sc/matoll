@@ -93,6 +93,7 @@ public class Lexicon {
                             if(containedEntry.getProvenance(ref)!=null){
                                 Provenance tmp_provenance = containedEntry.getProvenance(ref);
                                 tmp_provenance.increaseFrequency(entry.getProvenance(ref).getFrequency());
+                                tmp_provenance.addAllPattern(entry.getProvenance(ref).getPatternset());
                             }
                             else{
                                 containedEntry.addProvenance(entry.getProvenance(ref), ref);

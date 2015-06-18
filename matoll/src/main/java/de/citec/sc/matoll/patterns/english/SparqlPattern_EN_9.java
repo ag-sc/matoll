@@ -61,7 +61,7 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN);
+		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
 		
 	}
 

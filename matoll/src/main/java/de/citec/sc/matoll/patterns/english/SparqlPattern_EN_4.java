@@ -114,7 +114,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN);
+		Templates.getNounWithPrep(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
 		
 	     
 	}

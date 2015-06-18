@@ -29,7 +29,7 @@ import java.util.Date;
 public class Templates {
 	
 	public static void getNoun(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String noun = "";
@@ -68,6 +68,7 @@ public class Templates {
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
+                                        provenance.addPattern(pattern_name);
                                         entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -163,7 +164,7 @@ public class Templates {
 	
 	
 	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	    String e1_arg ="";
 	    String e2_arg = "";
 	    String prep = "";
@@ -204,6 +205,7 @@ public class Templates {
 	        		 	entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
+                                        provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
                                         entry.addProvenance(provenance,ref);
 	        		 	
@@ -297,7 +299,7 @@ public class Templates {
 	
 	
 	public static void getAdjective(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 		//TODO: Check this entry
 	    String e1_arg ="";
 	    String e2_arg = "";
@@ -342,6 +344,7 @@ public class Templates {
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
+                                        provenance.addPattern(pattern_name);
                                         entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -443,7 +446,7 @@ public class Templates {
 	
 	
 	public static void getTransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -480,6 +483,7 @@ public class Templates {
 	        		 	entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
+                                        provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
                                         entry.addProvenance(provenance,ref);
 	        		 	
@@ -575,7 +579,7 @@ public class Templates {
 	
 	
 	public static void getIntransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language) {
+			FeatureVector vector, List<String> sentences, String query, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 		
 		// match SPARQL query
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -620,6 +624,7 @@ public class Templates {
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
+                                        provenance.addPattern(pattern_name);
                                         entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
