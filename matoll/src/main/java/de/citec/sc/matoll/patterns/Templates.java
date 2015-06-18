@@ -16,6 +16,7 @@ import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -60,14 +61,14 @@ public class Templates {
                                         entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun");
                                         
 	        		 	Sense sense = new Sense();
-	        		 	
-	           		 	sense.setReference(new SimpleReference(reference));
+	        		 	Reference ref = new SimpleReference(reference);
+	           		 	sense.setReference(ref);
 	           		 	
 	        		 	entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
-                                        entry.setProvenance(provenance);
+                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -196,13 +197,15 @@ public class Templates {
 //	        			long timestamp = currentTimestamp.getTime();
                                         entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun_withPrep_"+prep);
 	        		 	Sense sense = new Sense();
-	        		 	
-	           		 	sense.setReference(new SimpleReference(reference));
+                                        
+                                        Reference ref = new SimpleReference(reference);
+	           		 	sense.setReference(ref);
 	           		 	
 	        		 	entry.addSense(sense);
+                                        
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
-                                        entry.setProvenance(provenance);
+                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -332,13 +335,14 @@ public class Templates {
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	           		 	sense.setReference(new SimpleReference(reference));
+	           		 	Reference ref = new SimpleReference(reference);
+	           		 	sense.setReference(ref);
 	           		 	
 	        		 	entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
-                                        entry.setProvenance(provenance);
+                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -470,12 +474,14 @@ public class Templates {
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	           		 	sense.setReference(new SimpleReference(reference));
-	        		 	
+	           		 	Reference ref = new SimpleReference(reference);
+	           		 	sense.setReference(ref);
+	           		 	
 	        		 	entry.addSense(sense);
+                                        
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
-                                        entry.setProvenance(provenance);
+                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -607,13 +613,14 @@ public class Templates {
 	        			
 	        		 	Sense sense = new Sense();
 	        		 	
-	        		 	sense.setReference(new SimpleReference(reference));
-	        		 	
+	        		 	Reference ref = new SimpleReference(reference);
+	           		 	sense.setReference(ref);
+	           		 	
 	        		 	entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
-                                        entry.setProvenance(provenance);
+                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	

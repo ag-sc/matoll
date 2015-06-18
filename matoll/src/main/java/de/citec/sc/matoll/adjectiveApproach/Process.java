@@ -22,6 +22,7 @@ import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
@@ -242,8 +243,8 @@ public class Process {
 		entry.setCanonicalForm(adjective);
 		
 		Sense sense = new Sense();
-
-		sense.setReference(new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(object_uri),object_uri,uri));
+                Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(object_uri),object_uri,uri);
+		sense.setReference(ref);
                 
                 entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_AdjectiveRestriction");
 				
@@ -259,15 +260,7 @@ public class Process {
 		
 		entry.addSyntacticBehaviour(behaviour);
 		
-		Provenance provenance = new Provenance();
 		
-		provenance.setAgent("Distribution");
-		provenance.setConfidence(distribution);
-		
-		//provenance.setAgent("Frequency");
-                provenance.setFrequency(frequency);
-		
-		entry.setProvenance(provenance);
 				
 		behaviour = new SyntacticBehaviour();
 		
@@ -280,9 +273,19 @@ public class Process {
 		entry.addSyntacticBehaviour(behaviour);
                 
                 entry.addSense(sense);
+                
+                Provenance provenance = new Provenance();
+		
+		provenance.setAgent("Distribution");
+		provenance.setConfidence(distribution);
+		
+		//provenance.setAgent("Frequency");
+                provenance.setFrequency(frequency);
+		
+		entry.addProvenance(provenance,ref);
 		
 		
-		//entry.setProvenance(provenance);
+		//entry.addProvenance(provenance);
 		
 		lexicon.addEntry(entry);
 		

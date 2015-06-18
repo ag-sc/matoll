@@ -88,7 +88,8 @@ public class LexiconLoader {
                                                  Provenance provenance = new Provenance();
                                                  provenance.setConfidence(Double.valueOf(getConfidence(subject,model)));
                                                  provenance.setFrequency(getFrequency(subject,model));
-						 entry.setProvenance(provenance);
+                                                 System.err.println("Adapt to new provenance style");
+						 //entry.setProvenance(provenance);
                                                  
 						 entry.setURI(subject.toString());
 					 

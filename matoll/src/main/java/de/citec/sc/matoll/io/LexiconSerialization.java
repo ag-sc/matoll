@@ -71,51 +71,69 @@ public class LexiconSerialization {
                 //System.out.println("entry.getReferences().size():"+entry.getReferences().size());
 		if (entry.getReferences().size()>0)
 		{
-			
+			int ref_counter = 0;
                         for(Reference ref : entry.getReferences()){
-                            if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
-			{
-                            SimpleReference reference = (SimpleReference) ref;
+                            ref_counter+=1;
+                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)));
 
-                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"));
-                            model.add(model.createResource(entry.getURI()+"#Sense"), LEMON.reference, model.createResource(reference.toString()));
-                            for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
-                                if (synbehaviour != null)
-                                {
-                                    for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                                        model.add(model.createResource(entry.getURI()+"#Sense"),LEMON.isA,model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
-                                     }
+                            Provenance provenance = entry.getProvenance(ref);
+                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)));
+                            SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
+                            model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), RDF.type, PROVO.Activity);
+                            if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
+                            if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
+                            if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
+                            if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.associatedWith, model.createResource(provenance.getAgent()));
+                            if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
 
-                                }
-                            }
                                 
-				
-			}
-			
-			if (ref instanceof de.citec.sc.matoll.core.Restriction)
-			{
-                            
-                            Restriction reference = (Restriction) ref;
+                            if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
+                            {
+                                SimpleReference reference = (SimpleReference) ref;
+                                int synbehaviour_counter = 0;
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                    synbehaviour_counter+=1;
+                                    if (synbehaviour != null)
+                                    {
+                                        model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
+                                        model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+                                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
+                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
 
-                            model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"));
-                            model.add(model.createResource(entry.getURI()+"#Sense"), LEMON.reference, model.createResource(reference.getURI()));
-                            model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
-                            model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
-                            model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
+                                         }
 
-                            for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
-                                if (synbehaviour != null)
-                                {
-                                    for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                                        model.add(model.createResource(entry.getURI()+"#Sense"),LEMON.isA,model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
-                                     }
-
+                                    }
                                 }
 
+
                             }
-				
-				
-			}
+
+                            if (ref instanceof de.citec.sc.matoll.core.Restriction)
+                            {
+
+                                Restriction reference = (Restriction) ref;
+                                model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), LEMON.reference, model.createResource(reference.getURI()));
+                                model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
+                                model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
+                                model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
+                                
+                                int synbehaviour_counter = 0;
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                    synbehaviour_counter+=1;
+                                    if (synbehaviour != null)
+                                    {
+                                        model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
+                                        model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+                                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue())); 
+                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
+                                         }
+
+                                    }
+
+                                }
+                            }
                    }
 			
 			
@@ -129,48 +147,48 @@ public class LexiconSerialization {
 
 		}
 			
-                /*
-                TODO: Check!
-                */
-                int synbehaviour_counter = 0;
-                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
-                    synbehaviour_counter+=1;
-                    if (synbehaviour != null)
-                    {
-			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)));
-			model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
-                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-                            //synarc.getArgumentType();
-                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
-                         }
-			
-                    }
-                }
+//                /*
+//                TODO: Check!
+//                */
+//                int synbehaviour_counter = 0;
+//                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+//                    synbehaviour_counter+=1;
+//                    if (synbehaviour != null)
+//                    {
+//			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)));
+//			model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+//                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
+//                            //synarc.getArgumentType();
+//                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
+//                         }
+//			
+//                    }
+//                }
 		
 		
 		
-		Provenance provenance = entry.getProvenance();
-		
-		if (provenance != null)
-		{
-			SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
-			model.add(model.createResource(entry.getURI()), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"));
-			model.add(model.createResource(entry.getURI()+"#Activity"), RDF.type, PROVO.Activity);
-			
-			if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
-			
-			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
-			
-                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
-		
-			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
-
-                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
-
-			
-			
-			
-		}
+//		Provenance provenance = entry.getProvenance();
+//		
+//		if (provenance != null)
+//		{
+//			SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
+//			model.add(model.createResource(entry.getURI()), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"));
+//			model.add(model.createResource(entry.getURI()+"#Activity"), RDF.type, PROVO.Activity);
+//			
+//			if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
+//			
+//			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
+//			
+//                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
+//		
+//			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
+//
+//                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
+//
+//			
+//			
+//			
+//		}
 		
 	}
 

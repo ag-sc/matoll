@@ -8,6 +8,7 @@ import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -32,8 +33,8 @@ public class test7 {
 		entry1.setCanonicalForm("marry");
 		
 		Sense sense1 = new Sense();
-		
-		sense1.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		Reference ref1 = new SimpleReference("http://dbpedia.org/ontology/spouse");
+		sense1.setReference(ref1);
 		
 		entry1.addSense(sense1);
                 entry1.setURI("http://localhost:8080/TransitiveFrame_marry");
@@ -51,7 +52,7 @@ public class test7 {
 		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
                 Provenance provenance1 = new Provenance();
                 provenance1.setFrequency(1);
-                entry1.setProvenance(provenance1);
+                entry1.addProvenance(provenance1,ref1);
 		
 		lexicon.addEntry(entry1);
 		
@@ -62,8 +63,8 @@ public class test7 {
                 entry2.setURI("http://localhost:8080/TransitiveFrame_marry");
 		
 		Sense sense2 = new Sense();
-		
-		sense2.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		Reference ref2 = new SimpleReference("http://dbpedia.org/ontology/spouse");
+		sense2.setReference(ref2);
 
 		entry2.addSense(sense2);
 		
@@ -92,7 +93,7 @@ public class test7 {
                 
                 Provenance provenance2 = new Provenance();
                 provenance2.setFrequency(1);
-                entry2.setProvenance(provenance2);
+                entry2.addProvenance(provenance2,ref2);
 		
 		
 		// The following should say that entry is already contained:
@@ -107,8 +108,8 @@ public class test7 {
 		entry3.setCanonicalForm("marry");
 		
 		Sense sense3 = new Sense();
-		
-		sense3.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
+		Reference ref3 = new SimpleReference("http://dbpedia.org/ontology/spouse");
+		sense3.setReference(ref3);
 
 		entry3.addSense(sense3);
                 //entry3.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
@@ -139,7 +140,7 @@ public class test7 {
                 
                 Provenance provenance3 = new Provenance();
                 provenance3.setFrequency(1);
-                entry3.setProvenance(provenance3);
+                entry3.addProvenance(provenance3,ref3);
                 
                 // The following should say that entry is already contained:
 		

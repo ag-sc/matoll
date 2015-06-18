@@ -15,6 +15,7 @@ import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
@@ -37,8 +38,8 @@ public class test6 {
 		entry.setCanonicalForm("female");
 		
 		Sense sense = new Sense();
-		
-		sense.setReference(new Restriction(lexicon.getBaseURI()+"RestrictionClass_gender_Female","http://dbpedia.org/ontology/gender","http://dbpedia.org/resource/Female"));
+		Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass_gender_Female","http://dbpedia.org/ontology/gender","http://dbpedia.org/resource/Female");
+		sense.setReference(ref);
 		
 		entry.addSense(sense);
 		
@@ -59,7 +60,7 @@ public class test6 {
 		provenance.setAgent("AdjectiveExtractor");
 		provenance.setConfidence(0.8);
 		
-		entry.setProvenance(provenance);
+		entry.addProvenance(provenance,ref);
 		
 		//entry = lexicon.createNewEntry("female");
 		
@@ -76,10 +77,6 @@ public class test6 {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
 		entry.addSyntacticBehaviour(behaviour);
-		
-		
-		
-		entry.setProvenance(provenance);
 		
                 lexicon.addEntry(entry);
 		

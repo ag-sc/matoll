@@ -164,15 +164,16 @@ public class RunPartialEvaluation {
             Lexicon lexicon = new Lexicon();
             int min_val = area.get(0);
             int max_val = area.get(1);
-            for(LexicalEntry entry:automatic_reduced.getEntries()){
-                try{
-                  int frequency = entry.getProvenance().getFrequency();
-                  if(frequency>= min_val && frequency<max_val) lexicon.addEntry(entry);
-                }
-                catch(Exception e){
-                    
-                }
-            }
+            System.err.println("Adapt to new provenance style");
+//            for(LexicalEntry entry:automatic_reduced.getEntries()){
+//                try{
+//                  int frequency = entry.getProvenance().getFrequency();
+//                  if(frequency>= min_val && frequency<max_val) lexicon.addEntry(entry);
+//                }
+//                catch(Exception e){
+//                    
+//                }
+//            }
             System.out.println("min_value:"+min_val);
             System.out.println("max_value:"+max_val);
             System.out.println("New lexicon contains "+lexicon.size()+" entries");

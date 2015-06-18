@@ -81,16 +81,27 @@ public class Lexicon {
 			
 			List<String> sentences = new ArrayList<String>();
                         
-                        /*
-                        Increase the frequency
-                        */
-                        containedEntry.getProvenance().increaseFrequency(entry.getProvenance().getFrequency());
+//                        /*
+//                        Increase the frequency
+//                        */
+//                        containedEntry.getProvenance().increaseFrequency(entry.getProvenance().getFrequency());
 			sentences.addAll(entry.getSentences());
 			sentences.addAll(containedEntry.getSentences());
 			
 			containedEntry.setSentences(sentences);
+                        for(Reference ref : entry.getReferences()){
+                            if(containedEntry.getProvenance(ref)!=null){
+                                Provenance tmp_provenance = containedEntry.getProvenance(ref);
+                                tmp_provenance.increaseFrequency(entry.getProvenance(ref).getFrequency());
+                            }
+                            else{
+                                containedEntry.addProvenance(entry.getProvenance(ref), ref);
+                            }
+                        }
                         
-                        for(Sense sense : entry.getSenses()) containedEntry.addSense(sense);
+                        for(Sense sense : entry.getSenses()) {
+                            containedEntry.addSense(sense);
+                        }
 			for( SyntacticBehaviour behaviours : entry.getBehaviours())  containedEntry.addSyntacticBehaviour(behaviours);
                         
                         //System.out.println(containedEntry.toString());
@@ -108,6 +119,10 @@ public class Lexicon {
         public String getBaseURI() 
         {
                return baseURI;
+        }
+        
+        public void setBaseURI(String baseURI){
+            this.baseURI = baseURI;
         }
         
 	public List<LexicalEntry> getEntries()

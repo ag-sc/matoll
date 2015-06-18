@@ -181,6 +181,7 @@ public class Matoll {
 		File folder = new File(directory);
 		
 		Lexicon lexicon;
+                
 		
 		// Creating preprocessor
 		
@@ -188,6 +189,7 @@ public class Matoll {
                 preprocessor.setCoreferenceResolution(coreference);
 				
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
+                lexiconwithFeatures.setBaseURI("http://localhost:8080/");
 		
 
 		PatternLibrary library = new PatternLibrary();
@@ -353,38 +355,39 @@ public class Matoll {
 
 			logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
 
-
-			if (classifier.predict(vector)==1)
-			{
-				Provenance provenance = new Provenance();
-                                
-
-				provenance.setConfidence(classifier.predict(vector, 1));
-
-				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
-
-				provenance.setEndedAtTime(new Date());
-
-				entry.setProvenance(provenance);
-
-				entries.add(entry);
-			}
-			else
-			{
-
-			}
+                        System.err.println("Adapt to new provenance style");
+//			if (classifier.predict(vector)==1)
+//			{
+//				Provenance provenance = new Provenance();
+//                                
+//
+//				provenance.setConfidence(classifier.predict(vector, 1));
+//
+//				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
+//
+//				provenance.setEndedAtTime(new Date());
+//
+//				entry.setProvenance(provenance);
+//
+//				entries.add(entry);
+//			}
+//			else
+//			{
+//
+//			}
 			
 		}
 		
 
-		  Collections.sort(entries, new Comparator<LexicalEntry>() {
-	
-			 
-			            public int compare(LexicalEntry one, LexicalEntry two) {
-			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
-				            }
-				             
-				        });
+//		  Collections.sort(entries, new Comparator<LexicalEntry>() {
+//	
+//			 
+//			            public int compare(LexicalEntry one, LexicalEntry two) {
+//                                        System.err.println("Adapt to new provenance style");
+//			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
+//				            }
+//				             
+//				        });
 		  
 		 /*
 		  * TODO

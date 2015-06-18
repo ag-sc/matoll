@@ -26,7 +26,8 @@ public class LexicalEntry {
 	HashSet<SyntacticBehaviour> hashsetBehaviour = new HashSet<SyntacticBehaviour>();
         
 	
-	Provenance Provenance;
+	//Provenance Provenance;
+        HashMap<Reference,Provenance> mappingReferenceProvenance = new HashMap<Reference,Provenance>();
 	
 	List<String> Sentences;
 	
@@ -257,14 +258,20 @@ public class LexicalEntry {
 	}
 
 
-	public void setProvenance(Provenance provenance) {
-		Provenance = provenance;
+	public void addProvenance(Provenance provenance, Reference reference) {
+                if(mappingReferenceProvenance.containsKey(reference)){
+                    System.out.println("For given sense there is already a provenance");
+                }
+                else{
+                    mappingReferenceProvenance.put(reference, provenance);
+                }
+		//Provenance = provenance;
 		
 	}
 	
-	public Provenance getProvenance()
+	public Provenance getProvenance(Reference reference)
 	{
-		return Provenance;
+		return mappingReferenceProvenance.get(reference);
 	}
 
 
