@@ -78,7 +78,7 @@ public class LexiconSerialization {
 //                        for(Reference ref : entry.getReferences()){
                             ref_counter+=1;
                             model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)));
-
+                            
                             Provenance provenance = entry.getProvenance(sense);
                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)));
                             SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
@@ -96,6 +96,7 @@ public class LexiconSerialization {
                             if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
                             {
                                 SimpleReference reference = (SimpleReference) ref;
+                                model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), LEMON.reference, model.createResource(reference.getURI()));
                                 int synbehaviour_counter = 0;
                                 for(SyntacticBehaviour synbehaviour : entry.getBehaviours().get(sense)){
                                     synbehaviour_counter+=1;

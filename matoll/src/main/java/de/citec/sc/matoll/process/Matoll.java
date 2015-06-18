@@ -190,7 +190,7 @@ public class Matoll {
                 preprocessor.setCoreferenceResolution(coreference);
 				
 		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
-                //lexiconwithFeatures.setBaseURI("http://localhost:8080/");
+                lexiconwithFeatures.setBaseURI("http://localhost:8080/");
 		
 
 		PatternLibrary library = new PatternLibrary();
