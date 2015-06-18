@@ -72,11 +72,14 @@ public class LexiconSerialization {
 		if (entry.getReferences().size()>0)
 		{
 			int ref_counter = 0;
-                        for(Reference ref : entry.getReferences()){
+                        for(Sense sense:entry.getSenses()){
+                            Reference ref = sense.getReference();
+//                        }
+//                        for(Reference ref : entry.getReferences()){
                             ref_counter+=1;
                             model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)));
 
-                            Provenance provenance = entry.getProvenance(ref);
+                            Provenance provenance = entry.getProvenance(sense);
                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)));
                             SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
                             model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), RDF.type, PROVO.Activity);
@@ -94,7 +97,7 @@ public class LexiconSerialization {
                             {
                                 SimpleReference reference = (SimpleReference) ref;
                                 int synbehaviour_counter = 0;
-                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours().get(sense)){
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {
@@ -122,7 +125,7 @@ public class LexiconSerialization {
                                 model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
                                 
                                 int synbehaviour_counter = 0;
-                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours().get(sense)){
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {

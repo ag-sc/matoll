@@ -131,7 +131,7 @@ public class LexiconEvaluationSimple {
                             }
                             
                             if (counter > 0) {
-                                evaluateSyntactic(entry,gold_entry);
+                                //evaluateSyntactic(entry,gold_entry);
                                 evaluateMapping(entry,gold_entry);
                                 comparisons++;
                                 break;
@@ -144,40 +144,40 @@ public class LexiconEvaluationSimple {
                 precision_sum_lemma = recall_sum;			
         }
 
-    private static void evaluateSyntactic(LexicalEntry entry, LexicalEntry gold_entry) {
-        int correct_behaviours = 0;
-        for(SyntacticBehaviour behave : entry.getBehaviours()){
-            String frame = behave.getFrame();
-            for(SyntacticBehaviour gold_behave : gold_entry.getBehaviours()){
-                // compare frames
-                if(gold_behave.getFrame().equals(frame)){
-
-                   // compare arguments (without values)
-                   Set<SyntacticArgument> args = new HashSet<SyntacticArgument>();
-                   for (SyntacticArgument arg : behave.getSynArgs()) {
-                        args.add(new SyntacticArgument(arg.getArgumentType(),"",arg.getPreposition()));
-                   }
-                   
-                   Set<SyntacticArgument> gold_args = new HashSet<SyntacticArgument>();
-                   for (SyntacticArgument gold_arg : gold_behave.getSynArgs()) {
-                        gold_args.add(new SyntacticArgument(gold_arg.getArgumentType(),"",gold_arg.getPreposition()));
-                   }
-                   
-                   if (args.equals(gold_args)) correct_behaviours += 1;                   
-                }
-            }
-                      
-        }
-        
-        double recall = 0.0;
-        double precision = 0.0;
-        if (correct_behaviours > 0) {
-            recall = (double) correct_behaviours/gold_entry.getBehaviours().size();
-            precision = (double) correct_behaviours/entry.getBehaviours().size();            
-        } 
-        recall_sum_syntactic += recall;
-        precision_sum_syntactic += precision;
-    }
+//    private static void evaluateSyntactic(LexicalEntry entry, LexicalEntry gold_entry) {
+//        int correct_behaviours = 0;
+//        for(SyntacticBehaviour behave : entry.getBehaviours()){
+//            String frame = behave.getFrame();
+//            for(SyntacticBehaviour gold_behave : gold_entry.getBehaviours()){
+//                // compare frames
+//                if(gold_behave.getFrame().equals(frame)){
+//
+//                   // compare arguments (without values)
+//                   Set<SyntacticArgument> args = new HashSet<SyntacticArgument>();
+//                   for (SyntacticArgument arg : behave.getSynArgs()) {
+//                        args.add(new SyntacticArgument(arg.getArgumentType(),"",arg.getPreposition()));
+//                   }
+//                   
+//                   Set<SyntacticArgument> gold_args = new HashSet<SyntacticArgument>();
+//                   for (SyntacticArgument gold_arg : gold_behave.getSynArgs()) {
+//                        gold_args.add(new SyntacticArgument(gold_arg.getArgumentType(),"",gold_arg.getPreposition()));
+//                   }
+//                   
+//                   if (args.equals(gold_args)) correct_behaviours += 1;                   
+//                }
+//            }
+//                      
+//        }
+//        
+//        double recall = 0.0;
+//        double precision = 0.0;
+//        if (correct_behaviours > 0) {
+//            recall = (double) correct_behaviours/gold_entry.getBehaviours().size();
+//            precision = (double) correct_behaviours/entry.getBehaviours().size();            
+//        } 
+//        recall_sum_syntactic += recall;
+//        precision_sum_syntactic += precision;
+//    }
     
     private static void evaluateMapping(LexicalEntry entry, LexicalEntry gold_entry) {
 
@@ -205,20 +205,20 @@ public class LexiconEvaluationSimple {
         // check for each synBehaviour in entry, whether renamed synBehaviour is in gold
         // (if so, mapping is correct)
 
-        loop:
-        for (SyntacticBehaviour syn : entry.getBehaviours()) {
-             SyntacticBehaviour renamed_syn = new SyntacticBehaviour();
-             renamed_syn.setFrame(syn.getFrame());
-             for (SyntacticArgument arg : syn.getSynArgs()) {
-                  if (!mapping.containsKey(arg.getValue())) {
-                      continue loop;
-                  }
-                  renamed_syn.add(new SyntacticArgument(arg.getArgumentType(),mapping.get(arg.getValue()),arg.getPreposition()));
-             }
-             if (gold_entry.getBehaviours().contains(renamed_syn)) {
-                 correctlyMappedSynBehaviours += 1;
-             }
-        }
+//        loop:
+//        for (SyntacticBehaviour syn : entry.getBehaviours()) {
+//             SyntacticBehaviour renamed_syn = new SyntacticBehaviour();
+//             renamed_syn.setFrame(syn.getFrame());
+//             for (SyntacticArgument arg : syn.getSynArgs()) {
+//                  if (!mapping.containsKey(arg.getValue())) {
+//                      continue loop;
+//                  }
+//                  renamed_syn.add(new SyntacticArgument(arg.getArgumentType(),mapping.get(arg.getValue()),arg.getPreposition()));
+//             }
+//             if (gold_entry.getBehaviours().contains(renamed_syn)) {
+//                 correctlyMappedSynBehaviours += 1;
+//             }
+//        }
 
         double recall = 0.0;
         double precision = 0.0;

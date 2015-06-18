@@ -97,7 +97,8 @@ public class LexiconLoader {
 					 			 
 						 entry.setPOS(getPOS(subject,model));
 					 
-						 entry.addSyntacticBehaviour(behaviour);
+                                                 System.err.println("Adapt to new sense/bahaviour style");
+						 //entry.addSyntacticBehaviour(behaviour);
 						 
 						 map = entry.computeMappings(sense);
 						 

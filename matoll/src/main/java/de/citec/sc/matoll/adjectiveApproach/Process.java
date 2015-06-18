@@ -258,7 +258,7 @@ public class Process {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.addSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour,sense);
 		
 		
 				
@@ -270,7 +270,7 @@ public class Process {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.addSyntacticBehaviour(behaviour);
+		entry.addSyntacticBehaviour(behaviour,sense);
                 
                 entry.addSense(sense);
                 
@@ -282,7 +282,7 @@ public class Process {
 		//provenance.setAgent("Frequency");
                 provenance.setFrequency(frequency);
 		
-		entry.addProvenance(provenance,ref);
+		entry.addProvenance(provenance,sense);
 		
 		
 		//entry.addProvenance(provenance);

@@ -367,12 +367,14 @@ public class LexiconEvaluation {
 
 	private static boolean checkSyntax(LexicalEntry entry, LexicalEntry gold_entry) {
             /*
-            TODO: Work on Behaviour
-            */
-            HashSet<SyntacticBehaviour> set_gold_entry = gold_entry.getBehaviours();
-            HashSet<SyntacticBehaviour> set_entry = entry.getBehaviours();
+//            TODO: Work on Behaviour
+//            */
+//            HashSet<SyntacticBehaviour> set_gold_entry = gold_entry.getBehaviours();
+//            HashSet<SyntacticBehaviour> set_entry = entry.getBehaviours();
             
-            return set_gold_entry.equals(set_entry);
+//            return set_gold_entry.equals(set_entry);
+            
+            return false;
 		
 	}
 

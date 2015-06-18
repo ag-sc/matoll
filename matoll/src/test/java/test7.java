@@ -52,7 +52,7 @@ public class test7 {
 		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
                 Provenance provenance1 = new Provenance();
                 provenance1.setFrequency(1);
-                entry1.addProvenance(provenance1,ref1);
+                entry1.addProvenance(provenance1,sense1);
 		
 		lexicon.addEntry(entry1);
 		
@@ -80,7 +80,7 @@ public class test7 {
 		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
-		entry2.addSyntacticBehaviour(behaviour2);
+		entry2.addSyntacticBehaviour(behaviour2,sense2);
 		
 		SyntacticBehaviour behaviour3 = new SyntacticBehaviour();
 		
@@ -89,11 +89,11 @@ public class test7 {
 		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
 		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2","with"));
 		
-		entry2.addSyntacticBehaviour(behaviour3);
+		entry2.addSyntacticBehaviour(behaviour3,sense2);
                 
                 Provenance provenance2 = new Provenance();
                 provenance2.setFrequency(1);
-                entry2.addProvenance(provenance2,ref2);
+                entry2.addProvenance(provenance2,sense2);
 		
 		
 		// The following should say that entry is already contained:
@@ -127,7 +127,7 @@ public class test7 {
 		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
-		entry3.addSyntacticBehaviour(behaviour4);
+		entry3.addSyntacticBehaviour(behaviour4,sense3);
 		
 		SyntacticBehaviour behaviour5 = new SyntacticBehaviour();
 		
@@ -136,11 +136,11 @@ public class test7 {
 		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
 		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2","with"));
 		
-		entry3.addSyntacticBehaviour(behaviour5);
+		entry3.addSyntacticBehaviour(behaviour5,sense3);
                 
                 Provenance provenance3 = new Provenance();
                 provenance3.setFrequency(1);
-                entry3.addProvenance(provenance3,ref3);
+                entry3.addProvenance(provenance3,sense3);
                 
                 // The following should say that entry is already contained:
 		

@@ -69,11 +69,11 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
-                                        entry.addProvenance(provenance,ref);
+                                        
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.addSyntacticBehaviour(behaviour);
+	        		 	
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -108,6 +108,10 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
+                                                
                                                 if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
 	        				
@@ -131,6 +135,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
@@ -207,11 +214,10 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
-                                        entry.addProvenance(provenance,ref);
+                                        
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -246,6 +252,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
@@ -267,6 +276,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
@@ -345,11 +357,9 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
-                                        entry.addProvenance(provenance,ref);
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
                                         /*
                                         no lemmatizer for the adjectives, in order to avoid that for example married is mapped to marry
@@ -391,6 +401,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(adj)){
                                                     lexicon.add(entry, vector);
@@ -412,6 +425,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(adj)){
                                                     lexicon.add(entry, vector);
@@ -485,11 +501,10 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
-                                        entry.addProvenance(provenance,ref);
+                                        
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -523,6 +538,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
@@ -544,6 +562,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
@@ -625,11 +646,10 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
-                                        entry.addProvenance(provenance,ref);
+                                        
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
-	        		 	entry.addSyntacticBehaviour(behaviour);
 	        			
 	        			if (Lemmatizer != null)
 	        			{
@@ -662,6 +682,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
@@ -683,6 +706,9 @@ public class Templates {
 	        			
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+                                                
+                                                entry.addSyntacticBehaviour(behaviour,sense);
+                                                entry.addProvenance(provenance,sense);
 	        			
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);

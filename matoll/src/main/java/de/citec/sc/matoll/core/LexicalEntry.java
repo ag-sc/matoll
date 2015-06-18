@@ -23,11 +23,11 @@ public class LexicalEntry {
 
         HashSet<Sense> hashsetSense = new HashSet<Sense>();
 
-	HashSet<SyntacticBehaviour> hashsetBehaviour = new HashSet<SyntacticBehaviour>();
+	HashMap<Sense,HashSet<SyntacticBehaviour>> hashsetBehaviour = new HashMap<Sense,HashSet<SyntacticBehaviour>>();
         
 	
 	//Provenance Provenance;
-        HashMap<Reference,Provenance> mappingReferenceProvenance = new HashMap<Reference,Provenance>();
+        HashMap<Sense,Provenance> mappingReferenceProvenance = new HashMap<Sense,Provenance>();
 	
 	List<String> Sentences;
 	
@@ -79,8 +79,11 @@ public class LexicalEntry {
 		
 		string += "POS: "+this.POS+"\n";
 		
-                for(SyntacticBehaviour Behaviour : hashsetBehaviour) string += Behaviour.toString();
-		for(Sense sense :hashsetSense) string += sense.toString();
+                
+		for(Sense sense :hashsetSense) {
+                    for(SyntacticBehaviour Behaviour : hashsetBehaviour.get(sense)) string += Behaviour.toString();
+                    string += sense.toString();
+                }
 		
 		/*for (String synArg: argumentMap.keySet())
 		{
@@ -118,7 +121,7 @@ public class LexicalEntry {
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		
-                for(SyntacticBehaviour Behaviour : hashsetBehaviour){
+                for(SyntacticBehaviour Behaviour : hashsetBehaviour.get(sense)){
                     for (SyntacticArgument synArg: Behaviour.getSynArgs())
                     {
 			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
@@ -223,15 +226,40 @@ public class LexicalEntry {
 	}
 
 
-	public HashSet<SyntacticBehaviour> getBehaviours() {
+	public HashMap<Sense, HashSet<SyntacticBehaviour>> getBehaviours() {
 		return hashsetBehaviour;
 	}
 	
 	
 
-	public void addSyntacticBehaviour(SyntacticBehaviour behaviour)
+	public void addSyntacticBehaviour(SyntacticBehaviour behaviour, Sense sense)
 	{
-            hashsetBehaviour.add(behaviour);
+            if(hashsetBehaviour.containsKey(sense)){
+                HashSet<SyntacticBehaviour> list = hashsetBehaviour.get(sense);
+                list.add(behaviour);
+                hashsetBehaviour.put(sense, list);
+            }
+            else{
+                HashSet<SyntacticBehaviour> list = new HashSet<SyntacticBehaviour>();
+                list.add(behaviour);
+                hashsetBehaviour.put(sense, list);
+            }
+            
+        }
+        
+        public void addAllSyntacticBehaviour(HashSet<SyntacticBehaviour> behaviours, Sense sense)
+	{
+            if(hashsetBehaviour.containsKey(sense)){
+                HashSet<SyntacticBehaviour> list = hashsetBehaviour.get(sense);
+                list.addAll(behaviours);
+                hashsetBehaviour.put(sense, list);
+            }
+            else{
+                HashSet<SyntacticBehaviour> list = new HashSet<SyntacticBehaviour>();
+                list.addAll(behaviours);
+                hashsetBehaviour.put(sense, list);
+            }
+            
         }
 	
 
@@ -258,20 +286,21 @@ public class LexicalEntry {
 	}
 
 
-	public void addProvenance(Provenance provenance, Reference reference) {
-                if(mappingReferenceProvenance.containsKey(reference)){
+	public void addProvenance(Provenance provenance, Sense sense) {
+            this.hashsetSense.add(sense);
+                if(mappingReferenceProvenance.containsKey(sense)){
                     System.out.println("For given sense there is already a provenance");
                 }
                 else{
-                    mappingReferenceProvenance.put(reference, provenance);
+                    mappingReferenceProvenance.put(sense, provenance);
                 }
 		//Provenance = provenance;
 		
 	}
 	
-	public Provenance getProvenance(Reference reference)
+	public Provenance getProvenance(Sense sense)
 	{
-		return mappingReferenceProvenance.get(reference);
+		return mappingReferenceProvenance.get(sense);
 	}
 
 

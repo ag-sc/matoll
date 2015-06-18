@@ -89,21 +89,30 @@ public class Lexicon {
 			sentences.addAll(containedEntry.getSentences());
 			
 			containedEntry.setSentences(sentences);
-                        for(Reference ref : entry.getReferences()){
-                            if(containedEntry.getProvenance(ref)!=null){
-                                Provenance tmp_provenance = containedEntry.getProvenance(ref);
-                                tmp_provenance.increaseFrequency(entry.getProvenance(ref).getFrequency());
-                                tmp_provenance.addAllPattern(entry.getProvenance(ref).getPatternset());
-                            }
-                            else{
-                                containedEntry.addProvenance(entry.getProvenance(ref), ref);
-                            }
-                        }
+//                        for(Reference ref : entry.getReferences()){
+//                            if(containedEntry.getProvenance(ref)!=null){
+//                                Provenance tmp_provenance = containedEntry.getProvenance(ref);
+//                                tmp_provenance.increaseFrequency(entry.getProvenance(ref).getFrequency());
+//                                tmp_provenance.addAllPattern(entry.getProvenance(ref).getPatternset());
+//                            }
+//                            else{
+//                                containedEntry.addProvenance(entry.getProvenance(ref), ref);
+//                            }
+//                        }
                         
                         for(Sense sense : entry.getSenses()) {
                             containedEntry.addSense(sense);
+                            if(containedEntry.getProvenance(sense)!=null){
+                                Provenance tmp_provenance = containedEntry.getProvenance(sense);
+                                tmp_provenance.increaseFrequency(entry.getProvenance(sense).getFrequency());
+                                tmp_provenance.addAllPattern(entry.getProvenance(sense).getPatternset());
+                            }
+                            else{
+                                containedEntry.addProvenance(entry.getProvenance(sense), sense);
+                            }
+                            for( SyntacticBehaviour behaviours : entry.getBehaviours().get(sense))  containedEntry.addSyntacticBehaviour(behaviours,sense);
                         }
-			for( SyntacticBehaviour behaviours : entry.getBehaviours())  containedEntry.addSyntacticBehaviour(behaviours);
+			
                         
                         //System.out.println(containedEntry.toString());
                         

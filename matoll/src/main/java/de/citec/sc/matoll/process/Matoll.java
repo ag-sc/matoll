@@ -172,11 +172,12 @@ public class Matoll {
 			System.out.print("Instantiating "+classifier.getClass()+ "\n");
 		}
 		
-		LexiconLoader loader = new LexiconLoader();
-		
-		logger.info("Loading lexicon from: "+gold_standard_lexicon+"\n");
-		
-		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
+//		LexiconLoader loader = new LexiconLoader();
+//		
+//		logger.info("Loading lexicon from: "+gold_standard_lexicon+"\n");
+//		
+//		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
+                Lexicon gold = new Lexicon();
 		
 		File folder = new File(directory);
 		
