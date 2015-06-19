@@ -72,11 +72,13 @@ public class LexiconSerialization {
 		if (entry.getReferences().size()>0)
 		{
 			int ref_counter = 0;
-                        for(Sense sense:entry.getSenses()){
+                        for(Sense sense:entry.getSenseBehaviours().keySet()){
+                            
                             Reference ref = sense.getReference();
 //                        }
 //                        for(Reference ref : entry.getReferences()){
                             ref_counter+=1;
+                            //System.out.println("Sense"+Integer.toString(ref_counter)+":"+sense.toString());
                             model.add(model.createResource(entry.getURI()), LEMON.sense, model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)));
                             
                             Provenance provenance = entry.getProvenance(sense);
@@ -98,7 +100,7 @@ public class LexiconSerialization {
                                 SimpleReference reference = (SimpleReference) ref;
                                 model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), LEMON.reference, model.createResource(reference.getURI()));
                                 int synbehaviour_counter = 0;
-                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours().get(sense)){
+                                for(SyntacticBehaviour synbehaviour : entry.getSenseBehaviours().get(sense)){
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {
@@ -126,7 +128,7 @@ public class LexiconSerialization {
                                 model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
                                 
                                 int synbehaviour_counter = 0;
-                                for(SyntacticBehaviour synbehaviour : entry.getBehaviours().get(sense)){
+                                for(SyntacticBehaviour synbehaviour : entry.getSenseBehaviours().get(sense)){
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {
@@ -158,7 +160,7 @@ public class LexiconSerialization {
 //                TODO: Check!
 //                */
 //                int synbehaviour_counter = 0;
-//                for(SyntacticBehaviour synbehaviour : entry.getBehaviours()){
+//                for(SyntacticBehaviour synbehaviour : entry.getSenseBehaviours()){
 //                    synbehaviour_counter+=1;
 //                    if (synbehaviour != null)
 //                    {

@@ -21,9 +21,9 @@ public class LexicalEntry {
         
 	
 
-        HashSet<Sense> hashsetSense = new HashSet<Sense>();
+//        HashSet<Sense> hashsetSense = new HashSet<Sense>();
 
-	HashMap<Sense,HashSet<SyntacticBehaviour>> hashsetBehaviour = new HashMap<Sense,HashSet<SyntacticBehaviour>>();
+	HashMap<Sense,HashSet<SyntacticBehaviour>> hashsetSenseBehaviour = new HashMap<Sense,HashSet<SyntacticBehaviour>>();
         
 	
 	//Provenance Provenance;
@@ -80,8 +80,8 @@ public class LexicalEntry {
 		string += "POS: "+this.POS+"\n";
 		
                 
-		for(Sense sense :hashsetSense) {
-                    for(SyntacticBehaviour Behaviour : hashsetBehaviour.get(sense)) string += Behaviour.toString();
+		for(Sense sense :hashsetSenseBehaviour.keySet()) {
+                    for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)) string += Behaviour.toString();
                     string += sense.toString();
                 }
 		
@@ -102,16 +102,16 @@ public class LexicalEntry {
 
 
 	
-	public HashSet<Sense> getSenses()
-	{
-		return hashsetSense;
-	}
+//	public HashSet<Sense> getSenses()
+//	{
+//		return hashsetSense;
+//	}
 	
 	
-	public void addSense(Sense sense) {
-		hashsetSense.add(sense);
-		
-	}
+//	public void addSense(Sense sense) {
+//		hashsetSense.add(sense);
+//		
+//	}
         /**
          * Mapping of argument types
          * @param sense
@@ -121,7 +121,7 @@ public class LexicalEntry {
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		
-                for(SyntacticBehaviour Behaviour : hashsetBehaviour.get(sense)){
+                for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)){
                     for (SyntacticArgument synArg: Behaviour.getSynArgs())
                     {
 			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
@@ -164,10 +164,11 @@ public class LexicalEntry {
 		
                 LexicalEntry other = (LexicalEntry) obj;
             //now URIs are even so if the URI is not equal, return false and do not check other options
-                if(this.getURI()==null || this.getReferences().isEmpty()) {
+                if(this.getURI()==null || this.getReferences().isEmpty()||other.getURI()==null || other.getReferences() == null) {
                     return false;
                 }
                 else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
+                //else return this.getURI().equals(other.getURI());
 //		if (this == obj)
 //			return true;
 //		if (obj == null)
@@ -179,13 +180,13 @@ public class LexicalEntry {
 //			return false;
 //		}
 //		
-//		if (hashsetBehaviour.isEmpty()) {
+//		if (hashsetSenseBehaviour.isEmpty()) {
 //			// System.out.print("Behaviour is null!\n");
-//			if (!other.hashsetBehaviour.isEmpty())
+//			if (!other.hashsetSenseBehaviour.isEmpty())
 //				return false;
 //		} /*else if (!Behaviour.equals(other.Behaviour))
 //			return false;*/
-//                else if (!hashsetBehaviour.equals(other.hashsetBehaviour))
+//                else if (!hashsetSenseBehaviour.equals(other.hashsetSenseBehaviour))
 //			return false;
 //				
 //		if (CanonicalForm == null) {
@@ -226,38 +227,38 @@ public class LexicalEntry {
 	}
 
 
-	public HashMap<Sense, HashSet<SyntacticBehaviour>> getBehaviours() {
-		return hashsetBehaviour;
+	public HashMap<Sense, HashSet<SyntacticBehaviour>> getSenseBehaviours() {
+		return hashsetSenseBehaviour;
 	}
 	
 	
 
 	public void addSyntacticBehaviour(SyntacticBehaviour behaviour, Sense sense)
 	{
-            if(hashsetBehaviour.containsKey(sense)){
-                HashSet<SyntacticBehaviour> list = hashsetBehaviour.get(sense);
+            if(hashsetSenseBehaviour.containsKey(sense)){
+                HashSet<SyntacticBehaviour> list = hashsetSenseBehaviour.get(sense);
                 list.add(behaviour);
-                hashsetBehaviour.put(sense, list);
+                hashsetSenseBehaviour.put(sense, list);
             }
             else{
                 HashSet<SyntacticBehaviour> list = new HashSet<SyntacticBehaviour>();
                 list.add(behaviour);
-                hashsetBehaviour.put(sense, list);
+                hashsetSenseBehaviour.put(sense, list);
             }
             
         }
         
         public void addAllSyntacticBehaviour(HashSet<SyntacticBehaviour> behaviours, Sense sense)
 	{
-            if(hashsetBehaviour.containsKey(sense)){
-                HashSet<SyntacticBehaviour> list = hashsetBehaviour.get(sense);
+            if(hashsetSenseBehaviour.containsKey(sense)){
+                HashSet<SyntacticBehaviour> list = hashsetSenseBehaviour.get(sense);
                 list.addAll(behaviours);
-                hashsetBehaviour.put(sense, list);
+                hashsetSenseBehaviour.put(sense, list);
             }
             else{
                 HashSet<SyntacticBehaviour> list = new HashSet<SyntacticBehaviour>();
                 list.addAll(behaviours);
-                hashsetBehaviour.put(sense, list);
+                hashsetSenseBehaviour.put(sense, list);
             }
             
         }
@@ -287,9 +288,14 @@ public class LexicalEntry {
 
 
 	public void addProvenance(Provenance provenance, Sense sense) {
-            this.hashsetSense.add(sense);
+//            this.hashsetSense.add(sense);
                 if(mappingReferenceProvenance.containsKey(sense)){
-                    System.out.println("For given sense there is already a provenance");
+                    //System.out.println("For given sense there is already a provenance");
+                    Provenance tmp_provenance = mappingReferenceProvenance.get(sense);
+                    tmp_provenance.increaseFrequency(provenance.getFrequency());
+                    tmp_provenance.addAllPattern(provenance.getPatternset());
+                    mappingReferenceProvenance.remove(sense);
+                    mappingReferenceProvenance.put(sense, tmp_provenance);
                 }
                 else{
                     mappingReferenceProvenance.put(sense, provenance);
@@ -313,12 +319,17 @@ public class LexicalEntry {
         public Set<Reference> getReferences() {
 		
             Set<Reference> references = new HashSet<Reference>();
-		if (hashsetSense!=null){
-                    for(Sense sense: hashsetSense){
-                        references.add(sense.getReference());
-                    }
-                    
+            if(hashsetSenseBehaviour!=null){
+                for(Sense sense :hashsetSenseBehaviour.keySet()){
+                    references.add(sense.getReference());
                 }
+            }
+//		if (hashsetSense!=null){
+//                    for(Sense sense: hashsetSense){
+//                        references.add(sense.getReference());
+//                    }
+//                    
+//                }
 		
             return references;
 		

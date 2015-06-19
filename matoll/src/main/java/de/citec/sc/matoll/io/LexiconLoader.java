@@ -104,7 +104,7 @@ public class LexiconLoader {
 						 
 						 if (map.keySet().size() > 0)
 						 {
-							 entry.addSense(sense);
+							 //entry.addSense(sense);
 							 //entry.setMappings(map);
 							 //lexicon.addEntry(entry);
 						 }
@@ -136,7 +136,7 @@ public class LexiconLoader {
 				 
 				 for (Sense sense: senses)
 				 {
-					 entry.addSense(sense);
+					 //entry.addSense(sense);
 				 }
                                  if(entry.getPOS()!=null && entry.getReferences().size()>0){
                                     boolean add_entry = true;

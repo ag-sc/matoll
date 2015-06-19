@@ -12,7 +12,7 @@ public class Provenance {
 	
 	Double Confidence;
 	
-        Integer Frequency = 1;
+        Integer Frequency;
         HashSet<String> patternset = new HashSet<String>();
 
     public HashSet<String> getPatternset() {
@@ -36,12 +36,14 @@ public class Provenance {
         }
 
         public void setFrequency(Integer frequency) {
-            Frequency = frequency;
+            this.Frequency = frequency;
         }
         
         public void increaseFrequency(Integer frequency){
+            System.out.println("Old Frequency:"+Frequency);
+            System.out.println("add:"+frequency);
             this.Frequency += frequency;
-            //System.out.println("New Frequency:"+Frequency);
+            System.out.println("New Frequency:"+Frequency);
         }
 
 	public String getAgent()

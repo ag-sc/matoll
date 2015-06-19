@@ -52,33 +52,57 @@ public class Sense {
 	@Override
 	public boolean equals(Object obj) {
 		
-		// System.out.print("I am in equals (Sense)\n");
-		
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		Sense other = (Sense) obj;
-		if (Reference == null) {
-			if (other.Reference != null)
-				return false;
-		} else if (!Reference.equals(other.Reference))
-			{
-				// System.out.print("Reference is different\n");
-				return false;
-			}
-		if (senseArgs == null) {
-			if (other.senseArgs != null)
-				return false;
-		} 
-		else if (!senseArgs.equals(other.senseArgs))
-			{
-				// System.out.print("Sense args are different\n");
-				// System.out.println(senseArgs);
-				// System.out.println(other.senseArgs);
-				return false;
-			}
-		return true;
+            
+                if(obj== null) return false;
+                else{
+                    Sense other = (Sense) obj;
+                    if(other.getReference()==null||Reference == null){
+                        return false;
+                    }
+                    else{
+                        if(other.getReference().getURI().equals(Reference.getURI())){
+                            if(senseArgs == null||other.senseArgs==null){
+                                return false;
+                            }
+                            else{
+                                if(senseArgs.equals(other.senseArgs)){
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+//		 System.out.print("I am in equals (Sense)\n");
+//		
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		Sense other = (Sense) obj;
+//		if (Reference == null) {
+//			if (other.Reference != null)
+//				return false;
+//		} else if (!Reference.equals(other.Reference))
+//			{
+//				 System.out.print("Reference is different\n");
+//				return false;
+//			}
+//		if (senseArgs == null) {
+//			if (other.senseArgs != null)
+//				return false;
+//		} 
+//		else if (!senseArgs.equals(other.senseArgs))
+//			{
+//				 System.out.print("Sense args are different\n");
+//				 System.out.println(senseArgs);
+//				 System.out.println(other.senseArgs);
+//				return false;
+//			}
+//		return true;
 	}
 
 	public Reference getReference() {

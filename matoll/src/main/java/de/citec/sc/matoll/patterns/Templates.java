@@ -64,7 +64,7 @@ public class Templates {
 	        		 	Reference ref = new SimpleReference(reference);
 	           		 	sense.setReference(ref);
 	           		 	
-	        		 	entry.addSense(sense);
+	        		 	//entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
@@ -209,7 +209,7 @@ public class Templates {
                                         Reference ref = new SimpleReference(reference);
 	           		 	sense.setReference(ref);
 	           		 	
-	        		 	entry.addSense(sense);
+	        		 	//entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
@@ -352,7 +352,7 @@ public class Templates {
 	           		 	Reference ref = new SimpleReference(reference);
 	           		 	sense.setReference(ref);
 	           		 	
-	        		 	entry.addSense(sense);
+	        		 	//entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
@@ -496,7 +496,7 @@ public class Templates {
 	           		 	Reference ref = new SimpleReference(reference);
 	           		 	sense.setReference(ref);
 	           		 	
-	        		 	entry.addSense(sense);
+	        		 	//entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
@@ -641,7 +641,7 @@ public class Templates {
 	        		 	Reference ref = new SimpleReference(reference);
 	           		 	sense.setReference(ref);
 	           		 	
-	        		 	entry.addSense(sense);
+	        		 	//entry.addSense(sense);
                                         
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);

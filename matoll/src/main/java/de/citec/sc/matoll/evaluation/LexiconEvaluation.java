@@ -316,11 +316,11 @@ public class LexiconEvaluation {
             HashMap<String,String> mapping_entry = new HashMap<String,String>();
             HashMap<String,String> mapping_gold_entry = new HashMap<String,String>();
             
-            for(Sense sense : entry.getSenses()){
+            for(Sense sense : entry.getSenseBehaviours().keySet() ){
                 mapping_entry.putAll(entry.computeMappings(sense));
             }
             
-            for(Sense sense : gold_entry.getSenses()){
+            for(Sense sense : gold_entry.getSenseBehaviours().keySet()){
                 mapping_gold_entry.putAll(gold_entry.computeMappings(sense));
             }
             
@@ -369,8 +369,8 @@ public class LexiconEvaluation {
             /*
 //            TODO: Work on Behaviour
 //            */
-//            HashSet<SyntacticBehaviour> set_gold_entry = gold_entry.getBehaviours();
-//            HashSet<SyntacticBehaviour> set_entry = entry.getBehaviours();
+//            HashSet<SyntacticBehaviour> set_gold_entry = gold_entry.getSenseBehaviours();
+//            HashSet<SyntacticBehaviour> set_entry = entry.getSenseBehaviours();
             
 //            return set_gold_entry.equals(set_entry);
             

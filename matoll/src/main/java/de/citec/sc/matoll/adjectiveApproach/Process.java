@@ -272,7 +272,7 @@ public class Process {
 		
 		entry.addSyntacticBehaviour(behaviour,sense);
                 
-                entry.addSense(sense);
+                //entry.addSense(sense);
                 
                 Provenance provenance = new Provenance();
 		

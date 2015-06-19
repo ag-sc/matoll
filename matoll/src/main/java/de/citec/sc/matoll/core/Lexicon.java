@@ -54,13 +54,6 @@ public class Lexicon {
 			{
 				list = (ArrayList<LexicalEntry>) map.get(entry.getCanonicalForm());
 				list.add(entry);
-                                /*
-                                TODO:Do I have to add the line map.put(entry..)?
-                                */
-                                /*
-                                TODO: Maybe we can later remove this map, as it increases the cost, as bigger the lexicon gets.
-                                */
-
 			}
 			else
 			{
@@ -79,49 +72,69 @@ public class Lexicon {
 	
 			containedEntry = getLexicalEntry(entry);
 			
-			List<String> sentences = new ArrayList<String>();
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> senses = containedEntry.getSenseBehaviours();
+                        System.out.println("#Senses contained entry:"+senses.size());
                         
-//                        /*
-//                        Increase the frequency
-//                        */
-//                        containedEntry.getProvenance().increaseFrequency(entry.getProvenance().getFrequency());
+                        
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> sense2 = entry.getSenseBehaviours();
+                        System.out.println("#Senses entry:"+sense2.size());
+                        
+			List<String> sentences = new ArrayList<String>();
+
 			sentences.addAll(entry.getSentences());
 			sentences.addAll(containedEntry.getSentences());
 			
 			containedEntry.setSentences(sentences);
-//                        for(Reference ref : entry.getReferences()){
-//                            if(containedEntry.getProvenance(ref)!=null){
-//                                Provenance tmp_provenance = containedEntry.getProvenance(ref);
-//                                tmp_provenance.increaseFrequency(entry.getProvenance(ref).getFrequency());
-//                                tmp_provenance.addAllPattern(entry.getProvenance(ref).getPatternset());
+                        
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> test1 = entry.getSenseBehaviours();
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> test2 = containedEntry.getSenseBehaviours();
+                        for(Sense sense :test1.keySet()){
+                            System.out.println("in sense");
+                            HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
+                            containedEntry.addAllSyntacticBehaviour(behaviours, sense);
+                            /*
+                            Update Provenance
+                            */
+                            Provenance provenance = entry.getProvenance(sense);
+                            System.out.println("Got provenance with frequency:"+provenance.getFrequency());
+                            containedEntry.addProvenance(provenance, sense);
+                            System.out.println("add this to frequency:"+containedEntry.getProvenance(sense).getFrequency());
+//                            if(test2.containsKey(sense)){
+//                                HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
+//                                containedEntry.addAllSyntacticBehaviour(behaviours, sense);
+//                                /*
+//                                Update Provenance
+//                                */
+//                                Provenance provenance = entry.getProvenance(sense);
+//                                containedEntry.addProvenance(provenance, sense);
 //                            }
 //                            else{
-//                                containedEntry.addProvenance(entry.getProvenance(ref), ref);
+//                                
 //                            }
-//                        }
-                        
-                        for(Sense sense : entry.getSenses()) {
-                            containedEntry.addSense(sense);
-                            if(containedEntry.getProvenance(sense)!=null){
-                                Provenance tmp_provenance = containedEntry.getProvenance(sense);
-                                tmp_provenance.increaseFrequency(entry.getProvenance(sense).getFrequency());
-                                tmp_provenance.addAllPattern(entry.getProvenance(sense).getPatternset());
-                            }
-                            else{
-                                containedEntry.addProvenance(entry.getProvenance(sense), sense);
-                            }
-                            for( SyntacticBehaviour behaviours : entry.getBehaviours().get(sense))  containedEntry.addSyntacticBehaviour(behaviours,sense);
                         }
-			
-                        
-                        //System.out.println(containedEntry.toString());
+                    HashMap<Sense, HashSet<SyntacticBehaviour>> sense3 = containedEntry.getSenseBehaviours();
+                    System.out.println("#Senses contained entry afterwards:"+sense3.size());
+//                        for(Sense sense : entry.getSenses()) {
+//                            System.out.println("Sense:"+sense.toString());
+//                            containedEntry.addSense(sense);
+//                            if(containedEntry.getProvenance(sense)!=null){
+//                                Provenance tmp_provenance = containedEntry.getProvenance(sense);
+//                                tmp_provenance.increaseFrequency(entry.getProvenance(sense).getFrequency());
+//                                tmp_provenance.addAllPattern(entry.getProvenance(sense).getPatternset());
+//                            }
+//                            else{
+//                                containedEntry.addProvenance(entry.getProvenance(sense), sense);
+//                            }
+//                            for( SyntacticBehaviour behaviours : entry.getSenseBehaviours().get(sense))  containedEntry.addSyntacticBehaviour(behaviours,sense);
+//                        }
+                    //System.out.println(containedEntry.toString());
                         
                         
                         
 			
 		}
 	
-		if (entry.getSenses() != null)
+		if (entry.getSenseBehaviours() != null)
                     for( Reference reference : entry.getReferences()) references.add(reference);
 			
 	}
@@ -156,7 +169,7 @@ public class Lexicon {
 		
 		for (LexicalEntry entry: entries)
 		{   
-                    for (Sense sense : entry.getSenses())
+                    for (Sense sense : entry.getSenseBehaviours().keySet())
                             references.add(sense.getReference());
 		}
 		

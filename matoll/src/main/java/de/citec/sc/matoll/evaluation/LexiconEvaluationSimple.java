@@ -146,9 +146,9 @@ public class LexiconEvaluationSimple {
 
 //    private static void evaluateSyntactic(LexicalEntry entry, LexicalEntry gold_entry) {
 //        int correct_behaviours = 0;
-//        for(SyntacticBehaviour behave : entry.getBehaviours()){
+//        for(SyntacticBehaviour behave : entry.getSenseBehaviours()){
 //            String frame = behave.getFrame();
-//            for(SyntacticBehaviour gold_behave : gold_entry.getBehaviours()){
+//            for(SyntacticBehaviour gold_behave : gold_entry.getSenseBehaviours()){
 //                // compare frames
 //                if(gold_behave.getFrame().equals(frame)){
 //
@@ -172,8 +172,8 @@ public class LexiconEvaluationSimple {
 //        double recall = 0.0;
 //        double precision = 0.0;
 //        if (correct_behaviours > 0) {
-//            recall = (double) correct_behaviours/gold_entry.getBehaviours().size();
-//            precision = (double) correct_behaviours/entry.getBehaviours().size();            
+//            recall = (double) correct_behaviours/gold_entry.getSenseBehaviours().size();
+//            precision = (double) correct_behaviours/entry.getSenseBehaviours().size();            
 //        } 
 //        recall_sum_syntactic += recall;
 //        precision_sum_syntactic += precision;
@@ -187,9 +187,9 @@ public class LexiconEvaluationSimple {
         
         Map<String,String> mapping = new HashMap<String,String>();
         
-        for (Sense sense : entry.getSenses()) {
+        for (Sense sense : entry.getSenseBehaviours().keySet()) {
              String reference = sense.getReference().getURI();
-             for (Sense gold_sense : gold_entry.getSenses()) {
+             for (Sense gold_sense : gold_entry.getSenseBehaviours().keySet()) {
                   if (gold_sense.getReference().getURI().equals(reference)) {
                       for (SenseArgument arg : sense.getSenseArgs()) {
                            for (SenseArgument gold_arg : gold_sense.getSenseArgs()) {
@@ -206,7 +206,7 @@ public class LexiconEvaluationSimple {
         // (if so, mapping is correct)
 
 //        loop:
-//        for (SyntacticBehaviour syn : entry.getBehaviours()) {
+//        for (SyntacticBehaviour syn : entry.getSenseBehaviours()) {
 //             SyntacticBehaviour renamed_syn = new SyntacticBehaviour();
 //             renamed_syn.setFrame(syn.getFrame());
 //             for (SyntacticArgument arg : syn.getSynArgs()) {
@@ -215,7 +215,7 @@ public class LexiconEvaluationSimple {
 //                  }
 //                  renamed_syn.add(new SyntacticArgument(arg.getArgumentType(),mapping.get(arg.getValue()),arg.getPreposition()));
 //             }
-//             if (gold_entry.getBehaviours().contains(renamed_syn)) {
+//             if (gold_entry.getSenseBehaviours().contains(renamed_syn)) {
 //                 correctlyMappedSynBehaviours += 1;
 //             }
 //        }
@@ -223,8 +223,8 @@ public class LexiconEvaluationSimple {
         double recall = 0.0;
         double precision = 0.0;
         if (correctlyMappedSynBehaviours > 0) {
-            recall = (double) correctlyMappedSynBehaviours/gold_entry.getBehaviours().size();
-            precision = (double) correctlyMappedSynBehaviours/entry.getBehaviours().size();
+            recall = (double) correctlyMappedSynBehaviours/gold_entry.getSenseBehaviours().size();
+            precision = (double) correctlyMappedSynBehaviours/entry.getSenseBehaviours().size();
             
         }
         recall_sum_mapping += recall;
