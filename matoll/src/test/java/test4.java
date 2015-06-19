@@ -61,9 +61,7 @@ public class test4 {
 		Sense sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
-		entry.addSense(sense);
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
 		entry.addSentence("This is the second sentence");

@@ -40,9 +40,7 @@ public class test6 {
 		Sense sense = new Sense();
 		Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass_gender_Female","http://dbpedia.org/ontology/gender","http://dbpedia.org/resource/Female");
 		sense.setReference(ref);
-		
-		entry.addSense(sense);
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
 		SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -63,9 +61,7 @@ public class test6 {
 		entry.addProvenance(provenance,sense);
 		
 		//entry = lexicon.createNewEntry("female");
-		
-		entry.addSense(sense);
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 
 		behaviour = new SyntacticBehaviour();

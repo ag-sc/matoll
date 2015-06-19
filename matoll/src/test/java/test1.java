@@ -24,9 +24,7 @@ public class test1 {
 		Sense sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
-		entry.addSense(sense);
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
 		SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -39,6 +37,7 @@ public class test1 {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 		
+                entry.addSyntacticBehaviour(behaviour, sense);
 		lexicon.add(entry, new FeatureVector());
 		
 		entry = new LexicalEntry(Language.EN);
@@ -48,10 +47,6 @@ public class test1 {
 		sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		/*
-                TODO: addSense
-                */
-		entry.addSense(sense);
 		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -64,6 +59,8 @@ public class test1 {
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
+                
+                entry.addSyntacticBehaviour(behaviour, sense);
 		
 		// The following should say that entry is already contained:
 		
@@ -80,8 +77,6 @@ public class test1 {
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
 		
-		entry.addSense(sense);
-		
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
 		behaviour = new SyntacticBehaviour();
@@ -94,6 +89,8 @@ public class test1 {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
+                entry.addSyntacticBehaviour(behaviour, sense);
+                
 		// The following should say that entry is already contained:
 		
 		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
@@ -108,9 +105,7 @@ public class test1 {
 		sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
-		entry.addSense(sense);
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
 		behaviour = new SyntacticBehaviour();
@@ -124,6 +119,8 @@ public class test1 {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));	
 		
 		// The following should say that entry is already contained:
+                
+                entry.addSyntacticBehaviour(behaviour, sense);
 		
 		if (lexicon.contains(entry)) System.out.print("Entry already included!!!");
 		else System.out.println("Entry not included!!!");

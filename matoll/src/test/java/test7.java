@@ -36,7 +36,6 @@ public class test7 {
 		Reference ref1 = new SimpleReference("http://dbpedia.org/ontology/spouse");
 		sense1.setReference(ref1);
 		
-		entry1.addSense(sense1);
                 entry1.setURI("http://localhost:8080/TransitiveFrame_marry");
 		
 		entry1.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -66,7 +65,6 @@ public class test7 {
 		Reference ref2 = new SimpleReference("http://dbpedia.org/ontology/spouse");
 		sense2.setReference(ref2);
 
-		entry2.addSense(sense2);
 		
 		entry2.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -111,7 +109,6 @@ public class test7 {
 		Reference ref3 = new SimpleReference("http://dbpedia.org/ontology/spouse");
 		sense3.setReference(ref3);
 
-		entry3.addSense(sense3);
                 //entry3.setURI("dblexipedia.org/lexica/TransitiveFrame_marry");
                 entry3.setURI("http://localhost:8080/TransitiveFrame_marry");
 		

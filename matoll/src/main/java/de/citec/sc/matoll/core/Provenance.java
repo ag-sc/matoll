@@ -40,10 +40,7 @@ public class Provenance {
         }
         
         public void increaseFrequency(Integer frequency){
-            System.out.println("Old Frequency:"+Frequency);
-            System.out.println("add:"+frequency);
             this.Frequency += frequency;
-            System.out.println("New Frequency:"+Frequency);
         }
 
 	public String getAgent()
