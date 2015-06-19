@@ -174,8 +174,9 @@ public class Process {
 								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
 								 System.out.println();*/
                                                                  try{
-                                                                    lexicon.addEntry(createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri,
-										 adjectiveObject.getFrequency(),result.get(key)));
+                                                                     LexicalEntry entry = createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
+                                                                     System.out.println(entry);
+                                                                    lexicon.addEntry(entry);
                                                                     csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                                                  }
                                                                  catch(Exception e){
@@ -409,10 +410,10 @@ public class Process {
             Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
         
             while (matcher.find()) {
-                  return matcher.group(2);
+                  return matcher.group(2).replace(" ","_");
             }
             
-            return uri;
+            return uri.replace(" ","_");
         }
 
 }

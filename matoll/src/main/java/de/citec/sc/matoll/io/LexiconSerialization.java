@@ -48,6 +48,8 @@ public class LexiconSerialization {
 	}
 
 	private void serialize(LexicalEntry entry, Model model) {
+            
+                if(entry.getURI().contains(" ")) return;
 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
 		
@@ -123,7 +125,10 @@ public class LexiconSerialization {
 
                                 Restriction reference = (Restriction) ref;
                                 model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)), LEMON.reference, model.createResource(reference.getURI()));
-                                model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
+                                if(reference.getValue().contains("http://")){
+                                    model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createResource(reference.getValue()));
+                                }
+                                else model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createResource(reference.getValue()));
                                 model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
                                 model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
                                 
