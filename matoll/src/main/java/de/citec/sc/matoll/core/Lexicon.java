@@ -70,10 +70,7 @@ public class Lexicon {
                         LexicalEntry containedEntry;
 	
 			containedEntry = getLexicalEntry(entry);
-			
-                        HashMap<Sense, HashSet<SyntacticBehaviour>> senses = containedEntry.getSenseBehaviours();                        
-                        
-                        HashMap<Sense, HashSet<SyntacticBehaviour>> sense2 = entry.getSenseBehaviours();
+		                        
                         
 			List<String> sentences = new ArrayList<String>();
 
@@ -82,10 +79,9 @@ public class Lexicon {
 			
 			containedEntry.setSentences(sentences);
                         
-                        HashMap<Sense, HashSet<SyntacticBehaviour>> test1 = entry.getSenseBehaviours();
-                        HashMap<Sense, HashSet<SyntacticBehaviour>> test2 = containedEntry.getSenseBehaviours();
-                        for(Sense sense :test1.keySet()){
-                            HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> senseBehaviours = entry.getSenseBehaviours();
+                        for(Sense sense :senseBehaviours.keySet()){
+                            HashSet<SyntacticBehaviour> behaviours = senseBehaviours.get(sense);
                             containedEntry.addAllSyntacticBehaviour(behaviours, sense);
                             /*
                             Update Provenance
@@ -93,7 +89,7 @@ public class Lexicon {
                             Provenance provenance = entry.getProvenance(sense);
                             containedEntry.addProvenance(provenance, sense);
 //                            if(test2.containsKey(sense)){
-//                                HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
+//                                HashSet<SyntacticBehaviour> behaviours = senseBehaviours.get(sense);
 //                                containedEntry.addAllSyntacticBehaviour(behaviours, sense);
 //                                /*
 //                                Update Provenance
@@ -105,7 +101,6 @@ public class Lexicon {
 //                                
 //                            }
                         }
-                    HashMap<Sense, HashSet<SyntacticBehaviour>> sense3 = containedEntry.getSenseBehaviours();
 //                        for(Sense sense : entry.getSenses()) {
 //                            System.out.println("Sense:"+sense.toString());
 //                            containedEntry.addSense(sense);
