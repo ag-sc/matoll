@@ -42,7 +42,6 @@ public class Lexicon {
 	
 	public void addEntry(LexicalEntry entry)
 	{
-                
 		
 		if(!entries.contains(entry))
 		{

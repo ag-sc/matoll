@@ -167,8 +167,8 @@ public class LexicalEntry {
                 if(this.getURI()==null || this.getReferences().isEmpty()||other.getURI()==null || other.getReferences() == null) {
                     return false;
                 }
-                else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
-                //else return this.getURI().equals(other.getURI());
+                //else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
+                else return this.getURI().equals(other.getURI());
 //		if (this == obj)
 //			return true;
 //		if (obj == null)

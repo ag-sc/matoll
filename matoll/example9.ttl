@@ -44,7 +44,7 @@
 <http://localhost:8080/TransitiveFrame_marry#Activity1>
         a       <http://www.w3.org/ns/prov#Activity> ;
         <http://www.w3.org/ns/prov#frequency>
-                "2"^^<http://www.w3.org/2001/XMLSchema#int> , "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+                "3"^^<http://www.w3.org/2001/XMLSchema#int> .
 
 <http://localhost:8080/TransitiveFrame_marry>
         a       <http://lemon-model.net/lemon#LexicalEntry> ;
