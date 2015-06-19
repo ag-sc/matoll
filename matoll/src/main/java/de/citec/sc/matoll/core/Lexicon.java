@@ -71,12 +71,9 @@ public class Lexicon {
 	
 			containedEntry = getLexicalEntry(entry);
 			
-                        HashMap<Sense, HashSet<SyntacticBehaviour>> senses = containedEntry.getSenseBehaviours();
-                        System.out.println("#Senses contained entry:"+senses.size());
-                        
+                        HashMap<Sense, HashSet<SyntacticBehaviour>> senses = containedEntry.getSenseBehaviours();                        
                         
                         HashMap<Sense, HashSet<SyntacticBehaviour>> sense2 = entry.getSenseBehaviours();
-                        System.out.println("#Senses entry:"+sense2.size());
                         
 			List<String> sentences = new ArrayList<String>();
 
@@ -88,16 +85,13 @@ public class Lexicon {
                         HashMap<Sense, HashSet<SyntacticBehaviour>> test1 = entry.getSenseBehaviours();
                         HashMap<Sense, HashSet<SyntacticBehaviour>> test2 = containedEntry.getSenseBehaviours();
                         for(Sense sense :test1.keySet()){
-                            System.out.println("in sense");
                             HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
                             containedEntry.addAllSyntacticBehaviour(behaviours, sense);
                             /*
                             Update Provenance
                             */
                             Provenance provenance = entry.getProvenance(sense);
-                            System.out.println("Got provenance with frequency:"+provenance.getFrequency());
                             containedEntry.addProvenance(provenance, sense);
-                            System.out.println("add this to frequency:"+containedEntry.getProvenance(sense).getFrequency());
 //                            if(test2.containsKey(sense)){
 //                                HashSet<SyntacticBehaviour> behaviours = test1.get(sense);
 //                                containedEntry.addAllSyntacticBehaviour(behaviours, sense);
@@ -112,7 +106,6 @@ public class Lexicon {
 //                            }
                         }
                     HashMap<Sense, HashSet<SyntacticBehaviour>> sense3 = containedEntry.getSenseBehaviours();
-                    System.out.println("#Senses contained entry afterwards:"+sense3.size());
 //                        for(Sense sense : entry.getSenses()) {
 //                            System.out.println("Sense:"+sense.toString());
 //                            containedEntry.addSense(sense);
