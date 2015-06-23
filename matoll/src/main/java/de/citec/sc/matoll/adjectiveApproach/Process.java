@@ -175,7 +175,7 @@ public class Process {
 								 System.out.println();*/
                                                                  try{
                                                                      LexicalEntry entry = createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
-                                                                     System.out.println(entry);
+                                                                     //System.out.println(entry);
                                                                     lexicon.addEntry(entry);
                                                                     csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                                                  }

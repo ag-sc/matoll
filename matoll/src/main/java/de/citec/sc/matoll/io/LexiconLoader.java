@@ -31,6 +31,8 @@ import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class LexiconLoader {
@@ -46,11 +48,11 @@ public class LexiconLoader {
 		Model model = RDFDataMgr.loadModel(file);
 		
 		 Statement stmt;
-		 Resource subject;
+		 Resource loaded_entry;
 		 
 		 Lexicon lexicon = new Lexicon();
 		 
-		 LexicalEntry entry;
+		 
 		 
 		 StmtIterator iter = model.listStatements(null, LEMON.canonicalForm, (RDFNode) null);
 		 
@@ -58,99 +60,138 @@ public class LexiconLoader {
 			 
 			 stmt = iter.next();
 			 
-			 subject = stmt.getSubject();
+			 loaded_entry = stmt.getSubject();
 			 
-			 // //System.out.println("Processing entry "+subject.toString());
+                         /*
+                         loaded_entry is one single entry.
+                         */
+			 System.out.println("Processing entry "+loaded_entry.toString());
+                         
+                         Language language = getLanguage(loaded_entry,model);
+                         
+                         /*
+                         Language
+                         */
+                         LexicalEntry entry = new LexicalEntry(language);
+                         
+                         entry.setURI(loaded_entry.toString());
+                         
+                         /*
+                         Do not read in sameAs, at it is generated automatically in the LexiconSerilization (and it is not needed elsewhere)
+                         */
+                         
+                         /*
+                         Set POS
+                         */
+                         String pos = getPOS(loaded_entry,model);
+                         entry.setPOS(pos);
+                         
+                         /*
+                         Canonnical Form
+                         */
+                         entry.setCanonicalForm(getCanonicalForm(loaded_entry,model));
+                         
+                         /*
+                         Sense, corresponding SynBehaviour + Provenance
+                         */
+                         HashMap<Sense,HashSet<SyntacticBehaviour>> hashsetSenseBehaviour = new HashMap<Sense,HashSet<SyntacticBehaviour>>();
+                         HashMap<Sense,Provenance> mappingReferenceProvenance = new HashMap<Sense,Provenance>();
+                         getSenses(loaded_entry,model,hashsetSenseBehaviour,mappingReferenceProvenance);
+                         for(Sense sense : hashsetSenseBehaviour.keySet()) entry.addAllSyntacticBehaviour(hashsetSenseBehaviour.get(sense), sense);
+                         for(Sense sense: mappingReferenceProvenance.keySet()) entry.addProvenance(mappingReferenceProvenance.get(sense), sense);
+                         
+                         if(pos!=null)lexicon.addEntry(entry);
+                         
 
-			 List<SyntacticBehaviour> behaviours = getSyntacticArguments(subject,model);
-			 
-			 List<Sense> senses = getSenseArguments(subject,model);
-			 
-			 // //System.out.println(behaviours.size()+" synargs extracted");
-			 
-			 // //System.out.println(senses.size()+" senses extracted");
-			 
-                         //System.out.println("Confidence:"+getConfidence(subject,model));
-			 
-			 HashMap<String,String> map;
-                         
-                         Language language = getLanguage(subject,model);
-			 
-                         
-			 if (behaviours.size() > 0)
-			 {      entry = new LexicalEntry(language);
-				for (SyntacticBehaviour behaviour: behaviours)
-				 {
-					 for (Sense sense: senses)
-					 { 
-						 //entry = new LexicalEntry();
-                                                 
-                                                 Provenance provenance = new Provenance();
-                                                 provenance.setConfidence(Double.valueOf(getConfidence(subject,model)));
-                                                 provenance.setFrequency(getFrequency(subject,model));
-                                                 System.err.println("Adapt to new provenance style");
-						 //entry.setProvenance(provenance);
-                                                 
-						 entry.setURI(subject.toString());
-					 
-						 entry.setCanonicalForm(getCanonicalForm(subject,model));
-					 			 
-						 entry.setPOS(getPOS(subject,model));
-					 
-                                                 System.err.println("Adapt to new sense/bahaviour style");
-						 //entry.addSyntacticBehaviour(behaviour);
-						 
-						 map = entry.computeMappings(sense);
-						 
-						 if (map.keySet().size() > 0)
-						 {
-							 //entry.addSense(sense);
-							 //entry.setMappings(map);
-							 //lexicon.addEntry(entry);
-						 }
-					 }
-				 }
-                                if(entry.getPOS()!=null && entry.getReferences().size()>0){
-                                    boolean add_entry = true;
-                                    for(Reference ref : entry.getReferences()){
-                                        try{
-                                            if(ref.getURI()==null)add_entry = false;
-                                        }
-                                        catch (Exception ex){ add_entry = false;};
-                                        
-                                    }
-                                    if(add_entry)lexicon.addEntry(entry);
-                                }
-			 }
-				 
-			else
-			{
-				
-				 entry = new LexicalEntry(language);
-				 
-				 entry.setURI(subject.toString());
-			 
-				 entry.setCanonicalForm(getCanonicalForm(subject,model));
-			 				 
-				 entry.setPOS(getPOS(subject,model));
-				 
-				 for (Sense sense: senses)
-				 {
-					 //entry.addSense(sense);
-				 }
-                                 if(entry.getPOS()!=null && entry.getReferences().size()>0){
-                                    boolean add_entry = true;
-                                    for(Reference ref : entry.getReferences()){
-                                        try{
-                                            if(ref.getURI()==null)add_entry = false;
-                                        }
-                                        catch (Exception ex){ add_entry = false;};
-                                        
-                                    }
-                                    if(add_entry)lexicon.addEntry(entry);
-                                }
-			 				
-			}
+//			 List<SyntacticBehaviour> behaviours = getSyntacticArguments(loaded_entry,model);
+//			 
+//			 List<Sense> senses = getSenseArguments(loaded_entry,model);
+//			 
+//			  System.out.println(behaviours.size()+" synargs extracted");
+//			 
+//			  System.out.println(senses.size()+" senses extracted");
+//			 
+//                         //System.out.println("Confidence:"+getConfidence(loaded_entry,model));
+//			 
+//			 HashMap<String,String> map;
+//                         
+//                         Language language = getLanguage(loaded_entry,model);
+//			 
+//                         
+//			 if (behaviours.size() > 0)
+//			 {      entry = new LexicalEntry(language);
+//				for (SyntacticBehaviour behaviour: behaviours)
+//				 {
+//					 for (Sense rdf_sense: senses)
+//					 { 
+//						 //entry = new LexicalEntry();
+//                                                 
+//                                                 Provenance provenance = new Provenance();
+//                                                 provenance.setConfidence(Double.valueOf(getConfidence(loaded_entry,model)));
+//                                                 provenance.setFrequency(getFrequency(loaded_entry,model));
+//                                                 System.err.println("Adapt to new provenance style");
+//						 //entry.setProvenance(provenance);
+//                                                 
+//						 entry.setURI(loaded_entry.toString());
+//					 
+//						 entry.setCanonicalForm(getCanonicalForm(loaded_entry,model));
+//					 			 
+//						 entry.setPOS(getPOS(loaded_entry,model));
+//					 
+//                                                 System.err.println("Adapt to new rdf_sense/bahaviour style");
+//						 //entry.addSyntacticBehaviour(behaviour);
+//						 
+//						 map = entry.computeMappings(rdf_sense);
+//						 
+//						 if (map.keySet().size() > 0)
+//						 {
+//							 //entry.addSense(rdf_sense);
+//							 //entry.setMappings(map);
+//							 //lexicon.addEntry(entry);
+//						 }
+//					 }
+//				 }
+//                                if(entry.getPOS()!=null && entry.getReferences().size()>0){
+//                                    boolean add_entry = true;
+//                                    for(Reference ref : entry.getReferences()){
+//                                        try{
+//                                            if(ref.getURI()==null)add_entry = false;
+//                                        }
+//                                        catch (Exception ex){ add_entry = false;};
+//                                        
+//                                    }
+//                                    if(add_entry)lexicon.addEntry(entry);
+//                                }
+//			 }
+//				 
+//			else
+//			{
+//				
+//				 entry = new LexicalEntry(language);
+//				 
+//				 entry.setURI(loaded_entry.toString());
+//			 
+//				 entry.setCanonicalForm(getCanonicalForm(loaded_entry,model));
+//			 				 
+//				 entry.setPOS(getPOS(loaded_entry,model));
+//				 
+//				 for (Sense rdf_sense: senses)
+//				 {
+//					 //entry.addSense(rdf_sense);
+//				 }
+//                                 if(entry.getPOS()!=null && entry.getReferences().size()>0){
+//                                    boolean add_entry = true;
+//                                    for(Reference ref : entry.getReferences()){
+//                                        try{
+//                                            if(ref.getURI()==null)add_entry = false;
+//                                        }
+//                                        catch (Exception ex){ add_entry = false;};
+//                                        
+//                                    }
+//                                    if(add_entry)lexicon.addEntry(entry);
+//                                }
+//			 				
+//			}
 				 
 				 
 		 }
@@ -182,95 +223,9 @@ public class LexiconLoader {
 		
 	}
 
-	private List<Sense> getSenseArguments(Resource subject, Model model) {
-		
-		List<Sense> senses = new ArrayList<Sense>();
-		
-		Sense sen;
-		
-		Resource sense;
-		
-		Resource object;
-		
-		Statement stmt;
-				
-		Set<SenseArgument> senseArguments = new HashSet<SenseArgument>();
-		
-		Statement senseArg;
-		
-		StmtIterator iter = model.listStatements(subject, LEMON.sense, (RDFNode) null);
-		 
-		 while (iter.hasNext()) {
-		
-			 stmt = iter.next();
-			 
-			 sense = (Resource) stmt.getObject();
-			 					
-			 sen = new Sense();
-			
-			 senseArguments = new HashSet<SenseArgument>();
-			
 
-	 		StmtIterator it = sense.listProperties(LEMON.isA);
-		    while( it.hasNext() ) {
-		    
-		    	senseArg = it.next();
-		    	
-		    	object = (Resource) senseArg.getObject();
-		    	
-		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
-		    }	
-		    	
-	    	it = sense.listProperties(LEMON.subjOfProp);
-		    while( it.hasNext() ) {
-		    
-		    	senseArg = it.next();
-		    	
-		    	object = (Resource) senseArg.getObject();
-		    	
-		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
-		    	
-		    }
-		    
-		   
-	    	it = sense.listProperties(LEMON.objOfProp);
-		    while( it.hasNext() ) {
-		    
-		    	senseArg = it.next();
-		    	
-		    	object = (Resource) senseArg.getObject();
-		    	
-		  
-		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));	
 
-		    }
-		   
-		    sen.setSenseArgs(senseArguments);
-                    
-                    Resource reference = getReference(sense,model);
-                    
-                    if (reference != null) {
-                        
-                        // check whether it's a restriction class
-                        String property = getPropertyObject(reference,OWL.onProperty);
-                        String value    = getPropertyObject(reference,OWL.hasValue);
-                        
-                        if (property != null && value != null) {
-                            sen.setReference(new Restriction(reference.toString(),property,value));
-                        }
-                        else {
-                            sen.setReference(new SimpleReference(reference.toString()));
-                        }
-                    }
-                   
-		    senses.add(sen);
-		    	
-		}
-	
-		return senses;	
-	}
-
-	private static List<SyntacticBehaviour> getSyntacticArguments(Resource subject, Model model) {
+	private static HashSet<SyntacticBehaviour> getSyntacticArguments(Resource loaded_entry, Model model) {
 		
 		Resource synBehaviour;
 		
@@ -284,7 +239,7 @@ public class LexiconLoader {
 		
 		Statement synArg;
 				
-		List<SyntacticBehaviour> behaviours = new ArrayList<SyntacticBehaviour>();
+		HashSet<SyntacticBehaviour> behaviours = new HashSet<SyntacticBehaviour>();
 		
 		SyntacticBehaviour behaviour;
 		
@@ -292,65 +247,47 @@ public class LexiconLoader {
 
 		Statement stmt;
 		
-		StmtIterator iter = model.listStatements(subject, LEMON.syntacticBehaviour, (RDFNode) null);
+		StmtIterator iter = model.listStatements(loaded_entry, LEMON.syntacticBehaviour, (RDFNode) null);
 		 
 		while (iter.hasNext()) {
+                    stmt = iter.next();
+                    
+                    behaviour = new SyntacticBehaviour();
+                   synBehaviour = (Resource) stmt.getObject();
+                     StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
+
+                     while( it.hasNext() ) {
+                        synArg = it.next();
+                        object = (Resource) synArg.getObject();
+
+                        predicate = synArg.getPredicate();
+                        prepStatement = object.getProperty(LEMON.marker);
+                        preposition = null;
+
+                        if (prepStatement != null)
+                        {
+                            prepositionEntry = (Resource) prepStatement.getObject();
+                            if (prepositionEntry != null)
+                            {
+                                    preposition = getCanonicalForm(prepositionEntry,model);
+                                    // //System.out.print("Preposition: "+preposition+"\n");
+                            }
+                            else
+                            {
+                                    preposition = null;
+                            }
+                        }
+
+                        if (!predicate.toString().equals(RDF.type.toString())){
+                        behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
+                        }
+                    }	
+
+                    behaviour.setFrame(getFrame(synBehaviour,model));
+
+                    behaviours.add(behaviour);
+                }
 		
-			 stmt = iter.next();
-		
-			 behaviour = new SyntacticBehaviour();
-                         
-                         synBehaviour = (Resource) stmt.getObject();
-			 
-			 StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
-					 
-			 while( it.hasNext() ) {
-		    	
-				synArg = it.next();
-		    	
-                                object = (Resource) synArg.getObject();
-                               
-                                
-			 	predicate = synArg.getPredicate();
-			 	
-                                prepStatement = object.getProperty(LEMON.marker);
-                                
-			 	
-			 	preposition = null;
-			 
-			 	if (prepStatement != null)
-			 	{
-	
-			 		prepositionEntry = (Resource) prepStatement.getObject();
-			 	
-			 		if (prepositionEntry != null)
-			 		{
-			 			preposition = getCanonicalForm(prepositionEntry,model);
-		    		
-			 			// //System.out.print("Preposition: "+preposition+"\n");
-		    		
-			 		}
-			 		else
-			 		{
-			 			preposition = null;
-			 		}
-			 	}
-			 		
-			 	if (!predicate.toString().equals(RDF.type.toString())){
-                                    behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
-                                }
-                                    
-			 	
-                                
-			 	
-		    }	
-		    	
-	    
-	    	behaviour.setFrame(getFrame(synBehaviour,model));
-	    	
-	    	behaviours.add(behaviour);
-		   
-		}
 	
 		   
 		return behaviours;
@@ -448,101 +385,11 @@ public class LexiconLoader {
 		}
 		else
 		{
-			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
+			// //System.out.print("Entry "+loaded_entry+" has no canonical form!!!\n");
 			return null;
 		}		
 	}
-        
-        private static double getConfidence(Resource subject, Model model) {
-		
-		Resource prov_activity;
-		
-		Statement stmt;
-		
-		Literal form;
-		
-                /*
-                if no confidence is given in .ttl file return 0.0
-                */
-                double return_vale = 0.0;
 
-		stmt = subject.getProperty(PROVO.generatedBy);
-		
-		if (stmt != null)
-		{
-			prov_activity = (Resource) stmt.getObject();
-			
-			if (prov_activity != null)
-			{
-				stmt = prov_activity.getProperty(PROVO.confidence);
-				
-				if (stmt != null)
-				{
-				return prov_activity.getProperty(PROVO.confidence).getDouble();
-				}
-				else
-				{
-					return return_vale;
-				}
-				
-			}
-			else
-			{
-				return return_vale;
-			}
-		}
-		else
-		{
-			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
-			return return_vale;
-		}
-	}
-        
-        private static int getFrequency(Resource subject, Model model) {
-		
-		Resource prov_activity;
-		
-		Statement stmt;
-		
-		Literal form;
-		
-                /*
-                if no confidence is given in .ttl file return 0.0
-                */
-                int return_vale = 0;
-
-		stmt = subject.getProperty(PROVO.generatedBy);
-		
-		if (stmt != null)
-		{
-			prov_activity = (Resource) stmt.getObject();
-			
-			if (prov_activity != null)
-			{
-				stmt = prov_activity.getProperty(PROVO.frequency);
-				
-				if (stmt != null)
-				{
-				return prov_activity.getProperty(PROVO.frequency).getInt();
-					//return form.toString();
-				}
-				else
-				{
-					return return_vale;
-				}
-				
-			}
-			else
-			{
-				return return_vale;
-			}
-		}
-		else
-		{
-			// //System.out.print("Entry "+subject+" has no canonical form!!!\n");
-			return return_vale;
-		}
-	}
 
     private Language getLanguage(Resource subject, Model model) {
         /*
@@ -551,6 +398,296 @@ public class LexiconLoader {
         */
         return Language.EN;
     }
+
+    
+    private void getSenses(Resource loaded_entry, Model model, HashMap<Sense, HashSet<SyntacticBehaviour>> hashsetSenseBehaviour, HashMap<Sense, Provenance> mappingReferenceProvenance) {
+     
+        Statement stmt;
+        StmtIterator iter = loaded_entry.listProperties(LEMON.sense);
+        while(iter.hasNext() ) {
+            stmt = iter.next();
+            RDFNode rdf_sense = stmt.getObject();
+            System.out.println("Found sense:"+rdf_sense.toString());
+            Sense sense = new Sense();
+            
+            Resource reference = getReference((Resource)rdf_sense,model);
+            if (reference != null) {
+                // check whether it's a restriction class
+                String property = getPropertyObject(reference,OWL.onProperty);
+                String value    = getPropertyObject(reference,OWL.hasValue);
+
+                if (property != null && value != null) {
+                    sense.setReference(new Restriction(reference.toString(),property,value));
+                }
+                else {
+                    sense.setReference(new SimpleReference(reference.toString()));
+                }
+            }
+            Set<SenseArgument> sense_arguments = getSenseArguments(rdf_sense,model);
+            for(SenseArgument argument : sense_arguments) {
+                sense.addSenseArg(argument);
+                System.out.println(argument.toString());
+            }
+            System.out.println("sense_arguments.size():"+sense_arguments.size());
+           
+            
+//            HashSet<SyntacticBehaviour> list_behaviours = getBehaviours(rdf_sense,loaded_entry, model);
+            HashSet<SyntacticBehaviour> list_behaviours = getSyntacticArguments(loaded_entry, model);
+            //System.out.println("list_behaviours.size():"+list_behaviours.size());
+            //for(SyntacticBehaviour x:list_behaviours)System.out.println(x.toString());
+            hashsetSenseBehaviour.put(sense, list_behaviours);
+            
+            Provenance provenance = getProvenance(rdf_sense,loaded_entry, model);
+            mappingReferenceProvenance.put(sense, provenance);
+        }
+    }
+
+    
+    private Provenance getProvenance(RDFNode rdf_sense, Resource loaded_entry,Model model) {
+        Statement stmt;
+        Provenance provenance = new Provenance();
+        
+        StmtIterator iter = model.listStatements(null, PROVO.generatedBy, (RDFNode) null);
+        int frequency = 0;
+        double confidence = 0.0;
+        String agent = "";
+        Date starttime = null;
+        Date endtime = null;
+        HashSet<String> patterns = new HashSet<String>();
+        while (iter.hasNext()) {
+             stmt = iter.next();
+             Resource activity;
+             if(stmt.getSubject().equals(rdf_sense)){
+                 activity= (Resource) stmt.getObject();
+                 try{
+                     Statement stmt_frequency = activity.getProperty(PROVO.frequency);
+                     if (stmt_frequency != null) frequency = activity.getProperty(PROVO.frequency).getInt();
+                 }
+                 catch(Exception e){};
+                 
+                 try{
+                     Statement stmt_confidence = activity.getProperty(PROVO.confidence);
+                     if (stmt_confidence != null) confidence = activity.getProperty(PROVO.confidence).getDouble();
+                 }
+                 catch(Exception e){};
+                 
+                 try{
+                     Statement stmt_agent = activity.getProperty(PROVO.associatedWith);
+                     if (stmt_agent != null) agent = activity.getProperty(PROVO.associatedWith).toString();
+                 }
+                 catch(Exception e){};
+                 
+                 try{
+                     SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");
+                     Statement stmt_starttime = activity.getProperty(PROVO.startedAtTime);
+                     if (stmt_starttime != null) starttime = df.parse(activity.getProperty(PROVO.startedAtTime).toString());
+                 }
+                 catch(Exception e){};
+                 
+                 try{
+                     SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");
+                     Statement stmt_endtime = activity.getProperty(PROVO.endedatTime);
+                     if (stmt_endtime != null) endtime = df.parse(activity.getProperty(PROVO.endedatTime).toString());
+                 }
+                 catch(Exception e){};
+                 
+                 /*
+                 Add Pattern
+                 */
+             }
+        }
+
+        provenance.setFrequency(frequency);
+        provenance.setConfidence(confidence);
+        if(!agent.equals(""))provenance.setAgent(agent);
+        if(starttime!=null)provenance.setStartedAtTime(starttime);
+        if(endtime!=null)provenance.setEndedAtTime(endtime);
+        provenance.setPatternset(patterns);
+        
+        System.out.println("Frequency:"+frequency);
+        
+        
+        return provenance;
+    }
+
+//    private HashSet<SyntacticBehaviour> getBehaviours(RDFNode rdf_sense, Resource loaded_entry, Model model) {
+//        Statement stmt;
+//        HashSet<SyntacticBehaviour> hashset = new HashSet<SyntacticBehaviour>();
+//        
+//        StmtIterator iter = model.listStatements(null, LEMON.syntacticBehaviour, (RDFNode) null);
+//
+//        while (iter.hasNext()) {
+//             stmt = iter.next();
+//             Resource rdf_behaviour;
+//             if(stmt.getSubject().equals(rdf_sense)){
+//                 rdf_behaviour= (Resource) stmt.getObject();
+//                 SyntacticBehaviour behaviour = new SyntacticBehaviour();
+//                 
+//                 /*
+//                 Get Frame
+//                 */
+//                 String frame = getFrame(rdf_behaviour,model);
+//                 behaviour.setFrame(frame);
+//                 
+//                 /*
+//                 GetArguments
+//                 */
+//                 //behaviour.getArguments(rdf_sense, rdf_behaviour,model));
+//                 
+//                 
+//                 
+//                 if(frame!=null) hashset.add(behaviour);
+//             }
+//             
+//             
+//             
+//             
+//        }
+//        
+//        return hashset;
+//    }
+
+    private Set<SenseArgument> getSenseArguments(RDFNode rdf_sense, Model model) {
+        Set<SenseArgument> senseArguments = new HashSet<SenseArgument>();
+	Statement senseArg;
+        Resource sense = (Resource) rdf_sense;
+        Resource object;
+	Statement stmt;
+        StmtIterator it = sense.listProperties(LEMON.isA);
+            while( it.hasNext() ) {
+
+                senseArg = it.next();
+
+                object = (Resource) senseArg.getObject();
+
+                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+            }	
+
+        it = sense.listProperties(LEMON.subjOfProp);
+            while( it.hasNext() ) {
+
+                senseArg = it.next();
+
+                object = (Resource) senseArg.getObject();
+
+                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+
+            }
+
+
+        it = sense.listProperties(LEMON.objOfProp);
+            while( it.hasNext() ) {
+
+                senseArg = it.next();
+
+                object = (Resource) senseArg.getObject();
+
+
+                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));	
+
+            }
+        
+        return senseArguments;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //	private List<Sense> getSenseArguments(Resource subject, Model model) {
+//		
+//		List<Sense> senses = new ArrayList<Sense>();
+//		
+//		Sense sen;
+//		
+//		Resource sense;
+//		
+//		Resource object;
+//		
+//		Statement stmt;
+//				
+//		Set<SenseArgument> senseArguments = new HashSet<SenseArgument>();
+//		
+//		Statement senseArg;
+//		
+//		StmtIterator iter = model.listStatements(subject, LEMON.sense, (RDFNode) null);
+//		 
+//		 while (iter.hasNext()) {
+//		
+//			 stmt = iter.next();
+//			 
+//			 sense = (Resource) stmt.getObject();
+//			 					
+//			 sen = new Sense();
+//			
+//			 senseArguments = new HashSet<SenseArgument>();
+//			
+//
+//	 		StmtIterator it = sense.listProperties(LEMON.isA);
+//		    while( it.hasNext() ) {
+//		    
+//		    	senseArg = it.next();
+//		    	
+//		    	object = (Resource) senseArg.getObject();
+//		    	
+//		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+//		    }	
+//		    	
+//	    	it = sense.listProperties(LEMON.subjOfProp);
+//		    while( it.hasNext() ) {
+//		    
+//		    	senseArg = it.next();
+//		    	
+//		    	object = (Resource) senseArg.getObject();
+//		    	
+//		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+//		    	
+//		    }
+//		    
+//		   
+//	    	it = sense.listProperties(LEMON.objOfProp);
+//		    while( it.hasNext() ) {
+//		    
+//		    	senseArg = it.next();
+//		    	
+//		    	object = (Resource) senseArg.getObject();
+//		    	
+//		  
+//		    	senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));	
+//
+//		    }
+//		   
+//		    sen.setSenseArgs(senseArguments);
+//                    
+//                    Resource reference = getReference(sense,model);
+//                    
+//                    if (reference != null) {
+//                        
+//                        // check whether it's a restriction class
+//                        String property = getPropertyObject(reference,OWL.onProperty);
+//                        String value    = getPropertyObject(reference,OWL.hasValue);
+//                        
+//                        if (property != null && value != null) {
+//                            sen.setReference(new Restriction(reference.toString(),property,value));
+//                        }
+//                        else {
+//                            sen.setReference(new SimpleReference(reference.toString()));
+//                        }
+//                    }
+//                   
+//		    senses.add(sen);
+//		    	
+//		}
+//	
+//		return senses;	
+//	}
         
         
         

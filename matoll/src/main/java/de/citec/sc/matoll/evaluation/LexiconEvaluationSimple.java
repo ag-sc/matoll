@@ -132,7 +132,7 @@ public class LexiconEvaluationSimple {
                             
                             if (counter > 0) {
                                 //evaluateSyntactic(entry,gold_entry);
-                                evaluateMapping(entry,gold_entry);
+                                //evaluateMapping(entry,gold_entry);
                                 comparisons++;
                                 break;
                             } 
