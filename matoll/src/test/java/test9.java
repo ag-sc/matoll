@@ -69,10 +69,21 @@ public class test9 {
 		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
 		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
+                
+                SyntacticBehaviour behaviour5 = new SyntacticBehaviour();
+		
+		behaviour5.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#SuperFrame");
+				
+		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
+		
+                
 		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","2"));
 		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));	
-		
+		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 		entry1.addSyntacticBehaviour(behaviour2,sense2);
+                entry1.addSyntacticBehaviour(behaviour5,sense2);
                 
                 Provenance provenance2 = new Provenance();
                 provenance2.setFrequency(20);
@@ -100,11 +111,11 @@ public class test9 {
 		
 		behaviour3.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subjectH","object",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObjectH","subject",null));
 		
-		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
+		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
                 Provenance provenance3 = new Provenance();
                 provenance3.setFrequency(2);
                 entry2.addProvenance(provenance3,sense3);

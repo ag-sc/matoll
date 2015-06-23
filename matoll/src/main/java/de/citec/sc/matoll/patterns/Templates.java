@@ -103,11 +103,11 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -130,11 +130,11 @@ public class Templates {
 	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","subject",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -247,11 +247,11 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2",prep));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","subject",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -271,11 +271,11 @@ public class Templates {
 	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","1",prep));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","subject",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","object",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -396,11 +396,11 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2",prep));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","subject",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -420,11 +420,11 @@ public class Templates {
 	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject","1",prep));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject","subject",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","object",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","2"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -533,11 +533,11 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -557,11 +557,11 @@ public class Templates {
 	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","subject",null));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -677,11 +677,11 @@ public class Templates {
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","2",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",prep));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
@@ -701,11 +701,11 @@ public class Templates {
 	        			else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
 	        			{
 	        				
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","1",prep));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
+	        				behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","subject",prep));
 	        			
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","1"));
-	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+	        				sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
                                                 
                                                 entry.addSyntacticBehaviour(behaviour,sense);
                                                 entry.addProvenance(provenance,sense);
