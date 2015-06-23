@@ -128,8 +128,8 @@ public class LexiconSerialization {
                                 if(reference.getValue().contains("http://")){
                                     model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createResource(reference.getValue()));
                                 }
-                                else model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createResource(reference.getValue()));
-                                model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createLiteral(reference.getProperty()));
+                                else model.add(model.createResource(reference.getURI()), OWL.hasValue, model.createLiteral(reference.getValue()));
+                                model.add(model.createResource(reference.getURI()), OWL.onProperty, model.createResource(reference.getProperty()));
                                 model.add(model.createResource(reference.getURI()), RDF.type, model.createResource("http://www.w3.org/2002/07/owl#Restriction"));
                                 
                                 int synbehaviour_counter = 0;
