@@ -34,18 +34,18 @@ public class SparqlPattern_ES_1 extends SparqlPattern{
 
 x verb y - ohne preposition
 	 */
-	String query = "SELECT ?lemma ?subj_arg ?obj_arg  WHERE {"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
 			+ "?verb <conll:postag> ?pos . "
 			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
 			+ "FILTER regex(?pos, \"VMIP\") ."
 			+ "?verb <conll:deprel> \"ROOT\" ."
-			+ "?verb <conll:form> ?lemma . "
+			+ "?verb <conll:lemma> ?lemma . "
 			+ "?subj <conll:head> ?verb . "
 			+ "?subj <conll:deprel> \"SUBJ\". "
 			+ "?dobj <conll:head> ?verb . "
 			+ "?dobj <conll:deprel> \"DO\" . "
-			+ "?subj <own:senseArg> ?subj_arg. "
-			+ "?dobj <own:senseArg> ?obj_arg. "
+			+ "?subj <own:senseArg> ?e1_arg. "
+			+ "?dobj <own:senseArg> ?e2_arg. "
 			+ "}";
 	
 	@Override

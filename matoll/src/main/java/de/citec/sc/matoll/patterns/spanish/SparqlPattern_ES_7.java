@@ -121,7 +121,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 
 
 
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep_form  WHERE {"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?verb <conll:cpostag> ?verb_pos ."
 			+ "FILTER regex(?deprel, \"VMIS\") ."
 			
@@ -132,11 +132,11 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 			+ "?e1 <conll:head> ?verb."
 			+ "?e1 <conll:deprel> \"SUBJ\" ."
 
-			+ "?prep <conll:head> ?verb."
-			+ "?prep <conll:deprel> \"MOD\" ."
-			+ "?prep <conll:form> ?prep_form. "
+			+ "?p <conll:head> ?verb."
+			+ "?p <conll:deprel> \"MOD\" ."
+			+ "?p <conll:lemma> ?prep. "
 		
-			+ "?e2 <conll:head> ?prep."
+			+ "?e2 <conll:head> ?p."
 			+ "?e2 <conll:deprel> \"COMP \"."
 			
 			+ "?e1 <own:senseArg> ?e1_arg. "

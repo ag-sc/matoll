@@ -38,17 +38,17 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
 //	15	.	.	f	Fp	_	14	punct	_	_
 
 
-			String query = "SELECT ?noun_lemma ?e1_arg ?e2_arg ?prep_form  WHERE {"
+			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 					+ "?noun <conll:postag> ?lemma_pos . "
 					+ "FILTER regex(?lemma_pos, \"NC\") ."
-					+ "?noun <conll:form> ?noun_lemma . "
+					+ "?noun <conll:lemma> ?lemma . "
 					
-					+ "?prep <conll:head> ?noun ."
-					+ "?prep <conll:postag> ?prep_pos ."
+					+ "?p <conll:head> ?noun ."
+					+ "?p <conll:postag> ?prep_pos ."
 					+ "FILTER regex(?prep_pos, \"SPS\") ."
-					+ "?prep <conll:form> ?prep_form ."
+					+ "?p <conll:lemma> ?prep ."
 					
-					+ "?e1 <conll:head> ?prep ."
+					+ "?e1 <conll:head> ?p ."
 					+ "?e1 <conll:deprel> ?e1_deprel ."
 					+ "FILTER regex(?e1_deprel, \"COMP\") ."
 					

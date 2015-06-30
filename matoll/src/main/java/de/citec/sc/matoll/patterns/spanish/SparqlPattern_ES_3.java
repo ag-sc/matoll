@@ -33,10 +33,10 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
 	
-	// same as query 3 but with adjective modifier
+	// same as query 2 but with adjective modifier
 	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			+ "?y <conll:form> ?lemma . "
+			+ "?y <conll:lemma> ?lemma . "
 			+ "?y <conll:head> ?blank . "
 			+ "?y <conll:deprel> \"MOD\" . "
 			+ "?y <conll:postag> \"AQ0FS0\". "
@@ -50,7 +50,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 			+ "?p <conll:head> ?blank . "
 			+ "?p <conll:deprel> \"MOD\". "
 			+ "?p <conll:postag> \"SPS00\". "
-			+ "?p <conll:form> ?prep . "
+			+ "?p <conll:lemma> ?prep . "
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:cpostag> \"n\" . "
 			+ "?e2 <conll:deprel> ?e2_grammar . "

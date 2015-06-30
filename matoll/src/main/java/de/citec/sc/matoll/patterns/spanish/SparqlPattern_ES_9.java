@@ -45,22 +45,22 @@ Neuer parse:
 	
 	// eigentlich estar casado con....
 	
-	String query = "SELECT ?verb_lemma ?e1_arg ?e2_arg ?prep:form  WHERE {"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?verb <conll:postag> ?verb_pos . "
 			+ "FILTER regex(?lemma_pos, \"VMIP\") ."
-			+ "?verb <conll:form> ?verb_lemma . "
+			+ "?verb <conll:lemma> ?lemma . "
 			
 			+ "?e1 <conll:head> ?verb . "
 			+ "?e1 <conll:deprel> ?e1_deprel. "
 			+ "FILTER regex(?e1_deprel, \"SUBJ\") ."
 			
-			+ "?prep <conll:head> ?verb . "
-			+ "?prep <conll:postag> ?prep_pos . "
+			+ "?p <conll:head> ?verb . "
+			+ "?p <conll:postag> ?prep_pos . "
 			+ "FILTER regex(?prep_pos, \"SPS\") ."
-			+ "?prep <conll:form> ?prep_form . "
-			+ "?prep <conll:deprel> \"OBLC\" . "
+			+ "?p <conll:lemma> ?prep . "
+			+ "?p <conll:deprel> \"OBLC\" . "
 			
-			+ "?e2 <conll:head> ?prep . "
+			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel> \"COMP\" . "
 			
 			+ "?e1 <own:senseArg> ?e1_arg. "

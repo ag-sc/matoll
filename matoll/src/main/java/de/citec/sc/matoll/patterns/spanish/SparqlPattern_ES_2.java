@@ -30,21 +30,21 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 	//query2 auch ok nach neuem Parse
 
 	 */
-			String query = "SELECT ?lemma ?subj_arg ?pobj_arg ?prep_form  WHERE {"
-					+ "?noun <conll:form> ?lemma . "
+			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+					+ "?noun <conll:lemma> ?lemma . "
 					+ "?noun <conll:head> ?copula . "
 					+ "?noun <conll:cpostag> \"n\" . "
-					+ "?noun <conll:deprel \"ATR\""
+					+ "?noun <conll:deprel> \"ATR\" ."
 					
 					+ "?prep <conll:deprel> \"MOD\" . "
 					+ "?prep <conll:postag> ?prep_pos ."
 					+ "FILTER regex(?prep_pos, \"SPS\") ."
 					+ "?prep <conll:head> ?noun . "
-					+ "?prep <conll:form> ?prep_form . "
+					+ "?prep <conll:lemma> ?prep . "
 					
 					+ "?copula <conll:postag> ?pos . "
 					+ "FILTER regex(?pos, \"VSIP\") ."
-					+ "?copula <conll:lemma> \"ser\" "
+					+ "?copula <conll:lemma> \"ser\" ."
 					
 					+ "?subj <conll:head> ?copula . "
 					+ "?subj <conll:deprel> ?dep . "
@@ -56,8 +56,8 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 					+ "?pobj <conll:deprel> ?e2_grammar . "
 					+ "FILTER regex(?e2_grammar, \"COMP\") ."
 					
-					+ "?subj <own:senseArg> ?subj_arg. "
-					+ "?pobj <own:senseArg> ?pobj_arg. "
+					+ "?subj <own:senseArg> ?e1_arg. "
+					+ "?pobj <own:senseArg> ?e2_arg. "
 					+ "}";
 	
 	@Override

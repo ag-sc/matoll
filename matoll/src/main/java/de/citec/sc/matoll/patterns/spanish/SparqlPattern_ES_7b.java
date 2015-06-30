@@ -18,6 +18,11 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_7b.class.getName());
 	
 	// X y Y se casaron
+        
+        /*
+        Siehe Email Christina
+        */
+        
 	
 //	<class:class125>  <conll:language>  "es" ;
 //    <conll:reference>  "http://dbpedia.org/ontology/spouse" ;
@@ -101,13 +106,14 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
         
         
 	// */
-	String query = "SELECT ?verb_lemma ?e1_arg ?e2_arg  WHERE {"
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
 			+ "?verb <conll:cpostag> ?verb_pos ."
 			+ "FILTER regex(?deprel, \"VMIS\") ."
 			
 			+ "?se <conll:lemma> \"se\" ."
 			+ "?se <conll:deprel> \"DO\" ."
 			+ "?se <conll:head> ?verb ."
+                        + "?verb <conll:lemma> ?lemma ."
 			
 			+ "?e1 <conll:head> ?verb."
 			+ "?e1 <conll:deprel> \"SUBJ\" ."

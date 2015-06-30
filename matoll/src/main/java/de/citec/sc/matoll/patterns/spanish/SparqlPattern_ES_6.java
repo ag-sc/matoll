@@ -28,21 +28,21 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 7	Irene_Angelina	irene_angelina	n	NP00000	_	6	COMP	_	_
 	 * 
 	 */
-	String query= "SELECT ?participle_lemma ?e1_arg ?e2_arg ?prep_form WHERE {"
+	String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"
 
 			+ "?e1 <conll:head> ?estar ."
 			+ "?e1 <conll:deprel> \"SUBJ\"."
 			
 			+ "?estar <conll:lemma> \"estar\" ."
 			
-			+ "?partciciple <conll:form> ?participle_lemma"
+			+ "?partciciple <conll:lemma> ?lemma ."
 			
-			+ "?prep <conll:form> ?prep_form ."
-			+ "?prep <conll:head> ?participle ."
-			+ "?prep <conll:deprel> \"OBLC\" ."
+			+ "?p <conll:lemma> ?prep ."
+			+ "?p <conll:head> ?participle ."
+			+ "?p <conll:deprel> \"OBLC\" ."
 			
 			
-			+ "?e2 <conll:head> ?prep ."
+			+ "?e2 <conll:head> ?p ."
 			+ "?e2 <conll:deprel> \"COMP\"."
 			
 			

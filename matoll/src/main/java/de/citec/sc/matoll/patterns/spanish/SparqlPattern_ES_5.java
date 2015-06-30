@@ -96,15 +96,15 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 					
 			+ "?noun <conll:postag> ?lemma_pos . "
 			+ "FILTER regex(?lemma_pos, \"NC\") ."
-			+ "?noun <conll:form> ?noun_lemma . "
+			+ "?noun <conll:lemma> ?lemma . "
 			+ "?noun <conll:head> ?e1 ."
 			
-			+ "?prep <conll:head> ?noun ."
-			+ "?prep <conll:postag> ?prep_pos ."
+			+ "?p <conll:head> ?noun ."
+			+ "?p <conll:postag> ?prep_pos ."
 			+ "FILTER regex(?prep_pos, \"SPS\") ."
-			+ "?prep <conll:form> ?prep_form ."
+			+ "?p <conll:lemma> ?prep ."
 			
-			+ "?e2 <conll:head> ?prep ."
+			+ "?e2 <conll:head> ?p ."
 			+ "?e2 <conll:deprel> ?e1_deprel ."
 			+ "FILTER regex(?e1_deprel, \"COMP\") ."
 			
