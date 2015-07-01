@@ -142,11 +142,11 @@ public class Lexicon {
         
         public List<LexicalEntry> getEntries(Language language)
 	{
-		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
-                for(LexicalEntry entry : getEntries()){
-                    if(entry.getLanguage().equals(language)) entries.add(entry);
+		List<LexicalEntry> entries_tmp = new ArrayList<LexicalEntry>();
+                for(LexicalEntry e : getEntries()){
+                    if(e.getLanguage().equals(language)) entries_tmp.add(e);
                 }
-                return entries;
+                return entries_tmp;
 	}
 	
 	public List<LexicalEntry> getEntriesWithCanonicalForm(String canonicalForm)
