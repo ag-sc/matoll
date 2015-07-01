@@ -24,11 +24,11 @@ public class test10 {
 		Lexicon lexicon = loader.loadFromFile(gold_standard_lexicon);
                 
 		
-		Lexicon gold = loader.loadFromFile("../lexica/dbpedia_en.rdf");
+//                Lexicon gold = loader.loadFromFile("../lexica/dbpedia_en.rdf");
                 
 		
-		System.out.print("Lexicon loaded\n");
-                System.out.println(gold.size());
+//		System.out.print("Lexicon loaded\n");
+//                System.out.println(gold.size());
                 
                 Model model = ModelFactory.createDefaultModel();
 		
@@ -40,10 +40,10 @@ public class test10 {
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
                 
-                
-                LexiconEvaluationSimple eval = new LexiconEvaluationSimple();
-                eval.evaluate(lexicon,gold);
-                System.out.println(eval.getRecall("lemma"));
+//                
+//                LexiconEvaluationSimple eval = new LexiconEvaluationSimple();
+//                eval.evaluate(lexicon,gold);
+//                System.out.println(eval.getRecall("lemma"));
 	}
 
 }

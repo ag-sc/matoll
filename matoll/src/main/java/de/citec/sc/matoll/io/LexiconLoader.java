@@ -225,7 +225,7 @@ public class LexiconLoader {
 
 
 
-	private static HashSet<SyntacticBehaviour> getSyntacticArguments(Resource loaded_entry, Model model) {
+	private static HashSet<SyntacticBehaviour> getSyntacticArguments(Resource loaded_entry, Model model, HashSet<String> sense_argument_values) {
 		
 		Resource synBehaviour;
 		
@@ -254,13 +254,18 @@ public class LexiconLoader {
                     
                     behaviour = new SyntacticBehaviour();
                    synBehaviour = (Resource) stmt.getObject();
-                     StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
-
+                   StmtIterator it = model.listStatements(synBehaviour, null, (RDFNode) null); 
+                   HashSet<String> argument_value_list = new HashSet<String>();
                      while( it.hasNext() ) {
                         synArg = it.next();
                         object = (Resource) synArg.getObject();
 
                         predicate = synArg.getPredicate();
+                        String argument_value = object.toString();
+                        /*
+                        Check, if argument_value have a BaseURI
+                        */
+                        if(argument_value.contains("#")) argument_value = argument_value.split("#")[1];
                         prepStatement = object.getProperty(LEMON.marker);
                         preposition = null;
 
@@ -277,19 +282,26 @@ public class LexiconLoader {
                                     preposition = null;
                             }
                         }
-
+                        /*
+                        Only way to map sense with syntactic arguments is the unique identifier for the syntactic argument.
+                        */
                         if (!predicate.toString().equals(RDF.type.toString())){
-                        behaviour.add(new SyntacticArgument(predicate.toString(),object.toString(),preposition));
+                        behaviour.add(new SyntacticArgument(predicate.toString(),argument_value,preposition));
+                        argument_value_list.add(argument_value);
                         }
                     }	
-
-                    behaviour.setFrame(getFrame(synBehaviour,model));
-
-                    behaviours.add(behaviour);
+                     boolean add_bahaviour = true;
+                     for(String p : argument_value_list){
+                         if(!sense_argument_values.contains(p))add_bahaviour = false;
+                     }
+                     if(add_bahaviour){
+                        behaviour.setFrame(getFrame(synBehaviour,model));
+                        behaviours.add(behaviour);
+                     }
+                     
                 }
 		
 	
-		   
 		return behaviours;
 	}
 	
@@ -392,9 +404,27 @@ public class LexiconLoader {
 
 
     private Language getLanguage(Resource subject, Model model) {
+        String language;
+
+        Statement stmt;
+
+        stmt = subject.getProperty(LEMON.language);
+
+        if (stmt != null)
+        {
+                language = stmt.getLiteral().toString();
+
+                if(language.equals("en")) return Language.EN;
+                if(language.equals("de")) return Language.DE;
+                if(language.equals("es")) return Language.ES;
+                if(language.equals("ja")) return Language.JA;
+        }
+        else
+        {
+                return null;
+        }
         /*
-        TODO: implement function;
-        return as default EN
+        default is English, if no language is given for the entry
         */
         return Language.EN;
     }
@@ -407,7 +437,6 @@ public class LexiconLoader {
         while(iter.hasNext() ) {
             stmt = iter.next();
             RDFNode rdf_sense = stmt.getObject();
-            System.out.println("Found sense:"+rdf_sense.toString());
             Sense sense = new Sense();
             
             Resource reference = getReference((Resource)rdf_sense,model);
@@ -423,18 +452,15 @@ public class LexiconLoader {
                     sense.setReference(new SimpleReference(reference.toString()));
                 }
             }
-            Set<SenseArgument> sense_arguments = getSenseArguments(rdf_sense,model);
+            List<SenseArgument> sense_arguments = getSenseArguments(rdf_sense,model);
+            HashSet<String> sense_argument_values = new HashSet<String>();
             for(SenseArgument argument : sense_arguments) {
                 sense.addSenseArg(argument);
-                System.out.println(argument.toString());
-            }
-            System.out.println("sense_arguments.size():"+sense_arguments.size());
-           
+                sense_argument_values.add(argument.getValue().toString());
+            }           
             
 //            HashSet<SyntacticBehaviour> list_behaviours = getBehaviours(rdf_sense,loaded_entry, model);
-            HashSet<SyntacticBehaviour> list_behaviours = getSyntacticArguments(loaded_entry, model);
-            //System.out.println("list_behaviours.size():"+list_behaviours.size());
-            //for(SyntacticBehaviour x:list_behaviours)System.out.println(x.toString());
+            HashSet<SyntacticBehaviour> list_behaviours = getSyntacticArguments(loaded_entry, model,sense_argument_values);
             hashsetSenseBehaviour.put(sense, list_behaviours);
             
             Provenance provenance = getProvenance(rdf_sense,loaded_entry, model);
@@ -461,13 +487,20 @@ public class LexiconLoader {
                  activity= (Resource) stmt.getObject();
                  try{
                      Statement stmt_frequency = activity.getProperty(PROVO.frequency);
-                     if (stmt_frequency != null) frequency = activity.getProperty(PROVO.frequency).getInt();
+                     if (stmt_frequency != null) {
+                         frequency = activity.getProperty(PROVO.frequency).getInt();
+                         provenance.setFrequency(frequency);
+                     }
+                     
                  }
                  catch(Exception e){};
                  
                  try{
                      Statement stmt_confidence = activity.getProperty(PROVO.confidence);
-                     if (stmt_confidence != null) confidence = activity.getProperty(PROVO.confidence).getDouble();
+                     if (stmt_confidence != null) {
+                         confidence = activity.getProperty(PROVO.confidence).getDouble();
+                         provenance.setConfidence(confidence);
+                     }
                  }
                  catch(Exception e){};
                  
@@ -497,15 +530,12 @@ public class LexiconLoader {
              }
         }
 
-        provenance.setFrequency(frequency);
-        provenance.setConfidence(confidence);
+        
         if(!agent.equals(""))provenance.setAgent(agent);
         if(starttime!=null)provenance.setStartedAtTime(starttime);
         if(endtime!=null)provenance.setEndedAtTime(endtime);
         provenance.setPatternset(patterns);
-        
-        System.out.println("Frequency:"+frequency);
-        
+                
         
         return provenance;
     }
@@ -547,8 +577,8 @@ public class LexiconLoader {
 //        return hashset;
 //    }
 
-    private Set<SenseArgument> getSenseArguments(RDFNode rdf_sense, Model model) {
-        Set<SenseArgument> senseArguments = new HashSet<SenseArgument>();
+    private List<SenseArgument> getSenseArguments(RDFNode rdf_sense, Model model) {
+        List<SenseArgument> senseArguments = new ArrayList<SenseArgument>();
 	Statement senseArg;
         Resource sense = (Resource) rdf_sense;
         Resource object;
@@ -559,8 +589,13 @@ public class LexiconLoader {
                 senseArg = it.next();
 
                 object = (Resource) senseArg.getObject();
-
-                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+                String predicate_string = senseArg.getPredicate().toString();
+                String object_string = object.toString();
+                /*
+                Check, if argument_value have a BaseURI
+                */
+                if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                senseArguments.add(new SenseArgument(predicate_string,object_string));
             }	
 
         it = sense.listProperties(LEMON.subjOfProp);
@@ -569,8 +604,13 @@ public class LexiconLoader {
                 senseArg = it.next();
 
                 object = (Resource) senseArg.getObject();
-
-                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));
+                String predicate_string = senseArg.getPredicate().toString();
+                String object_string = object.toString();
+                /*
+                Check, if argument_value have a BaseURI
+                */
+                if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                senseArguments.add(new SenseArgument(predicate_string,object_string));
 
             }
 
@@ -581,12 +621,15 @@ public class LexiconLoader {
                 senseArg = it.next();
 
                 object = (Resource) senseArg.getObject();
-
-
-                senseArguments.add(new SenseArgument(senseArg.getPredicate().toString(),object.toString()));	
+                String predicate_string = senseArg.getPredicate().toString();
+                String object_string = object.toString();
+                /*
+                Check, if argument_value have a BaseURI
+                */
+                if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                senseArguments.add(new SenseArgument(predicate_string,object_string));	
 
             }
-        
         return senseArguments;
     }
     

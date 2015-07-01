@@ -45,11 +45,11 @@ public class test9 {
 		
 		behaviour1.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
+		behaviour1.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","subject",null));
 		
-		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","1"));
-		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
+		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
+		sense1.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
                 Provenance provenance1 = new Provenance();
                 provenance1.setFrequency(1);
                 entry1.addProvenance(provenance1,sense1);
@@ -66,8 +66,8 @@ public class test9 {
 		
 		behaviour2.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
-		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
 		
                 
                 SyntacticBehaviour behaviour5 = new SyntacticBehaviour();
@@ -78,10 +78,8 @@ public class test9 {
 		behaviour5.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
 		
                 
-		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","2"));
-		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","1"));	
 		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
-		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+		sense2.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));	
 		entry1.addSyntacticBehaviour(behaviour2,sense2);
                 entry1.addSyntacticBehaviour(behaviour5,sense2);
                 
@@ -111,8 +109,8 @@ public class test9 {
 		
 		behaviour3.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subjectH","object",null));
-		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObjectH","subject",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
+		behaviour3.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","subject",null));
 		
 		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
 		sense3.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
@@ -122,6 +120,8 @@ public class test9 {
                 entry2.addSyntacticBehaviour(behaviour3,sense3);
 		
                 lexicon.addEntry(entry2);
+                
+                System.out.println("#entries:"+lexicon.size());
                 
                 Model model = ModelFactory.createDefaultModel();
 		

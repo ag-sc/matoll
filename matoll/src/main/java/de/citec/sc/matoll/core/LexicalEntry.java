@@ -168,7 +168,7 @@ public class LexicalEntry {
                     return false;
                 }
                 //else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
-                else return this.getURI().equals(other.getURI());
+                else return this.getURI().equals(other.getURI())&&other.getLanguage().equals(this.getLanguage());
 //		if (this == obj)
 //			return true;
 //		if (obj == null)
