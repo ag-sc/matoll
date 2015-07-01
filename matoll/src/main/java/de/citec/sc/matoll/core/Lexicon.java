@@ -139,6 +139,15 @@ public class Lexicon {
 	{
 		return entries;
 	}
+        
+        public List<LexicalEntry> getEntries(Language language)
+	{
+		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
+                for(LexicalEntry entry : getEntries()){
+                    if(entry.getLanguage().equals(language)) entries.add(entry);
+                }
+                return entries;
+	}
 	
 	public List<LexicalEntry> getEntriesWithCanonicalForm(String canonicalForm)
 	{
