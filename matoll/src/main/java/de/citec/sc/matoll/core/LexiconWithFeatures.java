@@ -22,7 +22,7 @@ public class LexiconWithFeatures extends Lexicon{
 	
 	public void add(LexicalEntry entry, FeatureVector vec)
 	{
-		logger.debug("add entry "+entry.toString()+"\n");
+		//logger.debug("add entry "+entry.toString()+"\n");
 		FeatureVector vector = null;
 		FeatureVector updatedVector = null;
 		
@@ -35,10 +35,10 @@ public class LexiconWithFeatures extends Lexicon{
 			
 			map.put(entry, updatedVector);
 			
-			logger.debug("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
-			logger.debug("Updated "+vector+"\n");
-			logger.debug("to "+updatedVector+"\n");
-			logger.debug("Sentences: ");
+			//logger.debug("Entry with lemma "+entry.getCanonicalForm() +" is aleady there!\n");
+			//logger.debug("Updated "+vector+"\n");
+			//logger.debug("to "+updatedVector+"\n");
+			//logger.debug("Sentences: ");
 			
 		}
 		else

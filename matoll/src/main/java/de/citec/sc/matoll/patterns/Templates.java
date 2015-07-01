@@ -48,9 +48,9 @@ public class Templates {
                     		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();	
                                  
-                                 logger.debug("Noun: "+noun, "Templates.getNoun()");
-                                 logger.debug("e1_arg: "+e1_arg, "");
-                                 logger.debug("e2_arg: "+e2_arg, "");
+                                 //logger.debug("Noun: "+noun, "Templates.getNoun()");
+                                 //logger.debug("e1_arg: "+e1_arg, "");
+                                 //logger.debug("e2_arg: "+e2_arg, "");
                                  
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
@@ -78,7 +78,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
-	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
+	        				//logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -95,7 +95,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
-                                                logger.debug("Added Sentence:"+sentence, "");
+                                                //logger.debug("Added Sentence:"+sentence, "");
 	        			}
 	        			
                                         //debugger.printDependencys(model);
@@ -115,10 +115,10 @@ public class Templates {
                                                 if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                    //logger.debug("Dit not add entry, beause of label: "+noun);
                                                 }
 	        				
                                                 
@@ -142,16 +142,16 @@ public class Templates {
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                    //logger.debug("Dit not add entry, beause of label: "+noun);
                                                 }
                                                 
 	        				
 	        			}
 	        			else{
-	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				//logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 
 	        			}
 	        			 
@@ -193,10 +193,10 @@ public class Templates {
 	        		 
 	        		 prep = qs.get("?prep").toString();
                                  
-                                 logger.debug("Noun: "+noun, "Templates.getNounWithPrep()");
-                                 logger.debug("e1_arg: "+e1_arg, "");
-                                 logger.debug("e2_arg: "+e2_arg, "");
-	        		 logger.debug("prep: "+prep, "");
+                                 //logger.debug("Noun: "+noun, "Templates.getNounWithPrep()");
+                                 //logger.debug("e1_arg: "+e1_arg, "");
+                                 //logger.debug("e2_arg: "+e2_arg, "");
+	        		 //logger.debug("prep: "+prep, "");
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry(language);
@@ -222,7 +222,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
-	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
+	        				//logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -239,7 +239,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
-                                                logger.debug("Added Sentence:"+sentence, "");
+                                                //logger.debug("Added Sentence:"+sentence, "");
 	        			}
                                         
                                         //debugger.printDependencys(model);
@@ -259,10 +259,10 @@ public class Templates {
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                    //logger.debug("Dit not add entry, beause of label: "+noun);
                                                 }
                                                 
 	        				
@@ -283,16 +283,16 @@ public class Templates {
 	        				if(isAlpha(noun)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+noun);
+                                                    //logger.debug("Dit not add entry, beause of label: "+noun);
                                                 }
                                                 
 	        				
 	        			}
 	        			else{
-	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				//logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 
 	        			}
 	        			 
@@ -334,10 +334,10 @@ public class Templates {
 	        		 
 	        		 prep = qs.get("?prep").toString();
                                  
-                                 logger.debug("Adj: "+adj, "Templates.getAdjective()");
-                                 logger.debug("e1_arg: "+e1_arg, "");
-                                 logger.debug("e2_arg: "+e2_arg, "");
-	        		 logger.debug("prep: "+prep, "");
+                                 //logger.debug("Adj: "+adj, "Templates.getAdjective()");
+                                 //logger.debug("e1_arg: "+e1_arg, "");
+                                 //logger.debug("e2_arg: "+e2_arg, "");
+	        		 //logger.debug("prep: "+prep, "");
 	        		 
 	        		    // System.out.print("Found: "+noun+"\n");
 	        		 
@@ -367,8 +367,8 @@ public class Templates {
 //	        			if (Lemmatizer != null)
 //	        			{
 //	        				String term = Lemmatizer.getLemma(adj)+"@"+language.toString().toLowerCase();
-//	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
-//                                                logger.debug("Lemmatized cannonical form:"+term, "");
+//	        				//logger.debug("Lemmatized cannonical form:"+term+"/n");
+//                                                //logger.debug("Lemmatized cannonical form:"+term, "");
 //	        				entry.setCanonicalForm(term);
 //	        			}
 //	        			else
@@ -388,7 +388,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
-                                                logger.debug("Added Sentence:"+sentence, "");
+                                                //logger.debug("Added Sentence:"+sentence, "");
 	        			}
                                         
                                         //debugger.printDependencys(model);
@@ -408,10 +408,10 @@ public class Templates {
 	        				if(isAlpha(adj)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+adj);
+                                                    //logger.debug("Dit not add entry, beause of label: "+adj);
                                                 }
                                                 
 	        				
@@ -432,16 +432,16 @@ public class Templates {
 	        				if(isAlpha(adj)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+adj);
+                                                    //logger.debug("Dit not add entry, beause of label: "+adj);
                                                 }
                                                 
 	        				
 	        			}
 	        			else{
-	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				//logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 
 	        			}
 	        			 
@@ -481,9 +481,9 @@ public class Templates {
 	        		 e1_arg = qs.get("?e1_arg").toString();
 	        		 e2_arg = qs.get("?e2_arg").toString();
                                  
-                                 logger.debug("Verb: "+verb, "Templates.getTransitiveVerb()");
-                                 logger.debug("e1_arg: "+e1_arg, "");
-                                 logger.debug("e2_arg: "+e2_arg, "");
+                                 //logger.debug("Verb: "+verb, "Templates.getTransitiveVerb()");
+                                 //logger.debug("e1_arg: "+e1_arg, "");
+                                 //logger.debug("e2_arg: "+e2_arg, "");
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry(language);
 //                                        Calendar calendar = Calendar.getInstance();
@@ -509,7 +509,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
-	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
+	        				//logger.debug("Lemmatized cannonical form:"+term+"/n");
                                                 verb = term;
 	        				entry.setCanonicalForm(term);
 	        			}
@@ -525,7 +525,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
-                                                logger.debug("Added Sentence:"+sentence, "");
+                                                //logger.debug("Added Sentence:"+sentence, "");
 	        			}
 	        			
                                         //debugger.printDependencys(model);
@@ -545,10 +545,10 @@ public class Templates {
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                    //logger.debug("Dit not add entry, beause of label: "+verb);
                                                 }
                                                 
 	        				
@@ -569,16 +569,16 @@ public class Templates {
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                    //logger.debug("Dit not add entry, beause of label: "+verb);
                                                 }
                                                 
 	        				
 	        			}
 	        			else{
-	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				//logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 
 	        			}
 	        		 
@@ -623,11 +623,11 @@ public class Templates {
 	        		 e2_arg = qs.get("?e2_arg").toString();
 	        		 prep = qs.get("?prep").toString();
 	        		 dobj_form = qs.get("?dobj_form");
-                                 logger.debug("Verb: "+verb, "Templates.getIntransitiveVerb()");
-                                 logger.debug("e1_arg: "+e1_arg, "");
-                                 logger.debug("e2_arg: "+e2_arg, "");
-                                 logger.debug("Prep: "+prep, "");
-                                 logger.debug("dobj_form: "+dobj_form, "");
+                                 //logger.debug("Verb: "+verb, "Templates.getIntransitiveVerb()");
+                                 //logger.debug("e1_arg: "+e1_arg, "");
+                                 //logger.debug("e2_arg: "+e2_arg, "");
+                                 //logger.debug("Prep: "+prep, "");
+                                 //logger.debug("dobj_form: "+dobj_form, "");
 	        		 
 	        		 
 	        		 	LexicalEntry entry = new LexicalEntry(language);
@@ -654,7 +654,7 @@ public class Templates {
 	        			if (Lemmatizer != null)
 	        			{
 	        				String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
-	        				logger.debug("Lemmatized cannonical form:"+term+"/n");
+	        				//logger.debug("Lemmatized cannonical form:"+term+"/n");
 	        				entry.setCanonicalForm(term);
 	        			}
 	        			else
@@ -669,7 +669,7 @@ public class Templates {
 	        			for (String sentence: sentences)
 	        			{
 	        				entry.addSentence(sentence);
-                                                logger.debug("Added Sentence:"+sentence, "");
+                                                //logger.debug("Added Sentence:"+sentence, "");
 	        			}
                                         
                                         //debugger.printDependencys(model);
@@ -689,10 +689,10 @@ public class Templates {
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                    //logger.debug("Dit not add entry, beause of label: "+verb);
                                                 }
                                                 
 	        				
@@ -713,16 +713,16 @@ public class Templates {
 	        				if(isAlpha(verb)){
                                                     lexicon.add(entry, vector);
 	        				
-                                                    logger.debug("Found entry:"+entry+"\n");
+                                                    //logger.debug("Found entry:"+entry+"\n");
                                                 }
                                                 else{
-                                                    logger.debug("Dit not add entry, beause of label: "+verb);
+                                                    //logger.debug("Dit not add entry, beause of label: "+verb);
                                                 }
                                                 
 	        				
 	        			}	
 	        			else{
-	        				logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+	        				//logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
                                                 
 	        			}
 	        		 
