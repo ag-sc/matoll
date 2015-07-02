@@ -144,7 +144,12 @@ public class Lexicon {
 	{
 		List<LexicalEntry> entries_tmp = new ArrayList<LexicalEntry>();
                 for(LexicalEntry e : getEntries()){
-                    if(e.getLanguage().equals(language)) entries_tmp.add(e);
+                    try{
+                        if(e.getLanguage().equals(language)) entries_tmp.add(e);
+                    }
+                    catch(Exception exp){
+                        System.err.println("Entry: "+e.toString()+"does NOT contain any language");
+                    }
                 }
                 return entries_tmp;
 	}
