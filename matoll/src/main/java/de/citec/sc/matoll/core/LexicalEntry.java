@@ -83,6 +83,10 @@ public class LexicalEntry {
 		for(Sense sense :hashsetSenseBehaviour.keySet()) {
                     for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)) string += Behaviour.toString();
                     string += sense.toString();
+                    if(mappingReferenceProvenance.containsKey(sense)){
+                        Provenance provenance = mappingReferenceProvenance.get(sense);
+                        for(String pattern:provenance.getPatternset())string+="Pattern: "+pattern+"\n";
+                    }
                 }
 		
 		/*for (String synArg: argumentMap.keySet())
@@ -95,6 +99,8 @@ public class LexicalEntry {
 		{
 			string += "Sentence: "+sentence+"\n";
 		}
+                
+                
 		
 		
 		return string;
