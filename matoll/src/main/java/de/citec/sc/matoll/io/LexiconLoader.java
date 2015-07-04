@@ -65,7 +65,7 @@ public class LexiconLoader {
                          /*
                          loaded_entry is one single entry.
                          */
-			 System.out.println("Processing entry "+loaded_entry.toString());
+			 //System.out.println("Processing entry "+loaded_entry.toString());
                          
                          Language language = getLanguage(loaded_entry,model);
                          
@@ -446,7 +446,7 @@ public class LexiconLoader {
                 String value    = getPropertyObject(reference,OWL.hasValue);
 
                 if (property != null && value != null) {
-                    sense.setReference(new Restriction(reference.toString(),property,value));
+                    sense.setReference(new Restriction(reference.toString(),value,property));
                 }
                 else {
                     sense.setReference(new SimpleReference(reference.toString()));
