@@ -60,9 +60,17 @@ public class ExtractData {
 	
 	public List<AdjectiveObject> start(String path_to_resourceFolder, String uri,MaxentTagger tagger,Morphology mp) throws Exception{
 		
-		List<List<String>> results = getRawObjects(path_to_resourceFolder,uri,"en");
+           
+		
 		List<AdjectiveObject> list_adjectiveobject = new ArrayList<AdjectiveObject>();
-		if(results.size()==0){
+                 /*
+                ignore URI:http://dbpedia.org/ontology/abstract
+                */
+                if(uri.equals("http://dbpedia.org/ontology/abstract")
+                        || uri.equals("http://dbpedia.org/ontology/slogan")
+                        || uri.equals("http://dbpedia.org/ontology/identificationSymbol")) return list_adjectiveobject;
+                List<List<String>> results = getRawObjects(path_to_resourceFolder,uri,"en");
+		if(results.isEmpty()){
 			System.out.println("No properties for "+uri);
 			return list_adjectiveobject;
 		}
