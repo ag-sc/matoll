@@ -31,9 +31,9 @@ public class test6 {
 		
 		Lexicon lexicon = new Lexicon();
 		
-		LexicalEntry entry;
+		LexicalEntry entry = new LexicalEntry(Language.EN);
 		
-		entry = lexicon.createNewEntry("female",Language.EN);
+		//entry = lexicon.createNewEntry("female",Language.EN);
 		
 		entry.setCanonicalForm("female");
 		
