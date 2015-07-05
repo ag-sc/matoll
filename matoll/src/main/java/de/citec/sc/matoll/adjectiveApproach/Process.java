@@ -17,10 +17,12 @@ import org.apache.jena.riot.RDFFormat;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
@@ -87,7 +89,7 @@ public class Process {
 		/*
 		 * Lexicon
 		 */
-		Lexicon lexicon = new Lexicon("http://dblexipedia.org/lexicon/");
+		LexiconWithFeatures lexicon = new LexiconWithFeatures();
 		
 		
 		/*
@@ -136,6 +138,8 @@ public class Process {
 		int uri_counter = 0;
 		int uri_used = 0;
 		HashSet<String> properties = importer.getProperties();
+//                properties.clear();
+//                properties.add("http://dbpedia.org/ontology/religion");
 		for(String uri:properties){
 			uri_counter+=1;
 			System.out.println("URI:"+uri);
@@ -174,9 +178,7 @@ public class Process {
 								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
 								 System.out.println();*/
                                                                  try{
-                                                                     LexicalEntry entry = createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
-                                                                     //System.out.println(entry);
-                                                                    lexicon.addEntry(entry);
+                                                                     createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
                                                                     csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                                                  }
                                                                  catch(Exception e){
@@ -235,19 +237,19 @@ public class Process {
 		
 	}
 
-	private static LexicalEntry createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
-                LexicalEntry entry;
-		
-                //System.out.println("Create Entry with: "+adjective);
-		entry = lexicon.createNewEntry(adjective,Language.EN);
-		
-		entry.setCanonicalForm(adjective);
+	private static void createLexicalEntry(LexiconWithFeatures lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
+                LexicalEntry entry = new LexicalEntry(Language.EN);
+		entry.setCanonicalForm(adjective+"@en");
+                
 		
 		Sense sense = new Sense();
                 Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(object_uri),object_uri,uri);
-		sense.setReference(ref);
+		//Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass_"+frag(uri)+"_"+frag(adjective),object_uri,uri);
+                //Reference ref = new Restriction(lexicon.getBaseURI()+"RestrictionClass",object_uri,uri);
+
+                sense.setReference(ref);
                 
-                entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_AdjectiveRestriction");
+                entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective.replace(" ","_")+"_as_AdjectiveRestriction");
 				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
 		
@@ -263,21 +265,21 @@ public class Process {
 		
 		
 				
-		behaviour = new SyntacticBehaviour();
+		SyntacticBehaviour behaviour2 = new SyntacticBehaviour();
 		
-		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
+		behaviour2.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","1",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","1",null));
 		
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
 		
-		entry.addSyntacticBehaviour(behaviour,sense);
+		entry.addSyntacticBehaviour(behaviour2,sense);
                 
                 //entry.addSense(sense);
                 
                 Provenance provenance = new Provenance();
 		
-		provenance.setAgent("Distribution");
+		//provenance.setAgent("Distribution");
 		provenance.setConfidence(distribution);
 		
 		//provenance.setAgent("Frequency");
@@ -287,10 +289,11 @@ public class Process {
 		
 		
 		//entry.addProvenance(provenance);
+		FeatureVector vector = new FeatureVector();
 		
-		lexicon.addEntry(entry);
-		
-		return entry;
+		vector.add("freq",1.0);
+		vector.add("adjective",1.0);
+		lexicon.add(entry,vector);
 	}
 
 	private static void writeSingleArffFile(String path, String arff_prefix,
@@ -406,6 +409,15 @@ public class Process {
         
         private static String frag(String uri) {
             
+            uri = uri.replace("=","");
+            uri = uri.replace("!","");
+            uri = uri.replace("?","");
+            uri = uri.replace("*","");
+            uri = uri.replace(",","");
+            uri = uri.replace("(","");
+            uri = uri.replace(")","");
+            uri = uri.replace(">","");
+            uri = uri.replace("<","");
             String  pattern =  ".+(/|#)(\\w+)";
             Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
         
