@@ -73,9 +73,10 @@ public class Lexicon {
 		                        
                         
 			List<String> sentences = new ArrayList<String>();
-
-			sentences.addAll(entry.getSentences());
-			sentences.addAll(containedEntry.getSentences());
+                        sentences.addAll(entry.getSentences());
+                        sentences.addAll(containedEntry.getSentences());
+                        
+			
 			
 			containedEntry.setSentences(sentences);
                         
@@ -156,7 +157,8 @@ public class Lexicon {
 	
 	public List<LexicalEntry> getEntriesWithCanonicalForm(String canonicalForm)
 	{
-		return map.get(canonicalForm);
+                return map.get(canonicalForm);
+
 	}
 	
 	public int size() {
@@ -182,7 +184,7 @@ public class Lexicon {
 		return "";
 	}
 
-	public LexicalEntry createNewEntry(String canonicalForm, Language language) {
+	private LexicalEntry createNewEntry(String canonicalForm, Language language) {
 		
 		LexicalEntry entry = new LexicalEntry(language);
 		
