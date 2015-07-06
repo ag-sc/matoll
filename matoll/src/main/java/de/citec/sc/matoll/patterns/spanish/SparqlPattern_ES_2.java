@@ -18,6 +18,26 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_2.class.getName());
 	
 	
+//	ID:1e7
+//	property subject: Olibrio
+//	property object: Placidia
+//	sentence:: 
+//	1	Placidia	placidia	n	NP00000	_	2	SUBJ
+//	2	fue	ser	v	VSIS3S0	_	0	ROOT
+//	3	una	uno	d	DI0FS0	_	4	SPEC
+//	4	consorte	consorte	n	NCCS000	_	2	ATR
+//	5	,	,	f	Fc	_	4	punct
+//	6	esposa	esposo	n	NCFS000	_	2	ATR
+//	7	de	de	s	SPS00	_	6	COMP
+//	8	el	el	d	DA0MS0	_	9	SPEC
+//	9	de	de	s	SPS00	_	7	COMP
+//	10	Occidente	occidente	n	NP00000	_	9	COMP
+//	11	,	,	f	Fc	_	10	punct
+//	12	Olibrio	olibrio	n	NP00000	_	10	MOD
+//	13	.	.	f	Fp	_	12	punct
+
+
+	
 	/*
 	1	T'Pel	t'pel	n	NCMS000	_	2	SUBJ	_	_
 	2	es	ser	v	VSIP3S0	_	0	ROOT	_	_
@@ -36,6 +56,7 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 					+ "?noun <conll:cpostag> \"n\" . "
 					+ "?noun <conll:deprel> \"ATR\" ."
 					
+					// can be also COMP
 					+ "?prep <conll:deprel> \"MOD\" . "
 					+ "?prep <conll:postag> ?prep_pos ."
 					+ "FILTER regex(?prep_pos, \"SPS\") ."
@@ -43,18 +64,16 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 					+ "?prep <conll:lemma> ?prep . "
 					
 					+ "?copula <conll:postag> ?pos . "
-					+ "FILTER regex(?pos, \"VSIP\") ."
+					// can be VSII1S0 or "v"
+					+ "FILTER regex(?pos, \"VSI\") ."
 					+ "?copula <conll:lemma> \"ser\" ."
 					
 					+ "?subj <conll:head> ?copula . "
-					+ "?subj <conll:deprel> ?dep . "
-					+ "FILTER regex(?dep, \"SUBJ\") ."
-					
+					+ "?subj <conll:deprel> \"SUBJ\" . "
 					
 					+ "?pobj <conll:head> ?prep . "
-					+ "?pobj <conll:postag> \"NP00000\" . "
-					+ "?pobj <conll:deprel> ?e2_grammar . "
-					+ "FILTER regex(?e2_grammar, \"COMP\") ."
+					+ "?pobj <conll:postag> \"n\" . "
+					+ "?pobj <conll:deprel> \"COMP\" . "
 					
 					+ "?subj <own:senseArg> ?e1_arg. "
 					+ "?pobj <own:senseArg> ?e2_arg. "

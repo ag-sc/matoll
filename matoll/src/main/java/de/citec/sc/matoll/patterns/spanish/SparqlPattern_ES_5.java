@@ -83,13 +83,28 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 	4	esposa	esposo	n	NCFS000	_	2	_
 	5	de	de	s	SPS00	_	4	COMP
 	6	Boabdil	boabdil	n	NP00000	_	5	COMP
+	
+	// spouse	
+//	ID:3b
+//	property subject: Claudio
+//	property object: Mesalina
+//	sentence:: 
+//	1	a	a	s	SPS00	_	0	ROOT
+//	2	Mesalina	mesalina	n	NP00000	_	1	COMP
+//	3	,	,	f	Fc	_	2	punct
+//	4	esposa	esposo	n	NCFS000	_	2	_
+//	5	de	de	s	SPS00	_	4	COMP
+//	6	Claudio	claudio	n	NP00000	_	5	COMP
+//	7	,	,	f	Fc	_	6	punct
+//	8	emperador	emperador	n	NCMS000	_	6	MOD
+//	9	romano	romano	a	AQ0MS0	_	8	MOD
+//	10	)	)	f	Fpt	_	9	punct
+//	11	.	
 
 	äquivalent zu englisch query 2
 	 */
 			String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 					
-			+ "?e1 <conll:head> ?e1."
-			
 			+ "?comma <conll:lemma> \",\". "
 			+ "?comma <conll:deprel> \"punct\". "
 			+ "?comma <conll:head> ?e1 ."		
@@ -100,6 +115,7 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 			+ "?noun <conll:head> ?e1 ."
 			
 			+ "?p <conll:head> ?noun ."
+			+ "?p <conll:deprel> \"COMP\" ."
 			+ "?p <conll:postag> ?prep_pos ."
 			+ "FILTER regex(?prep_pos, \"SPS\") ."
 			+ "?p <conll:lemma> ?prep ."

@@ -17,6 +17,38 @@ public class SparqlPattern_ES_9 extends SparqlPattern{
 
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_9.class.getName());
 	
+//	deathplace
+//	ID:f
+//	property subject: Lehri
+//	property object: Karachi
+//	sentence:: 
+//	1	Lehri	lehri	n	NP00000	_	2	SUBJ
+//	2	murió	morir	v	VMIS3S0	_	0	ROOT
+//	3	el	el	d	DA0MS0	_	4	SPEC
+//	4	13_de_septiembre_de_2012_a_las_9	[??:13/9/2012:9.00:??]	w	W	_	2	MOD
+//	5	am	ametro	n	NCMN000	_	4	COMP
+//	6	en	en	s	SPS00	_	2	MOD
+//	7	Karachi	karachi	n	NP00000	_	6	COMP
+//	8	.	.	f	Fp	_	7	punct
+
+//	ID:11
+//	property subject: K. C. Dey
+//	property object: Calcuta
+//	sentence:: 
+//	1	Dey	dey	n	NP00000	_	2	SUBJ
+//	2	falleció	fallecer	v	VMIS3S0	_	0	ROOT
+//	3	cuando	cuando	c	CS	_	2	MOD
+//	4	el	el	d	DA0MS0	_	5	SPEC
+//	5	obtenía	obtener	v	VMII3S0	_	3	COMP
+//	6	una	uno	d	DI0FS0	_	7	SPEC
+//	7	licenciatura	licenciatura	n	NCFS000	_	0	ROOT
+//	8	en	en	s	SPS00	_	7	MOD
+//	9	Calcuta	calcuta	n	NP00000	_	8	COMP
+//	10	en	en	s	SPS00	_	7	MOD
+//	11	1962	1962	z	Z	_	10	COMP
+//	12	.	.	f	Fp	_	11	punct
+
+
 	
 	/*
 	 * sentence:Actualmente Glebova vive en Tailandia y está casada con Paradorn Srichaphan . 
@@ -47,7 +79,7 @@ Neuer parse:
 	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?verb <conll:postag> ?verb_pos . "
-			+ "FILTER regex(?lemma_pos, \"VMIP\") ."
+			+ "FILTER regex(?lemma_pos, \"VMI\") ."
 			+ "?verb <conll:lemma> ?lemma . "
 			
 			+ "?e1 <conll:head> ?verb . "
@@ -58,8 +90,10 @@ Neuer parse:
 			+ "?p <conll:postag> ?prep_pos . "
 			+ "FILTER regex(?prep_pos, \"SPS\") ."
 			+ "?p <conll:lemma> ?prep . "
-			+ "?p <conll:deprel> \"OBLC\" . "
-			
+			// can be OBLC as well
+			+ "?p <conll:deprel> \"MOD\" ."
+		
+	
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel> \"COMP\" . "
 			

@@ -38,7 +38,6 @@ x verb y - ohne preposition
 			+ "?verb <conll:postag> ?pos . "
 			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
 			+ "FILTER regex(?pos, \"VMIP\") ."
-			+ "?verb <conll:deprel> \"ROOT\" ."
 			+ "?verb <conll:lemma> ?lemma . "
 			+ "?subj <conll:head> ?verb . "
 			+ "?subj <conll:deprel> \"SUBJ\". "

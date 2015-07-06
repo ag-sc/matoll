@@ -34,8 +34,12 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 			+ "?e1 <conll:deprel> \"SUBJ\"."
 			
 			+ "?estar <conll:lemma> \"estar\" ."
-			
-			+ "?partciciple <conll:lemma> ?lemma ."
+			+ "?estar <conll:cpostag> ?pos ."
+			+ "FILTER regex(?pos, \"VAIS\") ."
+
+			+ "?participle <conll:lemma> ?lemma ."
+			+ "?participle <conll:head> ?estar ."
+			+ "?participle <conll:deprel> \"ATR\". "
 			
 			+ "?p <conll:lemma> ?prep ."
 			+ "?p <conll:head> ?participle ."

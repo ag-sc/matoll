@@ -20,6 +20,8 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
 	
 	// should be subsumed by 3 or 4 or 6...
 	
+	// fue + es
+	
 	/*
 	 * PropSubj:Theo de Raadt
 PropObj:Calgary
@@ -38,6 +40,8 @@ sentence:El proyecto está liderado por Theo de Raadt , residente en Calgary .
 12	Calgary	_	n	NP00000	_	11	COMP
 13	.	_	f	Fp	_	12	punct
 residente en 
+
+está casado con / estuvo casado / ha actuado en...
 
 New Parse:
 1	El	el	d	DA0MS0	_	2	SPEC	_	_
