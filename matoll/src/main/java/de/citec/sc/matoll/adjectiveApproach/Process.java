@@ -287,13 +287,15 @@ public class Process {
 		
 		entry.addProvenance(provenance,sense);
 		
+		if(distribution>=0.5&&!object_uri.contains("%")){
+                    //entry.addProvenance(provenance);
+                    FeatureVector vector = new FeatureVector();
+
+                    vector.add("freq",1.0);
+                    vector.add("adjective",1.0);
+                    lexicon.add(entry,vector);
+                }
 		
-		//entry.addProvenance(provenance);
-		FeatureVector vector = new FeatureVector();
-		
-		vector.add("freq",1.0);
-		vector.add("adjective",1.0);
-		lexicon.add(entry,vector);
 	}
 
 	private static void writeSingleArffFile(String path, String arff_prefix,
@@ -418,6 +420,7 @@ public class Process {
             uri = uri.replace(")","");
             uri = uri.replace(">","");
             uri = uri.replace("<","");
+            uri = uri.replace("|"," ");
             String  pattern =  ".+(/|#)(\\w+)";
             Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
         
