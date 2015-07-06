@@ -25,6 +25,7 @@ import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 import java.util.HashSet;
+import org.apache.commons.lang3.StringUtils;
 
 public class LexiconSerialization {
     Dbnary dbnary_EN = null;
@@ -122,8 +123,8 @@ public class LexiconSerialization {
 //                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
                                             
                                             String insert_value = entry.getURI()+"#"+Long.toString(timestamp)+synarc.getValue();
-                                            if(synarc.getValue().length()>8 && synarc.getValue().substring(0, 8).matches("\\d")){
-                                                insert_value = entry.getURI()+"#"+synarc.getValue();
+                                            if(synarc.getValue().length()>13 && StringUtils.isNumeric(synarc.getValue().substring(0, 13))){
+                                                insert_value = entry.getURI()+"#"+synarc.getValue().substring(13);
                                             }
                                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
@@ -157,8 +158,8 @@ public class LexiconSerialization {
                                         long timestamp = System.currentTimeMillis();
                                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
                                             String insert_value = entry.getURI()+"#"+Long.toString(timestamp)+synarc.getValue();
-                                            if(synarc.getValue().length()>8 && synarc.getValue().substring(0, 8).matches("\\d")){
-                                                insert_value = entry.getURI()+"#"+synarc.getValue();
+                                            if(synarc.getValue().length()>13 && StringUtils.isNumeric(synarc.getValue().substring(0, 13))){
+                                                insert_value = entry.getURI()+"#"+synarc.getValue().substring(13);
                                             }
                                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
