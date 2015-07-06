@@ -6,6 +6,7 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
+import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
@@ -34,16 +35,16 @@ public class Auswertung {
 		LexiconLoader loader = new LexiconLoader();
 		
                 String path = "/Users/swalter/Documents/results_matoll_july_2015/";
-//                Lexicon set1 = loader.loadFromFile(path+"set1.ttl");
-//                Lexicon set2 = loader.loadFromFile(path+"set2.ttl");
-//                Lexicon set3 = loader.loadFromFile(path+"set3.ttl");
-//                Lexicon set4 = loader.loadFromFile(path+"set4.ttl");
-//                Lexicon es_partial = loader.loadFromFile(path+"es_partial.ttl");
-//                Lexicon de_full = loader.loadFromFile(path+"de_full.ttl");
+                Lexicon set1 = loader.loadFromFile(path+"set1.ttl");
+                Lexicon set2 = loader.loadFromFile(path+"set2.ttl");
+                Lexicon set3 = loader.loadFromFile(path+"set3.ttl");
+                Lexicon set4 = loader.loadFromFile(path+"set4.ttl");
+                Lexicon es_partial = loader.loadFromFile(path+"es_partial.ttl");
+                Lexicon de_full = loader.loadFromFile(path+"de_full.ttl");
                 Lexicon adjectives = loader.loadFromFile("/Users/swalter/Desktop/adjectives.ttl");
-                
+//                
                 System.out.println("Loaded all");
-                System.out.println("#adjectives:"+Integer.toString(adjectives.size()));
+//                System.out.println("#adjectives:"+Integer.toString(adjectives.size()));
 //                System.out.println("#entries Corpus:"+Integer.toString(set1.size()+set2.size()+set3.size()+set4.size()));
 //                System.out.println("#entries  spanish Corpus:"+Integer.toString(es_partial.size()));
 //                System.out.println("#entries  german Corpus:"+Integer.toString(de_full.size()));
@@ -51,14 +52,27 @@ public class Auswertung {
                 HashSet<String> properties_en = new HashSet<String>();
                 HashSet<String> properties_es = new HashSet<String>();
                 HashSet<String> properties_de = new HashSet<String>();
-//                for(LexicalEntry entry : set1.getEntries()) lexicon.addEntry(entry);
-//                for(LexicalEntry entry : set2.getEntries()) lexicon.addEntry(entry);
-//                for(LexicalEntry entry : set3.getEntries()) lexicon.addEntry(entry);
-//                for(LexicalEntry entry : set4.getEntries()) lexicon.addEntry(entry);
-//                for(LexicalEntry entry : es_partial.getEntries()) lexicon.addEntry(entry);
-//                for(LexicalEntry entry : de_full.getEntries()) lexicon.addEntry(entry);
+                HashSet<String> properties_adjective = new HashSet<String>();
+//                for(LexicalEntry entry : en.getEntries()) lexicon.addEntry(entry);
+                for(LexicalEntry entry : set1.getEntries()) lexicon.addEntry(entry);
+                for(LexicalEntry entry : set2.getEntries()) lexicon.addEntry(entry);
+                for(LexicalEntry entry : set3.getEntries()) lexicon.addEntry(entry);
+                for(LexicalEntry entry : set4.getEntries()) lexicon.addEntry(entry);
+                System.out.println("Added english entries");
+                System.out.println("#entries corpus en:"+lexicon.size());
+                System.out.println("#entries adjectives en:"+adjectives.size());
+                System.out.println("#entries  spanish Corpus:"+Integer.toString(es_partial.size()));
+                System.out.println("#entries  german Corpus:"+Integer.toString(de_full.size()));
+                for(LexicalEntry entry : es_partial.getEntries()) lexicon.addEntry(entry);
+                for(LexicalEntry entry : de_full.getEntries()) lexicon.addEntry(entry);
                 for(LexicalEntry entry : adjectives.getEntries()) lexicon.addEntry(entry);
-                
+//                for(LexicalEntry entry : adjectives.getEntries()){
+//                    for(Sense sense : entry.getSenseBehaviours().keySet()){
+//                        if (entry.getProvenance(sense).getConfidence()>0.8) lexicon.addEntry(entry);
+//                    }
+//                    
+//                }
+//                
                 
                 for(LexicalEntry entry : lexicon.getEntries()){
                     Set<Reference> references = entry.getReferences();
@@ -77,7 +91,10 @@ public class Auswertung {
 //                            System.out.println("on Value:"+reference.getValue());
 //                            System.out.println("Get property:"+reference.getProperty());
 //                            System.out.println();
-                            if(entry.getLanguage().equals(Language.EN))properties_en.add(reference.getProperty());
+                            if(entry.getLanguage().equals(Language.EN)){
+                                properties_en.add(reference.getProperty());
+                                properties_adjective.add(reference.getProperty());
+                            }
                             if(entry.getLanguage().equals(Language.ES))properties_es.add(reference.getProperty());
                             if(entry.getLanguage().equals(Language.DE))properties_de.add(reference.getProperty());
                         }
@@ -87,18 +104,19 @@ public class Auswertung {
                 
                 System.out.println("#entries:"+lexicon.size());
                 
-//                Model model = ModelFactory.createDefaultModel();
-//		
-//		LexiconSerialization serializer = new LexiconSerialization(Language.EN);
-//		
-//		serializer.serialize(lexicon, model);
-//		
-//		FileOutputStream out = new FileOutputStream(new File("full_dbpedia.ttl"));
-//		
-//		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+                Model model = ModelFactory.createDefaultModel();
+		
+		LexiconSerialization serializer = new LexiconSerialization(Language.EN);
+		
+		serializer.serialize(lexicon, model);
+		
+		FileOutputStream out = new FileOutputStream(new File("full_dbpedia.ttl"));
+		
+		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
                 
                 System.out.println("new lexicon is written");
                 System.out.println("#properties en:"+properties_en.size());
+                System.out.println("#properties_adjective:"+properties_adjective.size());
                 System.out.println("#properties es:"+properties_es.size());
                 System.out.println("#properties de:"+properties_de.size());
                 
