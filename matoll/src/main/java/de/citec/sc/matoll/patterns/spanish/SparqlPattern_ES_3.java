@@ -33,15 +33,17 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
 	
-	// same as query 2 but with adjective modifier
+	// TODO: concatenate ?lemma and ?noun as lemma of the lexical entry, literally, no lemmatization
+	// further checks need to be done here actually, but using the adjective as before was clearly wrong
+	// ideally we would check that the adjective actually directly follows the noun
 	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			+ "?y <conll:lemma> ?lemma . "
-			+ "?y <conll:head> ?blank . "
-			+ "?y <conll:deprel> \"MOD\" . "
-			+ "?y <conll:postag> \"AQ0FS0\". "
-			+ "?blank <conll:head> ?verb. "
-			+ "?blank <conll:deprel> \"ATR\". "
+			+ "?adjective <conll:lemma> ?lemma . "
+			+ "?adjective <conll:head> ?blank . "
+			+ "?adjective <conll:deprel> \"MOD\" . "
+			+ "?adjective <conll:postag> \"AQ0FS0\". "
+			+ "?noun <conll:head> ?noun. "
+			+ "?noun <conll:deprel> \"ATR\". "
 			+ "?verb <conll:postag> ?verb_pos . "
 			+ "FILTER regex(?verb_pos, \"VS\") ."
 			+ "?e1 <conll:head> ?verb . "

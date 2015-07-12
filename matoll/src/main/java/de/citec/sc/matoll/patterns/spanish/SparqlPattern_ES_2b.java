@@ -13,27 +13,20 @@ import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_2 extends SparqlPattern{
+public class SparqlPattern_ES_2b extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_2.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_2b.class.getName());
 	
 	
-
+	
 	/*
-1	La	el	d	DA0FS0	_	2	SPEC
-2	perla	perla	n	NCFS000	_	3	SUBJ
-3	es	ser	v	VSIP3S0	_	0	ROOT
-4	una	uno	d	DI0FS0	_	5	SPEC
-5	película	película	n	NCFS000	_	3	ATR
-6	mexicana	mexicano	a	AQ0FS0	_	5	MOD
-7	filmada	filmar	v	VMP00SF	_	5	MOD
-8	en	en	s	SPS00	_	7	MOD
-9	y	y	c	CC	_	8	COORD
-10	dirigida	dirigir	v	VMP00SF	_	9	CONJ
-11	por	por	s	SPS00	_	10	BYAG
-12	Emilio	emilio	n	NP00000	_	11	COMP
-
-    TODO: "COMP" in ?prep can also be "MOD"
+	1	T'Pel	t'pel	n	NCMS000	_	2	SUBJ	_	_
+	2	es	ser	v	VSIP3S0	_	0	ROOT	_	_
+	3	la	el	d	DA0FS0	_	4	SPEC	_	_
+	4	esposa	esposo	n	NCFS000	_	2	ATR	_	_
+	5	de	de	s	SPS00	_	4	MOD	_	_
+	6	Tuvok	tuvok	n	NP00000	_	5	COMP	_	_
+	7	.	.	f	Fp	_	6	punct	_	_
 
 	 */
 			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
@@ -48,16 +41,11 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 					+ "?noun <conll:cpostag> \"n\" . "
 					+ "?noun <conll:deprel> \"ATR\" ."
 					
-					+ "?participle <conll:lemma> ?lemma . "
-					+ "?participle <conll:head> ?noun . "
-					+ "?participle <conll:postag> ?participle_pos . "
-					+ "FILTER regex(?participle_pos, \"VMP\") ."
-					+ "?participle <conll:deprel> \"MOD\" ."
-					
-					
+					// can be also COMP
+					+ "?p <conll:deprel> \"COMP\" . "
 					+ "?p <conll:postag> ?prep_pos ."
 					+ "FILTER regex(?prep_pos, \"SPS\") ."
-					+ "?p <conll:head> ?participle . "
+					+ "?p <conll:head> ?noun . "
 					+ "?p <conll:lemma> ?prep . "
 					
 					+ "?subj <conll:head> ?copula . "
@@ -72,7 +60,7 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_2";
+		return "SPARQLPattern_ES_2b";
 	}
 
 	@Override

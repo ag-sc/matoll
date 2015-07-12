@@ -18,6 +18,8 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_5.class.getName());
 	
 	
+	// Pattern 5 seems to work
+	
 	/*
 	PropSubj:Rita Wilson
 	PropObj:Tom Hanks

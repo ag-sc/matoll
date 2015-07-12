@@ -17,6 +17,8 @@ public class SparqlPattern_ES_9 extends SparqlPattern{
 
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_9.class.getName());
 	
+	// Pattern 9 seems to work
+	
 //	deathplace
 //	ID:f
 //	property subject: Lehri
@@ -75,16 +77,17 @@ Neuer parse:
 
 	 */
 	
-	// eigentlich estar casado con....
+	// intransitive + pp
+	// Constraint: no direct object
 	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+			
 			+ "?verb <conll:postag> ?verb_pos . "
-			+ "FILTER regex(?lemma_pos, \"VMI\") ."
+			+ "FILTER regex(?verb_pos, \"VMI\") ."
 			+ "?verb <conll:lemma> ?lemma . "
 			
 			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:deprel> ?e1_deprel. "
-			+ "FILTER regex(?e1_deprel, \"SUBJ\") ."
+			+ "?e1 <conll:deprel> \"SUBJ\". "
 			
 			+ "?p <conll:head> ?verb . "
 			+ "?p <conll:postag> ?prep_pos . "
@@ -93,7 +96,7 @@ Neuer parse:
 			// can be OBLC as well
 			+ "?p <conll:deprel> \"MOD\" ."
 		
-	
+
 			+ "?e2 <conll:head> ?p . "
 			+ "?e2 <conll:deprel> \"COMP\" . "
 			

@@ -32,17 +32,27 @@ public class SparqlPattern_ES_1 extends SparqlPattern{
 11	cartaginés	cartaginés	a	AQ0MS0	_	10	MOD	_	_
 12	.	.	f	Fp	_	11	punct	_	_
 
+1	Pese_a	pese_a	s	SPS00	_	4	MOD
+2	que	que	p	PR0CN000	_	1	COMP
+3	Buckethead	buckethead	n	NP00000	_	4	SUBJ
+4	escribió	escribir	v	VMIS3S0	_	0	ROOT
+5	"	"	f	Fe	_	4	punct
+6	Jordan	jordan	n	NP00000	_	12	SUBJ
+7	"	"	f	Fe	_	6	punct
+
+
 x verb y - ohne preposition
 	 */
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
 			+ "?verb <conll:postag> ?pos . "
 			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
-			+ "FILTER regex(?pos, \"VMIP\") ."
+			+ "FILTER regex(?pos, \"VMI\") ."
 			+ "?verb <conll:lemma> ?lemma . "
 			+ "?subj <conll:head> ?verb . "
 			+ "?subj <conll:deprel> \"SUBJ\". "
 			+ "?dobj <conll:head> ?verb . "
 			+ "?dobj <conll:deprel> \"DO\" . "
+			
 			+ "?subj <own:senseArg> ?e1_arg. "
 			+ "?dobj <own:senseArg> ?e2_arg. "
 			+ "}";

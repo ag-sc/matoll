@@ -36,14 +36,15 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 //	11	.	.	f	Fp	_	10	punct
 
  
+	// reflexive verb: se casó con
+	// Template needs to be changed!!!
     
-   
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?verb <conll:cpostag> ?verb_pos ."
 			+ "?verb <conll:lemma> ?lemma ."
-			+ "FILTER regex(?deprel, \"VMIS\") ."
+			+ "FILTER regex(?verb_pos, \"VMIS\") ."
 			
-			// can be also MPAS
+			// "DO" can also be "MPAS"
 			+ "?se <conll:lemma> \"se\" ."
 			+ "?se <conll:deprel> \"DO\" ."
 			+ "?se <conll:head> ?verb ."
@@ -78,9 +79,9 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+		Templates.getIntransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
 		
-		
+	
 	}
 
 }

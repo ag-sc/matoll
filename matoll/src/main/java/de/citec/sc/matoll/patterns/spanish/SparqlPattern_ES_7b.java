@@ -18,103 +18,67 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_7b.class.getName());
 	
 	// X y Y se casaron
+	// template needs to be changed!
         
-        /*
-        Siehe Email Christina
-        */
-        
+//	ID:11
+//	property subject: Constantino VI
+//	property object: Teodote
+//	sentence:: 
+//	1	En	en	s	SPS00	_	8	MOD
+//	2	septiembre_de_795	[??:??/9/795:??.??:??]	w	W	_	1	COMP
+//	3	,	,	f	Fc	_	2	punct
+//	4	Constantino	constantino	n	NP00000	_	8	SUBJ
+//	5	y	y	c	CC	_	4	COORD
+//	6	Teodote	teodote	n	NP00000	_	5	CONJ
+//	7	se	se	p	P00CN000	_	8	DO
+//	8	casaron	casar	v	VMIS3P0	_	0	ROOT
+//	9	.	.	f	Fp	_	8	punct
+//        
 	
-//	<class:class125>  <conll:language>  "es" ;
-//    <conll:reference>  "http://dbpedia.org/ontology/spouse" ;
-//    <conll:sentence>   "Poco después Claudio y Agripinila se casaron y éste adoptó a el hijo de Agripinila , Nerón , como su heredero por encima_de Británico ." ;
-//    <own:obj>          "claudio" ;
-//    <own:subj>         "agripinila" .
-//    
-//        <token:token125_1>  <conll:cpostag>  "r" ;
-//        <conll:deprel>      "SPEC" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "poco" ;
-//        <conll:head>        <token:token125_2> ;
-//        <conll:lemma>       "poco" ;
-//        <conll:postag>      "RG" ;
-//        <conll:wordnumber>  "1" ;
-//        <own:partOf>        <class:class125> .
-//        
-//        <token:token125_2>  <conll:cpostag>  "r" ;
-//        <conll:deprel>      "MOD" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "después" ;
-//        <conll:head>        <token:token125_7> ;
-//        <conll:lemma>       "después" ;
-//        <conll:postag>      "RG" ;
-//        <conll:wordnumber>  "2" ;
-//        <own:partOf>        <class:class125> .
-//        
-//
-//        
-//        <token:token125_3>  <conll:cpostag>  "n" ;
-//        <conll:deprel>      "SUBJ" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "claudio" ;
-//        <conll:head>        <token:token125_7> ;
-//        <conll:lemma>       "claudio" ;
-//        <conll:postag>      "NP00000" ;
-//        <conll:wordnumber>  "3" ;
-//        <own:partOf>        <class:class125> .
-//        
-//        
-//        <token:token125_4>  <conll:cpostag>  "c" ;
-//        <conll:deprel>      "COORD" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "y" ;
-//        <conll:head>        <token:token125_3> ;
-//        <conll:lemma>       "y" ;
-//        <conll:postag>      "CC" ;
-//        <conll:wordnumber>  "4" ;
-//        <own:partOf>        <class:class125> .
-//        
-//        <token:token125_5>  <conll:cpostag>  "n" ;
-//        <conll:deprel>      "CONJ" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "agripinila" ;
-//        <conll:head>        <token:token125_4> ;
-//        <conll:lemma>       "agripinila" ;
-//        <conll:postag>      "NP00000" ;
-//        <conll:wordnumber>  "5" ;
-//        <own:partOf>        <class:class125> .
-//        
-
-//        <token:token125_6>  <conll:cpostag>  "p" ;
-//        <conll:deprel>      "DO" ;
-//        <conll:feats>       "_" ;
-//        <conll:form>        "se" ;
-//        <conll:head>        <token:token125_7> ;
-//        <conll:lemma>       "se" ;
-//        <conll:postag>      "P00CN000" ;
-//        <conll:wordnumber>  "6" ;
-//        <own:partOf>        <class:class125> .
-        
-//	   <token:token125_7>  <conll:cpostag>  "v" ;
-//	    <conll:deprel>      "ROOT" ;
-//	    <conll:feats>       "_" ;
-//	    <conll:form>        "casaron" ;
-//	    <conll:head>        <token:token125_0> ;
-//	    <conll:lemma>       "casar" ;
-//	    <conll:postag>      "VMIS3P0" ;
-//	    <conll:wordnumber>  "7" ;
-//	    <own:partOf>        <class:class125> .
-        
-        
+//	ID:5f
+//	property subject: Claudio
+//	property object: Agripinila
+//	sentence:: 
+//	1	Poco	poco	r	RG	_	2	SPEC
+//	2	después	después	r	RG	_	7	MOD
+//	3	Claudio	claudio	n	NP00000	_	7	SUBJ
+//	4	y	y	c	CC	_	3	COORD
+//	5	Agripinila	agripinila	n	NP00000	_	4	CONJ
+//	6	se	se	p	P00CN000	_	7	DO
+//	7	casaron	casar	v	VMIS3P0	_	0	ROOT
+//	8	y	y	c	CC	_	7	COORD
+//	9	éste	este	p	PD0MS000	_	10	SUBJ
+//	10	adoptó	adoptar	v	VMIS3S0	_	8	CONJ
+//	11	a	a	s	SPS00	_	10	DO
+//	12	el	el	d	DA0MS0	_	13	SPEC
+//	13	hijo	hijo	n	NCMS000	_	11	COMP
+//	14	de	de	s	SPS00	_	13	MOD
+//	15	Agripinila	agripinila	n	NP00000	_	14	COMP
+//	16	,	,	f	Fc	_	15	punct
+//	17	Nerón	nerón	n	NP00000	_	13	MOD
+//	18	,	,	f	Fc	_	17	punct
+//	19	como	como	c	CS	_	10	MOD
+//	20	su	su	d	DP3CS0	_	21	SPEC
+//	21	heredero	heredero	n	NCMS000	_	19	COMP
+//	22	por	por	s	SPS00	_	21	MOD
+//	23	encima_de	encima_de	s	SPS00	_	22	COMP
+//	24	Británico	británico	n	NP00000	_	23	COMP
+//	25	.	.	f	Fp	_	24	punct
+	
+	
+	// omit ?prep
+	
 	// */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
-			+ "?verb <conll:cpostag> ?verb_pos ."
-			+ "FILTER regex(?deprel, \"VMIS\") ."
+	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE {"
+			
+			+ "?verb <conll:postag> ?verb_pos ."
+			+ "FILTER regex(?verb_pos, \"VMIS\") ."
+            + "?verb <conll:lemma> ?lemma ."
 			
 			+ "?se <conll:lemma> \"se\" ."
 			+ "?se <conll:deprel> \"DO\" ."
 			+ "?se <conll:head> ?verb ."
-                        + "?verb <conll:lemma> ?lemma ."
-			
+
 			+ "?e1 <conll:head> ?verb."
 			+ "?e1 <conll:deprel> \"SUBJ\" ."
 
@@ -122,19 +86,19 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 			+ "?coord <conll:deprel> \"COORD\" ."
 			+ "?coord <conll:lemma> \"y\" ."
 			
-			+ "?e2 <conll:head> ?coord."
-			+ "?e2 <conll:deprel> \"CONJ \"."
+			+ "?e2 <conll:head> ?coord ."
+			+ "?e2 <conll:deprel> \"CONJ\" ."
 			
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
 	
-	// we need a new construction for casar+se
+	// we need a new construction for casar+se, wrong type currently selected
 	
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_7";
+		return "SPARQLPattern_ES_7b";
 	}
 
 	@Override
@@ -146,9 +110,9 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
 		
-		
+				
 	}
 
 }

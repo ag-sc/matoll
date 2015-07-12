@@ -26,6 +26,31 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 5	casado	casar	v	VMP00SM	_	4	ATR	_	_
 6	con	con	s	SPS00	_	5	OBLC	_	_
 7	Irene_Angelina	irene_angelina	n	NP00000	_	6	COMP	_	_
+
+// create 6b
+ * 
+ * 1	«	«	f	Fz	_	4	MOD
+2	Baby	baby	n	NP00000	_	1	MOD
+3	»	»	f	Fz	_	4	SUBJ
+4	fue	ser	v	VSIS3S0	_	0	ROOT
+5	escrita	escribir	v	VMP00SF	_	4	ATR
+6	por	por	s	SPS00	_	5	BYAG
+7	el	el	d	DA0MS0	_	8	SPEC
+8	cantante	cantante	n	NCCS000	_	6	COMP
+9	Justin_Bieber	justin_bieber	n	NP00000	_	8	MOD
+10	con	con	s	SPS00	_	8	MOD
+11	"	"	f	Fe	_	10	COMP
+12	Christopher	christopher	n	NP00000	_	8	MOD
+
+// create 6c
+ * 
+ * 3	Beyoncé	beyoncé	n	NP00000	_	4	MOD
+14	había	haber	v	VAII1S0	_	15	AUX
+15	escrito	escribir	v	VMP00SM	_	12	COMP
+16	para	para	s	SPS00	_	15	MOD
+17	"	"	f	Fe	_	16	COMP
+18	Survivor	survivor	n	NP00000	_	15	DO
+
 	 * 
 	 */
 	String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"

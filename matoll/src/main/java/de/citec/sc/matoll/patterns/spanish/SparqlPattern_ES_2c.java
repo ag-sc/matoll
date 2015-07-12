@@ -13,29 +13,24 @@ import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_2 extends SparqlPattern{
+public class SparqlPattern_ES_2c extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_2.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_2c.class.getName());
 	
-	
+//	ID:83
+//	property subject: Funhouse
+//	property object: Pink
+//	sentence:: 
+//	1	Glitter_In_The_Air	glitter_in_the_air	n	NP00000	_	2	SUBJ
+//	2	es	ser	v	VSIP3S0	_	0	ROOT
+//	3	una	uno	d	DI0FS0	_	4	SPEC
+//	4	canción	canción	n	NCFS000	_	2	ATR
+//	5	de	de	s	SPS00	_	4	COMP
+//	6	la	el	d	DA0FS0	_	7	SPEC
+//	7	cantante	cantante	n	NCCS000	_	5	COMP
+//	8	estadounidense	estadounidense	a	AQ0CS0	_	7	MOD
+//	9	Pink	pink	n	NP00000	_	7	MOD
 
-	/*
-1	La	el	d	DA0FS0	_	2	SPEC
-2	perla	perla	n	NCFS000	_	3	SUBJ
-3	es	ser	v	VSIP3S0	_	0	ROOT
-4	una	uno	d	DI0FS0	_	5	SPEC
-5	película	película	n	NCFS000	_	3	ATR
-6	mexicana	mexicano	a	AQ0FS0	_	5	MOD
-7	filmada	filmar	v	VMP00SF	_	5	MOD
-8	en	en	s	SPS00	_	7	MOD
-9	y	y	c	CC	_	8	COORD
-10	dirigida	dirigir	v	VMP00SF	_	9	CONJ
-11	por	por	s	SPS00	_	10	BYAG
-12	Emilio	emilio	n	NP00000	_	11	COMP
-
-    TODO: "COMP" in ?prep can also be "MOD"
-
-	 */
 			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 					
 					+ "?copula <conll:postag> ?pos . "
@@ -48,23 +43,22 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 					+ "?noun <conll:cpostag> \"n\" . "
 					+ "?noun <conll:deprel> \"ATR\" ."
 					
-					+ "?participle <conll:lemma> ?lemma . "
-					+ "?participle <conll:head> ?noun . "
-					+ "?participle <conll:postag> ?participle_pos . "
-					+ "FILTER regex(?participle_pos, \"VMP\") ."
-					+ "?participle <conll:deprel> \"MOD\" ."
-					
-					
+					// can be also COMP
+					+ "?p <conll:deprel> \"COMP\" . "
 					+ "?p <conll:postag> ?prep_pos ."
 					+ "FILTER regex(?prep_pos, \"SPS\") ."
-					+ "?p <conll:head> ?participle . "
+					+ "?p <conll:head> ?noun . "
 					+ "?p <conll:lemma> ?prep . "
+					
+					+ "?noun2 <conll:head> ?p . "
+					+ "?noun2 <conll:cpostag> \"n\" . "
+					+ "?noun2 <conll:deprel> \"COMP\" ."
 					
 					+ "?subj <conll:head> ?copula . "
 					+ "?subj <conll:deprel> \"SUBJ\" . "
 					
-					+ "?pobj <conll:head> ?p . "
-					+ "?pobj <conll:deprel> \"COMP\" . "
+					+ "?pobj <conll:head> ?noun2 . "
+					+ "?pobj <conll:deprel> \"MOD\" . "
 					
 					+ "?subj <own:senseArg> ?e1_arg. "
 					+ "?pobj <own:senseArg> ?e2_arg. "
@@ -72,7 +66,7 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_2";
+		return "SPARQLPattern_ES_2c";
 	}
 
 	@Override

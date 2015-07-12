@@ -37,11 +37,11 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
 //	14	Eva_Braun	eva_braun	n	NP00000	_	12	MOD	_	_
 //	15	.	.	f	Fp	_	14	punct	_	_
 	
+// Constraint: not embedded in a further prepositional phrase, too noisy
 	
-
-
-
+	
 			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+		
 					+ "?noun <conll:postag> ?lemma_pos . "
 					+ "FILTER regex(?lemma_pos, \"NC\") ."
 					+ "?noun <conll:lemma> ?lemma . "
@@ -55,10 +55,10 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
 					+ "?e1 <conll:head> ?p ."
 					+ "?e1 <conll:deprel> \"COMP\" ."
 					
-					// can be MOD or COMP
+					// can be MOD or COMP, choosing "MOD" for now
 					+ "?e2 <conll:head> ?e1."
 					+ "?e2 <conll:deprel> ?e2_deprel."
-					+ "FILTER regex(?e2_deprel, \"COMP\") ."
+					+ "FILTER regex(?e2_deprel, \"MOD\") ."
 
 					+ "?comma <conll:lemma> \",\". "
 					+ "?comma <conll:deprel> \"punct\". "
