@@ -33,6 +33,7 @@ import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
 
 
 public class LexiconLoader {
@@ -266,6 +267,7 @@ public class LexiconLoader {
                         Check, if argument_value have a BaseURI
                         */
                         if(argument_value.contains("#")) argument_value = argument_value.split("#")[1];
+                        if(argument_value.length()>13 && StringUtils.isNumeric(argument_value.substring(0, 13))) argument_value = argument_value.substring(13);
                         prepStatement = object.getProperty(LEMON.marker);
                         preposition = null;
 
@@ -595,6 +597,7 @@ public class LexiconLoader {
                 Check, if argument_value have a BaseURI
                 */
                 if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                if(object_string.length()>13 && StringUtils.isNumeric(object_string.substring(0, 13))) object_string = object_string.substring(13);
                 senseArguments.add(new SenseArgument(predicate_string,object_string));
             }	
 
@@ -610,6 +613,7 @@ public class LexiconLoader {
                 Check, if argument_value have a BaseURI
                 */
                 if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                if(object_string.length()>13 && StringUtils.isNumeric(object_string.substring(0, 13))) object_string = object_string.substring(13);
                 senseArguments.add(new SenseArgument(predicate_string,object_string));
 
             }
@@ -627,6 +631,7 @@ public class LexiconLoader {
                 Check, if argument_value have a BaseURI
                 */
                 if(object_string.contains("#")) object_string = object_string.split("#")[1];
+                if(object_string.length()>13 && StringUtils.isNumeric(object_string.substring(0, 13))) object_string = object_string.substring(13);
                 senseArguments.add(new SenseArgument(predicate_string,object_string));	
 
             }

@@ -46,11 +46,14 @@ import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_8;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_9;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2c;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_3;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_4;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_5;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_6;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_8;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_9;
 
@@ -143,13 +146,17 @@ public class Config {
 					
 					Patterns.add(new SparqlPattern_ES_1());
 					Patterns.add(new SparqlPattern_ES_2());
+                                        Patterns.add(new SparqlPattern_ES_2b());
+                                        Patterns.add(new SparqlPattern_ES_2c());
 					Patterns.add(new SparqlPattern_ES_3());
 					Patterns.add(new SparqlPattern_ES_4());
 					Patterns.add(new SparqlPattern_ES_5());
 					Patterns.add(new SparqlPattern_ES_6());
 					Patterns.add(new SparqlPattern_ES_7());
+                                        Patterns.add(new SparqlPattern_ES_7b());
 					Patterns.add(new SparqlPattern_ES_8());
 					Patterns.add(new SparqlPattern_ES_9());
+                                        
 					
 					logger.info("Adding patterns 1-9 (ES) to pattern library \n");
 				}
