@@ -92,7 +92,7 @@ public class test9 {
                 
                 
                 
-                LexicalEntry entry2 = new LexicalEntry(Language.EN);
+                LexicalEntry entry2 = new LexicalEntry(Language.DE);
 		
 		entry2.setCanonicalForm("marry");
 		
@@ -101,7 +101,7 @@ public class test9 {
 		sense3.setReference(ref3);
 		
 		//entry2.addSense(sense3);
-                entry2.setURI("http://localhost:8080/TransitiveFrame_marry");
+                entry2.setURI("http://localhost:8080/__TransitiveFrame_marry");
 		
 		entry2.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
@@ -120,6 +120,7 @@ public class test9 {
                 entry2.addSyntacticBehaviour(behaviour3,sense3);
 		
                 lexicon.addEntry(entry2);
+                System.out.println(lexicon.getEntries(Language.EN).size());
                 
                 System.out.println("#entries:"+lexicon.size());
                 

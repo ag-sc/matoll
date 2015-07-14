@@ -24,7 +24,8 @@ public class Process {
 			System.exit(1);
 		}
 		String endpoint = "http://dbpedia.org/sparql";
-		Boolean with_sentences = true;
+		Boolean with_sentences = false;
+                boolean additionalOutput = false;
 		/*
 		 *in pathToIndex only one index for one language can be found 
 		 */
@@ -70,7 +71,7 @@ public class Process {
 							List<List<String>> sentences = index.search(entities);
 							int value = 10000;
 							if(sentences.size()<=value){
-								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0));
+								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0),additionalOutput);
 							}
 							else{
 								int begin = 0;
@@ -78,9 +79,9 @@ public class Process {
 								for(int i= 0; i<Math.floor((double)sentences.size()/value);i++){
 									begin = i*value;
 									end = begin+value;
-									de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0));
+									de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0),additionalOutput);
 								}
-								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0));
+								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0),additionalOutput);
 							}
 							
 							System.out.println("Done");
