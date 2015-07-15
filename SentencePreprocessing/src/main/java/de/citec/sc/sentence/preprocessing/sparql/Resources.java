@@ -126,6 +126,13 @@ public class Resources {
                 if(term.contains("200^^httpwww.w3.org2001XMLSchema#gMonthDay")){
 			term = term.replace("200^^httpwww.w3.org2001XMLSchema#gMonthDay", "");
 		}
+                
+                term = term.replace("^^<http://dbpedia.org/datatype/", "");
+                term = term.replace("^^<http://www.w3.org/2001/XMLSchema#float", "");
+                term = term.replace("\"","");
+                
+                if(term.contains("*")) return "";
+                
 		return term;
 	}
 

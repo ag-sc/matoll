@@ -8,13 +8,14 @@ import java.util.List;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import de.citec.sc.sentence.preprocessing.process.Language;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class RDF {
 	
 	
-	private static void convertSentenceToRDF(Model default_model,String input_sentence, String propSubj, String propObj, String language, String uri, int counter){
+	private static void convertSentenceToRDF(Model default_model,String input_sentence, String propSubj, String propObj, Language language, String uri, int counter){
 		String class_token = "class"+Integer.toString(counter);
 		
 		String plain_sentence = "";
@@ -31,7 +32,7 @@ public class RDF {
 				.addProperty(default_model.createProperty("own:subj"),propSubj.toLowerCase())
 				.addProperty(default_model.createProperty("own:obj"),propObj.toLowerCase())
 				.addProperty(default_model.createProperty("conll:reference"),uri)
-				.addProperty(default_model.createProperty("conll:language"),language)
+				.addProperty(default_model.createProperty("conll:language"),language.toString().toLowerCase())
 				.addProperty(default_model.createProperty("conll:sentence"),plain_sentence);
 		
 		
@@ -91,7 +92,7 @@ public class RDF {
 		
 	}
 	
-	public static void writeModel(List<List<String>> input_sentences, String path_to_write,String language, String uri, boolean additionalOutput) throws IOException{
+	public static void writeModel(List<List<String>> input_sentences, String path_to_write,Language language, String uri, boolean additionalOutput) throws IOException{
 		if(!path_to_write.endsWith("/"))path_to_write+="/";
 		Model default_model = ModelFactory.createDefaultModel();
                 StringBuilder string_builder = new StringBuilder();

@@ -2,6 +2,7 @@ package de.citec.sc.sentence.preprocessing.lucene;
 
 
 
+import de.citec.sc.sentence.preprocessing.process.Language;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,12 +32,12 @@ public class IndexReader {
 	//private static MMapDirectory index;
 	private static DirectoryReader indexReader;
     private static IndexSearcher searcher;
-    private static String language;
+    private static Language language;
 	
-	public IndexReader(String pathToIndex, String language) throws IOException{
+	public IndexReader(String pathToIndex, Language language) throws IOException{
 		IndexReader.pathIndex = pathToIndex;
 		IndexReader.language = language;
-		if (language.equals("ja")) {
+		if (language.equals(Language.JA)) {
 			IndexReader.analyzer = new JapaneseAnalyzer();
 		} else {
 			IndexReader.analyzer = new StandardAnalyzer(Version.LATEST);
@@ -58,11 +59,11 @@ public class IndexReader {
 			
 			subj = preprocessing(subj);
 			obj = preprocessing(obj);
-			if (!IndexReader.language.equals("ja")) {
+			if (!IndexReader.language.equals(Language.JA)) {
 				if(subj.length()<=2||obj.length()<=2) return results;
 			}
 			String term = subj+" "+obj;
-			if (IndexReader.language.equals("ja")) {
+			if (IndexReader.language.equals(Language.JA)) {
 				QueryParser queryParser = new QueryParser("sentence", IndexReader.analyzer);
 				queryParser.setDefaultOperator(QueryParser.Operator.AND);
 				try {
@@ -135,9 +136,9 @@ public class IndexReader {
 		// hyphen seems to affect output of QueryParser
 		// not sure if this may affect e.g. processing of dates
 		// for other languages
-		if (language.equals("ja")) term = term.replace("-", "");
+		if (language.equals(Language.JA)) term = term.replace("-", "");
 		// JapaneseAnalyzer does not like stars
-		if (language.equals("ja")) term = term.replace("*", "");
+		if (language.equals(Language.JA)) term = term.replace("*", "");
 		return term;
 	}
 

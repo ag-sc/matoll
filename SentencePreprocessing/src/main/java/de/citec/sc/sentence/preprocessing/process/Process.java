@@ -31,7 +31,7 @@ public class Process {
 		 */
 		String pathToIndex = "/Users/swalter/Index/EnglishIndex";
 		String folderToSaveResourcesSentences = "/Users/swalter/Desktop/Resources";
-		String language = "en";
+		Language language = Language.EN;
                 
                 //String property_file = "/Users/swalter/Desktop/dbepdiaProperties_QALD-5.txt";
 		
@@ -100,7 +100,7 @@ public class Process {
 	}
 
 	private static void loadPropertyList(String pathToProperties,
-			List<List<String>> properties, String language) throws IOException {
+			List<List<String>> properties, Language language) throws IOException {
 		String properties_raw = "";
 		/*
 		 * each line contains one property
@@ -121,7 +121,7 @@ public class Process {
 	    	property.add(p);
 	    	property.add(ontologyName);
 	    	property.add(namespace);
-	    	property.add(language);
+	    	property.add(language.toString().toLowerCase());
 	    	property.add(name);
 	    	properties.add(property);
 	    	//System.out.println(property.toString());
@@ -131,7 +131,7 @@ public class Process {
 	}
 	
 	private static void loadOntology(String pathToOntology,
-			List<List<String>> properties, String language) throws IOException {
+			List<List<String>> properties, Language language) throws IOException {
 		OntologyImporter importer = new OntologyImporter(pathToOntology,"RDF/XML");
 	    
 	    for(String p: importer.getProperties()){
@@ -143,7 +143,7 @@ public class Process {
 	    	property.add(p);
 	    	property.add(ontologyName);
 	    	property.add(namespace);
-	    	property.add(language);
+	    	property.add(language.toString().toLowerCase());
 	    	property.add(name);
 	    	properties.add(property);
 	    	//System.out.println(property.toString());
