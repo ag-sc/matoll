@@ -99,7 +99,7 @@ public class IndexReader {
 	        for(int i=0;i<hits.length;++i) {
 	          int docId = hits[i].doc;
 	          Document d = searcher.doc(docId);
-	          ArrayList<String> result = new ArrayList<String>();
+	          ArrayList<String> result = new ArrayList<>();
 	          String sentence = d.get("sentence");
 	          if((sentence.split("\t\t")).length<=sentence_lenght){
 	        	  if(!cache.containsKey(sentence)){

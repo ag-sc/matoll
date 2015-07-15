@@ -72,7 +72,7 @@ public class Resources {
 	}
 
 
-	private static String cleanEntity(String term) {
+	public static String cleanEntity(String term) {
 		/*
 		 * 1: 1989-04-20+02:00^^http://www.w3.org/2001/XMLSchema#date
 		 * Only the year will be considered, in order to avoid noise with the id's from the parsed sentence
@@ -87,15 +87,18 @@ public class Resources {
 		 */
 		if(term.contains("(")){
 			term = term.split("\\(")[0];
-			if(term.endsWith(" ")){
-				// -1 removes not only whitespace, but also last character of term!
-				term = term.substring(0,term.lastIndexOf(" ")); //-1);
-			}
 		}
 		
 		if (term.contains("[")) {
 			term = term.split("\\[")[0];
-			term.trim();
+		}
+                
+                if (term.contains("^^<http://dbpedia.org/datatype/")) {
+			term = term.split("^^<http://dbpedia.org/datatype/")[0];
+		}
+                
+                if (term.contains("|")) {
+			term = term.split("\\|")[0];
 		}
 		
 		/*
@@ -127,11 +130,15 @@ public class Resources {
 			term = term.replace("200^^httpwww.w3.org2001XMLSchema#gMonthDay", "");
 		}
                 
-                term = term.replace("^^<http://dbpedia.org/datatype/", "");
                 term = term.replace("^^<http://www.w3.org/2001/XMLSchema#float", "");
+                term = term.replace("^^<http://www.w3.org/2001/XMLSchema#string>", "");
                 term = term.replace("\"","");
                 
                 if(term.contains("*")) return "";
+                
+                if (term.endsWith(".0")) term = term.substring(0, term.lastIndexOf(".0"));
+                
+                term = term.trim();
                 
 		return term;
 	}
