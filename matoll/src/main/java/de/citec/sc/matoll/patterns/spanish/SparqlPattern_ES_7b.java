@@ -18,7 +18,9 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_7b.class.getName());
 	
 	// X y Y se casaron
-	// template needs to be changed!
+	
+        // X und Y verheiraten sich
+        // template needs to be changed!
         
 //	ID:11
 //	property subject: Constantino VI
@@ -94,6 +96,9 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 			+ "}";
 	
 	// we need a new construction for casar+se, wrong type currently selected
+        //https://en.wiktionary.org/wiki/casarse
+        
+        //wenn "se" vorkommt, mit ans lemma hängen
 	
 	
 	@Override

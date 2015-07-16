@@ -103,6 +103,9 @@ Neuer parse:
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
+        /*
+        TODO Es darf nichts geben, was unter dem Verb hängt. Negation
+        */
 			
 	@Override
 	public String getID() {
