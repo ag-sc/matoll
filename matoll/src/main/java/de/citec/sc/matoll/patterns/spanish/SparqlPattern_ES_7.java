@@ -39,6 +39,10 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 	// reflexive verb: se casó con
 	// Template needs to be changed!!!
     
+        // X verheiratet sich mit Y
+        // -> Reflexiv 
+        // X heiratete Y -> Transitive
+        
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 			+ "?verb <conll:cpostag> ?verb_pos ."
 			+ "?verb <conll:lemma> ?lemma ."
