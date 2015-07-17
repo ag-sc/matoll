@@ -10,20 +10,11 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-
 import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.LexiconWithFeatures;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SenseArgument;
-import de.citec.sc.matoll.core.SimpleReference;
-import de.citec.sc.matoll.core.SyntacticArgument;
-import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import de.citec.sc.matoll.process.Matoll;
 
 public class SparqlPattern_EN_9 extends SparqlPattern {
 
@@ -61,7 +52,37 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 		
 		List<String> sentences = this.getSentences(model);
 		
-		Templates.getTransitiveVerb(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                ResultSet rs = qExec.execSelect() ;
+                String verb = null;
+                String e1_arg = null;
+                String e2_arg = null;
+
+                try {
+                 while ( rs.hasNext() ) {
+                         QuerySolution qs = rs.next();
+
+                         // System.out.print("Query 3 matched\n!!!");
+
+                         try{
+                                 verb = qs.get("?lemma").toString();
+                                 e1_arg = qs.get("?e1_arg").toString();
+                                 e2_arg = qs.get("?e2_arg").toString();	
+                          }
+	        	 catch(Exception e){
+	     	    	e.printStackTrace();
+	        		 //ignore those without Frequency TODO:Check Source of Error
+                        }
+                     }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                qExec.close() ;
+    
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    Templates.getTransitiveVerb(model, lexicon, vector, sentences, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+            } 
 		
 	}
 

@@ -1,5 +1,9 @@
 package de.citec.sc.matoll.patterns.english;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -85,9 +89,41 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
 		vector.add(this.getID(),1.0);
 		
 		List<String> sentences = this.getSentences(model);
-		
-		Templates.getAdjective(model, lexicon, vector, sentences, query, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-		
+                
+                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                ResultSet rs = qExec.execSelect() ;
+                String adjective = null;
+                String e1_arg = null;
+                String e2_arg = null;
+                String preposition = null;
+
+                try {
+                 while ( rs.hasNext() ) {
+                         QuerySolution qs = rs.next();
+
+                         // System.out.print("Query 3 matched\n!!!");
+
+                         try{
+                                 adjective = qs.get("?lemma").toString();
+                                 e1_arg = qs.get("?e1_arg").toString();
+                                 e2_arg = qs.get("?e2_arg").toString();	
+                                 preposition = qs.get("?prep").toString();	
+                          }
+	        	 catch(Exception e){
+	     	    	e.printStackTrace();
+	        		 //ignore those without Frequency TODO:Check Source of Error
+                        }
+                     }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                qExec.close() ;
+    
+		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                    Templates.getAdjective(model, lexicon, vector, sentences, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+            } 
+				
 	}
 
 	public String getID() {
