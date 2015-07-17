@@ -29,31 +29,20 @@ public class LexicalEntry {
 	//Provenance Provenance;
         HashMap<Sense,Provenance> mappingReferenceProvenance = new HashMap<Sense,Provenance>();
 	
-	List<String> Sentences;
+	
 	
 	public LexicalEntry(Language language)
 	{
-		//argumentMap = new HashMap<String,String>();
-		Sentences  = new ArrayList<String>();
-                this.language = language;
-			
+            this.language = language;
 	}
 	
 	
 	public LexicalEntry(String uri, Language language) {
-		URI = uri;
-		//argumentMap = new HashMap<String,String>();
-		Sentences  = new ArrayList<String>();
-                this.language = language;
+            URI = uri;
+            this.language = language;
 	}
 	
 
-	/*public String getMapping(String synArg)
-	{
-		if (argumentMap.containsKey(synArg))
-			return argumentMap.get(synArg);
-		else return null;
-	}*/
 
 	public void setCanonicalForm(String canonicalForm)
 	{
@@ -85,7 +74,8 @@ public class LexicalEntry {
                     string += sense.toString();
                     if(mappingReferenceProvenance.containsKey(sense)){
                         Provenance provenance = mappingReferenceProvenance.get(sense);
-                        for(String pattern:provenance.getPatternset())string+="Pattern: "+pattern+"\n";
+                        if(provenance.getPatternset()!=null)for(String pattern:provenance.getPatternset())string+="Pattern: "+pattern+"\n";
+                        if(provenance.getSentences()!=null)for(String sentence:provenance.getLongestSentences(5))string+="Sentence: "+sentence+"\n";
                     }
                 }
 		
@@ -95,11 +85,11 @@ public class LexicalEntry {
 		}*/
 		
 		
-		for (String sentence: Sentences)
-		{
-			string += "Sentence: "+sentence+"\n";
-		}
-                
+//		for (String sentence: Sentences)
+//		{
+//			string += "Sentence: "+sentence+"\n";
+//		}
+//                
                 
 		
 		
@@ -300,6 +290,7 @@ public class LexicalEntry {
                     Provenance tmp_provenance = mappingReferenceProvenance.get(sense);
                     tmp_provenance.increaseFrequency(provenance.getFrequency());
                     tmp_provenance.addAllPattern(provenance.getPatternset());
+                    tmp_provenance.addSentences(provenance.getSentences());
                     mappingReferenceProvenance.remove(sense);
                     mappingReferenceProvenance.put(sense, tmp_provenance);
                 }
@@ -315,11 +306,6 @@ public class LexicalEntry {
 		return mappingReferenceProvenance.get(sense);
 	}
 
-
-	public void addSentence(String sentence) {
-		Sentences.add(sentence);
-		
-	}
 
 
         public Set<Reference> getReferences() {
@@ -342,24 +328,7 @@ public class LexicalEntry {
 	}
 
 
-        
-
-
-	public List<String> getSentences() {
-		return Sentences;
-	}
-
-
-	public void addSentences(List<String> sentences) {
-		Sentences.addAll(sentences);
-		
-	}
-
-
-	public void setSentences(List<String> sentences) {
-		Sentences = sentences;
-		
-	}
+       
 	
 	
 }

@@ -57,6 +57,7 @@ public class LexiconSerialization {
 
 	private void serialize(LexicalEntry entry, Model model) {
             
+                int numberReturnedSentences = 5;
                 if(entry.getURI().contains(" ")) return;
 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
@@ -101,6 +102,11 @@ public class LexiconSerialization {
                             if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
                             if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.associatedWith, model.createLiteral(provenance.getAgent()));
                             if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
+                            if(provenance.getSentences()!=null){
+                               for(String sentence : provenance.getLongestSentences(numberReturnedSentences)){
+                                   model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
+                               }
+                            }
                             HashSet<String> patterns = new HashSet<String>();
                             patterns = provenance.getPatternset();
                             for(String pattern : patterns) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createLiteral(pattern));

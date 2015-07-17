@@ -1,5 +1,4 @@
 package de.citec.sc.matoll.core;
-import static de.citec.sc.matoll.vocabularies.LEMON.sense;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,51 +70,28 @@ public class Lexicon {
 	
 			containedEntry = getLexicalEntry(entry);
 		                        
-                        
-			List<String> sentences = new ArrayList<String>();
-                        sentences.addAll(entry.getSentences());
-                        sentences.addAll(containedEntry.getSentences());
-                        
-			
-			
-			containedEntry.setSentences(sentences);
+//                        
+//			List<String> sentences = new ArrayList<String>();
+//                        sentences.addAll(entry.getSentences());
+//                        sentences.addAll(containedEntry.getSentences());
+//                        
+//			
+//			
+//			containedEntry.setSentences(sentences);
                         
                         HashMap<Sense, HashSet<SyntacticBehaviour>> senseBehaviours = entry.getSenseBehaviours();
-                        for(Sense sense :senseBehaviours.keySet()){
+                        senseBehaviours.keySet().stream().map((sense) -> {
                             HashSet<SyntacticBehaviour> behaviours = senseBehaviours.get(sense);
                             containedEntry.addAllSyntacticBehaviour(behaviours, sense);
+                        return sense;
+                        }).forEach((sense) -> {
                             /*
                             Update Provenance
                             */
                             Provenance provenance = entry.getProvenance(sense);
                             containedEntry.addProvenance(provenance, sense);
-//                            if(test2.containsKey(sense)){
-//                                HashSet<SyntacticBehaviour> behaviours = senseBehaviours.get(sense);
-//                                containedEntry.addAllSyntacticBehaviour(behaviours, sense);
-//                                /*
-//                                Update Provenance
-//                                */
-//                                Provenance provenance = entry.getProvenance(sense);
-//                                containedEntry.addProvenance(provenance, sense);
-//                            }
-//                            else{
-//                                
-//                            }
-                        }
-//                        for(Sense sense : entry.getSenses()) {
-//                            System.out.println("Sense:"+sense.toString());
-//                            containedEntry.addSense(sense);
-//                            if(containedEntry.getProvenance(sense)!=null){
-//                                Provenance tmp_provenance = containedEntry.getProvenance(sense);
-//                                tmp_provenance.increaseFrequency(entry.getProvenance(sense).getFrequency());
-//                                tmp_provenance.addAllPattern(entry.getProvenance(sense).getPatternset());
-//                            }
-//                            else{
-//                                containedEntry.addProvenance(entry.getProvenance(sense), sense);
-//                            }
-//                            for( SyntacticBehaviour behaviours : entry.getSenseBehaviours().get(sense))  containedEntry.addSyntacticBehaviour(behaviours,sense);
-//                        }
-                    //System.out.println(containedEntry.toString());
+                        });
+
                         
                         
                         
@@ -123,7 +99,9 @@ public class Lexicon {
 		}
 	
 		if (entry.getSenseBehaviours() != null)
-                    for( Reference reference : entry.getReferences()) references.add(reference);
+                    entry.getReferences().stream().forEach((reference) -> {
+                        references.add(reference);
+                });
 			
 	}
 

@@ -38,7 +38,7 @@ public class test3 {
 		{
 			if (!lexicon.contains(entry))
 			{
-				entry.addSentence("This is the first sentence");
+//				entry.addSentence("This is the first sentence");
 				lexicon.add(entry, new FeatureVector());
 				System.out.print("Adding entry: "+entry+"\n");
 				System.out.print("Hashcode: "+entry.hashCode()+"\n");
@@ -57,7 +57,7 @@ public class test3 {
 				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 		
-		entry.addSentence("This is the second sentence");
+//		entry.addSentence("This is the second sentence");
 		
 		SyntacticBehaviour behaviour = new SyntacticBehaviour();
 		

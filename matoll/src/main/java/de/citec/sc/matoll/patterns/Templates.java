@@ -70,6 +70,8 @@ public class Templates {
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
                                         
+                                        sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+                                        
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -92,11 +94,7 @@ public class Templates {
 	        			
 	        			// System.out.print(entry+"\n");
 	        			
-	        			for (String sentence: sentences)
-	        			{
-	        				entry.addSentence(sentence);
-                                                //logger.debug("Added Sentence:"+sentence, "");
-	        			}
+	        			
 	        			
                                         //debugger.printDependencys(model);
                                         
@@ -214,6 +212,7 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
+                                        sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
                                         
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -233,16 +232,6 @@ public class Templates {
 	        			entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
-	        			
-	        			// System.out.print(entry+"\n");
-	        			
-	        			for (String sentence: sentences)
-	        			{
-	        				entry.addSentence(sentence);
-                                                //logger.debug("Added Sentence:"+sentence, "");
-	        			}
-                                        
-                                        //debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
@@ -357,6 +346,7 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
+                                        sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
 	        		 	
@@ -383,15 +373,6 @@ public class Templates {
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicateFrame");
 	        			
-	        			// System.out.print(entry+"\n");
-	        			
-	        			for (String sentence: sentences)
-	        			{
-	        				entry.addSentence(sentence);
-                                                //logger.debug("Added Sentence:"+sentence, "");
-	        			}
-                                        
-                                        //debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
@@ -501,6 +482,7 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.addPattern(pattern_name);
                                         provenance.setFrequency(1);
+                                        sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
                                         
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -522,13 +504,6 @@ public class Templates {
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 	        			
-	        			for (String sentence: sentences)
-	        			{
-	        				entry.addSentence(sentence);
-                                                //logger.debug("Added Sentence:"+sentence, "");
-	        			}
-	        			
-                                        //debugger.printDependencys(model);
                                         
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
@@ -646,6 +621,7 @@ public class Templates {
                                         Provenance provenance = new Provenance();
                                         provenance.setFrequency(1);
                                         provenance.addPattern(pattern_name);
+                                        sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
                                         
 	        		 	
 	        		 	SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -666,13 +642,6 @@ public class Templates {
 	        			
 	        			behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePPFrame");
 	        			
-	        			for (String sentence: sentences)
-	        			{
-	        				entry.addSentence(sentence);
-                                                //logger.debug("Added Sentence:"+sentence, "");
-	        			}
-                                        
-                                        //debugger.printDependencys(model);
 	        			
 	        			if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
 	        			{
