@@ -14,6 +14,10 @@ import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconLoader;
 
 public class LexiconEvaluation {
+    
+    /*
+    OLD evaluation
+    */
 
 	static Set<String> references;
 	
@@ -316,26 +320,26 @@ public class LexiconEvaluation {
             HashMap<String,String> mapping_entry = new HashMap<String,String>();
             HashMap<String,String> mapping_gold_entry = new HashMap<String,String>();
             
-            for(Sense sense : entry.getSenseBehaviours().keySet() ){
-                mapping_entry.putAll(entry.computeMappings(sense));
-            }
-            
-            for(Sense sense : gold_entry.getSenseBehaviours().keySet()){
-                mapping_gold_entry.putAll(gold_entry.computeMappings(sense));
-            }
-            
-            for (String synArg: mapping_entry.keySet())
-		{
-			
-			if (!mapping_gold_entry.containsKey(synArg)) 
-			{
-				return false;
-			}
-			else
-			{
-				if (!mapping_entry.get(synArg).equals(mapping_gold_entry.get(synArg))) return false;
-			}
-		}
+//            for(Sense sense : entry.getSenseBehaviours().keySet() ){
+//                mapping_entry.putAll(entry.computeMappings(sense));
+//            }
+//            
+//            for(Sense sense : gold_entry.getSenseBehaviours().keySet()){
+//                mapping_gold_entry.putAll(gold_entry.computeMappings(sense));
+//            }
+//            
+//            for (String synArg: mapping_entry.keySet())
+//		{
+//			
+//			if (!mapping_gold_entry.containsKey(synArg)) 
+//			{
+//				return false;
+//			}
+//			else
+//			{
+//				if (!mapping_entry.get(synArg).equals(mapping_gold_entry.get(synArg))) return false;
+//			}
+//		}
             
             return true;
 		

@@ -113,31 +113,31 @@ public class LexicalEntry {
          * @param sense
          * @return 
          */
-	public HashMap<String,String> computeMappings(Sense sense) {
-		
-		HashMap<String,String> map = new HashMap<String,String>();
-		
-                for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)){
-                    for (SyntacticArgument synArg: Behaviour.getSynArgs())
-                    {
-			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
-						
-				for (SenseArgument senseArg: sense.getSenseArgs())
-				{
-					// System.out.print("Checking: "+senseArg.getArgumenType()+"\n");
-				
-					if (synArg.getValue().equals(senseArg.getValue()))
-					{
-						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
-					
-						//System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
-					}	
-				}
-                    }
-                }
-			
-		return map;
-	}
+//	private HashMap<String,String> computeMappings(Sense sense) {
+//		
+//		HashMap<String,String> map = new HashMap<String,String>();
+//		
+//                for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)){
+//                    for (SyntacticArgument synArg: Behaviour.getSynArgs())
+//                    {
+//			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
+//						
+//				for (SenseArgument senseArg: sense.getSenseArgs())
+//				{
+//					// System.out.print("Checking: "+senseArg.getArgumenType()+"\n");
+//				
+//					if (synArg.getValue().equals(senseArg.getValue()))
+//					{
+//						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
+//					
+//						//System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
+//					}	
+//				}
+//                    }
+//                }
+//			
+//		return map;
+//	}
 
 	
 
