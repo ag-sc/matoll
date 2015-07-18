@@ -172,12 +172,12 @@ public class Matoll {
 			System.out.print("Instantiating "+classifier.getClass()+ "\n");
 		}
 		
-//		LexiconLoader loader = new LexiconLoader();
+		LexiconLoader loader = new LexiconLoader();
 //		
 //		logger.info("Loading lexicon from: "+gold_standard_lexicon+"\n");
 //		
-//		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
-                Lexicon gold = new Lexicon();
+		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
+                //Lexicon gold = new Lexicon();
 		
 		File folder = new File(directory);
 		
@@ -252,7 +252,6 @@ public class Matoll {
 		
 		LexiconSerialization serializer = new LexiconSerialization(language);
 		
-		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
                 
                 Model model = ModelFactory.createDefaultModel();
 		
@@ -264,188 +263,29 @@ public class Matoll {
                 
                 out.close();
 		
-		FeatureVector vector;
-		logger.info("Starting "+mode.toString()+"\n");	
+		
+		logger.info("Starting "+mode+"\n");	
 		boolean predict = true;
 		if (mode.equals("train"))
 		{
-			Dataset trainingSet = new Dataset();
-			
-			// process features
-			
-			int numPos = 0;
-			
-			int numNeg = 0;
-			
-			// get maxima
-			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
-			{
-				vector = lexiconwithFeatures.getFeatureVector(entry);
-				
-				for (String feature: vector.getFeatures())
-				{
-					updateMaximum(feature,vector.getFeatureMap().get(feature),maxima);
-				}
-				
-			}
-			
-			for (LexicalEntry entry: lexiconwithFeatures.getEntries())
-			{
-                                
-				//entry.setMappings(entry.computeMappings(entry.getSense()));
-				
-				// System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
-				
-				// System.out.println(entry);
-				
-				vector = lexiconwithFeatures.getFeatureVector(entry);
-				
-				// preprocessing vector
-				
-				List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
-				
-                                /*
-                                TODO:
-                                the contains function does not work here.
-                                why?
-                                Because the euqals methode is set in the lexical entry, but there it is also check on the URI level, if the entry is equals or not.
-                                This works perfect for creating and checking entries created by M-ATOLL, but not for lexica, like gold, with a different namespace etc.
-                                */
-				if (gold.contains(entry))
-				{
-					//System.out.print("Lexicon contains "+entry+"\n");
-					
-					trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
-					logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
-					numPos++;
-				
-				}
-			
-				else
-				{
-					// System.out.print("Lexicon does not contain "+entry+"\n");
-					
-					if (numNeg < numPos)
-					{
-						trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
-						// logger.info("Adding training example: "+entry.toString()+"\n");
-						logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
-						numNeg++;
-					}
-				}
-				
-			}
-			
-			if (trainingSet.size() > 0)
-			
-			classifier.train(trainingSet);
-			
-			else
-			{
-				logger.info("Can not train classifier as there are no training instances\n");
-				writeByReference(lexiconwithFeatures);
-				logger.info("Exit MATOLL\n");
-				return;
-				
-			}
+                    doTraining(lexiconwithFeatures,gold,maxima,language, classifier);
 		
 		}
-		
+                else{
+                    doPrediction(lexiconwithFeatures, gold, classifier, output);
+                }
 		writeByReference(lexiconwithFeatures);
-		for (LexicalEntry entry: lexiconwithFeatures.getEntries())
-		{
-			// System.out.println(entry);
-			vector = lexiconwithFeatures.getFeatureVector(entry);
+                logger.info("Write lexicon to "+output_lexicon+"\n");
+                model = ModelFactory.createDefaultModel();
 
-			logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
+                serializer.serialize(lexiconwithFeatures, model);
 
-                        System.err.println("Adapt to new provenance style");
-//			if (classifier.predict(vector)==1)
-//			{
-//				Provenance provenance = new Provenance();
-//                                
-//
-//				provenance.setConfidence(classifier.predict(vector, 1));
-//
-//				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
-//
-//				provenance.setEndedAtTime(new Date());
-//
-//				entry.setProvenance(provenance);
-//
-//				entries.add(entry);
-//			}
-//			else
-//			{
-//
-//			}
-			
-		}
-		
+                out = new FileOutputStream(new File(output_lexicon.replace(".lex",".ttl")));
 
-//		  Collections.sort(entries, new Comparator<LexicalEntry>() {
-//	
-//			 
-//			            public int compare(LexicalEntry one, LexicalEntry two) {
-//                                        System.err.println("Adapt to new provenance style");
-//			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
-//				            }
-//				             
-//				        });
-		  
-		 /*
-		  * TODO
-		  Exception in thread "main" java.lang.IllegalArgumentException: Comparison method violates its general contract!
-	at java.util.TimSort.mergeHi(TimSort.java:895)
-	at java.util.TimSort.mergeAt(TimSort.java:512)
-	at java.util.TimSort.mergeForceCollapse(TimSort.java:453)
-	at java.util.TimSort.sort(TimSort.java:250)
-	at java.util.Arrays.sort(Arrays.java:1435)
-	at java.util.Collections.sort(Collections.java:230)
-	at de.citec.sc.matoll.process.Matoll.main(Matoll.java:370)
-		  */
-		
-		
-		lexicon = new Lexicon();
-		
-		LexiconEvaluation eval = new LexiconEvaluation();
-		
-		FileWriter writer = new FileWriter(output);
-		
-		for (int i=0; i < entries.size(); i++)
-		{
-			lexicon.addEntry(entries.get(i));
-			
-			eval.setReferences(lexicon.getReferences());
-			
-			eval.evaluate(lexicon,gold);
-			
-			System.out.print("Considering entry "+entries.get(i)+"("+i+")\n");
-			
-			writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping")+"\n");
-			
-			System.out.println(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
-			
-			writer.flush();
-			
-		}
-		
-		writer.close();
-		
-		
-	
-		logger.info("Write lexicon to "+output_lexicon+"\n");
-		model = ModelFactory.createDefaultModel();
-		
-		serializer.serialize(lexiconwithFeatures, model);
-		
-		out = new FileOutputStream(new File(output_lexicon));
-		
-		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
-                
+                RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+
                 out.close();
-		
-		// System.out.print("Lexicon: "+output.toString()+" written out\n");
+                
 		
 		
 			
@@ -653,4 +493,190 @@ public class Matoll {
 		
 		return null;
 	}
+
+    private static boolean goldContainsEntry(Lexicon gold, LexicalEntry entry, Language language) {
+        String entry_cannoncical = entry.getCanonicalForm().replace("@"+language.toString().toLowerCase(),"");
+        String pos = entry.getPOS();
+        Set<Reference> references = entry.getReferences();
+        for(LexicalEntry gold_entry : gold.getEntries()){
+            String gold_cannoncical = gold_entry.getCanonicalForm().replace("@"+language.toString().toLowerCase(),"");
+            for(Reference gold_reference : gold_entry.getReferences()){
+                if(entry_cannoncical.equals(gold_cannoncical)&&pos.equals(gold_entry.getPOS()) && references.contains(gold_reference)) return true;
+            }
+            
+        }
+        
+        return false;
+    }
+
+    private static void doTraining(LexiconWithFeatures lexiconwithFeatures,Lexicon gold, HashMap<String,Double> maxima, Language language, Classifier classifier) {
+        Dataset trainingSet = new Dataset();
+        FeatureVector vector;
+			
+        // process features
+
+        int numPos = 0;
+
+        int numNeg = 0;
+
+        // get maxima
+        for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+        {
+                vector = lexiconwithFeatures.getFeatureVector(entry);
+
+                for (String feature: vector.getFeatures())
+                {
+                        updateMaximum(feature,vector.getFeatureMap().get(feature),maxima);
+                }
+
+        }
+
+        for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+        {
+
+                //entry.setMappings(entry.computeMappings(entry.getSense()));
+
+                System.out.println("Checking entry with label: "+entry.getCanonicalForm()+"\n");
+
+                // System.out.println(entry);
+
+                vector = lexiconwithFeatures.getFeatureVector(entry);
+
+                // preprocessing vector
+
+                //List<LexicalEntry> list = gold.getEntriesWithCanonicalForm(entry.getCanonicalForm());
+
+                /*
+                TODO:
+                the contains function does not work here.
+                why?
+                Because the euqals methode is set in the lexical entry, but there it is also check on the URI level, if the entry is equals or not.
+                This works perfect for creating and checking entries created by M-ATOLL, but not for lexica, like gold, with a different namespace etc.
+                */
+                if (goldContainsEntry(gold,entry, language))
+                {
+                        //System.out.print("Lexicon contains "+entry+"\n");
+
+                        trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
+                        logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+                        System.out.println("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+                        numPos++;
+
+                }
+
+                else
+                {
+                        // System.out.print("Lexicon does not contain "+entry+"\n");
+
+                        if (numNeg < numPos)
+                        {
+                                trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
+                                // logger.info("Adding training example: "+entry.toString()+"\n");
+                                logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
+                                numNeg++;
+                        }
+                }
+
+        }
+
+        if (trainingSet.size() > 0)
+
+        classifier.train(trainingSet);
+
+        else
+        {
+                logger.info("Can not train classifier as there are no training instances\n");
+                logger.info("Exit MATOLL\n");
+                return;
+
+        }
+    }
+
+    private static void doPrediction(LexiconWithFeatures lexiconwithFeatures, Lexicon gold, Classifier classifier, String output) throws IOException {
+        FeatureVector vector;
+        List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
+        for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+        {
+                // System.out.println(entry);
+                vector = lexiconwithFeatures.getFeatureVector(entry);
+
+                logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
+
+                System.err.println("Adapt to new provenance style");
+    //			if (classifier.predict(vector)==1)
+    //			{
+    //				Provenance provenance = new Provenance();
+    //                                
+    //
+    //				provenance.setConfidence(classifier.predict(vector, 1));
+    //
+    //				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
+    //
+    //				provenance.setEndedAtTime(new Date());
+    //
+    //				entry.setProvenance(provenance);
+    //
+    //				entries.add(entry);
+    //			}
+    //			else
+    //			{
+    //
+    //			}
+
+        }
+
+
+    //		  Collections.sort(entries, new Comparator<LexicalEntry>() {
+    //	
+    //			 
+    //			            public int compare(LexicalEntry one, LexicalEntry two) {
+    //                                        System.err.println("Adapt to new provenance style");
+    //			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
+    //				            }
+    //				             
+    //				        });
+
+         /*
+          * TODO
+          Exception in thread "main" java.lang.IllegalArgumentException: Comparison method violates its general contract!
+    at java.util.TimSort.mergeHi(TimSort.java:895)
+    at java.util.TimSort.mergeAt(TimSort.java:512)
+    at java.util.TimSort.mergeForceCollapse(TimSort.java:453)
+    at java.util.TimSort.sort(TimSort.java:250)
+    at java.util.Arrays.sort(Arrays.java:1435)
+    at java.util.Collections.sort(Collections.java:230)
+    at de.citec.sc.matoll.process.Matoll.main(Matoll.java:370)
+          */
+
+
+        Lexicon lexicon = new Lexicon();
+
+        LexiconEvaluation eval = new LexiconEvaluation();
+
+        FileWriter writer = new FileWriter(output);
+
+        for (int i=0; i < entries.size(); i++)
+        {
+                lexicon.addEntry(entries.get(i));
+
+                eval.setReferences(lexicon.getReferences());
+
+                eval.evaluate(lexicon,gold);
+
+                System.out.print("Considering entry "+entries.get(i)+"("+i+")\n");
+
+                writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping")+"\n");
+
+                System.out.println(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
+
+                writer.flush();
+
+        }
+
+        writer.close();
+
+
+
+        // System.out.print("Lexicon: "+output.toString()+" written out\n");
+    }
 }
