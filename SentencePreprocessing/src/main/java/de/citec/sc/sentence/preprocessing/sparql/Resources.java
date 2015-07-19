@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
@@ -31,6 +33,7 @@ public class Resources {
 	
 	public static List<List<String>> loadEntities(List<String> property, String resourceFolder) throws IOException{
 		List<List<String>> entities = new ArrayList<List<String>>();
+                Set<String> signature_pairs = new HashSet<String>();
 		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
 		String entities_raw = "";
 		
@@ -65,7 +68,16 @@ public class Resources {
 	    	pair.add(subj);
 	    	pair.add(obj);
 	    	
-	    	entities.add(pair);
+                String signature_1 = subj+obj;
+                String signature_2 = obj+subj;
+                
+                if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_pairs)){
+                    entities.add(pair);
+                    signature_pairs.add(signature_1);
+                    signature_pairs.add(signature_2);
+                }
+                
+	    	
 	    }
 		
 		return entities;

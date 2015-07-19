@@ -69,7 +69,7 @@ public class Process {
 							System.out.println("Processing:"+property.get(0));
 							List<List<String>> entities = de.citec.sc.sentence.preprocessing.sparql.Resources.loadEntities(property, folderToSaveResourcesSentences);
 							List<List<String>> sentences = index.search(entities);
-							int value = 10000;
+							int value = 100000;
 							if(sentences.size()<=value){
 								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0),additionalOutput);
 							}

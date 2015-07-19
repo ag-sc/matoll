@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -50,7 +52,7 @@ public class IndexReader {
 	
 	private List<List<String>> runSearch(String subj, String obj,int sentence_lenght)
 			throws IOException {
-		HashMap<String, String> cache = new HashMap<String, String>();
+		Set<String> cache = new HashSet<String>();
 		List<List<String>> results = new ArrayList<List<String>>();
 		try {
 			
@@ -88,7 +90,7 @@ public class IndexReader {
 				}
 			}
 		    //int hitsPerPage = 1000;
-                    int hitsPerPage = 10;
+                    int hitsPerPage = 100;
 		    
 		    
 	        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
@@ -102,12 +104,12 @@ public class IndexReader {
 	          ArrayList<String> result = new ArrayList<>();
 	          String sentence = d.get("sentence");
 	          if((sentence.split("\t\t")).length<=sentence_lenght){
-	        	  if(!cache.containsKey(sentence)){
+	        	  if(!cache.contains(sentence)){
 	        		  result.add(sentence);
 			          result.add(subj);
 			          result.add(obj);
 			          results.add(result);
-			          cache.put(sentence, "");
+			          cache.add(sentence);
 	        	  }
 	        	  
 	          }
@@ -145,10 +147,16 @@ public class IndexReader {
 
 	public List<List<String>> search(List<List<String>> entities){
 		List<List<String>> sentences = new ArrayList<List<String>>();
+                Set<String> unique_sentence = new HashSet<String>();
 		
 		for(List<String> entity : entities){
 			try {
-				sentences.addAll(this.runSearch(entity.get(0), entity.get(1), 60));
+				for(List<String> sentence_item : this.runSearch(entity.get(0), entity.get(1), 60)){
+                                    if(!unique_sentence.contains(sentence_item.get(0))){
+                                        sentences.add(sentence_item);
+                                        unique_sentence.add(sentence_item.get(0));
+                                    }
+                                }
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
