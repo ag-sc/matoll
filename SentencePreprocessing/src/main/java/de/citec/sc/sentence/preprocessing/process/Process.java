@@ -12,37 +12,43 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 
 import de.citec.sc.sentence.preprocessing.lucene.IndexReader;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class Process {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 		/*
 		 * examples for properties can be found under /src/test/resources/
 		 */
 		if (args.length == 0) {
-			System.out.println("Run: java Process ontology/pathToPropertyFile");
+			System.out.println("Run: java Process config.xml");
 			System.exit(1);
 		}
-		String endpoint = "http://dbpedia.org/sparql";
-		Boolean with_sentences = false;
-                boolean additionalOutput = false;
+                
+                String configFile = args[0];
+                Config config = new Config();
+		config.loadFromFile(configFile);
+                
+                
+		String endpoint = config.getEndpoint();
+		Boolean with_sentences = config.isWithSentences();
+                boolean additionalOutput = config.isAdditionalOutput();
 		/*
 		 *in pathToIndex only one index for one language can be found 
 		 */
-		String pathToIndex = "/Users/swalter/Index/EnglishIndex";
-		String folderToSaveResourcesSentences = "/Users/swalter/Desktop/Resources";
-		Language language = Language.EN;
-                
-                //String property_file = "/Users/swalter/Desktop/dbepdiaProperties_QALD-5.txt";
-		
+		String pathToIndex = config.getIndex();
+		String folderToSaveResourcesSentences = config.getOutput();
+		Language language = config.getLanguage();
+                		
 		IndexReader index = new IndexReader(pathToIndex,language);
 		List<List<String>> properties = new ArrayList<List<String>>();
 		try {
-			if(args[0].endsWith(".owl")){
-				loadOntology(args[0],properties,language);
+			if(config.getInput().endsWith(".owl")){
+				loadOntology(config.getInput(),properties,language);
 			}
 			else{
-				loadPropertyList(args[0],properties,language);
+				loadPropertyList(config.getInput(),properties,language);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
