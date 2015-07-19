@@ -41,7 +41,7 @@ public class Process {
 		String folderToSaveResourcesSentences = config.getOutput();
 		Language language = config.getLanguage();
                 		
-		IndexReader index = new IndexReader(pathToIndex,language);
+		
 		List<List<String>> properties = new ArrayList<List<String>>();
 		try {
 			if(config.getInput().endsWith(".owl")){
@@ -62,43 +62,44 @@ public class Process {
 		
 		
 		if(with_sentences){
-			String pathWriteSentences = folderToSaveResourcesSentences+"Sentences_"+language+"/";
-			if(checkFolder(pathWriteSentences)){
-				for (List<String> property: properties){
-					try {
-						String pathToSentenceModel = pathWriteSentences+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
-						boolean check_ontologyfolder = checkFolder(pathWriteSentences+property.get(1));
-						boolean check_namespacefolder = checkFolder(pathWriteSentences+property.get(1)+"/"+property.get(2));
-						boolean check_languagefolder = checkFolder(pathWriteSentences+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
-						boolean check_modelfolder = checkFolder(pathToSentenceModel);
-						if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_modelfolder){
-							System.out.println("Processing:"+property.get(0));
-							List<List<String>> entities = de.citec.sc.sentence.preprocessing.sparql.Resources.loadEntities(property, folderToSaveResourcesSentences);
-							List<List<String>> sentences = index.search(entities);
-							int value = 100000;
-							if(sentences.size()<=value){
-								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0),additionalOutput);
-							}
-							else{
-								int begin = 0;
-								int end = 0;
-								for(int i= 0; i<Math.floor((double)sentences.size()/value);i++){
-									begin = i*value;
-									end = begin+value;
-									de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0),additionalOutput);
-								}
-								de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0),additionalOutput);
-							}
-							
-							System.out.println("Done");
-							System.out.println();
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
+                    IndexReader index = new IndexReader(pathToIndex,language);
+                    String pathWriteSentences = folderToSaveResourcesSentences+"Sentences_"+language+"/";
+                    if(checkFolder(pathWriteSentences)){
+                            for (List<String> property: properties){
+                                    try {
+                                            String pathToSentenceModel = pathWriteSentences+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+                                            boolean check_ontologyfolder = checkFolder(pathWriteSentences+property.get(1));
+                                            boolean check_namespacefolder = checkFolder(pathWriteSentences+property.get(1)+"/"+property.get(2));
+                                            boolean check_languagefolder = checkFolder(pathWriteSentences+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
+                                            boolean check_modelfolder = checkFolder(pathToSentenceModel);
+                                            if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_modelfolder){
+                                                    System.out.println("Processing:"+property.get(0));
+                                                    List<List<String>> entities = de.citec.sc.sentence.preprocessing.sparql.Resources.loadEntities(property, folderToSaveResourcesSentences);
+                                                    List<List<String>> sentences = index.search(entities);
+                                                    int value = 100000;
+                                                    if(sentences.size()<=value){
+                                                            de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences, pathToSentenceModel, language, property.get(0),additionalOutput);
+                                                    }
+                                                    else{
+                                                            int begin = 0;
+                                                            int end = 0;
+                                                            for(int i= 0; i<Math.floor((double)sentences.size()/value);i++){
+                                                                    begin = i*value;
+                                                                    end = begin+value;
+                                                                    de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(begin, end), pathToSentenceModel, language, property.get(0),additionalOutput);
+                                                            }
+                                                            de.citec.sc.sentence.preprocessing.rdf.RDF.writeModel(sentences.subList(end, sentences.size()), pathToSentenceModel, language, property.get(0),additionalOutput);
+                                                    }
+
+                                                    System.out.println("Done");
+                                                    System.out.println();
+                                            }
+                                    } catch (IOException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                    }
+                            }
+                    }
 		}
 		
 		
