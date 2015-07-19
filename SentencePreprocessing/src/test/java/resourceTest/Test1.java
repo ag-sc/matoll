@@ -34,5 +34,9 @@ public class Test1 {
         input = "1963-05-18+02:00^^http://www.w3.org/2001/XMLSchema#date";
         System.out.println(Resources.cleanEntity(input).equals("1963"));
         
+        input = "\"1963-asd\"^^<http://dbpedia.org/datatype/";
+        System.out.println(Resources.cleanEntity(input));
+        
+        
     }
 }

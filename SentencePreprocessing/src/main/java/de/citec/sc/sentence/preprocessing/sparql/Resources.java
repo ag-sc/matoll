@@ -105,10 +105,10 @@ public class Resources {
 			term = term.split("\\[")[0];
 		}
                 
-                if (term.contains("^^<http://dbpedia.org/datatype/")) {
-			term = term.split("^^<http://dbpedia.org/datatype/")[0];
+                if (term.contains("<http://dbpedia.org/datatype/")) {
+			term = term.split("<http://dbpedia.org/datatype/")[0];
 		}
-                
+                term = term.replace("^", "");
                 if (term.contains("|")) {
 			term = term.split("\\|")[0];
 		}
@@ -145,6 +145,7 @@ public class Resources {
                 term = term.replace("^^<http://www.w3.org/2001/XMLSchema#float", "");
                 term = term.replace("^^<http://www.w3.org/2001/XMLSchema#string>", "");
                 term = term.replace("\"","");
+                
                 
                 if(term.contains("*")) return "";
                 
