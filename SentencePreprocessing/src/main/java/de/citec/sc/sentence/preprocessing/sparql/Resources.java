@@ -62,20 +62,27 @@ public class Resources {
 	    	
 	    	List<String> pair = new ArrayList<String>();
 	    	
-	    	subj = cleanEntity(subj);
-	    	obj = cleanEntity(obj);
-	    	
-	    	pair.add(subj);
-	    	pair.add(obj);
-	    	
-                String signature_1 = subj+obj;
-                String signature_2 = obj+subj;
-                
-                if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_pairs)){
-                    entities.add(pair);
-                    signature_pairs.add(signature_1);
-                    signature_pairs.add(signature_2);
+                try{
+                    subj = cleanEntity(subj);
+                    obj = cleanEntity(obj);
+
+                    pair.add(subj);
+                    pair.add(obj);
+
+                    String signature_1 = subj+obj;
+                    String signature_2 = obj+subj;
+
+                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_pairs)){
+                        entities.add(pair);
+                        signature_pairs.add(signature_1);
+                        signature_pairs.add(signature_2);
+                    }   
                 }
+                catch(Exception e){
+                    e.printStackTrace();
+                    System.out.println("Problem with: "+subj+" + "+obj);
+                }
+	    	
                 
 	    	
 	    }

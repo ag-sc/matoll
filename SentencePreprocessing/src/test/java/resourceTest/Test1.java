@@ -37,6 +37,8 @@ public class Test1 {
         input = "\"1963-asd\"^^<http://dbpedia.org/datatype/";
         System.out.println(Resources.cleanEntity(input));
         
+        input = "\"1963[/dbpedia.org/datatype/";
+        System.out.println(Resources.cleanEntity(input));
         
     }
 }
