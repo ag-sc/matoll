@@ -56,7 +56,7 @@ public class Process {
 		}
 		if(!folderToSaveResourcesSentences.endsWith("/")) folderToSaveResourcesSentences+="/";
 		System.out.println("Retrieve Entities");
-		de.citec.sc.sentence.preprocessing.sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint);
+		de.citec.sc.sentence.preprocessing.sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint, language);
 		System.out.println("Done");
 		System.out.println();
 		

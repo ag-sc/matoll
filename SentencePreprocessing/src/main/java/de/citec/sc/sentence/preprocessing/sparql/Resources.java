@@ -1,5 +1,6 @@
 package de.citec.sc.sentence.preprocessing.sparql;
 
+import de.citec.sc.sentence.preprocessing.process.Language;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,25 +10,39 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 
 public class Resources {
 
-	public static void retrieveEntities(List<List<String>> properties, String resourceFolder, String endpoint){
-		/*
-		 * Slash works only for Unix-based systems
-		 */
-		if(!resourceFolder.endsWith("/")) resourceFolder+="/";
-		
-		for(List<String> property:properties){
-			String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
-			boolean check_ontologyfolder = checkFolder(resourceFolder+property.get(1));
-			boolean check_namespacefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2));
-			boolean check_languagefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
-			boolean check_propertyFile = checkPropertyNameFile(pathToPropertyFile);
-			if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_propertyFile) getEntitiesFromServer(property,endpoint,pathToPropertyFile);
-		}
+	public static void retrieveEntities(List<List<String>> properties, String resourceFolder, String endpoint, Language language){
+            /*
+             * Slash works only for Unix-based systems
+             */
+            if(!resourceFolder.endsWith("/")) resourceFolder+="/";
+
+            List<String> empty_properties = new ArrayList<String>();
+
+            for(List<String> property:properties){
+                    String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+                    boolean check_ontologyfolder = checkFolder(resourceFolder+property.get(1));
+                    boolean check_namespacefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2));
+                    boolean check_languagefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
+                    boolean check_propertyFile = checkPropertyNameFile(pathToPropertyFile);
+                    if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_propertyFile) getEntitiesFromServer(property,endpoint,pathToPropertyFile,empty_properties);
+            }
+                
+            PrintWriter writer;
+            try {
+                writer = new PrintWriter("empty_properties"+language.toString()+".txt");
+                for(String p: empty_properties) writer.println(p);
+                writer.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
 		
 	}
 	
@@ -164,16 +179,23 @@ public class Resources {
 	}
 
 	private static void getEntitiesFromServer(List<String> property,
-			String endpoint, String path) {
+			String endpoint, String path, List<String> empty_properties) {
 		List<String> entities = Sparql.retrieveEntities(endpoint, property.get(0), property.get(3));
 		if(!entities.isEmpty()) writeEntries(entities,path);
+                else{
+                    empty_properties.add(property.get(0));
+                }
 	}
 
 	private static void writeEntries(List<String> entities, String path) {
 		try{
-			String output = "";
-			for(String entity:entities) output+="\n"+entity;
-			output=output.substring(1);
+			StringBuilder string_builder = new StringBuilder();
+                        entities.stream().forEach((entity) -> {
+                            string_builder.append("\n");
+                            string_builder.append(entity);
+                    });
+			String output=string_builder.toString();
+                        output = output.substring(1);
 			
 			PrintWriter writer = new PrintWriter(path);
 			writer.print(output);
