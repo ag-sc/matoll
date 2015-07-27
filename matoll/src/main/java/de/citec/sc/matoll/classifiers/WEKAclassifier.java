@@ -67,8 +67,9 @@ public class WEKAclassifier {
         we want predict that the entry is true
         */
         provenance.setAnnotation(1);
-        
-        writeVectors((List<Provenance>) provenance,"tmp.arff");
+        List<Provenance> tmp_prov = new ArrayList<Provenance>();
+        tmp_prov.add(provenance);
+        writeVectors(tmp_prov,"tmp.arff");
         
         ArffLoader loader = new ArffLoader();
         loader.setFile(new File("tmp.arff"));

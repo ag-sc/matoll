@@ -50,6 +50,7 @@ import de.citec.sc.matoll.classifiers.WEKAclassifier;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.utils.Learning;
 
 public class Matoll {
  
@@ -200,6 +201,9 @@ public class Matoll {
 		File[] files = folder.listFiles();
 
                 int file_counter = 0;
+                /*
+                TODO: run this loop parralel and put together final lexicon afterwards;
+                */
 		for (final File file : files) {
 			
 			if (file.isFile() && file.toString().endsWith(".ttl")) {
@@ -258,11 +262,14 @@ public class Matoll {
 		boolean predict = true;
 		if (mode.equals("train"))
 		{
-                    doTraining(automatic_lexicon,gold,maxima,language, classifier);
+                    /*
+                    during training only entries with a frequency of at least 2 are considered (per sense)
+                    */
+                    Learning.doTraining(automatic_lexicon,gold,maxima,language, classifier,2);
 		
 		}
                 else{
-                    doPrediction(automatic_lexicon, gold, classifier, output);
+                    Learning.doPrediction(automatic_lexicon, gold, classifier, output, language);
                 }
 		writeByReference(automatic_lexicon);
                 logger.info("Write lexicon to "+output_lexicon+"\n");
@@ -484,149 +491,4 @@ public class Matoll {
 		return null;
 	}
 
-    private static boolean goldContainsEntry(Lexicon gold, String entry_cannoncical, String pos, Reference reference , Language language) {
-        for(LexicalEntry gold_entry : gold.getEntries()){
-            String gold_cannoncical = gold_entry.getCanonicalForm().replace("@"+language.toString().toLowerCase(),"");
-            for(Reference gold_reference : gold_entry.getReferences()){
-                if(entry_cannoncical.equals(gold_cannoncical)&&pos.equals(gold_entry.getPOS()) && reference.equals(gold_reference)) return true;
-            }
-            
-        }
-        
-        return false;
-    }
-
-    private static void doTraining(Lexicon lexicon,Lexicon gold, HashMap<String,Double> maxima, Language language, WEKAclassifier weka_classifier) throws IOException {
-
-        List<Provenance> provenances = new ArrayList<Provenance>();
-        List<Provenance> provenances_correct = new ArrayList<Provenance>();
-        List<Provenance> provenances_wrong = new ArrayList<Provenance>();
-        lexicon.getEntries().stream().forEach((entry) -> {
-            String entry_cannoncical = entry.getCanonicalForm().replace("@"+language.toString().toLowerCase(),"");
-            String pos = entry.getPOS();
-            int overall_frequency = entry.getOverallFrequency();
-            entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
-                Reference ref = sense.getReference();
-                Provenance prov = entry.getProvenance(sense);
-                prov.setOveralLabelRatio(prov.getFrequency().doubleValue()/overall_frequency);
-                if (goldContainsEntry(gold,entry_cannoncical,pos,ref, language)) {
-                    prov.setAnnotation(1);
-                    provenances_correct.add(prov);
-                }
-                else {
-                    prov.setAnnotation(0);
-                    provenances_wrong.add(prov);
-                }
-            });
-        });
-
-        if (provenances_correct.size() > 0)
-        {
-            provenances.addAll(provenances_correct);
-            /*
-            try to get an even dataset
-            */
-            if(provenances_correct.size()<provenances_wrong.size()){
-                 provenances.addAll(provenances_wrong.subList(0, provenances_correct.size()));
-            }
-            else{
-                provenances.addAll(provenances_wrong);
-            }
-           
-            weka_classifier.train(provenances);
-        }
-
-        else
-        {
-                logger.info("Can not train classifier as there are no training instances\n");
-        }
-    }
-
-    private static void doPrediction(Lexicon lexicon, Lexicon gold, WEKAclassifier classifier, String output) throws IOException, Exception {
-        FeatureVector vector;
-        List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
-        for (LexicalEntry entry: lexicon.getEntries())
-        {
-//                // System.out.println(entry);
-//                vector = lexicon.getFeatureVector(entry);
-//
-//                logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
-
-                System.err.println("Adapt to new provenance style");
-    //			if (classifier.predict(vector)==1)
-    //			{
-    //				Provenance provenance = new Provenance();
-    //                                
-    //
-    //				provenance.setConfidence(classifier.predict(vector, 1));
-    //
-    //				provenance.setAgent("http://sc.citec.uni-bielefeld.de/matoll");
-    //
-    //				provenance.setEndedAtTime(new Date());
-    //
-    //				entry.setProvenance(provenance);
-    //
-    //				entries.add(entry);
-    //			}
-    //			else
-    //			{
-    //
-    //			}
-
-        }
-
-
-    //		  Collections.sort(entries, new Comparator<LexicalEntry>() {
-    //	
-    //			 
-    //			            public int compare(LexicalEntry one, LexicalEntry two) {
-    //                                        System.err.println("Adapt to new provenance style");
-    //			            		return (((LexicalEntry) one).getProvenance().getConfidence() >= ((LexicalEntry) two).getProvenance().getConfidence()) ? -1 : 1;               
-    //				            }
-    //				             
-    //				        });
-
-         /*
-          * TODO
-          Exception in thread "main" java.lang.IllegalArgumentException: Comparison method violates its general contract!
-    at java.util.TimSort.mergeHi(TimSort.java:895)
-    at java.util.TimSort.mergeAt(TimSort.java:512)
-    at java.util.TimSort.mergeForceCollapse(TimSort.java:453)
-    at java.util.TimSort.sort(TimSort.java:250)
-    at java.util.Arrays.sort(Arrays.java:1435)
-    at java.util.Collections.sort(Collections.java:230)
-    at de.citec.sc.matoll.process.Matoll.main(Matoll.java:370)
-          */
-
-//
-//        Lexicon lexicon = new Lexicon();
-//
-//        LexiconEvaluation eval = new LexiconEvaluation();
-//
-//        FileWriter writer = new FileWriter(output);
-//
-//        for (int i=0; i < entries.size(); i++)
-//        {
-//                lexicon.addEntry(entries.get(i));
-//
-//                eval.setReferences(lexicon.getReferences());
-//
-//                eval.evaluate(lexicon,gold);
-//
-//                System.out.print("Considering entry "+entries.get(i)+"("+i+")\n");
-//
-//                writer.write(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping")+"\n");
-//
-//                System.out.println(i+"\t"+eval.getPrecision("lemma")+"\t"+eval.getRecall("lemma")+"\t"+eval.getFMeasure("lemma")+"\t"+eval.getPrecision("syntactic")+"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")+"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")+"\t"+eval.getFMeasure("mapping"));
-//
-//                writer.flush();
-//
-//        }
-//
-//        writer.close();
-
-
-
-        // System.out.print("Lexicon: "+output.toString()+" written out\n");
-    }
 }

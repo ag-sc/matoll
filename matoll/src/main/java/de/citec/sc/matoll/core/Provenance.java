@@ -41,10 +41,15 @@ public class Provenance {
     
     
     public Double getAvaerage_lenght() {
-        double avg = 0.0;
-        for(String sentence:Sentences)avg+=sentence.length();
-        avg = avg/Sentences.size();
-        return avg;
+        if(Sentences.isEmpty()) return 0.0;
+        else{
+            double avg = 0.0;
+            for(String sentence:Sentences)avg+=sentence.length();
+            avg = avg/Sentences.size();
+
+            return avg;
+        }
+        
     }
 
     public void setPatternset(HashSet<String> pattern) {
