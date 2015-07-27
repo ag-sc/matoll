@@ -3,7 +3,7 @@
 import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -15,7 +15,7 @@ public class test1 {
 	public static void main(String[] args) {
 		// This test class checks if the equals method works...
 		
-		LexiconWithFeatures lexicon = new LexiconWithFeatures();
+		Lexicon lexicon = new Lexicon();
 		
 		LexicalEntry entry = new LexicalEntry(Language.EN);
 		
@@ -38,7 +38,7 @@ public class test1 {
 		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","2"));
 		
                 entry.addSyntacticBehaviour(behaviour, sense);
-		lexicon.add(entry, new FeatureVector());
+		lexicon.addEntry(entry);
 		
 		entry = new LexicalEntry(Language.EN);
 		

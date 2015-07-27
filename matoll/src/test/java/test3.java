@@ -5,7 +5,6 @@ import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -20,7 +19,7 @@ public class test3 {
 		
 		List<LexicalEntry> marry_entries;
 		
-		LexiconWithFeatures lexicon = new LexiconWithFeatures();
+		Lexicon lexicon = new Lexicon();
 		
 		String gold_standard_lexicon = "../lexica/dbpedia_en.rdf";
 		
@@ -39,7 +38,7 @@ public class test3 {
 			if (!lexicon.contains(entry))
 			{
 //				entry.addSentence("This is the first sentence");
-				lexicon.add(entry, new FeatureVector());
+				lexicon.addEntry(entry);
 				System.out.print("Adding entry: "+entry+"\n");
 				System.out.print("Hashcode: "+entry.hashCode()+"\n");
 			}
@@ -75,7 +74,7 @@ public class test3 {
 		
 		System.out.print(entry);
 		
-		lexicon.add(entry,new FeatureVector());
+		lexicon.addEntry(entry);
 		
 		for (LexicalEntry myEntry: lexicon.getEntries())
 		{

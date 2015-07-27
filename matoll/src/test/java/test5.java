@@ -1,15 +1,7 @@
 import java.io.FileNotFoundException;
-import java.util.List;
 
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SenseArgument;
-import de.citec.sc.matoll.core.SyntacticArgument;
-import de.citec.sc.matoll.core.SyntacticBehaviour;
-import de.citec.sc.matoll.evaluation.LexiconEvaluation;
 import de.citec.sc.matoll.evaluation.LexiconEvaluationSimple;
 import de.citec.sc.matoll.io.LexiconLoader;
 
