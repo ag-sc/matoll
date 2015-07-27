@@ -110,12 +110,14 @@ public class WEKAclassifier {
             +"@attribute 'normalizedFrequency' numeric\n"
             +"@attribute 'averageLenght' numeric\n"
             +"@attribute 'overallRatioLabel' numeric\n"
+            +"@attribute 'numberPattern' numeric\n"
             +"@attribute 'class' {0,1}\n"
             +"@data\n";
         
         output = provenance.stream().map((prov) -> prov.getFrequency().toString()
                 +","+prov.getAvaerage_lenght().toString()
                 +","+prov.getOveralLabelRatio().toString()
+                +","+prov.getPatternset().size()
                 +","+prov.getAnnotation().toString()+"\n").reduce(output, String::concat);
         
         
