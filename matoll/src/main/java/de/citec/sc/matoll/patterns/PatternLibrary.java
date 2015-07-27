@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class PatternLibrary {
@@ -55,7 +55,7 @@ public class PatternLibrary {
          * @param model Model, containing a parsed sentence
          * @param lexicon Lexicon
          */
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon)
+	public void extractLexicalEntries(Model model, Lexicon lexicon)
 	{
 		for (SparqlPattern pattern: Patterns)
 		{

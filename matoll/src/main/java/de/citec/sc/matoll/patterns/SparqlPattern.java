@@ -8,7 +8,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public abstract class SparqlPattern {
@@ -19,7 +19,7 @@ public abstract class SparqlPattern {
 	
 	public abstract String getID();
 	
-	public abstract void extractLexicalEntries(Model model, LexiconWithFeatures lexicon); 
+	public abstract void extractLexicalEntries(Model model, Lexicon lexicon); 
 
 	public void setLemmatizer(Lemmatizer lemmatizer) {
 		

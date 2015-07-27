@@ -11,19 +11,11 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SenseArgument;
-import de.citec.sc.matoll.core.SimpleReference;
-import de.citec.sc.matoll.core.SyntacticArgument;
-import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import de.citec.sc.matoll.process.Matoll;
-import de.citec.sc.matoll.utils.Lemmatizer;
+
 
 public class SparqlPattern_EN_3 extends SparqlPattern {
 
@@ -95,11 +87,8 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 			+ "}";
 	
 	
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		FeatureVector vector = new FeatureVector();
-		
-		vector.add("freq",1.0);
-		vector.add(this.getID(),1.0);
+        @Override
+	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		List<String> sentences = this.getSentences(model);
 		
@@ -134,11 +123,12 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
                 qExec.close() ;
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getNounWithPrep(model, lexicon, vector, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Templates.getNounWithPrep(model, lexicon, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 	}
 
 
+        @Override
 	public String getID() {
 		return "SPARQLPattern_EN_3";
 	}

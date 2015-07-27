@@ -10,9 +10,8 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
@@ -43,12 +42,8 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 			+ "}";
 
 	
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		
-		FeatureVector vector = new FeatureVector();
-		
-		vector.add("freq",1.0);
-		vector.add(this.getID(),1.0);
+        @Override
+	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		List<String> sentences = this.getSentences(model);
 		
@@ -81,11 +76,12 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
                 qExec.close() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
-                    Templates.getTransitiveVerb(model, lexicon, vector, sentences, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Templates.getTransitiveVerb(model, lexicon, sentences, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 		
 	}
 
+        @Override
 	public String getID() {
 		return "SPARQLPattern_EN_1";
 	}

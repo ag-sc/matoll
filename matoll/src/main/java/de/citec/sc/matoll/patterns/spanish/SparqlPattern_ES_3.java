@@ -10,10 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
-
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
@@ -71,11 +69,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 	}
 
 	@Override
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		FeatureVector vector = new FeatureVector();
-
-		vector.add("freq",1.0);
-		vector.add(this.getID(),1.0);
+	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		List<String> sentences = this.getSentences(model);
 		
@@ -110,7 +104,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                 qExec.close() ;
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getNounWithPrep(model, lexicon, vector, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    Templates.getNounWithPrep(model, lexicon, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 	}

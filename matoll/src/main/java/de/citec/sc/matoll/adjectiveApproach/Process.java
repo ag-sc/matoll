@@ -17,12 +17,10 @@ import org.apache.jena.riot.RDFFormat;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
@@ -89,7 +87,7 @@ public class Process {
 		/*
 		 * Lexicon
 		 */
-		LexiconWithFeatures lexicon = new LexiconWithFeatures();
+		Lexicon lexicon = new Lexicon();
 		
 		
 		/*
@@ -237,7 +235,7 @@ public class Process {
 		
 	}
 
-	private static void createLexicalEntry(LexiconWithFeatures lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
+	private static void createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
                 LexicalEntry entry = new LexicalEntry(Language.EN);
 		entry.setCanonicalForm(adjective+"@en");
                 
@@ -288,12 +286,7 @@ public class Process {
 		entry.addProvenance(provenance,sense);
 		
 		if(distribution>=0.5&&!object_uri.contains("%")){
-                    //entry.addProvenance(provenance);
-                    FeatureVector vector = new FeatureVector();
-
-                    vector.add("freq",1.0);
-                    vector.add("adjective",1.0);
-                    lexicon.add(entry,vector);
+                    lexicon.addEntry(entry);
                 }
 		
 	}

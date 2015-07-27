@@ -260,6 +260,11 @@ public class LexicalEntry {
         }
 	
 
+        public int getOverallFrequency(){
+            int tmp_freq = 0;
+            tmp_freq = mappingReferenceProvenance.keySet().stream().map((sense) -> mappingReferenceProvenance.get(sense)).map((tmp_prov) -> tmp_prov.getFrequency()).reduce(tmp_freq, Integer::sum);
+            return tmp_freq;
+        }
 
 	public String getPOS() {
 		return POS;

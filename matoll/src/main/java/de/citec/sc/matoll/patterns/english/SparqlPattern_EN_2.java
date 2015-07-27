@@ -14,7 +14,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
@@ -110,7 +110,8 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 18	.	_	.	.	_	4	punct
 	 */
 	
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
+        @Override
+	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		FeatureVector vector = new FeatureVector();
 		
@@ -150,12 +151,13 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
                 qExec.close() ;
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getNounWithPrep(model, lexicon, vector, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Templates.getNounWithPrep(model, lexicon, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
                 
 				
 	}
 
+        @Override
 	public String getID() {
 		return "SPARQLPattern_EN_2";
 	}

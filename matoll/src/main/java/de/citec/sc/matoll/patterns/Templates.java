@@ -4,17 +4,10 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Sense;
@@ -23,14 +16,11 @@ import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Lemmatizer;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Templates {
 	
    
-	public static void getNoun(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getNoun(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
 
@@ -81,7 +71,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(noun)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -108,7 +98,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(noun)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -127,8 +117,7 @@ public class Templates {
 	
 	
 	
-	public static void getNounWithPrep(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String noun, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getNounWithPrep(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun_withPrep_"+preposition);
@@ -173,7 +162,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(noun)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -197,7 +186,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(noun)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -214,8 +203,7 @@ public class Templates {
 	}
 	
 	
-	public static void getAdjective(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String adjective, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getAdjective(Model model, Lexicon lexicon, List<String> sentences, String adjective, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_Adjective_withPrep_"+preposition);
@@ -258,7 +246,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(adjective)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -282,7 +270,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(adjective)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -302,8 +290,7 @@ public class Templates {
 	
 	
 	
-	public static void getTransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+	public static void getTransitiveVerb(Model model, Lexicon lexicon, List<String> sentences, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
             LexicalEntry entry = new LexicalEntry(language);
 
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_TransitiveVerb");
@@ -352,7 +339,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(verb)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -376,7 +363,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(verb)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -395,8 +382,7 @@ public class Templates {
 	
 	
 	
-	public static void getIntransitiveVerb(Model model, LexiconWithFeatures lexicon,
-			FeatureVector vector, List<String> sentences, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+	public static void getIntransitiveVerb(Model model, Lexicon lexicon,  List<String> sentences, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_IntransitiveVerb_withPrep_"+preposition);
@@ -444,7 +430,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(verb)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }
@@ -468,7 +454,7 @@ public class Templates {
                     entry.addProvenance(provenance,sense);
 
                     if(isAlpha(verb)){
-                        lexicon.add(entry, vector);
+                        lexicon.addEntry(entry);
 
                         //logger.debug("Found entry:"+entry+"\n");
                     }

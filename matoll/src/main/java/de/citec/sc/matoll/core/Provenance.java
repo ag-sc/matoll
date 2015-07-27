@@ -25,10 +25,19 @@ public class Provenance {
         Integer Frequency;
         HashSet<String> patternset = new HashSet<String>();
         
+
         List<String> Sentences = new ArrayList<String>();
 
     public HashSet<String> getPatternset() {
         return patternset;
+    }
+    
+    
+    public Double getAvaerage_lenght() {
+        double avg = 0.0;
+        for(String sentence:Sentences)avg+=sentence.length();
+        avg = avg/Sentences.size();
+        return avg;
     }
 
     public void setPatternset(HashSet<String> pattern) {

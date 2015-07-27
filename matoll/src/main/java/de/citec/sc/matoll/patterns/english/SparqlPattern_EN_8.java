@@ -11,13 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
+import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import de.citec.sc.matoll.process.Matoll;
-import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class SparqlPattern_EN_8 extends SparqlPattern {
 
@@ -53,12 +50,9 @@ public class SparqlPattern_EN_8 extends SparqlPattern {
 					+ "?e2 <own:senseArg> ?e2_arg. "
 					+ "}";
 
-	public void extractLexicalEntries(Model model, LexiconWithFeatures lexicon) {
-		FeatureVector vector = new FeatureVector();
-		
-		vector.add("freq",1.0);
-		vector.add(this.getID(),1.0);
-		
+        @Override
+	public void extractLexicalEntries(Model model, Lexicon lexicon) {
+
 		List<String> sentences = this.getSentences(model);
 		
 		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
@@ -92,11 +86,12 @@ public class SparqlPattern_EN_8 extends SparqlPattern {
                 qExec.close() ;
     
 		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getAdjective(model, lexicon, vector, sentences, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Templates.getAdjective(model, lexicon, sentences, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 
 	}
 
+        @Override
 	public String getID() {
 		return "SPARQLPattern_EN_8";
 	}

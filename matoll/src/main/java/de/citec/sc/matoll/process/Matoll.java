@@ -10,9 +10,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +22,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 //import core.
-import de.citec.sc.bimmel.learning.*;
 import de.citec.sc.bimmel.core.Dataset;
 import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.bimmel.core.Instance;
@@ -33,11 +29,8 @@ import de.citec.sc.bimmel.core.Label;
 
 
 
-import de.citec.sc.matoll.classifiers.FreqClassifier;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
-import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.evaluation.LexiconEvaluation;
 import de.citec.sc.matoll.io.Config;
@@ -57,6 +50,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import de.citec.sc.matoll.classifiers.WEKAclassifier;
 import de.citec.sc.matoll.core.Language;
 
 public class Matoll {
@@ -113,7 +107,7 @@ public class Matoll {
 		
 		}
 		
-		Classifier classifier;
+//		Classifier classifier;
 		
 		directory = args[1];
 		configFile = args[2];
@@ -161,17 +155,17 @@ public class Matoll {
 			}		
 		}
 		
-		if (classi.equals("de.citec.sc.matoll.classifiers.FreqClassifier"))
-		{
-			classifier = new FreqClassifier("freq", frequency);
-			System.out.print("Instantiating" + classifier.getClass() + "\n");
-		}
-		else
-		{
-			classifier = (Classifier) Class.forName(classi).newInstance();
-			System.out.print("Instantiating "+classifier.getClass()+ "\n");
-		}
-		
+//		if (classi.equals("de.citec.sc.matoll.classifiers.FreqClassifier"))
+//		{
+//			classifier = new FreqClassifier("freq", frequency);
+//			System.out.print("Instantiating" + classifier.getClass() + "\n");
+//		}
+//		else
+//		{
+//			classifier = (Classifier) Class.forName(classi).newInstance();
+//			System.out.print("Instantiating "+classifier.getClass()+ "\n");
+//		}
+//		
 		LexiconLoader loader = new LexiconLoader();
 //		
 //		logger.info("Loading lexicon from: "+gold_standard_lexicon+"\n");
@@ -181,7 +175,7 @@ public class Matoll {
 		
 		File folder = new File(directory);
 		
-		Lexicon lexicon;
+//		Lexicon lexicon;
                 
 		
 		// Creating preprocessor
@@ -189,8 +183,7 @@ public class Matoll {
 		ModelPreprocessor preprocessor = new ModelPreprocessor(language);
                 preprocessor.setCoreferenceResolution(coreference);
 				
-		LexiconWithFeatures lexiconwithFeatures = new LexiconWithFeatures();
-                //lexiconwithFeatures.setBaseURI("http://localhost:8080/");
+		Lexicon automatic_lexicon = new Lexicon();
 		
 
 		PatternLibrary library = new PatternLibrary();
@@ -237,7 +230,7 @@ public class Matoll {
 					preprocessor.preprocess(sentence,subj,obj);
 			
 					//logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
-					library.extractLexicalEntries(sentence, lexiconwithFeatures);
+					library.extractLexicalEntries(sentence, automatic_lexicon);
 				}
                                 model.close();
 				// FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
@@ -248,14 +241,14 @@ public class Matoll {
 		}
 		
 		logger.info("Extracted all entries \n");
-		logger.info("Lexicon contains "+Integer.toString(lexiconwithFeatures.getEntries().size())+" entries\n");
+		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
 		
 		LexiconSerialization serializer = new LexiconSerialization(language);
 		
                 
                 Model model = ModelFactory.createDefaultModel();
 		
-		serializer.serialize(lexiconwithFeatures, model);
+		serializer.serialize(automatic_lexicon, model);
 		
 		FileOutputStream out = new FileOutputStream(new File(output_lexicon.replace(".lex","_beforeTraining.ttl")));
 		
@@ -263,22 +256,24 @@ public class Matoll {
                 
                 out.close();
 		
+                
+                WEKAclassifier classifier = new WEKAclassifier(language);
 		
 		logger.info("Starting "+mode+"\n");	
 		boolean predict = true;
 		if (mode.equals("train"))
 		{
-                    doTraining(lexiconwithFeatures,gold,maxima,language, classifier);
+                    doTraining(automatic_lexicon,gold,maxima,language, classifier);
 		
 		}
                 else{
-                    doPrediction(lexiconwithFeatures, gold, classifier, output);
+                    doPrediction(automatic_lexicon, gold, classifier, output);
                 }
-		writeByReference(lexiconwithFeatures);
+		writeByReference(automatic_lexicon);
                 logger.info("Write lexicon to "+output_lexicon+"\n");
                 model = ModelFactory.createDefaultModel();
 
-                serializer.serialize(lexiconwithFeatures, model);
+                serializer.serialize(automatic_lexicon, model);
 
                 out = new FileOutputStream(new File(output_lexicon.replace(".lex",".ttl")));
 
@@ -509,7 +504,7 @@ public class Matoll {
         return false;
     }
 
-    private static void doTraining(LexiconWithFeatures lexiconwithFeatures,Lexicon gold, HashMap<String,Double> maxima, Language language, Classifier classifier) {
+    private static void doTraining(Lexicon lexicon,Lexicon gold, HashMap<String,Double> maxima, Language language, WEKAclassifier classifier) {
         Dataset trainingSet = new Dataset();
         FeatureVector vector;
 			
@@ -520,18 +515,18 @@ public class Matoll {
         int numNeg = 0;
 
         // get maxima
-        for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+        for (LexicalEntry entry: lexicon.getEntries())
         {
-                vector = lexiconwithFeatures.getFeatureVector(entry);
+//                vector = lexicon.getFeatureVector(entry);
 
-                for (String feature: vector.getFeatures())
-                {
-                        updateMaximum(feature,vector.getFeatureMap().get(feature),maxima);
-                }
+//                for (String feature: vector.getFeatures())
+//                {
+//                        updateMaximum(feature,vector.getFeatureMap().get(feature),maxima);
+//                }
 
         }
 
-        for (LexicalEntry entry: lexiconwithFeatures.getEntries())
+        for (LexicalEntry entry: lexicon.getEntries())
         {
 
                 //entry.setMappings(entry.computeMappings(entry.getSense()));
@@ -540,7 +535,7 @@ public class Matoll {
 
                 // System.out.println(entry);
 
-                vector = lexiconwithFeatures.getFeatureVector(entry);
+//                vector = lexicon.getFeatureVector(entry);
 
                 // preprocessing vector
 
@@ -556,10 +551,10 @@ public class Matoll {
                 if (goldContainsEntry(gold,entry, language))
                 {
                         //System.out.print("Lexicon contains "+entry+"\n");
-
-                        trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
-                        logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
-                        System.out.println("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+//
+//                        trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(1)));
+//                        logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
+//                        System.out.println("Adding training example: "+entry.getCanonicalForm()+" with label "+1);
                         numPos++;
 
                 }
@@ -570,9 +565,9 @@ public class Matoll {
 
                         if (numNeg < numPos)
                         {
-                                trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
-                                // logger.info("Adding training example: "+entry.toString()+"\n");
-                                logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
+//                                trainingSet.addInstance(new Instance(normalize(vector,maxima), new Label(0)));
+//                                // logger.info("Adding training example: "+entry.toString()+"\n");
+//                                logger.debug("Adding training example: "+entry.getCanonicalForm()+" with label "+0);
                                 numNeg++;
                         }
                 }
@@ -580,8 +575,8 @@ public class Matoll {
         }
 
         if (trainingSet.size() > 0)
-
-        classifier.train(trainingSet);
+            System.out.println("Do training");
+//        classifier.train(trainingSet);
 
         else
         {
@@ -592,15 +587,15 @@ public class Matoll {
         }
     }
 
-    private static void doPrediction(LexiconWithFeatures lexiconwithFeatures, Lexicon gold, Classifier classifier, String output) throws IOException {
+    private static void doPrediction(Lexicon lexiconwithFeatures, Lexicon gold, WEKAclassifier classifier, String output) throws IOException, Exception {
         FeatureVector vector;
         List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
         for (LexicalEntry entry: lexiconwithFeatures.getEntries())
         {
-                // System.out.println(entry);
-                vector = lexiconwithFeatures.getFeatureVector(entry);
-
-                logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
+//                // System.out.println(entry);
+//                vector = lexiconwithFeatures.getFeatureVector(entry);
+//
+//                logger.info("Prediction: for "+ entry.getCanonicalForm() + " is " +classifier.predict(vector)+"\n");
 
                 System.err.println("Adapt to new provenance style");
     //			if (classifier.predict(vector)==1)
