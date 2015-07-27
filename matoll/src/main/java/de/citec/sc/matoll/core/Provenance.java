@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 
 public class Provenance {
@@ -24,6 +23,14 @@ public class Provenance {
 	
         Integer Frequency;
         HashSet<String> patternset = new HashSet<String>();
+        
+        Integer Annotation = 0;
+        
+        Double OveralLabelRatio = 0.0;
+
+    
+
+    
         
 
         List<String> Sentences = new ArrayList<String>();
@@ -166,5 +173,21 @@ public class Provenance {
 		}
 		return sortedMap;
 	}
+        
+        public Integer getAnnotation() {
+            return Annotation;
+        }
+
+        public void setAnnotation(Integer Annotation) {
+            this.Annotation = Annotation;
+        }
+        
+        public Double getOveralLabelRatio() {
+            return OveralLabelRatio;
+        }
+
+        public void setOveralLabelRatio(Double OveralLabelRatio) {
+            this.OveralLabelRatio = OveralLabelRatio;
+        }
 	
 }
