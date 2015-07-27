@@ -481,6 +481,7 @@ public class LexiconLoader {
         String agent = "";
         Date starttime = null;
         Date endtime = null;
+        List<String> sentences = new ArrayList<String>();
         HashSet<String> patterns = new HashSet<String>();
         while (iter.hasNext()) {
              stmt = iter.next();
@@ -529,6 +530,27 @@ public class LexiconLoader {
                  /*
                  Add Pattern
                  */
+                 
+                 try{
+                     Statement stmt_pattern = activity.getProperty(PROVO.pattern);
+                     if (stmt_pattern != null) {
+                         patterns.add(activity.getProperty(PROVO.pattern).getString());
+                     }
+                     
+                 }
+                 catch(Exception e){};
+                 
+                 /*
+                 Add Sentences
+                 */
+                 try{
+                     Statement stmt_sentence = activity.getProperty(PROVO.sentence);
+                     if (stmt_sentence != null) {
+                         sentences.add(activity.getProperty(PROVO.sentence).getString());
+                     }
+                     
+                 }
+                 catch(Exception e){};
              }
         }
 
@@ -537,6 +559,7 @@ public class LexiconLoader {
         if(starttime!=null)provenance.setStartedAtTime(starttime);
         if(endtime!=null)provenance.setEndedAtTime(endtime);
         provenance.setPatternset(patterns);
+        provenance.setSentences(sentences);
                 
         
         return provenance;
