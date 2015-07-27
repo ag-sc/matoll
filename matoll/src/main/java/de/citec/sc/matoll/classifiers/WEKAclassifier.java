@@ -111,6 +111,7 @@ public class WEKAclassifier {
             +"@attribute 'averageLenght' numeric\n"
             +"@attribute 'overallRatioLabel' numeric\n"
             +"@attribute 'numberPattern' numeric\n"
+            +"@attribute 'overallRatioEntries' numeric\n"
             +"@attribute 'class' {0,1}\n"
             +"@data\n";
         
@@ -118,6 +119,7 @@ public class WEKAclassifier {
                 +","+prov.getAvaerage_lenght().toString()
                 +","+prov.getOveralLabelRatio().toString()
                 +","+prov.getPatternset().size()
+                +","+prov.getOverallPropertyEntryRatio()
                 +","+prov.getAnnotation().toString()+"\n").reduce(output, String::concat);
         
         

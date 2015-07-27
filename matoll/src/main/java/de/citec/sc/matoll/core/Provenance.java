@@ -27,11 +27,12 @@ public class Provenance {
         Integer Annotation = 0;
         
         Double OveralLabelRatio = 0.0;
-
-    
-
-    
         
+        /*
+        iterates over all entries and sums up all frequencys for a certain property.
+        This ratio is then the frequency of the current provenance, divided by the number from above
+        */
+        Double OverallPropertyEntryRatio = 0.0; 
 
         List<String> Sentences = new ArrayList<String>();
 
@@ -194,5 +195,13 @@ public class Provenance {
         public void setOveralLabelRatio(Double OveralLabelRatio) {
             this.OveralLabelRatio = OveralLabelRatio;
         }
+        public Double getOverallPropertyEntryRatio() {
+            return OverallPropertyEntryRatio;
+        }
+
+        public void setOverallPropertyEntryRatio(Double OverallPropertyEntryRatio) {
+            this.OverallPropertyEntryRatio = OverallPropertyEntryRatio;
+        }
+    
 	
 }

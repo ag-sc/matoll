@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jena.riot.RDFDataMgr;
@@ -34,6 +35,7 @@ public class Learning {
     
     public static void doTraining(Lexicon lexicon,Lexicon gold, HashMap<String,Double> maxima, Language language, WEKAclassifier weka_classifier, int value) throws IOException {
 
+        Map<String,Integer> lookup = getOverallFrequencyPerProperty(lexicon);
         List<Provenance> provenances = new ArrayList<>();
         List<Provenance> provenances_correct = new ArrayList<>();
         List<Provenance> provenances_wrong = new ArrayList<>();
@@ -44,6 +46,7 @@ public class Learning {
             entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
                 Reference ref = sense.getReference();
                 Provenance prov = entry.getProvenance(sense);
+                prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/lookup.get(ref.getURI()));
                 if(prov.getFrequency()>=value){
                     prov.setOveralLabelRatio(prov.getFrequency().doubleValue()/overall_frequency);
                     if (goldContainsEntry(gold,entry_cannoncical,pos,ref, language)) {
@@ -99,12 +102,14 @@ public class Learning {
     public static void doPrediction(Lexicon lexicon, Lexicon gold, WEKAclassifier classifier, String output, Language language) throws IOException, Exception {
        classifier.loadModel("matoll"+language.toString()+".model");
        
+       Map<String,Integer> lookup = getOverallFrequencyPerProperty(lexicon);
        Lexicon learned_lexicon = new Lexicon();
        for(LexicalEntry entry:lexicon.getEntries()){
            int overall_frequency = entry.getOverallFrequency();
            for(Sense sense : entry.getSenseBehaviours().keySet()){
                Provenance prov = entry.getProvenance(sense);
                prov.setOveralLabelRatio(prov.getFrequency().doubleValue()/overall_frequency);
+               prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/lookup.get(sense.getReference().getURI()));
                try {
                    HashMap<Integer, Double> result = classifier.predict(prov);
                    for(int key : result.keySet()){
@@ -170,6 +175,25 @@ public class Learning {
         new_entry.addProvenance(prov, sense);
         learned_lexicon.addEntry(new_entry);
         
+    }
+
+    private static Map<String, Integer> getOverallFrequencyPerProperty(Lexicon lexicon) {
+        Map<String,Integer> hm = new HashMap<>();
+        lexicon.getEntries().stream().forEach((entry) -> {
+            entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
+                int freq = entry.getProvenance(sense).getFrequency();
+                String uri = sense.getReference().getURI();
+                if(hm.containsKey(uri)){
+                    int value = hm.get(uri);
+                    hm.put(uri, value+freq);
+                }
+                else{
+                    hm.put(uri, freq);
+                }
+            });
+        });
+        
+        return hm;
     }
 
         
