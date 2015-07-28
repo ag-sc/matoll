@@ -17,7 +17,10 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
 import weka.core.Instance;
@@ -40,9 +43,9 @@ public class WEKAclassifier {
         this.Language=language;
     }
 
-    public void train(List<Provenance> provenances) throws IOException {
+    public void train(List<Provenance> provenances,Set<String> pattern_lookup,Set<String> pos_lookup) throws IOException {
         String path = "matoll"+Language.toString()+".arff";
-        writeVectors(provenances,path);
+        writeVectors(provenances,path,pattern_lookup,pos_lookup);
         Instances inst = new Instances(new BufferedReader(new FileReader(path)));
          inst.setClassIndex(inst.numAttributes() - 1);
          try {
@@ -61,7 +64,7 @@ public class WEKAclassifier {
     
 
 
-    public HashMap<Integer, Double> predict(Provenance provenance) throws IOException, Exception {
+    public HashMap<Integer, Double> predict(Provenance provenance,Set<String> pattern_lookup,Set<String> pos_lookup) throws IOException, Exception {
         
         /*
         we want predict that the entry is true
@@ -69,7 +72,7 @@ public class WEKAclassifier {
         provenance.setAnnotation(1);
         List<Provenance> tmp_prov = new ArrayList<Provenance>();
         tmp_prov.add(provenance);
-        writeVectors(tmp_prov,"tmp.arff");
+        writeVectors(tmp_prov,"tmp.arff",pattern_lookup, pos_lookup);
         
         ArffLoader loader = new ArffLoader();
         loader.setFile(new File("tmp.arff"));
@@ -105,22 +108,37 @@ public class WEKAclassifier {
         this.cls = (Classifier) weka.core.SerializationHelper.read(file);
     }
 
-    private void writeVectors(List<Provenance> provenance, String path) {
+    private void writeVectors(List<Provenance> provenance, String path,Set<String> pattern_lookup,Set<String> pos_lookup) {
         String output ="@relation matoll\n"
             +"@attribute 'normalizedFrequency' numeric\n"
             +"@attribute 'averageLenght' numeric\n"
             +"@attribute 'overallRatioLabel' numeric\n"
             +"@attribute 'numberPattern' numeric\n"
-            +"@attribute 'overallRatioEntries' numeric\n"
-            +"@attribute 'class' {0,1}\n"
+            +"@attribute 'overallRatioEntries' numeric\n";
+        output = pattern_lookup.stream().map((p) -> "@attribute '"+p+"' {0,1}\n").reduce(output, String::concat);
+        output = pos_lookup.stream().map((s) -> "@attribute 'pos_"+s.split("#")[1]+"' {0,1}\n").reduce(output, String::concat);
+        output+="@attribute 'class' {0,1}\n"
             +"@data\n";
         
-        output = provenance.stream().map((prov) -> prov.getFrequency().toString()
+        for(Provenance prov:provenance){
+            output+=prov.getFrequency().toString()
                 +","+prov.getAvaerage_lenght().toString()
                 +","+prov.getOveralLabelRatio().toString()
                 +","+prov.getPatternset().size()
-                +","+prov.getOverallPropertyEntryRatio()
-                +","+prov.getAnnotation().toString()+"\n").reduce(output, String::concat);
+                +","+prov.getOverallPropertyEntryRatio();
+            HashSet<String> patterns = prov.getPatternset();
+            for(String p:pattern_lookup){
+                if(patterns.contains(p)) output+=",1";
+                else output+=",0";
+            }
+            for(String p:pos_lookup){
+                if(prov.getPOS().equals(p)) output+=",1";
+                else output+=",0";
+            }
+            output+=","+prov.getAnnotation().toString()+"\n";
+            
+        }
+            
         
         
         PrintWriter writer;

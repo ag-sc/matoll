@@ -14,27 +14,30 @@ import java.util.Map;
 
 public class Provenance {
 
-	String Agent;
-	
-	Date StartedAtTime;
-	Date EndedAtTime;
-	
-	Double Confidence;
-	
-        Integer Frequency;
-        HashSet<String> patternset = new HashSet<String>();
-        
-        Integer Annotation = 0;
-        
-        Double OveralLabelRatio = 0.0;
-        
-        /*
-        iterates over all entries and sums up all frequencys for a certain property.
-        This ratio is then the frequency of the current provenance, divided by the number from above
-        */
-        Double OverallPropertyEntryRatio = 0.0; 
+    String Agent;
 
-        List<String> Sentences = new ArrayList<String>();
+    Date StartedAtTime;
+    Date EndedAtTime;
+
+    Double Confidence;
+
+    String POS;
+
+
+    Integer Frequency;
+    HashSet<String> patternset = new HashSet<String>();
+
+    Integer Annotation = 0;
+
+    Double OveralLabelRatio = 0.0;
+
+    /*
+    iterates over all entries and sums up all frequencys for a certain property.
+    This ratio is then the frequency of the current provenance, divided by the number from above
+    */
+    Double OverallPropertyEntryRatio = 0.0; 
+
+    List<String> Sentences = new ArrayList<>();
 
     public HashSet<String> getPatternset() {
         return patternset;
@@ -202,6 +205,14 @@ public class Provenance {
         public void setOverallPropertyEntryRatio(Double OverallPropertyEntryRatio) {
             this.OverallPropertyEntryRatio = OverallPropertyEntryRatio;
         }
+        public String getPOS() {
+            return POS;
+        }
+
+        public void setPOS(String POS) {
+            this.POS = POS;
+        }
+        
     
 	
 }

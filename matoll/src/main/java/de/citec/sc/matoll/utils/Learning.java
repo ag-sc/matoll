@@ -20,8 +20,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jena.riot.RDFDataMgr;
@@ -35,7 +37,10 @@ public class Learning {
     
     public static void doTraining(Lexicon lexicon,Lexicon gold, HashMap<String,Double> maxima, Language language, WEKAclassifier weka_classifier, int value) throws IOException {
 
-        Map<String,Integer> lookup = getOverallFrequencyPerProperty(lexicon);
+        Map<String,Integer> frequency_lookup = new HashMap<>();
+        Set<String> pattern_lookup = new HashSet<>();
+        Set<String> pos_lookup = new HashSet<>();
+        getInformationAboutLexicon(lexicon,frequency_lookup,pattern_lookup,pos_lookup);
         List<Provenance> provenances = new ArrayList<>();
         List<Provenance> provenances_correct = new ArrayList<>();
         List<Provenance> provenances_wrong = new ArrayList<>();
@@ -46,9 +51,10 @@ public class Learning {
             entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
                 Reference ref = sense.getReference();
                 Provenance prov = entry.getProvenance(sense);
-                prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/lookup.get(ref.getURI()));
+                prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/frequency_lookup.get(ref.getURI()));
                 if(prov.getFrequency()>=value){
                     prov.setOveralLabelRatio(prov.getFrequency().doubleValue()/overall_frequency);
+                    prov.setPOS(pos);
                     if (goldContainsEntry(gold,entry_cannoncical,pos,ref, language)) {
                         prov.setAnnotation(1);
                         provenances_correct.add(prov);
@@ -75,7 +81,7 @@ public class Learning {
                 provenances.addAll(provenances_wrong);
             }
            
-            weka_classifier.train(provenances);
+            weka_classifier.train(provenances,pattern_lookup,pos_lookup);
         }
 
         else
@@ -102,16 +108,20 @@ public class Learning {
     public static void doPrediction(Lexicon lexicon, Lexicon gold, WEKAclassifier classifier, String output, Language language) throws IOException, Exception {
        classifier.loadModel("matoll"+language.toString()+".model");
        
-       Map<String,Integer> lookup = getOverallFrequencyPerProperty(lexicon);
+        Map<String,Integer> frequency_lookup = new HashMap<>();
+        Set<String> pattern_lookup = new HashSet<>();
+        Set<String> pos_lookup = new HashSet<>();
+        getInformationAboutLexicon(lexicon,frequency_lookup,pattern_lookup,pos_lookup);
        Lexicon learned_lexicon = new Lexicon();
        for(LexicalEntry entry:lexicon.getEntries()){
            int overall_frequency = entry.getOverallFrequency();
            for(Sense sense : entry.getSenseBehaviours().keySet()){
                Provenance prov = entry.getProvenance(sense);
                prov.setOveralLabelRatio(prov.getFrequency().doubleValue()/overall_frequency);
-               prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/lookup.get(sense.getReference().getURI()));
+               prov.setOverallPropertyEntryRatio(prov.getFrequency().doubleValue()/frequency_lookup.get(sense.getReference().getURI()));
+               prov.setPOS(entry.getPOS());
                try {
-                   HashMap<Integer, Double> result = classifier.predict(prov);
+                   HashMap<Integer, Double> result = classifier.predict(prov,pattern_lookup,pos_lookup);
                    for(int key : result.keySet()){
                        if(key==1){
                            addEntryWithSense(learned_lexicon,entry,sense,result.get(key), prov,language);
@@ -120,7 +130,7 @@ public class Learning {
                } catch (Exception ex) {
                    Logger.getLogger(Learning.class.getName()).log(Level.SEVERE, null, ex);
                }
-           };
+           }
        }
        
        LexiconSerialization serializer = new LexiconSerialization(language);
@@ -177,23 +187,30 @@ public class Learning {
         
     }
 
-    private static Map<String, Integer> getOverallFrequencyPerProperty(Lexicon lexicon) {
-        Map<String,Integer> hm = new HashMap<>();
+    private static void getInformationAboutLexicon(Lexicon lexicon,Map<String,Integer> frequency_lookup,
+           Set<String> pattern_lookup,Set<String> pos_lookup) {
         lexicon.getEntries().stream().forEach((entry) -> {
+            
+            String pos = entry.getPOS();
+            pos_lookup.add(pos);
             entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
                 int freq = entry.getProvenance(sense).getFrequency();
                 String uri = sense.getReference().getURI();
-                if(hm.containsKey(uri)){
-                    int value = hm.get(uri);
-                    hm.put(uri, value+freq);
+                if(frequency_lookup.containsKey(uri)){
+                    int value = frequency_lookup.get(uri);
+                    frequency_lookup.put(uri, value+freq);
                 }
                 else{
-                    hm.put(uri, freq);
+                    frequency_lookup.put(uri, freq);
                 }
+                entry.getProvenance(sense).getPatternset().stream().forEach((p) -> {
+                    pattern_lookup.add(p);
+                });
+                
             });
         });
         
-        return hm;
+
     }
 
         
