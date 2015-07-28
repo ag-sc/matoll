@@ -179,7 +179,7 @@ public class Learning {
         LexicalEntry new_entry = new LexicalEntry(language);
         prov.setConfidence(confidence);
         new_entry.setCanonicalForm(old_entry.getCanonicalForm());
-        new_entry.setPOS(old_entry.getCanonicalForm());
+        new_entry.setPOS(old_entry.getPOS());
         new_entry.setURI(old_entry.getURI());
         new_entry.addAllSyntacticBehaviour(old_entry.getSenseBehaviours().get(sense), sense);
         new_entry.addProvenance(prov, sense);
