@@ -3,7 +3,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.LexiconWithFeatures;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
@@ -31,7 +30,7 @@ public class Auswertung {
 	public static void main(String[] args) throws FileNotFoundException {
 		// This test class checks if the equals method works...
 		
-                LexiconWithFeatures lexicon = new LexiconWithFeatures();
+                Lexicon lexicon = new Lexicon();
 		LexiconLoader loader = new LexiconLoader();
 		
                 String path = "/Users/swalter/Documents/results_matoll_july_2015/";
@@ -39,7 +38,9 @@ public class Auswertung {
                 Lexicon set2 = loader.loadFromFile(path+"set2.ttl");
                 Lexicon set3 = loader.loadFromFile(path+"set3.ttl");
                 Lexicon set4 = loader.loadFromFile(path+"set4.ttl");
-                Lexicon es_partial = loader.loadFromFile(path+"es_partial.ttl");
+                //Lexicon es_partial = loader.loadFromFile(path+"es_partial.ttl");
+                Lexicon es_partial = loader.loadFromFile(path+"dbpedia2014_ES_Full_beforeTraining.ttl");
+                
                 Lexicon de_full = loader.loadFromFile(path+"de_full.ttl");
                 Lexicon adjectives = loader.loadFromFile("/Users/swalter/Desktop/adjectives.ttl");
 //                
@@ -119,6 +120,10 @@ public class Auswertung {
                 System.out.println("#properties_adjective:"+properties_adjective.size());
                 System.out.println("#properties es:"+properties_es.size());
                 System.out.println("#properties de:"+properties_de.size());
+                properties_en.addAll(properties_de);
+                properties_en.addAll(properties_es);
+                properties_en.addAll(properties_adjective);
+                System.out.println("#overallProperties:"+properties_en.size());
                 
 //                List<List<String>> properties = new ArrayList<List<String>>();
 //            try {

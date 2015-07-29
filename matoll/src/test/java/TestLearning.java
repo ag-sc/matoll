@@ -6,9 +6,11 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.evaluation.LexiconEvaluationSimple;
+import de.citec.sc.matoll.evaluation.VerySimpleLexiconEvaluation;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.utils.Learning;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -26,7 +28,7 @@ public class TestLearning {
         Lexicon automatic = loader.loadFromFile("/Users/swalter/Documents/resultsFirstTraining/resultsFirstTraining/dbpedia2014Full_new_beforeTraining.ttl");
         
         WEKAclassifier classifier = new WEKAclassifier(Language.EN);
-        Learning.doTraining(automatic, gold, null, Language.EN, classifier,1);        
+        Learning.doTraining(automatic, gold, null, Language.EN, classifier,4);        
         Learning.doPrediction(automatic, gold, classifier, null, Language.EN);
         
         Lexicon learned = loader.loadFromFile("learned_lexiconEN.ttl");
@@ -86,6 +88,7 @@ public class TestLearning {
             }
          }
         System.out.println();
+        System.out.println("LexiconEvaluationSimple:");
         System.out.println("With gold:");
         eval.evaluate(automatic,gold);
         System.out.println("Automatic => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
@@ -100,6 +103,27 @@ public class TestLearning {
         
         eval.evaluate(learned,new_gold);
         System.out.println("Learned => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
+        
+        
+        
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("VerySimpleLexiconEvaluation:");
+        System.out.println("With gold:");
+        List<Double> result = VerySimpleLexiconEvaluation.evaluate(automatic,gold);
+        System.out.println("Automatic => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
+        
+        result = VerySimpleLexiconEvaluation.evaluate(learned,gold);
+        System.out.println("Learned => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
+        
+        System.out.println();
+        System.out.println("With reduced gold:");
+        result = VerySimpleLexiconEvaluation.evaluate(automatic,new_gold);
+        System.out.println("Automatic => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
+        
+        result = VerySimpleLexiconEvaluation.evaluate(learned,new_gold);
+        System.out.println("Learned => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
         
 
 
