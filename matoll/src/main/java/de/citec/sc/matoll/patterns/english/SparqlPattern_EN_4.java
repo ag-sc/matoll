@@ -114,7 +114,6 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -124,7 +123,6 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

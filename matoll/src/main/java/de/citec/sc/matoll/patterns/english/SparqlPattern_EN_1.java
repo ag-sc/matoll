@@ -112,7 +112,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -122,7 +121,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

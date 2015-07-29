@@ -84,7 +84,6 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -94,7 +93,6 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

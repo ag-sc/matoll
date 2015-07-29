@@ -79,7 +79,6 @@ x verb y - ohne preposition
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -88,7 +87,6 @@ x verb y - ohne preposition
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

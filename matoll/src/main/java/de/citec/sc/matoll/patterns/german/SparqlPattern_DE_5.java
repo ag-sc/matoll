@@ -122,7 +122,6 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -131,7 +130,6 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

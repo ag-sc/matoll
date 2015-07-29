@@ -103,8 +103,6 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
-
                          try{
                                  noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
@@ -113,7 +111,6 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

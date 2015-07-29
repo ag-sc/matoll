@@ -84,7 +84,6 @@ sentence:Yangtze River Express wurde am 15. Januar 2003 gegründet .
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -94,7 +93,6 @@ sentence:Yangtze River Express wurde am 15. Januar 2003 gegründet .
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

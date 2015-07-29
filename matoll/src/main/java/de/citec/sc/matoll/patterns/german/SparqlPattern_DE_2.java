@@ -78,7 +78,6 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -88,7 +87,6 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

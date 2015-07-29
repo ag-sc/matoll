@@ -85,7 +85,6 @@ sentence:Haywood war zudem mit dem Model Iman Abdulmajid , der heutigen Ehefrau 
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -95,7 +94,6 @@ sentence:Haywood war zudem mit dem Model Iman Abdulmajid , der heutigen Ehefrau 
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

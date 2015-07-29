@@ -131,7 +131,6 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -141,7 +140,6 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

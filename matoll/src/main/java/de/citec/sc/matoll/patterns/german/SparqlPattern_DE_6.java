@@ -140,7 +140,6 @@ sentence:Der Big Stone Lake ist die Quelle des Minnesota River , einem 534 km la
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -149,7 +148,6 @@ sentence:Der Big Stone Lake ist die Quelle des Minnesota River , einem 534 km la
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

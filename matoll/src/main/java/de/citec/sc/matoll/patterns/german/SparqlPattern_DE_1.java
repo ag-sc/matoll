@@ -73,7 +73,6 @@ Assuming Board is obj
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -83,7 +82,6 @@ Assuming Board is obj
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

@@ -153,7 +153,6 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
 
                          try{
                                  noun = qs.get("?lemma").toString();
@@ -163,7 +162,6 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

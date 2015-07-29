@@ -66,8 +66,6 @@ public class SparqlPattern_EN_8 extends SparqlPattern {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
-
                          try{
                                  adjective = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
@@ -76,7 +74,6 @@ public class SparqlPattern_EN_8 extends SparqlPattern {
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

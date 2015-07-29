@@ -100,8 +100,6 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
 
-                         // System.out.print("Query 3 matched\n!!!");
-
                          try{
                                  noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
@@ -110,7 +108,6 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
-	        		 //ignore those without Frequency TODO:Check Source of Error
                         }
                      }
                 }

@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
+import weka.classifiers.functions.Logistic;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -32,14 +33,19 @@ import weka.core.converters.ArffLoader;
  * @author swalter
  */
 public class WEKAclassifier {
-    SMO smo;
+//    SMO smo;
+    Logistic log;
     Classifier cls;
     Language Language;
     
     public WEKAclassifier(Language language) throws Exception{
-        this.smo = new SMO();
-        this.smo.setOptions(weka.core.Utils.splitOptions("-M"));
-        this.cls = smo; 
+//        this.smo = new SMO();
+//        this.smo.setOptions(weka.core.Utils.splitOptions("-M"));
+//        this.cls = smo; 
+        
+        this.log = new Logistic();
+//        this.log.setOptions(weka.core.Utils.splitOptions("-M"));
+        this.cls = log; 
         this.Language=language;
     }
 
