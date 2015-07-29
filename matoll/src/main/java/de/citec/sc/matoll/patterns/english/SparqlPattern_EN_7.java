@@ -48,6 +48,9 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 	
 	
 // pci: Why is this not the same as Pattern 4 ???	
+        /*
+        Pattern 4 contains a relation verb, which is not needed according to this pattern. But of course things, which have a verb, do also match.
+        */
 	
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE"
 			+ "{ "
