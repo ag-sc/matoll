@@ -83,30 +83,33 @@ Neuer parse:
 	
 	// intransitive + pp
 	// Constraint: no direct object
-	
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			
-			+ "?verb <conll:postag> ?verb_pos . "
-			+ "FILTER regex(?verb_pos, \"VMI\") ."
-			+ "?verb <conll:lemma> ?lemma . "
-			
-			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:deprel> \"SUBJ\". "
-			
-			+ "?p <conll:head> ?verb . "
-			+ "?p <conll:postag> ?prep_pos . "
-			+ "FILTER regex(?prep_pos, \"SPS\") ."
-			+ "?p <conll:lemma> ?prep . "
-			// can be OBLC as well
-			+ "?p <conll:deprel> \"MOD\" ."
-		
+	@Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"COMP\" . "
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+                            + "?verb <conll:postag> ?verb_pos . "
+                            + "FILTER regex(?verb_pos, \"VMI\") ."
+                            + "?verb <conll:lemma> ?lemma . "
+
+                            + "?e1 <conll:head> ?verb . "
+                            + "?e1 <conll:deprel> \"SUBJ\". "
+
+                            + "?p <conll:head> ?verb . "
+                            + "?p <conll:postag> ?prep_pos . "
+                            + "FILTER regex(?prep_pos, \"SPS\") ."
+                            + "?p <conll:lemma> ?prep . "
+                            // can be OBLC as well
+                            + "?p <conll:deprel> \"MOD\" ."
+
+
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> \"COMP\" . "
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
         /*
         TODO Es darf nichts geben, was unter dem Verb hängt. Negation
         */
@@ -121,7 +124,7 @@ Neuer parse:
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

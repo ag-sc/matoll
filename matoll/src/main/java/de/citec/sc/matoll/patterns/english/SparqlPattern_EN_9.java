@@ -19,27 +19,32 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 
 	Logger logger = LogManager.getLogger(SparqlPattern_EN_9.class.getName());
 	
-	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
-			+ "{?y <conll:cpostag> \"VB\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBD\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBP\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBZ\" .}"
-			+ "?y <conll:form> ?lemma . "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> ?deprel. "
-			+ "FILTER regex(?deprel, \"subj\") ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"prep\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?y. "
-			+ "?e2 <conll:form> ?dobj_form. "
-			+ "?e2 <conll:deprel> \"dobj\"."
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+	public String getQuery() {
+            String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+                            + "{?y <conll:cpostag> \"VB\" .}"
+                            + "UNION"
+                            + "{?y <conll:cpostag> \"VBD\" .}"
+                            + "UNION"
+                            + "{?y <conll:cpostag> \"VBP\" .}"
+                            + "UNION"
+                            + "{?y <conll:cpostag> \"VBZ\" .}"
+                            + "?y <conll:form> ?lemma . "
+                            + "?e1 <conll:head> ?y . "
+                            + "?e1 <conll:deprel> ?deprel. "
+                            + "FILTER regex(?deprel, \"subj\") ."
+                            + "?p <conll:head> ?y . "
+                            + "?p <conll:deprel> \"prep\" . "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?y. "
+                            + "?e2 <conll:form> ?dobj_form. "
+                            + "?e2 <conll:deprel> \"dobj\"."
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
+                
 
 	
         @Override
@@ -47,7 +52,7 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

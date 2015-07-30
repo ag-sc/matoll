@@ -72,30 +72,33 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 	
 	// omit ?prep
 	
-	// */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE {"
-			
-			+ "?verb <conll:postag> ?verb_pos ."
-			+ "FILTER regex(?verb_pos, \"VMIS\") ."
-            + "?verb <conll:lemma> ?lemma ."
-			
-			+ "?se <conll:lemma> \"se\" ."
-			+ "?se <conll:deprel> \"DO\" ."
-			+ "?se <conll:head> ?verb ."
+	@Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE {"
 
-			+ "?e1 <conll:head> ?verb."
-			+ "?e1 <conll:deprel> \"SUBJ\" ."
+                            + "?verb <conll:postag> ?verb_pos ."
+                            + "FILTER regex(?verb_pos, \"VMIS\") ."
+                + "?verb <conll:lemma> ?lemma ."
 
-			+ "?coord <conll:head> ?e1 ."
-			+ "?coord <conll:deprel> \"COORD\" ."
-			+ "?coord <conll:lemma> \"y\" ."
-			
-			+ "?e2 <conll:head> ?coord ."
-			+ "?e2 <conll:deprel> \"CONJ\" ."
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+                            + "?se <conll:lemma> \"se\" ."
+                            + "?se <conll:deprel> \"DO\" ."
+                            + "?se <conll:head> ?verb ."
+
+                            + "?e1 <conll:head> ?verb."
+                            + "?e1 <conll:deprel> \"SUBJ\" ."
+
+                            + "?coord <conll:head> ?e1 ."
+                            + "?coord <conll:deprel> \"COORD\" ."
+                            + "?coord <conll:lemma> \"y\" ."
+
+                            + "?e2 <conll:head> ?coord ."
+                            + "?e2 <conll:deprel> \"CONJ\" ."
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	// we need a new construction for casar+se, wrong type currently selected
         //https://en.wiktionary.org/wiki/casarse
@@ -113,7 +116,7 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

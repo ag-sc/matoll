@@ -39,29 +39,33 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 	// further checks need to be done here actually, but using the adjective as before was clearly wrong
 	// ideally we would check that the adjective actually directly follows the noun
 	
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			+ "?adjective <conll:lemma> ?lemma . "
-			+ "?adjective <conll:head> ?blank . "
-			+ "?adjective <conll:deprel> \"MOD\" . "
-			+ "?adjective <conll:postag> \"AQ0FS0\". "
-			+ "?noun <conll:head> ?noun. "
-			+ "?noun <conll:deprel> \"ATR\". "
-			+ "?verb <conll:postag> ?verb_pos . "
-			+ "FILTER regex(?verb_pos, \"VS\") ."
-			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
-			+ "FILTER regex(?e1_grammar, \"SUBJ\") ."
-			+ "?p <conll:head> ?blank . "
-			+ "?p <conll:deprel> \"MOD\". "
-			+ "?p <conll:postag> \"SPS00\". "
-			+ "?p <conll:lemma> ?prep . "
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:cpostag> \"n\" . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER regex(?e2_grammar, \"COMP\") ."
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+                            + "?adjective <conll:lemma> ?lemma . "
+                            + "?adjective <conll:head> ?blank . "
+                            + "?adjective <conll:deprel> \"MOD\" . "
+                            + "?adjective <conll:postag> \"AQ0FS0\". "
+                            + "?noun <conll:head> ?noun. "
+                            + "?noun <conll:deprel> \"ATR\". "
+                            + "?verb <conll:postag> ?verb_pos . "
+                            + "FILTER regex(?verb_pos, \"VS\") ."
+                            + "?e1 <conll:head> ?verb . "
+                            + "?e1 <conll:deprel> ?e1_grammar . "
+                            + "FILTER regex(?e1_grammar, \"SUBJ\") ."
+                            + "?p <conll:head> ?blank . "
+                            + "?p <conll:deprel> \"MOD\". "
+                            + "?p <conll:postag> \"SPS00\". "
+                            + "?p <conll:lemma> ?prep . "
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:cpostag> \"n\" . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER regex(?e2_grammar, \"COMP\") ."
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	@Override
 	public String getID() {
@@ -73,7 +77,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

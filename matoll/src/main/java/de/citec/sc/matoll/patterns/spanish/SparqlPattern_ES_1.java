@@ -45,19 +45,23 @@ public class SparqlPattern_ES_1 extends SparqlPattern{
 
 x verb y - ohne preposition
 	 */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
-			+ "?verb <conll:postag> ?pos . "
-			//POSTAG nach VM prüfen Verbos principales (Hauptverb)
-			+ "FILTER regex(?pos, \"VMI\") ."
-			+ "?verb <conll:lemma> ?lemma . "
-			+ "?subj <conll:head> ?verb . "
-			+ "?subj <conll:deprel> \"SUBJ\". "
-			+ "?dobj <conll:head> ?verb . "
-			+ "?dobj <conll:deprel> \"DO\" . "
-			
-			+ "?subj <own:senseArg> ?e1_arg. "
-			+ "?dobj <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
+                            + "?verb <conll:postag> ?pos . "
+                            //POSTAG nach VM prüfen Verbos principales (Hauptverb)
+                            + "FILTER regex(?pos, \"VMI\") ."
+                            + "?verb <conll:lemma> ?lemma . "
+                            + "?subj <conll:head> ?verb . "
+                            + "?subj <conll:deprel> \"SUBJ\". "
+                            + "?dobj <conll:head> ?verb . "
+                            + "?dobj <conll:deprel> \"DO\" . "
+
+                            + "?subj <own:senseArg> ?e1_arg. "
+                            + "?dobj <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	@Override
 	public String getID() {
@@ -69,7 +73,7 @@ x verb y - ohne preposition
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

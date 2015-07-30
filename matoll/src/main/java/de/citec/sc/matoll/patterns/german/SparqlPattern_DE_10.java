@@ -38,27 +38,31 @@ sentence:Yangtze River Express wurde am 15. Januar 2003 gegründet .
 10	.	.	$.	$.	_	0	root	_	_ 	
 ----------------------
 	 */
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"
-			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
-			+ "FILTER regex(?e1_grammar, \"subj\") ."
-			+ "?y <conll:cpostag> \"V\" . "
-			+ "?y <conll:deprel> ?lemma_grammar . "
-			+ "FILTER( regex(?lemma_grammar, \"aux\"))"
-			+ "?y <conll:lemma> ?lemma . "
-			+ "?y <conll:head> ?verb . "
-			+ "?verb <conll:cpostag> \"V\" ."
-			//+ "?verb <conll:lemma> \"sein\" ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"pp\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-			+ "?e2 <conll:form> ?e2_form . "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"
+                            + "?e1 <conll:head> ?verb . "
+                            + "?e1 <conll:deprel> ?e1_grammar . "
+                            + "FILTER regex(?e1_grammar, \"subj\") ."
+                            + "?y <conll:cpostag> \"V\" . "
+                            + "?y <conll:deprel> ?lemma_grammar . "
+                            + "FILTER( regex(?lemma_grammar, \"aux\"))"
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?y <conll:head> ?verb . "
+                            + "?verb <conll:cpostag> \"V\" ."
+                            //+ "?verb <conll:lemma> \"sein\" ."
+                            + "?p <conll:head> ?y . "
+                            + "?p <conll:deprel> \"pp\" . "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
+                            + "?e2 <conll:form> ?e2_form . "
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 
 	
@@ -73,7 +77,7 @@ sentence:Yangtze River Express wurde am 15. Januar 2003 gegründet .
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

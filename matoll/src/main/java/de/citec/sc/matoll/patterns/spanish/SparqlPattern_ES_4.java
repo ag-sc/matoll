@@ -41,34 +41,37 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
 	
 // Constraint: not embedded in a further prepositional phrase, too noisy
 	
-	
-			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-		
-					+ "?noun <conll:postag> ?lemma_pos . "
-					+ "FILTER regex(?lemma_pos, \"NC\") ."
-					+ "?noun <conll:lemma> ?lemma . "
-					
-					+ "?p <conll:head> ?noun ."
-					+ "?p <conll:postag> ?prep_pos ."
-					+ "FILTER regex(?prep_pos, \"SPS\") ."
-					+ "?p <conll:deprel> \"COMP\" ."
-					+ "?p <conll:lemma> ?prep ."
-					
-					+ "?e1 <conll:head> ?p ."
-					+ "?e1 <conll:deprel> \"COMP\" ."
-					
-					// can be MOD or COMP, choosing "MOD" for now
-					+ "?e2 <conll:head> ?e1."
-					+ "?e2 <conll:deprel> ?e2_deprel."
-					+ "FILTER regex(?e2_deprel, \"MOD\") ."
+	@Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 
-					+ "?comma <conll:lemma> \",\". "
-					+ "?comma <conll:deprel> \"punct\". "
-					+ "?comma <conll:head> ?e1 ."
-					
-					+ "?e1 <own:senseArg> ?e1_arg. "
-					+ "?e2 <own:senseArg> ?e2_arg. "
-					+ "}";
+                            + "?noun <conll:postag> ?lemma_pos . "
+                            + "FILTER regex(?lemma_pos, \"NC\") ."
+                            + "?noun <conll:lemma> ?lemma . "
+
+                            + "?p <conll:head> ?noun ."
+                            + "?p <conll:postag> ?prep_pos ."
+                            + "FILTER regex(?prep_pos, \"SPS\") ."
+                            + "?p <conll:deprel> \"COMP\" ."
+                            + "?p <conll:lemma> ?prep ."
+
+                            + "?e1 <conll:head> ?p ."
+                            + "?e1 <conll:deprel> \"COMP\" ."
+
+                            // can be MOD or COMP, choosing "MOD" for now
+                            + "?e2 <conll:head> ?e1."
+                            + "?e2 <conll:deprel> ?e2_deprel."
+                            + "FILTER regex(?e2_deprel, \"MOD\") ."
+
+                            + "?comma <conll:lemma> \",\". "
+                            + "?comma <conll:deprel> \"punct\". "
+                            + "?comma <conll:head> ?e1 ."
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	@Override
 	public String getID() {
 		return "SPARQLPattern_ES_4";
@@ -79,7 +82,7 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

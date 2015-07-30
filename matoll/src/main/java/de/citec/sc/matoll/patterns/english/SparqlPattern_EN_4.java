@@ -70,31 +70,35 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 	
 		Logger logger = LogManager.getLogger(SparqlPattern_EN_4.class.getName());
 
-		String query = "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
-				+"{ "
-				+"{ ?y <conll:cpostag> \"NN\" . } "
-				+ " UNION "
-				+"{ ?y <conll:cpostag> \"NNS\" . } "
-				+ " UNION "
-				+"{ ?y <conll:cpostag> \"NNP\" . } "
-				+ "?y <conll:form> ?lemma . "
-				+"OPTIONAL{"
-				+ "?lemma_nn <conll:head> ?y. "
-				+ "?lemma_nn <conll:form> ?prefix. "
-				+ "?lemma_nn <conll:deprel> \"nn\"."
-				+"} "
-				+ "?verb <conll:head> ?y . "
-				+ "?verb <conll:deprel> \"cop\" ."
-				+ "?e1 <conll:head> ?y . "
-				+ "?e1 <conll:deprel> \"nsubj\" . "
-				+ "?p <conll:head> ?y . "
-				+ "?p <conll:deprel> \"prep\" . "
-				+ "?p <conll:form> ?prep . "
-				+ "?e2 <conll:head> ?p . "
-				+ "?e2 <conll:deprel> \"pobj\" . "
-				+ "?e1 <own:senseArg> ?e1_arg. "
-				+ "?e2 <own:senseArg> ?e2_arg. "
-				+ "}";
+        @Override
+    public String getQuery() {
+        String query = "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
+                        +"{ "
+                        +"{ ?y <conll:cpostag> \"NN\" . } "
+                        + " UNION "
+                        +"{ ?y <conll:cpostag> \"NNS\" . } "
+                        + " UNION "
+                        +"{ ?y <conll:cpostag> \"NNP\" . } "
+                        + "?y <conll:form> ?lemma . "
+                        +"OPTIONAL{"
+                        + "?lemma_nn <conll:head> ?y. "
+                        + "?lemma_nn <conll:form> ?prefix. "
+                        + "?lemma_nn <conll:deprel> \"nn\"."
+                        +"} "
+                        + "?verb <conll:head> ?y . "
+                        + "?verb <conll:deprel> \"cop\" ."
+                        + "?e1 <conll:head> ?y . "
+                        + "?e1 <conll:deprel> \"nsubj\" . "
+                        + "?p <conll:head> ?y . "
+                        + "?p <conll:deprel> \"prep\" . "
+                        + "?p <conll:form> ?prep . "
+                        + "?e2 <conll:head> ?p . "
+                        + "?e2 <conll:deprel> \"pobj\" . "
+                        + "?e1 <own:senseArg> ?e1_arg. "
+                        + "?e2 <own:senseArg> ?e2_arg. "
+                        + "}";
+        return query;
+    }
 		
 		
 
@@ -103,7 +107,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

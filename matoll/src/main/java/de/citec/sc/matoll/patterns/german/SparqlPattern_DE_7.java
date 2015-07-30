@@ -47,27 +47,31 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 	20	.	.	$.	$.	_	0	root	_	_ 	
 	----------------------
 	 */
-			String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg WHERE{"
-					+ "?e1 <conll:deprel> ?e1_grammar . "
-					+ "FILTER regex(?e1_grammar, \"subj\") ."
-					+ "?e1 <conll:head> ?verb . "
-					+ "?verb <conll:cpostag> \"V\" . "
-					+ "?y <conll:head> ?verb . "
-					+ "?y <conll:postag> ?lemma_pos . "
-					+ "FILTER regex(?lemma_pos, \"ADJ\") ."
-					+ "?y <conll:lemma> ?lemma . "
-					+ "?p <conll:head> ?verb . "
-					+ "?p <conll:deprel> \"pp\" . "
-					+ "?p <conll:form> ?prep . "
-					+ "?e2 <conll:head> ?p . "
-					+ "?e2 <conll:deprel> ?e2_grammar . "
-					+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-					//+ "{?e2 <conll:deprel> \"pn\" . }"
-					//+ "UNION"
-					//+ "FILTER regex(?e2_grammar, \"obj\") ."
-					+ "?e1 <own:senseArg> ?e1_arg. "
-					+ "?e2 <own:senseArg> ?e2_arg. "
-					+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg WHERE{"
+                            + "?e1 <conll:deprel> ?e1_grammar . "
+                            + "FILTER regex(?e1_grammar, \"subj\") ."
+                            + "?e1 <conll:head> ?verb . "
+                            + "?verb <conll:cpostag> \"V\" . "
+                            + "?y <conll:head> ?verb . "
+                            + "?y <conll:postag> ?lemma_pos . "
+                            + "FILTER regex(?lemma_pos, \"ADJ\") ."
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?p <conll:head> ?verb . "
+                            + "?p <conll:deprel> \"pp\" . "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
+                            //+ "{?e2 <conll:deprel> \"pn\" . }"
+                            //+ "UNION"
+                            //+ "FILTER regex(?e2_grammar, \"obj\") ."
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 			
 	
 	
@@ -81,7 +85,7 @@ public class SparqlPattern_DE_7 extends SparqlPattern{
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String adjective = null;
                 String e1_arg = null;

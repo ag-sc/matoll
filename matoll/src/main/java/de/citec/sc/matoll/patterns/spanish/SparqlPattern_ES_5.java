@@ -107,30 +107,34 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 
 	äquivalent zu englisch query 2
 	 */
-			String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-					
-			+ "?comma <conll:lemma> \",\". "
-			+ "?comma <conll:deprel> \"punct\". "
-			+ "?comma <conll:head> ?e1 ."		
-					
-			+ "?noun <conll:postag> ?lemma_pos . "
-			+ "FILTER regex(?lemma_pos, \"NC\") ."
-			+ "?noun <conll:lemma> ?lemma . "
-			+ "?noun <conll:head> ?e1 ."
-			
-			+ "?p <conll:head> ?noun ."
-			+ "?p <conll:deprel> \"COMP\" ."
-			+ "?p <conll:postag> ?prep_pos ."
-			+ "FILTER regex(?prep_pos, \"SPS\") ."
-			+ "?p <conll:lemma> ?prep ."
-			
-			+ "?e2 <conll:head> ?p ."
-			+ "?e2 <conll:deprel> ?e1_deprel ."
-			+ "FILTER regex(?e1_deprel, \"COMP\") ."
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+
+            + "?comma <conll:lemma> \",\". "
+            + "?comma <conll:deprel> \"punct\". "
+            + "?comma <conll:head> ?e1 ."		
+
+            + "?noun <conll:postag> ?lemma_pos . "
+            + "FILTER regex(?lemma_pos, \"NC\") ."
+            + "?noun <conll:lemma> ?lemma . "
+            + "?noun <conll:head> ?e1 ."
+
+            + "?p <conll:head> ?noun ."
+            + "?p <conll:deprel> \"COMP\" ."
+            + "?p <conll:postag> ?prep_pos ."
+            + "FILTER regex(?prep_pos, \"SPS\") ."
+            + "?p <conll:lemma> ?prep ."
+
+            + "?e2 <conll:head> ?p ."
+            + "?e2 <conll:deprel> ?e1_deprel ."
+            + "FILTER regex(?e1_deprel, \"COMP\") ."
+
+            + "?e1 <own:senseArg> ?e1_arg. "
+            + "?e2 <own:senseArg> ?e2_arg. "
+            + "}";
+            return query;
+        }
 			
 	@Override
 	public String getID() {
@@ -142,7 +146,7 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

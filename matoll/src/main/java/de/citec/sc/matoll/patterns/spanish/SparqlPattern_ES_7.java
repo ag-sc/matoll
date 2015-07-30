@@ -44,32 +44,35 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
         // X verheiratet sich mit Y
         // -> Reflexiv 
         // X heiratete Y -> Transitive
-        
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			+ "?verb <conll:cpostag> ?verb_pos ."
-			+ "?verb <conll:lemma> ?lemma ."
-			+ "FILTER regex(?verb_pos, \"VMIS\") ."
-			
-			// "DO" can also be "MPAS"
-			+ "?se <conll:lemma> \"se\" ."
-			+ "?se <conll:deprel> \"DO\" ."
-			+ "?se <conll:head> ?verb ."
-			
-			+ "?e1 <conll:head> ?verb."
-			+ "?e1 <conll:deprel> \"SUBJ\" ."
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+                            + "?verb <conll:cpostag> ?verb_pos ."
+                            + "?verb <conll:lemma> ?lemma ."
+                            + "FILTER regex(?verb_pos, \"VMIS\") ."
 
-			
-			// can be OBLC instead of MOD
-			+ "?p <conll:head> ?verb."
-			+ "?p <conll:deprel> \"MOD\" ."
-			+ "?p <conll:lemma> ?prep. "
-		
-			+ "?e2 <conll:head> ?p."
-			+ "?e2 <conll:deprel> \"COMP \"."
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+                            // "DO" can also be "MPAS"
+                            + "?se <conll:lemma> \"se\" ."
+                            + "?se <conll:deprel> \"DO\" ."
+                            + "?se <conll:head> ?verb ."
+
+                            + "?e1 <conll:head> ?verb."
+                            + "?e1 <conll:deprel> \"SUBJ\" ."
+
+
+                            // can be OBLC instead of MOD
+                            + "?p <conll:head> ?verb."
+                            + "?p <conll:deprel> \"MOD\" ."
+                            + "?p <conll:lemma> ?prep. "
+
+                            + "?e2 <conll:head> ?p."
+                            + "?e2 <conll:deprel> \"COMP \"."
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 			
 	@Override
 	public String getID() {
@@ -81,7 +84,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

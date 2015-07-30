@@ -42,35 +42,39 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
 //10	Calgary	calgary	n	NP00000	_	9	COMP	_	_
 //11	.	.	f	Fp	_	10	punct	_	_
 
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-			
-			+ "?copula <conll:lemma> \"estar\" ."
-			+ "?copula <conll:postag> ?copula_pos ."
-			+ "FILTER regex(?copula_pos, \"VAIP\") ."
-			
-			
-			+ "?participle <conll:postag> ?participle_pos . "
-			+ "FILTER regex(?participle_pos, \"VMP\") ."
-			+ "?participle <conll:lemma> ?lemma . "
-			+ "?participle <conll:head> ?copula . "
-			+ "?participle <conll:deprel> \"ATR\" . "
-			
-			+ "?e1 <conll:head> ?copula . "
-			+ "?e1 <conll:deprel> \"SUBJ\". "
-			
-			+ "?p <conll:head> ?participle . "
-			+ "?p <conll:postag> ?prep_pos . "
-			+ "FILTER regex(?prep_pos, \"SPS\") ."
-			+ "?p <conll:lemma> ?prep . "
-			// can be OBLC as well
-			+ "?p <conll:deprel> \"BYAG\" ."
-		
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"COMP\" . "
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+
+                            + "?copula <conll:lemma> \"estar\" ."
+                            + "?copula <conll:postag> ?copula_pos ."
+                            + "FILTER regex(?copula_pos, \"VAIP\") ."
+
+
+                            + "?participle <conll:postag> ?participle_pos . "
+                            + "FILTER regex(?participle_pos, \"VMP\") ."
+                            + "?participle <conll:lemma> ?lemma . "
+                            + "?participle <conll:head> ?copula . "
+                            + "?participle <conll:deprel> \"ATR\" . "
+
+                            + "?e1 <conll:head> ?copula . "
+                            + "?e1 <conll:deprel> \"SUBJ\". "
+
+                            + "?p <conll:head> ?participle . "
+                            + "?p <conll:postag> ?prep_pos . "
+                            + "FILTER regex(?prep_pos, \"SPS\") ."
+                            + "?p <conll:lemma> ?prep . "
+                            // can be OBLC as well
+                            + "?p <conll:deprel> \"BYAG\" ."
+
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> \"COMP\" . "
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 			
 	@Override
 	public String getID() {
@@ -82,7 +86,7 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
 
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

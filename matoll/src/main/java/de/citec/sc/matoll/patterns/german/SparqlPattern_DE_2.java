@@ -38,23 +38,26 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
 12	Partei	Partei	N	NN	Fem|Akk|Sg	10	app	_
 	 */
 	
-	
-	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
-			+ "?y <conll:cpostag> \"V\" ."
-			//VVFIN
-			+ "?y <conll:lemma> ?lemma . "
-			+ "?e1 <conll:head> ?p . "
-			+ "?e1 <conll:deprel> ?deprel. "
-			+ "FILTER regex(?deprel, \"pn\") ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"pp\" . "
-			+" ?p <conll:postag> \"APPRART\". "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> \"obja\" . "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+	@Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+                            + "?y <conll:cpostag> \"V\" ."
+                            //VVFIN
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?e1 <conll:head> ?p . "
+                            + "?e1 <conll:deprel> ?deprel. "
+                            + "FILTER regex(?deprel, \"pn\") ."
+                            + "?p <conll:head> ?y . "
+                            + "?p <conll:deprel> \"pp\" . "
+                            +" ?p <conll:postag> \"APPRART\". "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?y . "
+                            + "?e2 <conll:deprel> \"obja\" . "
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	
 	@Override
@@ -67,7 +70,7 @@ sentence:Am 19. Februar 1979 gründeten die Gefolgsleute Chomeinis die Islamisch
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

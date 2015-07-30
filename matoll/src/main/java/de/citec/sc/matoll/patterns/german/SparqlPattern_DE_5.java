@@ -81,23 +81,27 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
 30	.	.	$.	$.	_	0	root	_	_ 	*/
 
 
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE{"
-			+ "?e1 <conll:form> ?e1_form . "
-			+ "?y <conll:deprel> \"app\" . "
-			+ "?y <conll:cpostag> \"N\" . "
-			+ "?y <conll:lemma> ?lemma . "
-			+ "{?y <conll:head> ?e1 . }"
-			+ "UNION"
-			+ "{?e1 <conll:head> ?y }. "
-			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-			//+ "FILTER regex(?e2_grammar, \"obj\") ."
-			//+ "UNION"
-			//+ "{FILTER regex(?e2_grammar, \"gmod\") .}"
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE{"
+                            + "?e1 <conll:form> ?e1_form . "
+                            + "?y <conll:deprel> \"app\" . "
+                            + "?y <conll:cpostag> \"N\" . "
+                            + "?y <conll:lemma> ?lemma . "
+                            + "{?y <conll:head> ?e1 . }"
+                            + "UNION"
+                            + "{?e1 <conll:head> ?y }. "
+                            + "?e2 <conll:head> ?y . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
+                            //+ "FILTER regex(?e2_grammar, \"obj\") ."
+                            //+ "UNION"
+                            //+ "{FILTER regex(?e2_grammar, \"gmod\") .}"
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+           return query;
+        }
 	
 	
 	
@@ -112,7 +116,7 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

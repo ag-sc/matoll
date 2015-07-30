@@ -50,6 +50,9 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	23	II	_	NNP	NNP	_	21	pobj
 	24	.	_	.	.	_	12	punct
 	----------------------*/
+        
+        @Override
+    public String getQuery() {
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
@@ -70,6 +73,8 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 			+ "?e1 <own:senseArg> ?e1_arg . "
 			+ "?e2 <own:senseArg> ?e2_arg . "
 			+ "}";
+        return query;
+    }
 	
 	
 
@@ -78,7 +83,7 @@ public class SparqlPattern_EN_6 extends SparqlPattern {
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		List<String> sentences = this.getSentences(model);
-                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;

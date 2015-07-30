@@ -96,26 +96,29 @@ sentence:Der Big Stone Lake ist die Quelle des Minnesota River , einem 534 km la
 11	,	,	$,	$,	_	0	root	_	_ 
 
 */
-	
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE{"
-			+ "?e1 <conll:head> ?verb . "
-			+ "?e1 <conll:deprel> ?e1_grammar . "
-			//+ "FILTER regex(?e1_grammar, \"subj\") ."
-			+ "FILTER( regex(?e1_grammar, \"obj\") || regex(?e1_grammar, \"subj\"))"
-			+ "?y <conll:cpostag> ?lemma_pos . "
-			+ "?y <conll:cpostag> \"N\" . "
-			+ "?y <conll:deprel> \"pred\" . "
-			+ "FILTER( regex(?lemma_grammar, \"subj\") || regex(?lemma_grammar, \"pred\"))"
-			+ "?y <conll:lemma> ?lemma . "
-			+ "?y <conll:head> ?verb . "
-			+ "?verb <conll:cpostag> \"V\" ."
-			+ "?verb <conll:lemma> \"sein\" ."
-			+ "?e2 <conll:head> ?y . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+	@Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE{"
+                            + "?e1 <conll:head> ?verb . "
+                            + "?e1 <conll:deprel> ?e1_grammar . "
+                            //+ "FILTER regex(?e1_grammar, \"subj\") ."
+                            + "FILTER( regex(?e1_grammar, \"obj\") || regex(?e1_grammar, \"subj\"))"
+                            + "?y <conll:cpostag> ?lemma_pos . "
+                            + "?y <conll:cpostag> \"N\" . "
+                            + "?y <conll:deprel> \"pred\" . "
+                            + "FILTER( regex(?lemma_grammar, \"subj\") || regex(?lemma_grammar, \"pred\"))"
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?y <conll:head> ?verb . "
+                            + "?verb <conll:cpostag> \"V\" ."
+                            + "?verb <conll:lemma> \"sein\" ."
+                            + "?e2 <conll:head> ?y . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	
 	
@@ -130,7 +133,7 @@ sentence:Der Big Stone Lake ist die Quelle des Minnesota River , einem 534 km la
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

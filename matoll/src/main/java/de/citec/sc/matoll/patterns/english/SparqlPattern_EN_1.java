@@ -19,26 +19,7 @@ public class SparqlPattern_EN_1 extends SparqlPattern {
 
 	Logger logger = LogManager.getLogger(SparqlPattern_EN_1.class.getName());
 	
-	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
-			+ "{?y <conll:cpostag> \"VB\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBD\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBP\" .}"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"VBZ\" .}"
-			+ "?y <conll:form> ?lemma . "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> ?deprel. "
-			+ "FILTER regex(?deprel, \"subj\") ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"prep\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"pobj\". "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+
 	
 	/*
 entity1_form:jobs
@@ -95,13 +76,36 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 34      .       _       .       .       _       3       punct
 
 */
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+                    + "{?y <conll:cpostag> \"VB\" .}"
+                    + "UNION"
+                    + "{?y <conll:cpostag> \"VBD\" .}"
+                    + "UNION"
+                    + "{?y <conll:cpostag> \"VBP\" .}"
+                    + "UNION"
+                    + "{?y <conll:cpostag> \"VBZ\" .}"
+                    + "?y <conll:form> ?lemma . "
+                    + "?e1 <conll:head> ?y . "
+                    + "?e1 <conll:deprel> ?deprel. "
+                    + "FILTER regex(?deprel, \"subj\") ."
+                    + "?p <conll:head> ?y . "
+                    + "?p <conll:deprel> \"prep\" . "
+                    + "?p <conll:form> ?prep . "
+                    + "?e2 <conll:head> ?p . "
+                    + "?e2 <conll:deprel> \"pobj\". "
+                    + "?e1 <own:senseArg> ?e1_arg. "
+                    + "?e2 <own:senseArg> ?e2_arg. "
+                    + "}";
+            return query;
+        }
 	
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
 		List<String> sentences = this.getSentences(model);
-                
   
-                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;
@@ -139,5 +143,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	public String getID() {
 		return "SPARQLPattern_EN_1";
 	}
+
 
 }

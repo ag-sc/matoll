@@ -63,28 +63,31 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 
 	 */
 
-	
-	
-	String query = "SELECT ?lemma ?prefix ?prep ?e1_arg ?e2_arg  WHERE {"
-			+ "{?y <conll:cpostag> \"NN\" . }"
-			+ "UNION"
-			+ "{?y <conll:cpostag> \"NNS\" . }"
-			+ "?y <conll:form> ?lemma . "
-			+"OPTIONAL{"
-			+ "?modifier <conll:head> ?y. "
-			+ "?modifier <conll:form> ?prefix. "
-			+ "?modifier <conll:deprel> \"nn\"."
-			+"} "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> \"appos\"."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"prep\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> \"pobj\". "
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+    
+        @Override
+        public String getQuery() {	
+            String query = "SELECT ?lemma ?prefix ?prep ?e1_arg ?e2_arg  WHERE {"
+                            + "{?y <conll:cpostag> \"NN\" . }"
+                            + "UNION"
+                            + "{?y <conll:cpostag> \"NNS\" . }"
+                            + "?y <conll:form> ?lemma . "
+                            +"OPTIONAL{"
+                            + "?modifier <conll:head> ?y. "
+                            + "?modifier <conll:form> ?prefix. "
+                            + "?modifier <conll:deprel> \"nn\"."
+                            +"} "
+                            + "?e1 <conll:head> ?y . "
+                            + "?e1 <conll:deprel> \"appos\"."
+                            + "?p <conll:head> ?y . "
+                            + "?p <conll:deprel> \"prep\" . "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> \"pobj\". "
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	
         @Override
@@ -92,7 +95,7 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

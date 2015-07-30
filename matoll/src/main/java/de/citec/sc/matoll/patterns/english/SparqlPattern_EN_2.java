@@ -29,6 +29,8 @@ public class SparqlPattern_EN_2 extends SparqlPattern {
 
 	Logger logger = LogManager.getLogger(SparqlPattern_EN_2.class.getName());
 	
+    @Override
+    public String getQuery() {
 	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
 			+ "{?y <conll:deprel> \"appos\".} UNION {?y <conll:deprel> \"dep\".}"
 			+ "?y <conll:form> ?lemma . "
@@ -49,6 +51,8 @@ public class SparqlPattern_EN_2 extends SparqlPattern {
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
+        return query;
+    }
 	
 	/*
 	 * 
@@ -120,7 +124,7 @@ sentence:Ann was later named after Lady Anne Hyde the first wife of King James I
 		
 		List<String> sentences = this.getSentences(model);
                 
-                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

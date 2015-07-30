@@ -13,11 +13,12 @@ import de.citec.sc.matoll.utils.Lemmatizer;
 
 public abstract class SparqlPattern {
 	
-
 	protected Lemmatizer Lemmatizer;
         
 	
 	public abstract String getID();
+        
+        public abstract String getQuery();
 	
 	public abstract void extractLexicalEntries(Model model, Lexicon lexicon); 
 
@@ -77,6 +78,7 @@ public abstract class SparqlPattern {
 		
 		return null;
 
-	}	
+        }
+        
 	
 }

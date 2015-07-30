@@ -55,31 +55,35 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 
 	 * 
 	 */
-	String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"
+        @Override
+        public String getQuery() {
+            String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE {"
 
-			+ "?e1 <conll:head> ?estar ."
-			+ "?e1 <conll:deprel> \"SUBJ\"."
-			
-			+ "?estar <conll:lemma> \"estar\" ."
-			+ "?estar <conll:cpostag> ?pos ."
-			+ "FILTER regex(?pos, \"VAIS\") ."
+                            + "?e1 <conll:head> ?estar ."
+                            + "?e1 <conll:deprel> \"SUBJ\"."
 
-			+ "?participle <conll:lemma> ?lemma ."
-			+ "?participle <conll:head> ?estar ."
-			+ "?participle <conll:deprel> \"ATR\". "
-			
-			+ "?p <conll:lemma> ?prep ."
-			+ "?p <conll:head> ?participle ."
-			+ "?p <conll:deprel> \"OBLC\" ."
-			
-			
-			+ "?e2 <conll:head> ?p ."
-			+ "?e2 <conll:deprel> \"COMP\"."
-			
-			
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+                            + "?estar <conll:lemma> \"estar\" ."
+                            + "?estar <conll:cpostag> ?pos ."
+                            + "FILTER regex(?pos, \"VAIS\") ."
+
+                            + "?participle <conll:lemma> ?lemma ."
+                            + "?participle <conll:head> ?estar ."
+                            + "?participle <conll:deprel> \"ATR\". "
+
+                            + "?p <conll:lemma> ?prep ."
+                            + "?p <conll:head> ?participle ."
+                            + "?p <conll:deprel> \"OBLC\" ."
+
+
+                            + "?e2 <conll:head> ?p ."
+                            + "?e2 <conll:deprel> \"COMP\"."
+
+
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 			
 	@Override
 	public String getID() {
@@ -91,7 +95,7 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String adjective = null;
                 String e1_arg = null;

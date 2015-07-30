@@ -31,35 +31,39 @@ public class SparqlPattern_ES_2b extends SparqlPattern{
 	7	.	.	f	Fp	_	6	punct	_	_
 
 	 */
-			String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-					
-					+ "?copula <conll:postag> ?pos . "
-					// can be VSII1S0 or "v"
-					+ "FILTER regex(?pos, \"VSI\") ."
-					+ "?copula <conll:lemma> \"ser\" ."
-					
-					+ "?noun <conll:lemma> ?lemma . "
-					+ "?noun <conll:head> ?copula . "
-					+ "?noun <conll:cpostag> \"n\" . "
-					+ "?noun <conll:deprel> \"ATR\" ."
-					
-					// can be also COMP
-					+ "?p <conll:deprel> \"COMP\" . "
-					+ "?p <conll:postag> ?prep_pos ."
-					+ "FILTER regex(?prep_pos, \"SPS\") ."
-					+ "?p <conll:head> ?noun . "
-					+ "?p <conll:lemma> ?prep . "
-					
-					+ "?subj <conll:head> ?copula . "
-					+ "?subj <conll:deprel> \"SUBJ\" . "
-					
-					+ "?pobj <conll:head> ?p . "
-					+ "?pobj <conll:deprel> \"COMP\" . "
-					
-					+ "?subj <own:senseArg> ?e1_arg. "
-					+ "?pobj <own:senseArg> ?e2_arg. "
-					+ "}";
-	
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+
+                            + "?copula <conll:postag> ?pos . "
+                            // can be VSII1S0 or "v"
+                            + "FILTER regex(?pos, \"VSI\") ."
+                            + "?copula <conll:lemma> \"ser\" ."
+
+                            + "?noun <conll:lemma> ?lemma . "
+                            + "?noun <conll:head> ?copula . "
+                            + "?noun <conll:cpostag> \"n\" . "
+                            + "?noun <conll:deprel> \"ATR\" ."
+
+                            // can be also COMP
+                            + "?p <conll:deprel> \"COMP\" . "
+                            + "?p <conll:postag> ?prep_pos ."
+                            + "FILTER regex(?prep_pos, \"SPS\") ."
+                            + "?p <conll:head> ?noun . "
+                            + "?p <conll:lemma> ?prep . "
+
+                            + "?subj <conll:head> ?copula . "
+                            + "?subj <conll:deprel> \"SUBJ\" . "
+
+                            + "?pobj <conll:head> ?p . "
+                            + "?pobj <conll:deprel> \"COMP\" . "
+
+                            + "?subj <own:senseArg> ?e1_arg. "
+                            + "?pobj <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
+                        
 	@Override
 	public String getID() {
 		return "SPARQLPattern_ES_2b";
@@ -70,7 +74,7 @@ public class SparqlPattern_ES_2b extends SparqlPattern{
 		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

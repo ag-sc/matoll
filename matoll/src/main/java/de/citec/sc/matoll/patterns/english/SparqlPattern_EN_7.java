@@ -51,7 +51,8 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
         /*
         Pattern 4 contains a relation verb, which is not needed according to this pattern. But of course things, which have a verb, do also match.
         */
-	
+    @Override
+    public String getQuery() {
 	String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
@@ -87,12 +88,14 @@ sentence:Deshabandu Professor Nandadasa Kodagoda MRCP , MD was the former Vice C
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "
 			+ "}";
+        return query;
+    }
 	
         @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {		
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;
                 String e1_arg = null;

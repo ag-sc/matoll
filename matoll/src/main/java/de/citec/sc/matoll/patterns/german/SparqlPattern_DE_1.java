@@ -33,23 +33,27 @@ sentence:Lakshmi Niwas Mittal sitzt im Board of Directors von Goldman Sachs .
 Assuming Board is obj
 */
 	//Verb + prep
-	String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
-			+ "?y <conll:cpostag> ?lemma_pos . "
-			+ "?y <conll:cpostag> \"V\" ."
-			//Filter auf nicht VA
-			+ "?y <conll:lemma> ?lemma . "
-			+ "?e1 <conll:head> ?y . "
-			+ "?e1 <conll:deprel> ?deprel. "
-			+ "FILTER regex(?deprel, \"subj\") ."
-			+ "?p <conll:head> ?y . "
-			+ "?p <conll:deprel> \"pp\" . "
-			+ "?p <conll:form> ?prep . "
-			+ "?e2 <conll:head> ?p . "
-			+ "?e2 <conll:deprel> ?e2_grammar . "
-			+ "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-			+ "?e1 <own:senseArg> ?e1_arg. "
-			+ "?e2 <own:senseArg> ?e2_arg. "
-			+ "}";
+        @Override
+        public String getQuery() {
+            String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+                            + "?y <conll:cpostag> ?lemma_pos . "
+                            + "?y <conll:cpostag> \"V\" ."
+                            //Filter auf nicht VA
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?e1 <conll:head> ?y . "
+                            + "?e1 <conll:deprel> ?deprel. "
+                            + "FILTER regex(?deprel, \"subj\") ."
+                            + "?p <conll:head> ?y . "
+                            + "?p <conll:deprel> \"pp\" . "
+                            + "?p <conll:form> ?prep . "
+                            + "?e2 <conll:head> ?p . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
+                            + "?e1 <own:senseArg> ?e1_arg. "
+                            + "?e2 <own:senseArg> ?e2_arg. "
+                            + "}";
+            return query;
+        }
 	
 	
 	@Override
@@ -62,7 +66,7 @@ Assuming Board is obj
 
 		List<String> sentences = this.getSentences(model);
 		
-		QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;
