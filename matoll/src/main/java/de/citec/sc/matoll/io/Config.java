@@ -72,6 +72,8 @@ public class Config {
 	Language Language = EN;
 	Integer numItems;
 	String Frequency;
+        String BaseUri;
+
 	
 	List<SparqlPattern> Patterns = null;
 	
@@ -176,6 +178,11 @@ public class Config {
 			if (node.getNodeName().equals("Classifier"))
 			{
 				this.Classifier = node.getTextContent();
+			}
+                        
+                        if (node.getNodeName().equals("BaseURI"))
+			{
+				this.BaseUri = node.getTextContent();
 			}
 			
 			if (node.getNodeName().equals("OutputLexicon"))
@@ -325,5 +332,9 @@ public class Config {
 		
 		return null;
 	}
+        
+        public String getBaseUri() {
+            return BaseUri;
+        }
 
 }

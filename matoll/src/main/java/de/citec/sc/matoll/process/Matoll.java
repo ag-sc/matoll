@@ -177,6 +177,7 @@ public class Matoll {
                 preprocessor.setCoreferenceResolution(coreference);
 				
 		Lexicon automatic_lexicon = new Lexicon();
+                if(config.getBaseUri()!=null) automatic_lexicon.setBaseURI(config.getBaseUri());
 		
 
 		PatternLibrary library = new PatternLibrary();
@@ -239,7 +240,7 @@ public class Matoll {
 		logger.info("Extracted all entries \n");
 		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
 		
-		LexiconSerialization serializer = new LexiconSerialization(language);
+		LexiconSerialization serializer = new LexiconSerialization(language,library.getPatternSparqlMapping());
 		
                 
                 Model model = ModelFactory.createDefaultModel();

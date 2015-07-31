@@ -7,10 +7,14 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PatternLibrary {
 
 	List<SparqlPattern> Patterns;
+        Map<String,String> PatternSparqlMapping = new HashMap<>();
+
 	
 
 	Lemmatizer Lemmatizer;
@@ -68,8 +72,15 @@ public class PatternLibrary {
 
 	public void setPatterns(List<SparqlPattern> patterns) {
 		Patterns = patterns;
+                patterns.stream().forEach((p) -> {
+                    PatternSparqlMapping.put(p.getID(), p.getQuery());
+            });
 		
 	}
+        
+        public Map<String, String> getPatternSparqlMapping() {
+            return PatternSparqlMapping;
+        }
 	
 	
 }

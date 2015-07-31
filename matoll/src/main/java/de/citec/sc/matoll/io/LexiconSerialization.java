@@ -25,6 +25,7 @@ import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 import java.util.HashSet;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 public class LexiconSerialization {
@@ -32,6 +33,7 @@ public class LexiconSerialization {
     Dbnary dbnary_ES = null;
     Dbnary dbnary_DE = null;
     Uby uby = null;
+    Map<String,String> patternSparqlMapping = new HashMap<>();
     
         public LexiconSerialization(Language language){
             this.dbnary_EN = new Dbnary(Language.EN);
@@ -39,13 +41,34 @@ public class LexiconSerialization {
             this.dbnary_DE = new Dbnary(Language.DE);
             this.uby = new Uby(Language.EN);
         }
+        
+        public LexiconSerialization(Language language,Map<String,String> sparqlpattern){
+            this.dbnary_EN = new Dbnary(Language.EN);
+            this.dbnary_ES = new Dbnary(Language.ES);
+            this.dbnary_DE = new Dbnary(Language.DE);
+            this.uby = new Uby(Language.EN);
+            this.patternSparqlMapping=sparqlpattern;
+        }
 
 	public void serialize(Lexicon lexicon, Model model) {
+            
+                String baseURI = lexicon.getBaseURI();
+                
+                /*
+                Create Resource for each used pattern.
+                */
+                if(!patternSparqlMapping.isEmpty()){
+                    for(String p: patternSparqlMapping.keySet()){
+                        model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.sparqlPattern, model.createResource(baseURI+"pattern#"+p));
+                        model.add(model.createResource(baseURI+"pattern#"+p), OWL.hasValue, model.createLiteral(patternSparqlMapping.get(p)));
+                    }
+                }
+                
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
                     if(!entry.getURI().contains(" ")){
-                        serialize(entry,model);
+                        serialize(entry,model,baseURI);
 			model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(entry.getURI()));	
                     }
 			
@@ -55,7 +78,7 @@ public class LexiconSerialization {
 		
 	}
 
-	private void serialize(LexicalEntry entry, Model model) {
+	private void serialize(LexicalEntry entry, Model model, String baseURI) {
             
                 int numberReturnedSentences = 5;
                 if(entry.getURI().contains(" ")) return;
@@ -107,9 +130,17 @@ public class LexiconSerialization {
                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
                                }
                             }
+                            
                             HashSet<String> patterns = new HashSet<String>();
                             patterns = provenance.getPatternset();
-                            for(String pattern : patterns) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createLiteral(pattern));
+                            for(String pattern : patterns) {
+                                if(patternSparqlMapping.isEmpty() || !patternSparqlMapping.containsKey(pattern))
+                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createLiteral(pattern));
+                                else{
+                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createResource(baseURI+"pattern#"+pattern));
+                                    //model.add(model.createResource(baseURI+"pattern#"+pattern), PROVO.query, model.createLiteral(patternSparqlMapping.get(pattern)));
+                                }
+                            }
 
                                 
                             if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
