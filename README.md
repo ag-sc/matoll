@@ -1,11 +1,5 @@
 # M-ATOLL
 
-## Build
-
-In order to build M-ATOLL, you need to install the [Bielefeld Machine Learning Library](https://github.com/ag-sc/bimmel.git):
-
-    mvn install:install-file -Dfile=bimmel-0.0.1-SNAPSHOT.jar -DgroupId=www.sc.cit-ec.uni-bielefeld.de -DartifactId=bimmel -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
-
 ## References 
 
 When citing M-ATOLL, please refer to the following paper:

@@ -21,9 +21,6 @@ import javax.xml.parsers.ParserConfigurationException;
 //import learning.SVMClassifier;
 
 
-//import core.
-import de.citec.sc.bimmel.core.Dataset;
-import de.citec.sc.bimmel.core.FeatureVector;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -317,26 +314,26 @@ public class Matoll {
 			
 		}
 	}
-        /**
-         * 
-         * @param vector
-         * @param max
-         * @return 
-         */
-	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
-		
-		HashMap<String,Double> map;
-		
-		map = vector.getFeatureMap();
-		
-		for (String feature: map.keySet())
-		{
-			map.put(feature, new Double(map.get(feature).doubleValue() / max.get(feature).doubleValue()));
-		}
-		
-		return vector;
-		
-	}
+//        /**
+//         * 
+//         * @param vector
+//         * @param max
+//         * @return 
+//         */
+//	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
+//		
+//		HashMap<String,Double> map;
+//		
+//		map = vector.getFeatureMap();
+//		
+//		for (String feature: map.keySet())
+//		{
+//			map.put(feature, new Double(map.get(feature).doubleValue() / max.get(feature).doubleValue()));
+//		}
+//		
+//		return vector;
+//		
+//	}
         /**
          * 
          * @param feature

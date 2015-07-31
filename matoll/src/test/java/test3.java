@@ -1,7 +1,5 @@
 import java.io.FileNotFoundException;
 import java.util.List;
-
-import de.citec.sc.bimmel.core.FeatureVector;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;

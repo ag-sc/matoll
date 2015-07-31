@@ -41,11 +41,22 @@
   		<artifactId>log4j-api</artifactId>
   		<version>2.1</version>
   	</dependency>
-  	<dependency>
+  	<!--<dependency>
   		<groupId>www.sc.cit-ec.uni-bielefeld.de</groupId>
   		<artifactId>bimmel</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
+  	</dependency>-->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+                  <artifactId>jgrapht-core</artifactId>
+           <version>0.9.1</version>
+        </dependency>
+          <dependency>
+                <groupId>jgraph</groupId>
+                <artifactId>jgraph</artifactId>
+                <version>5.13.0.0</version>
+        </dependency>
+  
   	<dependency>
   		<groupId>nz.ac.waikato.cms.moa</groupId>
   		<artifactId>weka-package</artifactId>
@@ -77,6 +88,12 @@
   		<artifactId>log4j-core</artifactId>
   		<version>2.2</version>
   	</dependency>
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-jdk1.5</artifactId>
+      <version>0.7.3</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
   <plugins>

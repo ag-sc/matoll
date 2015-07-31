@@ -80,29 +80,37 @@ public class TestLearning {
             for(Reference ref:references){
                 if (ref instanceof de.citec.sc.matoll.core.SimpleReference){
                     String uri = ref.getURI();
-                    if(properties_gold.contains(uri)){
-                        new_gold.addEntry(entry);
-                        break;
+                    try{
+                        if(properties_gold.contains(uri)){
+                            new_gold.addEntry(entry);
+                            break;
+                        }
                     }
+                    catch (Exception e){
+                        /*
+                        There is not always a ref in gold....
+                        */
+                    }
+                    
                 }
             }
          }
-        System.out.println();
-        System.out.println("LexiconEvaluationSimple:");
-        System.out.println("With gold:");
-        eval.evaluate(automatic,gold);
-        System.out.println("Automatic => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
-        
-        eval.evaluate(learned,gold);
-        System.out.println("Learned => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
-        
-        System.out.println();
-        System.out.println("With reduced gold:");
-        eval.evaluate(automatic,new_gold);
-        System.out.println("Automatic => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
-        
-        eval.evaluate(learned,new_gold);
-        System.out.println("Learned => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
+//        System.out.println();
+//        System.out.println("LexiconEvaluationSimple:");
+//        System.out.println("With gold:");
+//        eval.evaluate(automatic,gold);
+//        System.out.println("Automatic => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
+//        
+//        eval.evaluate(learned,gold);
+//        System.out.println("Learned => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
+//        
+//        System.out.println();
+//        System.out.println("With reduced gold:");
+//        eval.evaluate(automatic,new_gold);
+//        System.out.println("Automatic => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
+//        
+//        eval.evaluate(learned,new_gold);
+//        System.out.println("Learned => P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")+"\tF:"+eval.getFMeasure("lemma"));
         
         
         
