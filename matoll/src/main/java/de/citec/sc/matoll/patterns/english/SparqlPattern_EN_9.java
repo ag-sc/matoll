@@ -86,7 +86,7 @@ public class SparqlPattern_EN_9 extends SparqlPattern {
 
         @Override
 	public String getID() {
-		return "SPARQLPattern_EN_1";
+		return "SPARQLPattern_EN_9";
 	}
 
 }
