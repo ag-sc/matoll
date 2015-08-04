@@ -5,6 +5,7 @@
  */
 package de.citec.sc.matoll.utils;
 
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_1;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_2;
@@ -56,65 +57,44 @@ import org.jgrapht.graph.*;
 public class visualizeSPARQL {
     private static int variable_counter = 0;
     public static void main(String[] args){
-        List<SparqlPattern> Patterns = new ArrayList<SparqlPattern>();
-        Patterns.add(new SparqlPattern_EN_1());
-        Patterns.add(new SparqlPattern_EN_2());
-        Patterns.add(new SparqlPattern_EN_3());
-        Patterns.add(new SparqlPattern_EN_4());
-        Patterns.add(new SparqlPattern_EN_5());
-        Patterns.add(new SparqlPattern_EN_6());
-        Patterns.add(new SparqlPattern_EN_7());
-        Patterns.add(new SparqlPattern_EN_8());
-        Patterns.add(new SparqlPattern_EN_9());
-        Patterns.add(new SparqlPattern_DE_1());
-        Patterns.add(new SparqlPattern_DE_2());
-        Patterns.add(new SparqlPattern_DE_3());
-        Patterns.add(new SparqlPattern_DE_4());
-//        Patterns.add(new SparqlPattern_DE_5());
-        Patterns.add(new SparqlPattern_DE_6());
-        Patterns.add(new SparqlPattern_DE_7());
-        Patterns.add(new SparqlPattern_DE_8());
-        Patterns.add(new SparqlPattern_DE_9());
-        Patterns.add(new SparqlPattern_DE_10());
-//        Patterns.add(new SparqlPattern_ES_1());
-//        Patterns.add(new SparqlPattern_ES_2());
-//        Patterns.add(new SparqlPattern_ES_2b());
-//        Patterns.add(new SparqlPattern_ES_2c());
-//        Patterns.add(new SparqlPattern_ES_3());
-//        Patterns.add(new SparqlPattern_ES_4());
-//        Patterns.add(new SparqlPattern_ES_5());
-//        Patterns.add(new SparqlPattern_ES_6());
-//        Patterns.add(new SparqlPattern_ES_7());
-//        Patterns.add(new SparqlPattern_ES_7b());
-//        Patterns.add(new SparqlPattern_ES_8());
-//        Patterns.add(new SparqlPattern_ES_9());
+        List<SparqlPattern> Patterns_EN = new ArrayList<SparqlPattern>();
+        List<SparqlPattern> Patterns_ES = new ArrayList<SparqlPattern>();
+        List<SparqlPattern> Patterns_DE = new ArrayList<SparqlPattern>();
+        Patterns_EN.add(new SparqlPattern_EN_1());
+        Patterns_EN.add(new SparqlPattern_EN_2());
+        Patterns_EN.add(new SparqlPattern_EN_3());
+        Patterns_EN.add(new SparqlPattern_EN_4());
+        Patterns_EN.add(new SparqlPattern_EN_5());
+        Patterns_EN.add(new SparqlPattern_EN_6());
+        Patterns_EN.add(new SparqlPattern_EN_7());
+        Patterns_EN.add(new SparqlPattern_EN_8());
+        Patterns_EN.add(new SparqlPattern_EN_9());
+        Patterns_DE.add(new SparqlPattern_DE_1());
+        Patterns_DE.add(new SparqlPattern_DE_2());
+        Patterns_DE.add(new SparqlPattern_DE_3());
+        Patterns_DE.add(new SparqlPattern_DE_4());
+        Patterns_DE.add(new SparqlPattern_DE_5());
+        Patterns_DE.add(new SparqlPattern_DE_6());
+        Patterns_DE.add(new SparqlPattern_DE_7());
+        Patterns_DE.add(new SparqlPattern_DE_8());
+        Patterns_DE.add(new SparqlPattern_DE_9());
+        Patterns_DE.add(new SparqlPattern_DE_10());
+        Patterns_ES.add(new SparqlPattern_ES_1());
+        Patterns_ES.add(new SparqlPattern_ES_2());
+        Patterns_ES.add(new SparqlPattern_ES_2b());
+        Patterns_ES.add(new SparqlPattern_ES_2c());
+        Patterns_ES.add(new SparqlPattern_ES_3());
+        Patterns_ES.add(new SparqlPattern_ES_4());
+        Patterns_ES.add(new SparqlPattern_ES_5());
+        Patterns_ES.add(new SparqlPattern_ES_6());
+        Patterns_ES.add(new SparqlPattern_ES_7());
+        Patterns_ES.add(new SparqlPattern_ES_7b());
+        Patterns_ES.add(new SparqlPattern_ES_8());
+        Patterns_ES.add(new SparqlPattern_ES_9());
         
-        String prefix = "\\documentclass{scrartcl}\n" +
-        "\\usepackage{mathtools}\n" +
-        "\\usepackage{tikz}\n" +
-        "\\usetikzlibrary{trees,positioning}\n" +
-        "\n" +
-        "\\begin{document}\n";
-        
-        String suffix = "\\end{document}";
-        String output = "";
-        System.out.println("Starting visualisation");
-        for(SparqlPattern pattern : Patterns){
-            String tmp =doVisual(pattern.getQuery(),pattern.getID().replace("_","\\_"))+"\n\n\n";
-            if (tmp!=null)output+=tmp;
-            else System.out.println(pattern.getID()+" could not be visualized");
-        }
-            
-        
-        PrintWriter writer;
-        try {
-                writer = new PrintWriter("sparql_tree.tex");
-                writer.write(prefix+output+suffix);
-                writer.close();
-        } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
+        writePatterns(Patterns_EN, Language.EN);
+        writePatterns(Patterns_ES, Language.ES);
+        writePatterns(Patterns_DE, Language.DE);
         
     }
     
@@ -281,5 +261,34 @@ public class visualizeSPARQL {
         if(go_on)return output;
         else return "}\n";
         
+    }
+
+    private static void writePatterns(List<SparqlPattern> Patterns, Language language) {
+        String prefix = "\\documentclass{scrartcl}\n" +
+        "\\usepackage{mathtools}\n" +
+        "\\usepackage{tikz}\n" +
+        "\\usetikzlibrary{trees,positioning}\n" +
+        "\n" +
+        "\\begin{document}\n";
+        
+        String suffix = "\\end{document}";
+        String output = "";
+        System.out.println("Starting visualisation");
+        for(SparqlPattern pattern : Patterns){
+            String tmp =doVisual(pattern.getQuery(),pattern.getID().replace("_","\\_"))+"\n\n\n";
+            if (tmp!=null)output+=tmp;
+            else System.out.println(pattern.getID()+" could not be visualized");
+        }
+            
+        
+        PrintWriter writer;
+        try {
+                writer = new PrintWriter("sparql_tree_"+language.toString()+".tex");
+                writer.write(prefix+output+suffix);
+                writer.close();
+        } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
     }
 }
