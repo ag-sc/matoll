@@ -193,33 +193,28 @@ public class Matoll {
 		File[] files = folder.listFiles();
                 
                 ForkJoinPool commonPool = ForkJoinPool.commonPool();
-                System.out.println(commonPool.getParallelism());    
+                System.out.println(commonPool.getParallelism());   
+                /*
+                add -Djava.util.concurrent.ForkJoinPool.common.parallelism=5 in run.sh
+                */
 
                 List<File> list_files = new ArrayList<>();
-                //list_files.addAll(Arrays.asList(files));
-                for(File file:files){
-                    try{
-                        list_files.add(file);
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
+                list_files.addAll(Arrays.asList(files));
 //                list_files.parallelStream()
 //                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
 //                        .map((File f)->{
 //                            return createLexicon(f,preprocessor,library);
 //                        })
 //                        .forEach(automatic_lexicon::addLexicon);
-                System.out.println(list_files.size()+" of files");
+                System.out.println(list_files.size()+" files");
                 
-                List<Lexicon> test= list_files.parallelStream()
+                List<Lexicon> lexicon_list= list_files.parallelStream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                         .map((File f)->{
                             return createLexicon(f,preprocessor,library);
                         })
                         .collect(Collectors.toList());
-                test.stream().forEach((l) -> {
+                lexicon_list.stream().forEach((l) -> {
                     automatic_lexicon.addLexicon(l);
             });
                        
