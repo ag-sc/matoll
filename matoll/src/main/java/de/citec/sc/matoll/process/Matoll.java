@@ -48,6 +48,10 @@ import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.utils.Learning;
+import java.util.Arrays;
+import java.util.concurrent.ForkJoinPool;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class Matoll {
  
@@ -150,17 +154,7 @@ public class Matoll {
 			    }
 			}		
 		}
-		
-//		if (classi.equals("de.citec.sc.matoll.classifiers.FreqClassifier"))
-//		{
-//			classifier = new FreqClassifier("freq", frequency);
-//			System.out.print("Instantiating" + classifier.getClass() + "\n");
-//		}
-//		else
-//		{
-//			classifier = (Classifier) Class.forName(classi).newInstance();
-//			System.out.print("Instantiating "+classifier.getClass()+ "\n");
-//		}
+
 //		
 		LexiconLoader loader = new LexiconLoader();
 //		
@@ -197,45 +191,47 @@ public class Matoll {
 		
 		List<Model> sentences;
 		File[] files = folder.listFiles();
+                
+                ForkJoinPool commonPool = ForkJoinPool.commonPool();
+                System.out.println(commonPool.getParallelism());    
 
-                int file_counter = 0;
-                /*
-                TODO: run this loop parralel and put together final lexicon afterwards;
-                */
-		for (final File file : files) {
-			
-			if (file.isFile() && file.toString().endsWith(".ttl")) {
-                            
-                                file_counter+=1;
-
-				logger.info("Processing: "+file.toString()+"  "+file_counter+"/"+files.length);
-                                
-								
-				Model model = RDFDataMgr.loadModel(file.toString());
-			 
-				sentences = getSentences(model);
-			 
-				for (Model sentence: sentences)
-				{
-					//System.out.println(sentence.toString());
-					obj = getObject(sentence);
-			 
-					subj = getSubject(sentence);
-			 
-					reference = getReference(sentence);
-			
-					preprocessor.preprocess(sentence,subj,obj);
-			
-					//logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
-					library.extractLexicalEntries(sentence, automatic_lexicon);
-				}
-                                model.close();
-				// FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
-			
-				// RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
-			
-			}
-		}
+                List<File> list_files = new ArrayList<>();
+                list_files.addAll(Arrays.asList(files));
+//                list_files.parallelStream()
+//                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
+//                        .map((File f)->{
+//                            return createLexicon(f,preprocessor,library);
+//                        })
+//                        .forEach(automatic_lexicon::addLexicon);
+                
+                List<Lexicon> test= list_files.parallelStream()
+                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
+                        .map((File f)->{
+                            return createLexicon(f,preprocessor,library);
+                        })
+                        .collect(Collectors.toList());
+                test.stream().forEach((l) -> {
+                    automatic_lexicon.addLexicon(l);
+            });
+                       
+                
+//                int file_counter = 0;
+//                /*
+//                TODO: run this loop parralel and put together final lexicon afterwards;
+//                */
+//		for (final File file : files) {
+//			
+//			if (file.isFile() && file.toString().endsWith(".ttl")) {
+//                            
+//                                file_counter+=1;
+//
+//				logger.info("Processing: "+file.toString()+"  "+file_counter+"/"+files.length);
+//                                
+//								
+//			
+//			
+//			}
+//		}
 		
 		logger.info("Extracted all entries \n");
 		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
@@ -285,6 +281,45 @@ public class Matoll {
 		
 			
 	}
+        
+        private static Lexicon createLexicon(File file,ModelPreprocessor preprocessor,PatternLibrary library) {
+            Model model = RDFDataMgr.loadModel(file.toString());
+            
+            Lexicon lexicon = new Lexicon();
+            try{
+                List<Model> sentences = getSentences(model);
+
+                for (Model sentence: sentences)
+                {
+                    //System.out.println(sentence.toString());
+                    String obj = getObject(sentence);
+
+                    String subj = getSubject(sentence);
+
+                    String reference = getReference(sentence);
+
+                    preprocessor.preprocess(sentence,subj,obj);
+
+                    //logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
+                    library.extractLexicalEntries(sentence, lexicon);
+                }
+                model.close();
+                // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
+
+                // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+                return lexicon;
+            }
+            catch(Exception e){
+                return lexicon;
+            }
+			 
+            
+        }
+        
+        
+        private static String test123(String input){
+            return input+"321";
+        }
         /**
          * 
          * @param lexicon

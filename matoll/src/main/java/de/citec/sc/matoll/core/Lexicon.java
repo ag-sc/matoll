@@ -39,6 +39,12 @@ public class Lexicon {
 		this.baseURI = baseURI;
 	}
 	
+        public void addLexicon(Lexicon lex){
+            lex.getEntries().stream().forEach((e) -> {
+                this.addEntry(e);
+            });
+        }
+        
 	public void addEntry(LexicalEntry entry)
 	{
 		
