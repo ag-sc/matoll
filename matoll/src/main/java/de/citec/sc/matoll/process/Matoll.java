@@ -84,11 +84,12 @@ public class Matoll {
 		String configFile;
 		Language language;
 		String classi;
-		Config config = null;
+		//final Config config = null;
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
 		double frequency = 2.0;
+                
 		
 		HashMap<String,Double> maxima; 
 		maxima = new HashMap<String,Double>();
@@ -112,7 +113,7 @@ public class Matoll {
 		directory = args[1];
 		configFile = args[2];
 		
-		config = new Config();
+		final Config config = new Config();
 		
 		config.loadFromFile(configFile);
 		
@@ -127,6 +128,8 @@ public class Matoll {
 		coreference = config.getCoreference();
 		
 		language = config.getLanguage();
+                
+                final StanfordLemmatizer sl = new StanfordLemmatizer(language);
 				
 		for (int i=0; i < args.length; i++)
 		{
@@ -173,10 +176,10 @@ public class Matoll {
 		Lexicon automatic_lexicon = new Lexicon();
                 if(config.getBaseUri()!=null) automatic_lexicon.setBaseURI(config.getBaseUri());
 		
-
+                
 		PatternLibrary library = new PatternLibrary();
                 if(language == Language.EN){
-                    StanfordLemmatizer sl = new StanfordLemmatizer(language);
+                    //sl = new StanfordLemmatizer(language);
                     library.setLemmatizer(sl);
                 }
 		
@@ -200,6 +203,7 @@ public class Matoll {
 
                 List<File> list_files = new ArrayList<>();
                 list_files.addAll(Arrays.asList(files));
+                
 //                list_files.parallelStream()
 //                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
 //                        .map((File f)->{
@@ -207,16 +211,18 @@ public class Matoll {
 //                        })
 //                        .forEach(automatic_lexicon::addLexicon);
                 System.out.println(list_files.size()+" files");
+                chunks(list_files,commonPool.getParallelism());
                 
                 List<Lexicon> lexicon_list= list_files.parallelStream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                         .map((File f)->{
-                            return createLexicon(f,preprocessor,library);
+                            System.out.println(f.toString());
+                            return createLexicon(f,config,sl);
                         })
                         .collect(Collectors.toList());
                 lexicon_list.stream().forEach((l) -> {
                     automatic_lexicon.addLexicon(l);
-            });
+                 });
                        
                 
 //                int file_counter = 0;
@@ -286,40 +292,56 @@ public class Matoll {
 			
 	}
         
-        private static Lexicon createLexicon(File file,ModelPreprocessor preprocessor,PatternLibrary library) {
-            Model model = RDFDataMgr.loadModel(file.toString());
-            
+        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl) {
+            Language language = config.getLanguage();
+            ModelPreprocessor preprocessor = new ModelPreprocessor(language);
+            preprocessor.setCoreferenceResolution(config.getCoreference());
+            PatternLibrary library = new PatternLibrary();
+            if(language == Language.EN){
+                library.setLemmatizer(sl);
+            }
+            library.setPatterns(config.getPatterns());
+                
             Lexicon lexicon = new Lexicon();
+
+            Model model = RDFDataMgr.loadModel(file.toString());
             try{
                 List<Model> sentences = getSentences(model);
-
-                for (Model sentence: sentences)
-                {
+                sentences.stream().map((sentence) -> {
                     //System.out.println(sentence.toString());
                     String obj = getObject(sentence);
-
                     String subj = getSubject(sentence);
-
                     String reference = getReference(sentence);
-
                     preprocessor.preprocess(sentence,subj,obj);
-
-                    //logger.info("Extract lexical entry for: "+sentence.toString()+"\n");	
+                    return sentence;
+                }).forEach((sentence) -> {
+                    //logger.info("Extract lexical entry for: "+sentence.toString()+"\n");
                     library.extractLexicalEntries(sentence, lexicon);
-                }
+                });
                 model.close();
                 // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
 
                 // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
-                return lexicon;
             }
             catch(Exception e){
-                return lexicon;
             }
-			 
+            
+            
+            return lexicon;
             
         }
         
+        
+        private static <T> List<T[]> chunks(List<T> bigList,int n){
+            List<T[]> parts = new ArrayList<T[]>();
+
+            for (int i = 0; i < bigList.size(); i += n) {
+                T[] part = (T[])bigList.subList(i, Math.min(bigList.size(), i + n)).toArray();         
+                parts.add(part);
+            }
+
+            return parts;
+        }
         
         private static String test123(String input){
             return input+"321";
