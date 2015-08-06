@@ -1,8 +1,10 @@
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.coreference.Coreference;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 
 /**

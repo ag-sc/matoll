@@ -74,11 +74,11 @@
           <version>3.5.1</version>
           <classifier>models</classifier>
         </dependency>
-  	<!--<dependency>
+  	<dependency>
   		<groupId>de.tudarmstadt.ukp.jwktl</groupId>
   		<artifactId>jwktl</artifactId>
   		<version>1.0.1</version>
-  	</dependency>-->
+  	</dependency>
   	<dependency>
   		<groupId>org.apache.logging.log4j</groupId>
   		<artifactId>log4j-core</artifactId>

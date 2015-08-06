@@ -1,26 +1,28 @@
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
-import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
