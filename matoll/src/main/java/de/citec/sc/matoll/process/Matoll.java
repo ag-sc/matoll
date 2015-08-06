@@ -2,7 +2,6 @@ package de.citec.sc.matoll.process;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,33 +24,31 @@ import javax.xml.parsers.ParserConfigurationException;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
-import de.citec.sc.matoll.evaluation.LexiconEvaluation;
 import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
+import de.citec.sc.matoll.classifiers.WEKAclassifier;
+import de.citec.sc.matoll.core.Language;
+import de.citec.sc.matoll.utils.Learning;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+
 import org.xml.sax.SAXException;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import de.citec.sc.matoll.classifiers.WEKAclassifier;
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.Provenance;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.utils.Learning;
 import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 
 public class Matoll {
  
@@ -211,12 +208,11 @@ public class Matoll {
 //                        })
 //                        .forEach(automatic_lexicon::addLexicon);
                 System.out.println(list_files.size()+" files");
-                chunks(list_files,commonPool.getParallelism());
                 
-                List<Lexicon> lexicon_list= list_files.parallelStream()
+                List<Lexicon> lexicon_list= list_files.stream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                         .map((File f)->{
-                            System.out.println(f.toString());
+                            logger.info("Processing: "+f.toString());
                             return createLexicon(f,config,sl);
                         })
                         .collect(Collectors.toList());
@@ -225,23 +221,6 @@ public class Matoll {
                  });
                        
                 
-//                int file_counter = 0;
-//                /*
-//                TODO: run this loop parralel and put together final lexicon afterwards;
-//                */
-//		for (final File file : files) {
-//			
-//			if (file.isFile() && file.toString().endsWith(".ttl")) {
-//                            
-//                                file_counter+=1;
-//
-//				logger.info("Processing: "+file.toString()+"  "+file_counter+"/"+files.length);
-//                                
-//								
-//			
-//			
-//			}
-//		}
 		
 		logger.info("Extracted all entries \n");
 		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
@@ -332,20 +311,7 @@ public class Matoll {
         }
         
         
-        private static <T> List<T[]> chunks(List<T> bigList,int n){
-            List<T[]> parts = new ArrayList<T[]>();
 
-            for (int i = 0; i < bigList.size(); i += n) {
-                T[] part = (T[])bigList.subList(i, Math.min(bigList.size(), i + n)).toArray();         
-                parts.add(part);
-            }
-
-            return parts;
-        }
-        
-        private static String test123(String input){
-            return input+"321";
-        }
         /**
          * 
          * @param lexicon
