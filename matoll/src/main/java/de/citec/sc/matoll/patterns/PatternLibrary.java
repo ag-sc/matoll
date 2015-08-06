@@ -3,7 +3,7 @@ package de.citec.sc.matoll.patterns;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;

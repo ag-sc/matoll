@@ -3,13 +3,14 @@ package de.citec.sc.matoll.patterns;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.StmtIterator;
 
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;
+import org.apache.jena.rdf.model.Statement;
 
 public abstract class SparqlPattern {
 	

@@ -1,15 +1,15 @@
 package de.citec.sc.matoll.patterns.german;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
@@ -91,10 +91,7 @@ sentence:Alessandra Martines ist eine Cousine zweiten Grades von Carla Bruni , d
                             + "{?e1 <conll:head> ?y }. "
                             + "?e2 <conll:head> ?y . "
                             + "?e2 <conll:deprel> ?e2_grammar . "
-                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-                            //+ "FILTER regex(?e2_grammar, \"obj\") ."
-                            //+ "UNION"
-                            //+ "{FILTER regex(?e2_grammar, \"gmod\") .}"
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\")) ."
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
