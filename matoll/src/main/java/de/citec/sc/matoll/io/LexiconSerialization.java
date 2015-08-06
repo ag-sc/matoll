@@ -3,12 +3,10 @@ package de.citec.sc.matoll.io;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDF;
-import de.citec.sc.matoll.core.Language;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.rdf.model.Model;
 
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Provenance;
@@ -27,6 +25,7 @@ import de.citec.sc.matoll.vocabularies.PROVO;
 import java.util.HashSet;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+
 
 public class LexiconSerialization {
     Dbnary dbnary_EN = null;
