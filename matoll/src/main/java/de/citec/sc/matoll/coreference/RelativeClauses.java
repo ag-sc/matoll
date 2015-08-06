@@ -1,7 +1,8 @@
 package de.citec.sc.matoll.coreference;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+
 import de.citec.sc.matoll.core.Language;
 import java.util.Set;
 
