@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
@@ -35,6 +35,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
 import weka.core.Instance;
