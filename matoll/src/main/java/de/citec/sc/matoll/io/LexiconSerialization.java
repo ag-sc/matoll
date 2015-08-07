@@ -65,7 +65,7 @@ public class LexiconSerialization {
                 
                 for(String prep : lexicon.getPrepositions()){
                     model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(lexicon.getBaseURI()+"preposition_"+prep));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEXINFO.partOfSpeech, model.createResource(LEXINFO.preposition));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEXINFO.partOfSpeech,model.createResource("http://www.lexinfo.net/ontology/2.0/lexinfo#preposition"));
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"));
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep));
                 }
@@ -97,7 +97,7 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
                 
                 if(entry.getPreposition()!=null)
-                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition#"+entry.getPreposition()));
+                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition()));
                 
                 
                 String dbnary_uri = "";
