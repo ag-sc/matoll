@@ -72,7 +72,7 @@ public class Config {
 	Language Language = EN;
 	Integer numItems;
 	String Frequency;
-        String BaseUri;
+        String BaseUri = "http://dblexipedia.org/";
 
 	
 	List<SparqlPattern> Patterns = null;

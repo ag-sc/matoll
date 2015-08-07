@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class Lexicon {
@@ -234,4 +235,16 @@ public class Lexicon {
 		
 		return entries;
 	}
+        
+        public List<String> getPrepositions(){
+            List<String> prepositions = new ArrayList<>();
+            
+            prepositions = this.entries.stream()
+                    .filter(e->e.getPreposition()!=null)
+                    .map((LexicalEntry e)->{return e.getPreposition();})
+                    .collect(Collectors.toList());
+            
+            
+            return prepositions;
+        }
 }

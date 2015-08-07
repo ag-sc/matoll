@@ -58,11 +58,17 @@ public class LexiconSerialization {
                 */
                 if(!patternSparqlMapping.isEmpty()){
                     for(String p: patternSparqlMapping.keySet()){
-                        model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.sparqlPattern, model.createResource(baseURI+"pattern#"+p));
-                        model.add(model.createResource(baseURI+"pattern#"+p), OWL.hasValue, model.createLiteral(patternSparqlMapping.get(p)));
+                        model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.sparqlPattern, model.createResource(baseURI+"pattern_"+p));
+                        model.add(model.createResource(baseURI+"pattern_"+p), OWL.hasValue, model.createLiteral(patternSparqlMapping.get(p)));
                     }
                 }
                 
+                for(String prep : lexicon.getPrepositions()){
+                    model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(lexicon.getBaseURI()+"preposition_"+prep));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEXINFO.partOfSpeech, model.createResource(LEXINFO.preposition));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep));
+                }
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
@@ -84,6 +90,16 @@ public class LexiconSerialization {
 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
 		
+                model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()));
+                model.add(model.createResource(entry.getURI()), LEMON.language, model.createLiteral(entry.getLanguage().toString().toLowerCase()));
+
+		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
+		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
+                
+                if(entry.getPreposition()!=null)
+                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition#"+entry.getPreposition()));
+                
+                
                 String dbnary_uri = "";
                 if(entry.getLanguage().equals(Language.EN))dbnary_EN.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
                 if(entry.getLanguage().equals(Language.ES))dbnary_ES.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
@@ -98,11 +114,6 @@ public class LexiconSerialization {
                         model.add(model.createResource(entry.getURI()), OWL.sameAs, model.createResource(tmp_uri));
                     }
                 }
-                model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()));
-                model.add(model.createResource(entry.getURI()), LEMON.language, model.createLiteral(entry.getLanguage().toString().toLowerCase()));
-
-		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
-		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
 		
                 //System.out.println("entry.getReferences().size():"+entry.getReferences().size());
 		if (entry.getReferences().size()>0)
@@ -136,7 +147,7 @@ public class LexiconSerialization {
                                 if(patternSparqlMapping.isEmpty() || !patternSparqlMapping.containsKey(pattern))
                                     model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createLiteral(pattern));
                                 else{
-                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createResource(baseURI+"pattern#"+pattern));
+                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createResource(baseURI+"pattern_"+pattern));
                                     //model.add(model.createResource(baseURI+"pattern#"+pattern), PROVO.query, model.createLiteral(patternSparqlMapping.get(pattern)));
                                 }
                             }

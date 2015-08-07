@@ -171,7 +171,7 @@ public class Matoll {
                 preprocessor.setCoreferenceResolution(coreference);
 				
 		Lexicon automatic_lexicon = new Lexicon();
-                if(config.getBaseUri()!=null) automatic_lexicon.setBaseURI(config.getBaseUri());
+                automatic_lexicon.setBaseURI(config.getBaseUri());
 		
                 
 		PatternLibrary library = new PatternLibrary();
@@ -282,6 +282,7 @@ public class Matoll {
             library.setPatterns(config.getPatterns());
                 
             Lexicon lexicon = new Lexicon();
+            lexicon.setBaseURI(config.getBaseUri());
 
             Model model = RDFDataMgr.loadModel(file.toString());
             try{

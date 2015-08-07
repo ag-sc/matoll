@@ -13,6 +13,9 @@ public class LexicalEntry {
 	
 	String POS;
         
+        String Preposition;
+
+        
         /*
         Set default to English
         */
@@ -269,7 +272,14 @@ public class LexicalEntry {
 	public String getPOS() {
 		return POS;
 	}
+        
+        public String getPreposition() {
+            return Preposition;
+        }
 
+        public void setPreposition(String Preposition) {
+            this.Preposition = Preposition;
+        }
 
 	public void setPOS(String pos) {
 		POS = pos;

@@ -122,6 +122,7 @@ public class Templates {
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun_withPrep_"+preposition);
             Sense sense = new Sense();
+            entry.setPreposition(preposition);
 
             Reference ref = new SimpleReference(reference);
             sense.setReference(ref);
@@ -207,7 +208,7 @@ public class Templates {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_Adjective_withPrep_"+preposition);
-
+            entry.setPreposition(preposition);
             Sense sense = new Sense();
 
             Reference ref = new SimpleReference(reference);
@@ -386,7 +387,7 @@ public class Templates {
 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_IntransitiveVerb_withPrep_"+preposition);
-
+            entry.setPreposition(preposition);
             Sense sense = new Sense();
 
             Reference ref = new SimpleReference(reference);
