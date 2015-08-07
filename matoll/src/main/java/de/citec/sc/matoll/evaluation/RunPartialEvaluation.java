@@ -5,8 +5,8 @@
  */
 package de.citec.sc.matoll.evaluation;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
+
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -21,12 +21,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
@@ -38,7 +38,7 @@ public class RunPartialEvaluation {
     public static void main(String[] args){
         
         
-        String path_automaticlexicon = "/Users/swalter/Downloads/dbpedia2014_beforeTraining_localhost.ttl";
+        String path_automaticlexicon = "/Users/swalter/Downloads/dbpedia2014Full_new_beforeTraining.ttl";
         
         List<List<Integer>> areas = new ArrayList<List<Integer>>();
         List<Integer> tmp = new ArrayList<Integer>();
@@ -75,6 +75,7 @@ public class RunPartialEvaluation {
         
         Lexicon automatic = loader.loadFromFile(path_automaticlexicon);
         System.out.println("Loaded automatic lexicon");
+        System.out.println("#entries:"+automatic.size());
 
         
         /*
@@ -160,35 +161,35 @@ public class RunPartialEvaluation {
         LexiconEvaluationSimple eval = new LexiconEvaluationSimple();
         
         
-        for(List<Integer> area : areas){
-            Lexicon lexicon = new Lexicon();
-            int min_val = area.get(0);
-            int max_val = area.get(1);
-            System.err.println("Adapt to new provenance style");
-//            for(LexicalEntry entry:automatic_reduced.getEntries()){
-//                try{
-//                  int frequency = entry.getProvenance().getFrequency();
-//                  if(frequency>= min_val && frequency<max_val) lexicon.addEntry(entry);
-//                }
-//                catch(Exception e){
-//                    
-//                }
+//        for(List<Integer> area : areas){
+//            Lexicon lexicon = new Lexicon();
+//            int min_val = area.get(0);
+//            int max_val = area.get(1);
+//            System.err.println("Adapt to new provenance style");
+////            for(LexicalEntry entry:automatic_reduced.getEntries()){
+////                try{
+////                  int frequency = entry.getProvenance().getFrequency();
+////                  if(frequency>= min_val && frequency<max_val) lexicon.addEntry(entry);
+////                }
+////                catch(Exception e){
+////                    
+////                }
+////            }
+//            System.out.println("min_value:"+min_val);
+//            System.out.println("max_value:"+max_val);
+//            System.out.println("New lexicon contains "+lexicon.size()+" entries");
+//            if(lexicon.size()>0){
+//                eval.evaluate(lexicon,gold_reduced);
+//                System.out.println("P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")
+//                    +"\tF:"+eval.getFMeasure("lemma"));
+////                        +"\t"+eval.getPrecision("syntactic")
+////                    +"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")
+////                    +"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")
+////                    +"\t"+eval.getFMeasure("mapping"));
 //            }
-            System.out.println("min_value:"+min_val);
-            System.out.println("max_value:"+max_val);
-            System.out.println("New lexicon contains "+lexicon.size()+" entries");
-            if(lexicon.size()>0){
-                eval.evaluate(lexicon,gold_reduced);
-                System.out.println("P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")
-                    +"\tF:"+eval.getFMeasure("lemma"));
-//                        +"\t"+eval.getPrecision("syntactic")
-//                    +"\t"+eval.getRecall("syntactic")+"\t"+eval.getFMeasure("syntactic")
-//                    +"\t"+eval.getPrecision("mapping")+"\t"+eval.getRecall("mapping")
-//                    +"\t"+eval.getFMeasure("mapping"));
-            }
-        }
+//        }
         
-        eval.evaluate(automatic_reduced,gold_reduced);
+        eval.evaluate(automatic,gold);
                 System.out.println("P:"+eval.getPrecision("lemma")+"\tR:"+eval.getRecall("lemma")
                     +"\tF:"+eval.getFMeasure("lemma"));
 //                        +"\t"+eval.getPrecision("syntactic")
