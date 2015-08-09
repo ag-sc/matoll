@@ -73,6 +73,10 @@ public class Config {
 	Integer numItems;
 	String Frequency;
         String BaseUri = "http://dblexipedia.org/";
+        
+        List<File> files = new ArrayList<>();
+
+   
 
 	
 	List<SparqlPattern> Patterns = null;
@@ -230,6 +234,25 @@ public class Config {
 				}
 
 			}
+                        
+                        if (node.getNodeName().equals("Files"))
+			{				
+				NodeList patterns = node.getChildNodes();
+				
+				for (int j = 0; j <  patterns.getLength(); j++) {
+			
+					Node pattern = patterns.item(j);
+					
+					if (pattern.getNodeName().equals("File"))
+					{
+						files.add(new File(pattern.getTextContent()));
+						
+					}	
+						
+				}
+
+			}
+                        
 		}
 		
 	}
@@ -335,6 +358,9 @@ public class Config {
         
         public String getBaseUri() {
             return BaseUri;
+        }
+         public List<File> getFiles() {
+            return files;
         }
 
 }

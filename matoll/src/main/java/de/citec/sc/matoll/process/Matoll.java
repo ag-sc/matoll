@@ -162,7 +162,6 @@ public class Matoll {
 //		
 		Lexicon gold = loader.loadFromFile(gold_standard_lexicon);
 		
-		File folder = new File(directory);
 		                
 		
 		// Creating preprocessor
@@ -190,16 +189,27 @@ public class Matoll {
 		String reference = null;
 		
 		List<Model> sentences;
-		File[] files = folder.listFiles();
                 
-                ForkJoinPool commonPool = ForkJoinPool.commonPool();
-                System.out.println(commonPool.getParallelism());   
-                /*
-                add -Djava.util.concurrent.ForkJoinPool.common.parallelism=5 in run.sh
-                */
-
                 List<File> list_files = new ArrayList<>();
-                list_files.addAll(Arrays.asList(files));
+                 
+                if(config.getFiles().isEmpty()){
+                    File folder = new File(directory);
+                    File[] files = folder.listFiles();
+                    list_files.addAll(Arrays.asList(files));
+                }
+                else{
+                    list_files.addAll(config.getFiles());
+                }
+		
+                
+//                ForkJoinPool commonPool = ForkJoinPool.commonPool();
+//                System.out.println(commonPool.getParallelism());   
+//                /*
+//                add -Djava.util.concurrent.ForkJoinPool.common.parallelism=5 in run.sh
+//                */
+
+               
+                
                 
 //                list_files.parallelStream()
 //                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
@@ -207,7 +217,7 @@ public class Matoll {
 //                            return createLexicon(f,preprocessor,library);
 //                        })
 //                        .forEach(automatic_lexicon::addLexicon);
-                System.out.println(list_files.size()+" files");
+//                System.out.println(list_files.size()+" files");
                 
                 List<Lexicon> lexicon_list= list_files.stream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
