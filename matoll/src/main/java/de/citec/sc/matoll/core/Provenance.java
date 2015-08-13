@@ -48,8 +48,9 @@ public class Provenance {
         if(Sentences.isEmpty()) return 0.0;
         else{
             double avg = 0.0;
-            for(String sentence:Sentences)avg+=sentence.length();
-            avg = avg/Sentences.size();
+            List<String> sentences = getShortestSentences(5);
+            for(String sentence:sentences)avg+=sentence.length();
+            avg = avg/sentences.size();
 
             return avg;
         }
@@ -146,7 +147,7 @@ public class Provenance {
          * @param k number of sentences
          * @return 
          */
-        public List<String> getLongestSentences(int k){
+        public List<String> getShortestSentences(int k){
             List<String> sentences = new ArrayList<>();
             Map<String, Integer> map = new HashMap<String, Integer>();
             Sentences.stream().forEach((sentence) -> { map.put(sentence, sentence.length());});

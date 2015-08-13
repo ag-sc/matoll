@@ -73,8 +73,17 @@ public class LexiconSerialization {
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
                     if(!entry.getURI().contains(" ")){
-                        serialize(entry,model,baseURI);
-			model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(entry.getURI()));	
+                        boolean add_entry = true;
+                    
+                        if(!entry.getPreposition().isEmpty()){
+                            if(!StringUtils.isAlpha(entry.getPreposition())) add_entry = false;
+                        }
+                        
+                        if(add_entry){
+                            serialize(entry,model,baseURI);
+                            model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(entry.getURI()));	
+                        }
+                        
                     }
 			
 		}
@@ -86,8 +95,7 @@ public class LexiconSerialization {
 	private void serialize(LexicalEntry entry, Model model, String baseURI) {
             
                 int numberReturnedSentences = 5;
-                if(entry.getURI().contains(" ")) return;
-		
+                		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
 		
                 model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()));
@@ -136,7 +144,7 @@ public class LexiconSerialization {
                             if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.associatedWith, model.createLiteral(provenance.getAgent()));
                             if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
                             if(provenance.getSentences()!=null){
-                               for(String sentence : provenance.getLongestSentences(numberReturnedSentences)){
+                               for(String sentence : provenance.getShortestSentences(numberReturnedSentences)){
                                    model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
                                }
                             }
