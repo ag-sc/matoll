@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
@@ -36,7 +40,9 @@ public class CreateIndex {
     
     public static void main(String[] args) throws IOException {
         Analyzer analyzer = null;
-        String path_to_file = "/Users/swalter/Downloads/german_sentences_reduced.txt";
+        
+        List<String> files = new ArrayList<>();
+        files.add("/Users/swalter/Downloads/german_sentences_reduced.txt");
         String indexPath = "/Users/swalter/Index/GermanIndexReduced/";
         Language language = Language.DE;
         Directory dir = FSDirectory.open(Paths.get(indexPath));
@@ -50,7 +56,14 @@ public class CreateIndex {
         iwc.setOpenMode(OpenMode.CREATE);
         iwc.setRAMBufferSizeMB(12000);
         try (IndexWriter writer = new IndexWriter(dir, iwc)) {
-            indexDocs(writer,Paths.get(path_to_file));
+            files.forEach(f->{
+                try {
+                    indexDocs(writer,Paths.get(f));
+                } catch (IOException ex) {
+                    Logger.getLogger(CreateIndex.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            
         }
         
         
