@@ -74,7 +74,6 @@ public class LexiconSerialization {
 		{
                     if(!entry.getURI().contains(" ")){
                         boolean add_entry = true;
-                    
                         if(!entry.getPreposition().isEmpty()){
                             if(!StringUtils.isAlpha(entry.getPreposition())) add_entry = false;
                         }

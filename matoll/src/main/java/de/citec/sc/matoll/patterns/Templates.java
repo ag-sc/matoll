@@ -26,6 +26,7 @@ public class Templates {
 
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun");
 
+            entry.setPreposition("");
             Sense sense = new Sense();
             Reference ref = new SimpleReference(reference);
             sense.setReference(ref);
@@ -295,6 +296,7 @@ public class Templates {
             LexicalEntry entry = new LexicalEntry(language);
 
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_TransitiveVerb");
+            entry.setPreposition("");
 
             Sense sense = new Sense();
 
