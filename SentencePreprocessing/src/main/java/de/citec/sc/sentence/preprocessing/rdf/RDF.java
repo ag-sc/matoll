@@ -93,47 +93,50 @@ public class RDF {
 	}
 	
 	public static void writeModel(List<List<String>> input_sentences, String path_to_write,Language language, String uri, boolean additionalOutput) throws IOException{
-		if(!path_to_write.endsWith("/"))path_to_write+="/";
-		Model default_model = ModelFactory.createDefaultModel();
-                StringBuilder string_builder = new StringBuilder();
-		int counter = 0;
-		for(List<String> input: input_sentences) {
-			counter+=1;
-			String input_sentence = input.get(0);
-                        if(additionalOutput){
-                            string_builder.append("ID:");
-                            string_builder.append(Integer.toString(counter));
-                            string_builder.append("\n");
-                            string_builder.append("property subject: ");
-                            string_builder.append(input.get(1));
-                            string_builder.append("\n");
-                            string_builder.append("property object: ");
-                            string_builder.append(input.get(2));
-                            string_builder.append("\n");
-                            string_builder.append("sentence:: \n");
-                            string_builder.append(input_sentence.replace("\t\t", "\n"));
-                            string_builder.append("\n\n");
+                if(input_sentences.size()>0){
+                    if(!path_to_write.endsWith("/"))path_to_write+="/";
+                    Model default_model = ModelFactory.createDefaultModel();
+                    StringBuilder string_builder = new StringBuilder();
+                    int counter = 0;
+                    for(List<String> input: input_sentences) {
+                            counter+=1;
+                            String input_sentence = input.get(0);
+                            if(additionalOutput){
+                                string_builder.append("ID:");
+                                string_builder.append(Integer.toString(counter));
+                                string_builder.append("\n");
+                                string_builder.append("property subject: ");
+                                string_builder.append(input.get(1));
+                                string_builder.append("\n");
+                                string_builder.append("property object: ");
+                                string_builder.append(input.get(2));
+                                string_builder.append("\n");
+                                string_builder.append("sentence:: \n");
+                                string_builder.append(input_sentence.replace("\t\t", "\n"));
+                                string_builder.append("\n\n");
+                            }
+
+                            String propSubj = input.get(1);
+                            String propObj = input.get(2);
+                            convertSentenceToRDF(default_model,input_sentence,propSubj,propObj,language,uri,counter);
+                    }
+                    long timestamp = System.currentTimeMillis();
+                    OutputStream output_stream_turtel = new FileOutputStream(path_to_write+Long.toString(timestamp)+".ttl");
+                    default_model.write(output_stream_turtel,"TURTLE");
+                    output_stream_turtel.close();
+                    if(additionalOutput){
+                        PrintWriter writer;
+                        try {
+                                writer = new PrintWriter(path_to_write+Long.toString(timestamp)+".txt");
+                                writer.println(string_builder.toString());
+                                writer.close();
+                        } catch (FileNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
                         }
-                        
-			String propSubj = input.get(1);
-			String propObj = input.get(2);
-			convertSentenceToRDF(default_model,input_sentence,propSubj,propObj,language,uri,counter);
-		}
-		long timestamp = System.currentTimeMillis();
-		OutputStream output_stream_turtel = new FileOutputStream(path_to_write+Long.toString(timestamp)+".ttl");
-		default_model.write(output_stream_turtel,"TURTLE");
-		output_stream_turtel.close();
-                if(additionalOutput){
-                    PrintWriter writer;
-                    try {
-                            writer = new PrintWriter(path_to_write+Long.toString(timestamp)+".txt");
-                            writer.println(string_builder.toString());
-                            writer.close();
-                    } catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                     }
                 }
+		
                 
 		
 	}
