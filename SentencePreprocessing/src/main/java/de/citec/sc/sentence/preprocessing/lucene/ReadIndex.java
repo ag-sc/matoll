@@ -125,7 +125,7 @@ public class ReadIndex {
 	}
 	
         
-        private List<List<String>> runStrictSearch(String subj, String obj)
+        private List<List<String>> runStrictSearch(String subj, String obj, boolean strict)
 			throws IOException {
             Set<String> cache = new HashSet<>();
             List<List<String>> results = new ArrayList<>();
@@ -140,10 +140,16 @@ public class ReadIndex {
                         if(subj.length()<=2||obj.length()<=2) return results;
                 }
 
-//                System.out.println(searcher.collectionStatistics("plain").docCount());
-//                System.out.println(searcher.collectionStatistics("parsed").docCount());
-                booleanQuery.add(new QueryParser("plain", analyzer).parse(subj.toLowerCase()), BooleanClause.Occur.MUST);
-                booleanQuery.add(new QueryParser("plain", analyzer).parse(obj.toLowerCase()), BooleanClause.Occur.MUST);
+                if(strict){
+                    booleanQuery.add(new QueryParser("plain", analyzer).parse("\""+subj.toLowerCase()+"\""), BooleanClause.Occur.MUST);
+                    booleanQuery.add(new QueryParser("plain", analyzer).parse("\""+obj.toLowerCase()+"\""), BooleanClause.Occur.MUST);
+                }
+                else{
+                    booleanQuery.add(new QueryParser("plain", analyzer).parse(subj.toLowerCase()), BooleanClause.Occur.MUST);
+                    booleanQuery.add(new QueryParser("plain", analyzer).parse(obj.toLowerCase()), BooleanClause.Occur.MUST);
+                }
+                
+                //System.out.println(booleanQuery.toString());
                     
                 
                 int hitsPerPage = 99;
@@ -201,7 +207,7 @@ public class ReadIndex {
 		
                 entities.stream().forEach((entity) -> {
                     try {
-                        for(List<String> sentence_item : this.runStrictSearch(entity.get(0), entity.get(1))){
+                        for(List<String> sentence_item : this.runStrictSearch(entity.get(0), entity.get(1),true)){
                             if(!unique_sentence.contains(sentence_item.get(0))){
                                 sentences.add(sentence_item);
                                 unique_sentence.add(sentence_item.get(0));
