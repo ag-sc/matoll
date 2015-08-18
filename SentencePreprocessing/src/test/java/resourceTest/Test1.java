@@ -53,8 +53,8 @@ public class Test1 {
         List<List<String>> input = new ArrayList<>();
         
         List<String> one = new ArrayList<>();
-        one.add("Michelle");
-        one.add("Barack");
+        one.add("Michelle Obama");
+        one.add("Barack Obama");
         input.add(one);
         for(List<String> bla: index.search(input)){
             System.out.println(bla.get(0));
