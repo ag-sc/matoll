@@ -5,6 +5,7 @@
  */
 package resourceTest;
 
+import de.citec.sc.sentence.preprocessing.process.OntologyImporter;
 import de.citec.sc.sentence.preprocessing.sparql.Resources;
 
 /**
@@ -39,6 +40,9 @@ public class Test1 {
         
         input = "\"1963[/dbpedia.org/datatype/";
         System.out.println(Resources.cleanEntity(input));
+        
+        OntologyImporter onto_import = new OntologyImporter("../dbpedia_2014.owl","RDF/XML");
+        System.out.println(onto_import.getProperties().size());
         
     }
 }

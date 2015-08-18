@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
 import de.citec.sc.sentence.preprocessing.process.Language;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 
 public class RDF {
 	
