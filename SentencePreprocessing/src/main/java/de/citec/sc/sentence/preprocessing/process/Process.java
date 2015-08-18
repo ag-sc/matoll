@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
-import de.citec.sc.sentence.preprocessing.lucene.IndexReader;
+import de.citec.sc.sentence.preprocessing.lucene.ReadIndex;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -62,7 +62,7 @@ public class Process {
 		
 		
 		if(with_sentences){
-                    IndexReader index = new IndexReader(pathToIndex,language);
+                    ReadIndex index = new ReadIndex(pathToIndex,language);
                     String pathWriteSentences = folderToSaveResourcesSentences+"Sentences_"+language+"/";
                     if(checkFolder(pathWriteSentences)){
                             for (List<String> property: properties){
