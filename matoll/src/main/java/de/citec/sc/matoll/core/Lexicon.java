@@ -240,7 +240,7 @@ public class Lexicon {
             List<String> prepositions = new ArrayList<>();
             
             prepositions = this.entries.stream()
-                    .filter(e->e.getPreposition()!=null)
+                    .filter(e->e.getPreposition()!=null && !e.getPreposition().equals(""))
                     .map((LexicalEntry e)->{return e.getPreposition();})
                     .collect(Collectors.toList());
             
