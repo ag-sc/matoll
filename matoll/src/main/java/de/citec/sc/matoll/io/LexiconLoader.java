@@ -331,16 +331,11 @@ public class LexiconLoader {
 
         if (stmt != null)
         {
-                language = stmt.getLiteral().toString();
-
+                language = stmt.getLiteral().toString().toLowerCase();
                 if(language.equals("en")) return Language.EN;
                 if(language.equals("de")) return Language.DE;
                 if(language.equals("es")) return Language.ES;
                 if(language.equals("ja")) return Language.JA;
-        }
-        else
-        {
-                return null;
         }
         /*
         default is English, if no language is given for the entry
@@ -478,6 +473,7 @@ public class LexiconLoader {
         if(starttime!=null)provenance.setStartedAtTime(starttime);
         if(endtime!=null)provenance.setEndedAtTime(endtime);
         provenance.setPatternset(patterns);
+        //System.out.println(patterns.size()+" patterns were found");
         provenance.setSentences(sentences);
                 
         
@@ -589,7 +585,7 @@ public class LexiconLoader {
         Statement stmt;
 
         Literal form;
-        String preposition = null;
+        String preposition = "";
             stmt = subject.getProperty(LEMON.marker);
             if(stmt!=null){
                 String query = "Select ?prep WHERE{"

@@ -274,7 +274,8 @@ public class LexicalEntry {
 	}
         
         public String getPreposition() {
-            return Preposition;
+            if(Preposition==null) return "";
+            else return Preposition;
         }
 
         public void setPreposition(String Preposition) {

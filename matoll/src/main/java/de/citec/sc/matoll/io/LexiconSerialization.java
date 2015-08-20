@@ -74,7 +74,7 @@ public class LexiconSerialization {
 		{
                     if(!entry.getURI().contains(" ")){
                         boolean add_entry = true;
-                        if(!entry.getPreposition().isEmpty() && !entry.getPreposition().equals("")){
+                        if(!entry.getPreposition().equals("")){
                             if(!StringUtils.isAlpha(entry.getPreposition())) add_entry = false;
                         }
                         
@@ -103,7 +103,7 @@ public class LexiconSerialization {
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
                 
-                if(entry.getPreposition()!=null&&!entry.getPreposition().equals(""))
+                if(!entry.getPreposition().equals(""))
                     model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition()));
                 
 
@@ -185,7 +185,7 @@ public class LexiconSerialization {
                                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
 //                                            if (synarc.getValue().contains("object")){
-//                                                 if(entry.getPreposition()!=null&&!entry.getPreposition().equals("")){
+//                                                 if(!entry.getPreposition().equals("")){
 //                                                    model.add(model.createResource(insert_value), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition())); 
 //                                                 }
 //                                                       
