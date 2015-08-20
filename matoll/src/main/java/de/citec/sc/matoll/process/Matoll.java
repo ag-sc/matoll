@@ -40,8 +40,11 @@ import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
 
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -219,13 +222,28 @@ public class Matoll {
 //                        .forEach(automatic_lexicon::addLexicon);
 //                System.out.println(list_files.size()+" files");
                 
-                List<Lexicon> lexicon_list= list_files.parallelStream()
+//                List<Lexicon> lexicon_list= list_files.stream()
+//                        .limit(10)
+//                        .parallel()
+//                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
+//                        .map((File f)->{
+//                            logger.info("Processing: "+f.toString());
+//                            return createLexicon(f,config,sl);
+//                        })
+//                        .collect(Collectors.toList());
+//                
+
+                Stream<Lexicon> stream = list_files.parallelStream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                         .map((File f)->{
                             logger.info("Processing: "+f.toString());
                             return createLexicon(f,config,sl);
-                        })
-                        .collect(Collectors.toList());
+                        });
+                Callable<List<Lexicon>> task = () -> stream.collect(toList());
+                ForkJoinPool forkJoinPool = new ForkJoinPool(2);
+                List<Lexicon> lexicon_list = forkJoinPool.submit(task).get();
+                
+                
                 lexicon_list.stream().forEach((l) -> {
                     automatic_lexicon.addLexicon(l);
                  });
