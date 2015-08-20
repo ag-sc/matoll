@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.Model;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Preposition;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
@@ -65,19 +66,20 @@ public class LexiconSerialization {
                     }
                 }
                 
-                for(String prep : lexicon.getPrepositions()){
-                    model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(lexicon.getBaseURI()+"preposition_"+prep));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEXINFO.partOfSpeech,model.createResource("http://www.lexinfo.net/ontology/2.0/lexinfo#preposition"));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep));
+                for(Preposition prep : lexicon.getPrepositions()){
+                    model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEMON.language,model.createLiteral(prep.getLanguage().toString().toLowerCase()));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEXINFO.partOfSpeech,model.createResource("http://www.lexinfo.net/ontology/2.0/lexinfo#preposition"));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep.getCanonicalForm()+"@"+prep.getLanguage().toString().toLowerCase()));
                 }
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
                     if(!entry.getURI().contains(" ")){
                         boolean add_entry = true;
-                        if(!entry.getPreposition().equals("")){
-                            if(!StringUtils.isAlpha(entry.getPreposition())) add_entry = false;
+                        if(entry.getPreposition()!=null){
+                            if(!StringUtils.isAlpha(entry.getPreposition().getCanonicalForm())) add_entry = false;
                         }
                         
                         if(add_entry){
@@ -103,10 +105,10 @@ public class LexiconSerialization {
                 model.add(model.createResource(entry.getURI()), LEMON.language, model.createLiteral(entry.getLanguage().toString().toLowerCase()));
 
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
-		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()));
+		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()+"@"+entry.getLanguage().toString().toLowerCase()));
                 
-                if(!entry.getPreposition().equals(""))
-                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition()));
+                if(entry.getPreposition()!=null)
+                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition().getCanonicalForm()));
                 
 
                 

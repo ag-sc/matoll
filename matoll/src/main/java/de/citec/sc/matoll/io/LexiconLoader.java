@@ -19,6 +19,7 @@ import de.citec.sc.matoll.core.Language;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Preposition;
 import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
@@ -97,7 +98,7 @@ public class LexiconLoader {
                          entry.setCanonicalForm(getCanonicalForm(loaded_entry,model));
                          
                          
-                         entry.setPreposition(getPreposition(loaded_entry,model));
+                         entry.setPreposition(new Preposition(language,getPreposition(loaded_entry,model)));
                          
                          /*
                          Sense, corresponding SynBehaviour + Provenance
@@ -301,6 +302,9 @@ public class LexiconLoader {
 				if (stmt != null)
 				{
 				form = (Literal) canonicalForm.getProperty(LEMON.writtenRep).getObject();
+                                        if (form.toString().contains("@")){
+                                            return form.toString().split("@")[0];
+                                        }
 					return form.toString();
 				}
 				else
@@ -618,6 +622,7 @@ public class LexiconLoader {
                 }
                 qExec.close() ;  
             }
+        if(preposition.contains("@")) return preposition.split("@")[0];
         return preposition;
     }
 

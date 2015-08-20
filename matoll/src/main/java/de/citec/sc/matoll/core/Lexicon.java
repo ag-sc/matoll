@@ -236,11 +236,11 @@ public class Lexicon {
 		return entries;
 	}
         
-        public List<String> getPrepositions(){
-            List<String> prepositions = new ArrayList<>();
+        public List<Preposition> getPrepositions(){
+            List<Preposition> prepositions = new ArrayList<>();
             
             prepositions = this.entries.stream()
-                    .filter(e->e.getPreposition()!=null && !e.getPreposition().equals(""))
+                    .filter(e->e.getPreposition()!=null)
                     .map((LexicalEntry e)->{return e.getPreposition();})
                     .collect(Collectors.toList());
             

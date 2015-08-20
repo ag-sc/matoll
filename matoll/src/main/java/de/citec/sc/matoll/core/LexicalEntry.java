@@ -1,8 +1,6 @@
 package de.citec.sc.matoll.core;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class LexicalEntry {
@@ -13,7 +11,7 @@ public class LexicalEntry {
 	
 	String POS;
         
-        String Preposition;
+        Preposition preposition;
 
         
         /*
@@ -273,13 +271,14 @@ public class LexicalEntry {
 		return POS;
 	}
         
-        public String getPreposition() {
-            if(Preposition==null) return "";
-            else return Preposition;
+        public Preposition getPreposition() {
+            if(preposition==null) return null;
+            if(preposition.getCanonicalForm().equals("")) return null;
+            return preposition;
         }
 
-        public void setPreposition(String Preposition) {
-            this.Preposition = Preposition;
+        public void setPreposition(Preposition preposition) {
+            this.preposition = preposition;
         }
 
 	public void setPOS(String pos) {
