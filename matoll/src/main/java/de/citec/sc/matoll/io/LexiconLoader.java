@@ -194,7 +194,7 @@ public class LexiconLoader {
                             if (prepositionEntry != null)
                             {
                                     preposition = getCanonicalForm(prepositionEntry,model);
-                                    // //System.out.print("Preposition: "+preposition+"\n");
+                                    // //System.out.print("Preposition: "+pattern_name+"\n");
                             }
                             else
                             {
@@ -383,6 +383,39 @@ public class LexiconLoader {
     }
 
     
+    private String getPattern(Resource subject, Model model) {
+        Resource pattern_entry;
+        Resource canonicalForm;
+
+        Statement stmt;
+
+        Literal form;
+        String pattern_name = "";
+            stmt = subject.getProperty(PROVO.pattern);
+            if(stmt!=null){
+                String query = "Select ?prep WHERE{"
+                        + "<"+stmt.getObject().toString()+"> <"+LEMON.canonicalForm+">  ?canonicalForm .\n" 
+                        +"  ?canonicalForm <"+LEMON.writtenRep+"> ?prep }";
+                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+                ResultSet rs = qExec.execSelect() ;
+
+                try {
+                 while ( rs.hasNext() ) {
+                         QuerySolution qs = rs.next();
+                         try{
+                                 pattern_name = qs.get("?prep").toString();	
+                          }
+                         catch(Exception e){
+                        }
+                     }
+                }
+                catch(Exception e){
+                }
+                qExec.close() ;  
+            }
+        return pattern_name;
+    }
+    
     private Provenance getProvenance(RDFNode rdf_sense, Resource loaded_entry,Model model) {
         Statement stmt;
         Provenance provenance = new Provenance();
@@ -447,7 +480,8 @@ public class LexiconLoader {
                  try{
                      Statement stmt_pattern = activity.getProperty(PROVO.pattern);
                      if (stmt_pattern != null) {
-                         patterns.add(activity.getProperty(PROVO.pattern).getString());
+                         //patterns.add(activity.getProperty(PROVO.pattern).getString());
+                         patterns.add(getPattern(activity,model));
                      }
                      
                  }
@@ -457,10 +491,15 @@ public class LexiconLoader {
                  Add Sentences
                  */
                  try{
-                     Statement stmt_sentence = activity.getProperty(PROVO.sentence);
-                     if (stmt_sentence != null) {
-                         sentences.add(activity.getProperty(PROVO.sentence).getString());
-                     }
+                     
+                    StmtIterator iter_sentence = activity.listProperties(PROVO.sentence);
+                     while(iter_sentence.hasNext() ) {
+
+                         Statement stmt_sentence = iter_sentence.next();
+                         if (stmt_sentence != null) {
+                             sentences.add(stmt_sentence.getObject().toString());
+                         }
+                    }
                      
                  }
                  catch(Exception e){};
@@ -473,8 +512,12 @@ public class LexiconLoader {
         if(starttime!=null)provenance.setStartedAtTime(starttime);
         if(endtime!=null)provenance.setEndedAtTime(endtime);
         provenance.setPatternset(patterns);
-        //System.out.println(patterns.size()+" patterns were found");
+        if(patterns.size()>0)
+        for(String p:patterns)System.out.println("p:"+p);
         provenance.setSentences(sentences);
+        for(String p:sentences)System.out.println("s:"+p);
+        System.out.println();
+        System.out.println();
                 
         
         return provenance;
