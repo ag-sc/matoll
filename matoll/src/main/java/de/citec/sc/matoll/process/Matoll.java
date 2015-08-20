@@ -211,37 +211,24 @@ public class Matoll {
 //                add -Djava.util.concurrent.ForkJoinPool.common.parallelism=5 in run.sh
 //                */
 
-               
+//                Stream<Lexicon> stream;
+//            stream = list_files.parallelStream()
+//                    .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
+//                    .map((File f)->{
+//                        logger.info("Processing: "+f.toString());
+//                        return createLexicon(f,config,sl);
+//                    });
+//                Callable<List<Lexicon>> task = () -> stream.collect(toList());
+//                ForkJoinPool forkJoinPool = new ForkJoinPool(2);
+//                List<Lexicon> lexicon_list = forkJoinPool.submit(task).get();
                 
-                
-//                list_files.parallelStream()
-//                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
-//                        .map((File f)->{
-//                            return createLexicon(f,preprocessor,library);
-//                        })
-//                        .forEach(automatic_lexicon::addLexicon);
-//                System.out.println(list_files.size()+" files");
-                
-//                List<Lexicon> lexicon_list= list_files.stream()
-//                        .limit(10)
-//                        .parallel()
-//                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
-//                        .map((File f)->{
-//                            logger.info("Processing: "+f.toString());
-//                            return createLexicon(f,config,sl);
-//                        })
-//                        .collect(Collectors.toList());
-//                
-
-                Stream<Lexicon> stream = list_files.parallelStream()
-                        .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
-                        .map((File f)->{
-                            logger.info("Processing: "+f.toString());
-                            return createLexicon(f,config,sl);
-                        });
-                Callable<List<Lexicon>> task = () -> stream.collect(toList());
-                ForkJoinPool forkJoinPool = new ForkJoinPool(2);
-                List<Lexicon> lexicon_list = forkJoinPool.submit(task).get();
+                List<Lexicon> lexicon_list= list_files.stream()
+                    .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
+                    .map((File f)->{
+                        logger.info("Processing: "+f.toString());
+                        return createLexicon(f,config,sl);
+                    })
+                    .collect(Collectors.toList());
                 
                 
                 lexicon_list.stream().forEach((l) -> {
