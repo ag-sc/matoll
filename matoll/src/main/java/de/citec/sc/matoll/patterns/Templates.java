@@ -24,8 +24,6 @@ public class Templates {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
 
-            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun");
-
             entry.setPreposition("");
             Sense sense = new Sense();
             Reference ref = new SimpleReference(reference);
@@ -44,15 +42,18 @@ public class Templates {
 
             if (Lemmatizer != null)
             {
-                    String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
+                    String term = Lemmatizer.getLemma(noun);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
-                    entry.setCanonicalForm(term);
+                    entry.setCanonicalForm(term+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_Noun");
             }
             else
             {
                     entry.setCanonicalForm(noun+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun");
             }
-
+            
+            
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 
             behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
@@ -121,7 +122,6 @@ public class Templates {
 	public static void getNounWithPrep(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
-            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun_withPrep_"+preposition);
             Sense sense = new Sense();
             entry.setPreposition(preposition);
 
@@ -139,12 +139,15 @@ public class Templates {
 
             if (Lemmatizer != null)
             {
-                    String term = Lemmatizer.getLemma(noun)+"@"+language.toString().toLowerCase();
-                    entry.setCanonicalForm(term);
+                    String term = Lemmatizer.getLemma(noun);
+                    //logger.debug("Lemmatized cannonical form:"+term+"/n");
+                    entry.setCanonicalForm(term+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_Noun_withPrep_"+preposition);
             }
             else
             {
                     entry.setCanonicalForm(noun+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun_withPrep_"+preposition);
             }
 
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -295,7 +298,6 @@ public class Templates {
 	public static void getTransitiveVerb(Model model, Lexicon lexicon, List<String> sentences, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
             LexicalEntry entry = new LexicalEntry(language);
 
-            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_TransitiveVerb");
             entry.setPreposition("");
 
             Sense sense = new Sense();
@@ -312,18 +314,20 @@ public class Templates {
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
 
 
+            
             if (Lemmatizer != null)
             {
-                    String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
+                    String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
-                    verb = term;
-                    entry.setCanonicalForm(term);
+                    entry.setCanonicalForm(term+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_TransitiveVerb");
             }
             else
             {
                     entry.setCanonicalForm(verb+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_TransitiveVerb");
             }
-
+            
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 
             behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
@@ -402,19 +406,22 @@ public class Templates {
 
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
-
-
-            if (Lemmatizer != null)
+            
+            
+             if (Lemmatizer != null)
             {
-                    String term = Lemmatizer.getLemma(verb)+"@"+language.toString().toLowerCase();
+                    String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
-                    entry.setCanonicalForm(term);
+                    entry.setCanonicalForm(term+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_IntransitiveVerb_withPrep_"+preposition);
             }
             else
             {
                     entry.setCanonicalForm(verb+"@"+language.toString().toLowerCase());
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_IntransitiveVerb_withPrep_"+preposition);
             }
-
+             
+             
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 
             behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#IntransitivePPFrame");

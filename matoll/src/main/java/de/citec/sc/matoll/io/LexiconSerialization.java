@@ -106,6 +106,8 @@ public class LexiconSerialization {
                 if(entry.getPreposition()!=null&&!entry.getPreposition().equals(""))
                     model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition()));
                 
+
+                
                 
                 String dbnary_uri = "";
                 if(entry.getLanguage().equals(Language.EN))dbnary_EN.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
@@ -182,7 +184,13 @@ public class LexiconSerialization {
                                             }
                                             model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
-                                         }
+//                                            if (synarc.getValue().contains("object")){
+//                                                 if(entry.getPreposition()!=null&&!entry.getPreposition().equals("")){
+//                                                    model.add(model.createResource(insert_value), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition())); 
+//                                                 }
+//                                                       
+//                                            }
+                                        }
 
                                     }
                                 }
