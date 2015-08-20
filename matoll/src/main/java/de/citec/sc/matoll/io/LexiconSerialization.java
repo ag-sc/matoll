@@ -60,6 +60,8 @@ public class LexiconSerialization {
                     for(String p: patternSparqlMapping.keySet()){
                         model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.sparqlPattern, model.createResource(baseURI+"pattern_"+p));
                         model.add(model.createResource(baseURI+"pattern_"+p), OWL.hasValue, model.createLiteral(patternSparqlMapping.get(p)));
+                        model.add(model.createResource(baseURI+"pattern_"+p), LEMON.canonicalForm, model.createResource(baseURI+"pattern_"+p+"#CanonicalForm"));
+                        model.add(model.createResource(baseURI+"pattern_"+p+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(p));
                     }
                 }
                 

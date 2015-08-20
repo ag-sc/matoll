@@ -56,7 +56,7 @@ public class LexiconLoader {
 		 Resource loaded_entry;
 		 
 		 Lexicon lexicon = new Lexicon();
-		 
+                 		 
 		 
 		 
 		 StmtIterator iter = model.listStatements(null, LEMON.canonicalForm, (RDFNode) null);
@@ -382,39 +382,7 @@ public class LexiconLoader {
         }
     }
 
-    
-    private String getPattern(Resource subject, Model model) {
-        Resource pattern_entry;
-        Resource canonicalForm;
-
-        Statement stmt;
-
-        Literal form;
-        String pattern_name = "";
-            stmt = subject.getProperty(PROVO.pattern);
-            if(stmt!=null){
-                String query = "Select ?prep WHERE{"
-                        + "<"+stmt.getObject().toString()+"> <"+LEMON.canonicalForm+">  ?canonicalForm .\n" 
-                        +"  ?canonicalForm <"+LEMON.writtenRep+"> ?prep }";
-                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
-                ResultSet rs = qExec.execSelect() ;
-
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
-                         try{
-                                 pattern_name = qs.get("?prep").toString();	
-                          }
-                         catch(Exception e){
-                        }
-                     }
-                }
-                catch(Exception e){
-                }
-                qExec.close() ;  
-            }
-        return pattern_name;
-    }
+   
     
     private Provenance getProvenance(RDFNode rdf_sense, Resource loaded_entry,Model model) {
         Statement stmt;
@@ -478,11 +446,16 @@ public class LexiconLoader {
                  */
                  
                  try{
-                     Statement stmt_pattern = activity.getProperty(PROVO.pattern);
-                     if (stmt_pattern != null) {
-                         //patterns.add(activity.getProperty(PROVO.pattern).getString());
-                         patterns.add(getPattern(activity,model));
-                     }
+                     
+                     StmtIterator iter_pattern = activity.listProperties(PROVO.pattern);
+                     while(iter_pattern.hasNext() ) {
+
+                         Statement stmt_pattern = iter_pattern.next();
+                         if (stmt_pattern != null) {
+                             patterns.addAll(getPatternWrittenRepresentation(stmt_pattern.getObject(),model));
+                         }
+                    }
+                     
                      
                  }
                  catch(Exception e){};
@@ -512,13 +485,7 @@ public class LexiconLoader {
         if(starttime!=null)provenance.setStartedAtTime(starttime);
         if(endtime!=null)provenance.setEndedAtTime(endtime);
         provenance.setPatternset(patterns);
-        if(patterns.size()>0)
-        for(String p:patterns)System.out.println("p:"+p);
-        provenance.setSentences(sentences);
-        for(String p:sentences)System.out.println("s:"+p);
-        System.out.println();
-        System.out.println();
-                
+        provenance.setSentences(sentences);                
         
         return provenance;
     }
@@ -652,6 +619,34 @@ public class LexiconLoader {
                 qExec.close() ;  
             }
         return preposition;
+    }
+
+    private List getPatternWrittenRepresentation(RDFNode pattern,Model model) {
+        List<String> pattern_name = new ArrayList<>();
+
+        String query = "Select DISTINCT ?form WHERE{"
+                + "<"+pattern+"> <"+LEMON.canonicalForm+"> ?canonicalForm. "
+                + "?canonicalForm <"+LEMON.writtenRep+"> ?form}";
+        QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+        ResultSet rs = qExec.execSelect() ;
+
+        try {
+         while ( rs.hasNext() ) {
+                 QuerySolution qs = rs.next();
+                 try{
+                         pattern_name.add(qs.get("?form").toString());	
+                  }
+                 catch(Exception e){
+                     e.printStackTrace();
+                }
+             }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        qExec.close() ; 
+        
+        return pattern_name;
     }
         
         
