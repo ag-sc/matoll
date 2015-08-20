@@ -602,7 +602,6 @@ public class LexiconLoader {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
                          try{
-                                System.err.println(qs.get("?prep").toString());
                                  preposition = qs.get("?prep").toString();	
                           }
                          catch(Exception e){
