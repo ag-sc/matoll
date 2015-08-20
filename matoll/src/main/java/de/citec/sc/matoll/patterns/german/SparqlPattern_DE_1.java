@@ -14,6 +14,7 @@ import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
+import org.apache.jena.shared.Lock;
 
 public class SparqlPattern_DE_1 extends SparqlPattern{
 
@@ -66,6 +67,7 @@ Assuming Board is obj
 
 		List<String> sentences = this.getSentences(model);
 		
+                model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
@@ -93,6 +95,7 @@ Assuming Board is obj
                     e.printStackTrace();
                 }
                 qExec.close() ;
+                model.leaveCriticalSection() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Templates.getIntransitiveVerb(model, lexicon, sentences, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());

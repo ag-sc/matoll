@@ -219,7 +219,7 @@ public class Matoll {
 //                        .forEach(automatic_lexicon::addLexicon);
 //                System.out.println(list_files.size()+" files");
                 
-                List<Lexicon> lexicon_list= list_files.stream()
+                List<Lexicon> lexicon_list= list_files.parallelStream()
                         .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                         .map((File f)->{
                             logger.info("Processing: "+f.toString());
@@ -264,7 +264,7 @@ public class Matoll {
                 else{
                     Learning.doPrediction(automatic_lexicon, gold, classifier, output, language);
                 }
-		writeByReference(automatic_lexicon);
+		writeByReference(automatic_lexicon,language);
                 logger.info("Write lexicon to "+output_lexicon+"\n");
                 model = ModelFactory.createDefaultModel();
 
@@ -328,7 +328,7 @@ public class Matoll {
          * @param lexicon
          * @throws IOException 
          */
-	private static void writeByReference(Lexicon lexicon) throws IOException {
+	private static void writeByReference(Lexicon lexicon, Language language) throws IOException {
 		List<LexicalEntry> entries;
 		FileWriter writer;
 		Set<Reference> references = lexicon.getReferences();
@@ -336,7 +336,7 @@ public class Matoll {
 		
 		for (Reference ref: references)
 		{
-			String filename = ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
+			String filename = language.toString()+"_"+ref.toString().replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+".lex";
 			System.out.println("Write lexicon for reference "+ref.toString()+" to "+filename);
 			writer = new FileWriter(filename);
 			entries = lexicon.getEntriesForReference(ref.toString());
