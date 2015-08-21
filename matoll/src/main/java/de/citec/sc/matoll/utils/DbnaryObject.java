@@ -5,6 +5,8 @@
  */
 package de.citec.sc.matoll.utils;
 
+import de.citec.sc.matoll.core.Language;
+
 /**
  *
  * @author swalter
@@ -14,6 +16,15 @@ public class DbnaryObject {
     private String label = "";
     private String partOfSpeech = "";
     private String dbnary_uri = "";
+    private Language language = Language.EN;
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 
     public String getLabel() {
         return label;

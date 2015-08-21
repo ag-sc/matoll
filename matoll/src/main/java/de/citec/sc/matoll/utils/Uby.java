@@ -22,16 +22,17 @@ import java.util.logging.Logger;
  */
 public class Uby {
     
-    private final HashMap<String,List<DbnaryObject>> uby_list = new HashMap<String,List<DbnaryObject>>();
-    private Language language;
+    private final HashMap<String,List<DbnaryObject>> uby_list = new HashMap<>();
     
-    public Uby(Language language){
-        if(language.equals(Language.EN)) loadUby("resources/uby.en");
-        this.language = language;
+    public Uby(){
+        loadUby("resources/uby.en", Language.EN);
+        /*
+        to add more languages, inport more files.
+        */
     }
     
     
-    private void loadUby(String file){
+    private void loadUby(String file, Language language){
         try {
             String content = new String(Files.readAllBytes(Paths.get(file)));
             String[] lines = content.split("\n");
@@ -42,7 +43,8 @@ public class Uby {
                 ubyobject.setDbnary_uri(items[0]);
                 //ubyobject.setPartOfSpeech(normalise(items[1]));
                 ubyobject.setPartOfSpeech(items[1]);
-                ubyobject.setLabel(items[2]);
+                ubyobject.setLabel(items[2]+"_"+language.toString());
+                ubyobject.setLanguage(language);
                 update(ubyobject);
             }
             
@@ -53,12 +55,12 @@ public class Uby {
     }
     
     
-    public HashSet<String> getURI(String label, String pos){
+    public HashSet<String> getURI(String label, String pos, Language language){
         HashSet<String> uri = new HashSet<String>();
         pos = pos.replace("commonNoun", "noun");
         label = label.replace("@"+language.toString().toLowerCase(), "");
-        if(uby_list.containsKey(label)){
-            List<DbnaryObject> value = uby_list.get(label);
+        if(uby_list.containsKey(label+"_"+language.toString())){
+            List<DbnaryObject> value = uby_list.get(label+"_"+language.toString());
             
             for(DbnaryObject ubyobject : value){
                 if(ubyobject.getPartOfSpeech().equals(pos.toLowerCase())){

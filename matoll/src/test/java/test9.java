@@ -126,7 +126,7 @@ public class test9 {
                 
                 Model model = ModelFactory.createDefaultModel();
 		
-		LexiconSerialization serializer = new LexiconSerialization(Language.EN);
+		LexiconSerialization serializer = new LexiconSerialization();
 		
 		serializer.serialize(lexicon, model);
 		

@@ -25,7 +25,7 @@ public class TestLearning {
      public static void main(String[] args) throws Exception{
         LexiconLoader loader = new LexiconLoader();
 	Lexicon gold = loader.loadFromFile("/Users/swalter/Git/matoll/lexica/dbpedia_en.rdf");
-        Lexicon automatic = loader.loadFromFile("/Users/swalter/Documents/resultsFirstTraining/resultsFirstTraining/dbpedia2014Full_new_beforeTraining.ttl");
+        Lexicon automatic = loader.loadFromFile("/Users/swalter/Documents/SecondTraining/dbpedia2014Full_new_beforeTraining.ttl");
         
         WEKAclassifier classifier = new WEKAclassifier(Language.EN);
         Learning.doTraining(automatic, gold, null, Language.EN, classifier,4);        

@@ -29,24 +29,18 @@ import org.apache.commons.lang3.StringUtils;
 
 
 public class LexiconSerialization {
-    Dbnary dbnary_EN = null;
-    Dbnary dbnary_ES = null;
-    Dbnary dbnary_DE = null;
+    Dbnary dbnary = null;
     Uby uby = null;
     Map<String,String> patternSparqlMapping = new HashMap<>();
     
-        public LexiconSerialization(Language language){
-            this.dbnary_EN = new Dbnary(Language.EN);
-            this.dbnary_ES = new Dbnary(Language.ES);
-            this.dbnary_DE = new Dbnary(Language.DE);
-            this.uby = new Uby(Language.EN);
+        public LexiconSerialization(){
+            this.dbnary = new Dbnary();
+            this.uby = new Uby();
         }
         
-        public LexiconSerialization(Language language,Map<String,String> sparqlpattern){
-            this.dbnary_EN = new Dbnary(Language.EN);
-            this.dbnary_ES = new Dbnary(Language.ES);
-            this.dbnary_DE = new Dbnary(Language.DE);
-            this.uby = new Uby(Language.EN);
+        public LexiconSerialization(Map<String,String> sparqlpattern){
+            this.dbnary = new Dbnary();
+            this.uby = new Uby();
             this.patternSparqlMapping=sparqlpattern;
         }
 
@@ -113,15 +107,12 @@ public class LexiconSerialization {
 
                 
                 
-                String dbnary_uri = "";
-                if(entry.getLanguage().equals(Language.EN))dbnary_EN.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
-                if(entry.getLanguage().equals(Language.ES))dbnary_ES.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
-                if(entry.getLanguage().equals(Language.DE))dbnary_DE.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
+                String dbnary_uri = dbnary.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""),entry.getLanguage());
                 if(!dbnary_uri.equals("")){
                     model.add(model.createResource(entry.getURI()), OWL.sameAs, model.createResource(dbnary_uri));
 
                 }
-                HashSet<String> uby_uri = uby.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""));
+                HashSet<String> uby_uri = uby.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""),entry.getLanguage());
                 if(uby_uri.size()>0){
                     for(String tmp_uri : uby_uri){
                         model.add(model.createResource(entry.getURI()), OWL.sameAs, model.createResource(tmp_uri));

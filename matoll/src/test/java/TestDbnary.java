@@ -14,8 +14,8 @@ import de.citec.sc.matoll.utils.Dbnary;
  */
 public class TestDbnary {
     public static void main(String[] args){
-        Dbnary dbnary = new Dbnary(Language.EN);
+        Dbnary dbnary = new Dbnary();
         System.out.println("Loaded");
-        System.out.println(dbnary.getURI("female", "adjective"));
+        System.out.println(dbnary.getURI("female", "adjective", Language.EN));
     }
 }

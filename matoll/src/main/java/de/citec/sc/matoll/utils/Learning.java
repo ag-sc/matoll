@@ -137,7 +137,7 @@ public class Learning {
            }
        }
        
-       LexiconSerialization serializer = new LexiconSerialization(language);
+       LexiconSerialization serializer = new LexiconSerialization();
        Model model = ModelFactory.createDefaultModel();
 
        serializer.serialize(learned_lexicon, model);

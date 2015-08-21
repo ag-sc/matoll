@@ -22,19 +22,17 @@ import java.util.logging.Logger;
 public class Dbnary {
     
     private final HashMap<String,List<DbnaryObject>> dbnaryList = new HashMap<String,List<DbnaryObject>>();
-    private Language language;
     
-    public Dbnary(Language language){
-        if(language.equals(Language.EN)) loadDbnary("resources/dbnary.en");
-        if(language.equals(Language.DE)) loadDbnary("resources/dbnary.de");
-        if(language.equals(Language.JA)) loadDbnary("resources/dbnary.ja");
-        if(language.equals(Language.ES)) loadDbnary("resources/dbnary.es");
-        this.language = language;
+    public Dbnary(){
+        loadDbnary("resources/dbnary.en",Language.EN);
+        loadDbnary("resources/dbnary.de",Language.DE);
+        loadDbnary("resources/dbnary.ja",Language.JA);
+        loadDbnary("resources/dbnary.es",Language.ES);
         
     }
     
     
-    private void loadDbnary(String file){
+    private void loadDbnary(String file, Language language){
         try {
             String content = new String(Files.readAllBytes(Paths.get(file)));
             String[] lines = content.split("\n");
@@ -44,7 +42,8 @@ public class Dbnary {
                 DbnaryObject dbnaryobject = new DbnaryObject();
                 dbnaryobject.setDbnary_uri(items[0]);
                 dbnaryobject.setPartOfSpeech(normalise(items[1]));
-                dbnaryobject.setLabel(items[2]);
+                dbnaryobject.setLabel(items[2]+"_"+language.toString());
+                dbnaryobject.setLanguage(language);
                 update(dbnaryobject);
             }
             
@@ -55,15 +54,15 @@ public class Dbnary {
     }
     
     
-    public String getURI(String label, String pos){
+    public String getURI(String label, String pos, Language language){
         String uri = "";
         pos = pos.replace("commonNoun", "noun");
         label = label.replace("@"+language.toString().toLowerCase(), "");
-        if(dbnaryList.containsKey(label)){
-            List<DbnaryObject> value = dbnaryList.get(label);
+        if(dbnaryList.containsKey(label+"_"+language.toString())){
+            List<DbnaryObject> value = dbnaryList.get(label+"_"+language.toString());
             
             for(DbnaryObject dbnaryobject : value){
-                if(dbnaryobject.getPartOfSpeech().equals(pos.toLowerCase())){
+                if(dbnaryobject.getPartOfSpeech().equals(pos.toLowerCase()) && dbnaryobject.getLanguage().equals(language)){
                     uri = dbnaryobject.getDbnary_uri();
                 }
             }
