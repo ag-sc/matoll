@@ -199,7 +199,7 @@ public class Process {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		LexiconSerialization serializer = new LexiconSerialization();
+		LexiconSerialization serializer = new LexiconSerialization(false);
 		
 		serializer.serialize(lexicon, model);
 		

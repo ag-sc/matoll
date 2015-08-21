@@ -1,12 +1,12 @@
 package de.citec.sc.matoll.io;
 
+import de.citec.sc.matoll.core.Language;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.rdf.model.Model;
 
-import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Preposition;
@@ -18,6 +18,7 @@ import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Dbnary;
+import de.citec.sc.matoll.utils.Stopwords;
 import de.citec.sc.matoll.utils.Uby;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
@@ -32,16 +33,22 @@ public class LexiconSerialization {
     Dbnary dbnary = null;
     Uby uby = null;
     Map<String,String> patternSparqlMapping = new HashMap<>();
+    Stopwords stopwords = null;
+    boolean removeST = false;
     
-        public LexiconSerialization(){
+        public LexiconSerialization(boolean removestopwords){
             this.dbnary = new Dbnary();
             this.uby = new Uby();
+            this.stopwords=new Stopwords();
+            this.removeST=removestopwords;
         }
         
-        public LexiconSerialization(Map<String,String> sparqlpattern){
+        public LexiconSerialization(Map<String,String> sparqlpattern,boolean removestopwords){
             this.dbnary = new Dbnary();
             this.uby = new Uby();
             this.patternSparqlMapping=sparqlpattern;
+            this.stopwords=new Stopwords();
+            this.removeST=removestopwords;
         }
 
 	public void serialize(Lexicon lexicon, Model model) {
@@ -73,12 +80,21 @@ public class LexiconSerialization {
                     if(!entry.getURI().contains(" ")){
                         boolean add_entry = true;
                         if(entry.getPreposition()!=null){
+                            /*
+                            igrnore entries with wired prepositions, such as %
+                            */
                             if(!StringUtils.isAlpha(entry.getPreposition().getCanonicalForm())) add_entry = false;
                         }
                         
                         if(add_entry){
-                            serialize(entry,model,baseURI);
-                            model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(entry.getURI()));	
+                            if(removeST && stopwords.isStopword(entry.getCanonicalForm(), entry.getLanguage())){
+                                //do nothing
+                            }
+                            else{
+                                serialize(entry,model,baseURI);
+                                model.add(model.createResource("http://dblexipedia.org/Lexicon"), LEMON.entry, model.createResource(entry.getURI()));
+                            }
+                            	
                         }
                         
                     }

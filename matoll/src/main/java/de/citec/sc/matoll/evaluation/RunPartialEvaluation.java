@@ -239,7 +239,7 @@ public class RunPartialEvaluation {
     }
 
     private static void writeLexicon(Lexicon lexicon, String name) throws FileNotFoundException {
-        LexiconSerialization serializer = new LexiconSerialization();
+        LexiconSerialization serializer = new LexiconSerialization(false);
 		
         Model model = ModelFactory.createDefaultModel();
 
