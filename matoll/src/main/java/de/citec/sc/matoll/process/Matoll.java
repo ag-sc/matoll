@@ -240,7 +240,7 @@ public class Matoll {
 		logger.info("Extracted all entries \n");
 		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
 		
-		LexiconSerialization serializer = new LexiconSerialization(library.getPatternSparqlMapping(),config.useStopwords());
+		LexiconSerialization serializer = new LexiconSerialization(library.getPatternSparqlMapping(),config.removeStopwords());
 		
                 
                 Model model = ModelFactory.createDefaultModel();

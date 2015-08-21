@@ -74,7 +74,7 @@ public class Config {
 	String Frequency;
         String BaseUri = "http://dblexipedia.org/";
         
-        boolean UseStopwords = false;
+        boolean RemoveStopwords = false;
         
         List<File> files = new ArrayList<>();
 
@@ -176,10 +176,10 @@ public class Config {
 				if (node.getTextContent().equals("False")) this.Coreference = false;
 			}
                         
-                        if (node.getNodeName().equals("UseStopwords"))
+                        if (node.getNodeName().equals("RemoveStopwords"))
 			{				
-				if (node.getTextContent().equals("True")) this.UseStopwords = true;
-				if (node.getTextContent().equals("False")) this.UseStopwords = false;
+				if (node.getTextContent().equals("True")) this.RemoveStopwords = true;
+				if (node.getTextContent().equals("False")) this.RemoveStopwords = false;
 			}
 			
 			if (node.getNodeName().equals("GoldStandardLexicon"))
@@ -328,8 +328,8 @@ public class Config {
 		return Coreference;
 	}
         
-        public Boolean useStopwords() {
-		return UseStopwords;
+        public Boolean removeStopwords() {
+		return RemoveStopwords;
 	}
 
 	public String getFrequency()

@@ -34,13 +34,13 @@ public class LexiconSerialization {
     Uby uby = null;
     Map<String,String> patternSparqlMapping = new HashMap<>();
     Stopwords stopwords = null;
-    boolean removeST = false;
+    boolean removeStopwords = false;
     
         public LexiconSerialization(boolean removestopwords){
             this.dbnary = new Dbnary();
             this.uby = new Uby();
             this.stopwords=new Stopwords();
-            this.removeST=removestopwords;
+            this.removeStopwords=removestopwords;
         }
         
         public LexiconSerialization(Map<String,String> sparqlpattern,boolean removestopwords){
@@ -48,7 +48,7 @@ public class LexiconSerialization {
             this.uby = new Uby();
             this.patternSparqlMapping=sparqlpattern;
             this.stopwords=new Stopwords();
-            this.removeST=removestopwords;
+            this.removeStopwords=removestopwords;
         }
 
 	public void serialize(Lexicon lexicon, Model model) {
@@ -87,7 +87,7 @@ public class LexiconSerialization {
                         }
                         
                         if(add_entry){
-                            if(removeST && stopwords.isStopword(entry.getCanonicalForm(), entry.getLanguage())){
+                            if(removeStopwords && stopwords.isStopword(entry.getCanonicalForm(), entry.getLanguage())){
                                 //do nothing
                             }
                             else{
