@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package de.citec.sc.matoll.utils;
 
 import de.citec.sc.matoll.core.Language;
@@ -11,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +26,7 @@ public class Stopwords {
     
     
     public boolean isStopword(String word,Language language){
-        return stopwords.contains(word.toLowerCase()+"_"+language.toString());
+        return stopwords.contains(word.trim().toLowerCase()+"_"+language.toString());
     }
     
     private void loadStopwords(String file, Language language){
@@ -41,12 +35,13 @@ public class Stopwords {
             String[] lines = content.split("\n");
             
             for(String line : lines){
+                line = line.replace("\n","").trim();
                 this.stopwords.add(line.toLowerCase()+"_"+language);
             }
             
             
         } catch (IOException ex) {
-            Logger.getLogger(Dbnary.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
     
