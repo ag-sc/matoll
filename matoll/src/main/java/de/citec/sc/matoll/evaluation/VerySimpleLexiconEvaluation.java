@@ -12,7 +12,7 @@ public class VerySimpleLexiconEvaluation {
     
 
 
-	public static List<Double> evaluate(Lexicon automatic, Lexicon gold) {
+	public static List<Double> evaluate(Lexicon automatic, Lexicon gold, boolean onlyProperties) {
             
             Map<String,List<List<String>>> hm_automatic = new HashMap<>();
             Map<String,List<List<String>>> hm_gold = new HashMap<>();
@@ -20,8 +20,8 @@ public class VerySimpleLexiconEvaluation {
             /*
             First create map with reference as key and an array with pos,form and ref for each sese/ref in each entry
             */
-            createMap(automatic,hm_automatic);
-            createMap(gold,hm_gold);
+            createMap(automatic,hm_automatic,onlyProperties);
+            createMap(gold,hm_gold,onlyProperties);
 //            System.out.println("gold");
 //            for(String key : hm_gold.keySet()){
 //                System.out.println(hm_gold.get(key));
@@ -44,27 +44,50 @@ public class VerySimpleLexiconEvaluation {
         
 
         
-        private static void createMap(Lexicon lexicon, Map<String,List<List<String>>> hm){
+        private static void createMap(Lexicon lexicon, Map<String,List<List<String>>> hm, boolean onlyProperties){
             for(LexicalEntry entry : lexicon.getEntries()){
                 String pos = entry.getPOS();
                 String form = entry.getCanonicalForm();
                 for( Reference ref:entry.getReferences()){
                     try{
-                        String uri = ref.getURI();
-                        List<String>tmp = new ArrayList<>();
-                        tmp.add(pos);
-                        tmp.add(form);
-                        tmp.add(uri);
-                        if(hm.containsKey(uri)){
-                            List<List<String>> tmp_list = hm.get(uri);
-                            tmp_list.add(tmp);
-                            hm.put(uri, tmp_list);
+                        if(onlyProperties){
+                            String uri = ref.getURI();
+                            String tmp_uri = uri.replace("http://dbpedia.org/", "");
+                            if(!Character.isUpperCase(tmp_uri.charAt(0))){
+                                List<String>tmp = new ArrayList<>();
+                                tmp.add(pos);
+                                tmp.add(form);
+                                tmp.add(uri);
+                                if(hm.containsKey(uri)){
+                                    List<List<String>> tmp_list = hm.get(uri);
+                                    tmp_list.add(tmp);
+                                    hm.put(uri, tmp_list);
+                                }
+                                else{
+                                    List<List<String>> tmp_list = new ArrayList<>();
+                                    tmp_list.add(tmp);
+                                    hm.put(uri, tmp_list);
+                                }
+                            }
                         }
                         else{
-                            List<List<String>> tmp_list = new ArrayList<>();
-                            tmp_list.add(tmp);
-                            hm.put(uri, tmp_list);
+                            String uri = ref.getURI();
+                            List<String>tmp = new ArrayList<>();
+                            tmp.add(pos);
+                            tmp.add(form);
+                            tmp.add(uri);
+                            if(hm.containsKey(uri)){
+                                List<List<String>> tmp_list = hm.get(uri);
+                                tmp_list.add(tmp);
+                                hm.put(uri, tmp_list);
+                            }
+                            else{
+                                List<List<String>> tmp_list = new ArrayList<>();
+                                tmp_list.add(tmp);
+                                hm.put(uri, tmp_list);
+                            }
                         }
+                        
                     }
                     catch(Exception e){
                           /*

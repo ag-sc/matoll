@@ -16,83 +16,95 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-
 public class SparqlPattern_EN_3 extends SparqlPattern {
 
-
-	Logger logger = LogManager.getLogger(SparqlPattern_EN_3.class.getName());
-
-	
-	/*
-	 * ################################
-entity1_form:akerson
-entity2_form:motors
-propSubject:daniel akerson
-propObject:general motors
+	/*################################
+entity1_form:shriram
+entity2_form:google
+propSubject:ram shriram
+propObject:google
 --------------
-entity1_grammar:appos
+entity1_grammar:nsubj
 entity2_grammar:pobj
 --------------
-lemma:chairman
-lemma_grammar:nsubj
+lemma:member
+lemma_grammar:null
 lemma_pos:nn
 depending dobj:
 depending advmod:
 --------------
-query_name:query3
+query_name:query5
 intended_lexical_type:Noun
-entry:RelationalNoun("chairman",<http://dbpedia.org/ontology/board>, propSubj = PrepositionalObject("of"), propObj = CopulativeArg)
+entry:RelationalNoun("board member",<http://dbpedia.org/ontology/board>, propSubj = PrepositionalObject("of"), propObj = CopulativeArg)
 --------------
-sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson , stated that while the cost of hydrogen fuel cell cars is decreasing : `` The car is still too expensive and probably wo n't be practical until the 2020-plus period , I do n't know . '' 
-1	In	_	IN	IN	_	16	prep
-2	July	_	NNP	NNP	_	1	pobj
-3	2011	_	CD	CD	_	2	num
-4	,	_	,	,	_	16	punct
+sentence:Kavitark Ram Shriram is a board member of Google and one of the first investors in Google . 
+1	Kavitark	_	NNP	NNP	_	3	nn
+2	Ram	_	NNP	NNP	_	3	nn
+3	Shriram	_	NNP	NNP	_	7	nsubj
+4	is	_	VBZ	VBZ	_	7	cop
+5	a	_	DT	DT	_	7	det
+6	board	_	NN	NN	_	7	nn
+7	member	_	NN	NN	_	0	null
+8	of	_	IN	IN	_	7	prep
+9	Google	_	NNP	NNP	_	8	pobj
+=>works only in fuzzy mode.
+
+PropSubj:Oxford Brookes University
+PropObj:Janet Beer
+sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes University . 
+1	Professor	_	NNP	NNP	_	3	nn
+2	Janet	_	NNP	NNP	_	3	nn
+3	Beer	_	NNP	NNP	_	6	nsubj
+4	is	_	VBZ	VBZ	_	6	cop
 5	the	_	DT	DT	_	6	det
-6	chairman	_	NN	NN	_	16	nsubj
-7	and	_	CC	CC	_	6	cc
-8	CEO	_	NN	NN	_	6	conj
-9	of	_	IN	IN	_	6	prep
-10	General	_	NNP	NNP	_	11	nn
-11	Motors	_	NNPS	NNPS	_	9	pobj
-12	,	_	,	,	_	6	punct
-13	Daniel	_	NNP	NNP	_	14	nn
-14	Akerson	_	NNP	NNP	_	6	appos
-15	,	_	,	,	_	6	punct
-16	stated	_	VBD	VBD	_	0	null
+6	Vice-Chancellor	_	NNP	NNP	_	0	null
+7	of	_	IN	IN	_	6	prep
+8	Oxford	_	NNP	NNP	_	10	nn
+9	Brookes	_	NNP	NNP	_	10	nn
+10	University	_	NNP	NNP	_	7	pobj
+11	.	_	.	.	_	6	punct
+----------------------
 
-	 */
 
-    
+*/
+	
+		Logger logger = LogManager.getLogger(SparqlPattern_EN_3.class.getName());
+
         @Override
-        public String getQuery() {	
-            String query = "SELECT ?lemma ?prefix ?prep ?e1_arg ?e2_arg  WHERE {"
-                            + "{?y <conll:cpostag> \"NN\" . }"
-                            + "UNION"
-                            + "{?y <conll:cpostag> \"NNS\" . }"
-                            + "?y <conll:form> ?lemma . "
-                            +"OPTIONAL{"
-                            + "?modifier <conll:head> ?y. "
-                            + "?modifier <conll:form> ?prefix. "
-                            + "?modifier <conll:deprel> \"nn\"."
-                            +"} "
-                            + "?e1 <conll:head> ?y . "
-                            + "?e1 <conll:deprel> \"appos\"."
-                            + "?p <conll:head> ?y . "
-                            + "?p <conll:deprel> \"prep\" . "
-                            + "?p <conll:form> ?prep . "
-                            + "?e2 <conll:head> ?p . "
-                            + "?e2 <conll:deprel> \"pobj\". "
-                            + "?e1 <own:senseArg> ?e1_arg. "
-                            + "?e2 <own:senseArg> ?e2_arg. "
-                            + "}";
-            return query;
-        }
-	
-	
+    public String getQuery() {
+        String query = "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
+                        +"{ "
+                        +"{ ?y <conll:cpostag> \"NN\" . } "
+                        + " UNION "
+                        +"{ ?y <conll:cpostag> \"NNS\" . } "
+                        + " UNION "
+                        +"{ ?y <conll:cpostag> \"NNP\" . } "
+                        + "?y <conll:form> ?lemma . "
+                        +"OPTIONAL{"
+                        + "?lemma_nn <conll:head> ?y. "
+                        + "?lemma_nn <conll:form> ?prefix. "
+                        + "?lemma_nn <conll:deprel> \"nn\"."
+                        +"} "
+                        + "?verb <conll:head> ?y . "
+                        + "?verb <conll:deprel> \"cop\" ."
+                        + "?e1 <conll:head> ?y . "
+                        + "?e1 <conll:deprel> \"nsubj\" . "
+                        + "?p <conll:head> ?y . "
+                        + "?p <conll:deprel> \"prep\" . "
+                        + "?p <conll:form> ?prep . "
+                        + "?e2 <conll:head> ?p . "
+                        + "?e2 <conll:deprel> \"pobj\" . "
+                        + "?e1 <own:senseArg> ?e1_arg. "
+                        + "?e2 <own:senseArg> ?e2_arg. "
+                        + "}";
+        return query;
+    }
+		
+		
+
         @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
-		
+
 		List<String> sentences = this.getSentences(model);
 		
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
@@ -101,16 +113,24 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String modifier = "";
 
                 try {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
+
 
                          try{
                                  noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
                                  preposition = qs.get("?prep").toString();	
+                                 try{
+                                     modifier = qs.get("?prefix").toString();
+                                 }
+                                 catch(Exception e){
+                                     
+                                 }
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -123,10 +143,14 @@ sentence:In July 2011 , the chairman and CEO of General Motors , Daniel Akerson 
                 qExec.close() ;
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getNounWithPrep(model, lexicon, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    if (!modifier.equals("")){
+                        Templates.getNounWithPrep(model, lexicon, sentences, modifier +" "+noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    }
+                    else Templates.getNounWithPrep(model, lexicon, sentences, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
+		
+	     
 	}
-
 
         @Override
 	public String getID() {

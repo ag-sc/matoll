@@ -1,9 +1,9 @@
 <Config>
-   <Language>EN</Language>
-   <Index>/Users/swalter/Index/EnglishIndex</Index>
-   <Input>../dbpedia_2014.owl</Input>
+   <Language>DE</Language>
+   <Index>/Users/swalter/Index/GermanIndexReduced</Index>
+   <Input>test.txt</Input>
    <Output>/Users/swalter/Desktop/Resources</Output>
    <Endpoint>http://dbpedia.org/sparql</Endpoint>
-   <WithSentences>False</WithSentences>
-   <AdditionalOutput>False</AdditionalOutput>
+   <WithSentences>True</WithSentences>
+   <AdditionalOutput>True</AdditionalOutput>
 </Config>

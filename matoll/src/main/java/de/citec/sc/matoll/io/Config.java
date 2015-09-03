@@ -31,9 +31,6 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_7;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_8;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_9;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_10;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
@@ -124,9 +121,6 @@ public class Config {
 					Patterns.add(new SparqlPattern_EN_4());
 					Patterns.add(new SparqlPattern_EN_5());
 					Patterns.add(new SparqlPattern_EN_6());
-					Patterns.add(new SparqlPattern_EN_7());
-					Patterns.add(new SparqlPattern_EN_8());
-                                        Patterns.add(new SparqlPattern_EN_9());
 					
 					logger.info("Adding patterns 1-8 (EN) to pattern library \n");
 				}

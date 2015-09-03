@@ -119,18 +119,18 @@ public class TestLearning {
         System.out.println();
         System.out.println("VerySimpleLexiconEvaluation:");
         System.out.println("With gold:");
-        List<Double> result = VerySimpleLexiconEvaluation.evaluate(automatic,gold);
+        List<Double> result = VerySimpleLexiconEvaluation.evaluate(automatic,gold,true);
         System.out.println("Automatic => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
         
-        result = VerySimpleLexiconEvaluation.evaluate(learned,gold);
+        result = VerySimpleLexiconEvaluation.evaluate(learned,gold,true);
         System.out.println("Learned => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
         
         System.out.println();
         System.out.println("With reduced gold:");
-        result = VerySimpleLexiconEvaluation.evaluate(automatic,new_gold);
+        result = VerySimpleLexiconEvaluation.evaluate(automatic,new_gold,true);
         System.out.println("Automatic => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
         
-        result = VerySimpleLexiconEvaluation.evaluate(learned,new_gold);
+        result = VerySimpleLexiconEvaluation.evaluate(learned,new_gold,true);
         System.out.println("Learned => P:"+result.get(0)+"\tR:"+result.get(1)+"\tF:"+result.get(2));
         
 

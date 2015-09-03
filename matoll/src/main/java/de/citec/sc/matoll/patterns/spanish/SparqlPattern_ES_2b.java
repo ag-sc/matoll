@@ -31,6 +31,12 @@ public class SparqlPattern_ES_2b extends SparqlPattern{
 	7	.	.	f	Fp	_	6	punct	_	_
 
 	 */
+        
+        /*
+        Eventuell Adjective  hinzu nehmen
+        
+        
+        */
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"

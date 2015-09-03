@@ -13,9 +13,6 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_7;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_8;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_9;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_10;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
@@ -66,9 +63,6 @@ public class visualizeSPARQL {
         Patterns_EN.add(new SparqlPattern_EN_4());
         Patterns_EN.add(new SparqlPattern_EN_5());
         Patterns_EN.add(new SparqlPattern_EN_6());
-        Patterns_EN.add(new SparqlPattern_EN_7());
-        Patterns_EN.add(new SparqlPattern_EN_8());
-        Patterns_EN.add(new SparqlPattern_EN_9());
         Patterns_DE.add(new SparqlPattern_DE_1());
         Patterns_DE.add(new SparqlPattern_DE_2());
         Patterns_DE.add(new SparqlPattern_DE_3());
@@ -276,6 +270,10 @@ public class visualizeSPARQL {
         System.out.println("Starting visualisation");
         for(SparqlPattern pattern : Patterns){
             String tmp =doVisual(pattern.getQuery(),pattern.getID().replace("_","\\_"))+"\n\n\n";
+            String[] triple = pattern.getQuery().split("\n");
+            for(String t : triple){
+                tmp = "%"+t+"\n"+tmp;
+            }
             if (tmp!=null)output+=tmp;
             else System.out.println(pattern.getID()+" could not be visualized");
         }
