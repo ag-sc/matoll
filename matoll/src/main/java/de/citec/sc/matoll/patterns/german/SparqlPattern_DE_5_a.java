@@ -16,25 +16,24 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_1 extends SparqlPattern{
+public class SparqlPattern_DE_5_a extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_1.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_5_a.class.getName());
 	
-        
         /*
-        ADJ
+        Passive
         */
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
-                            + "?e1 <conll:head> ?sein. "
-                            + "?sein <conll:lemma> \"sein\". "
-                            + "?verb <conll:form> ?lemma . "
-                            + "?verb <conll:head> ?sein . "
+                            + "?e1 <conll:head> ?werden. "
+                            + "?werden <conll:lemma> \"werden\". "
+                            + "?verb <conll:lemma> ?lemma . "
+                            + "?verb <conll:head> ?werden . "
                             + "?verb <conll:cpostag> \"V\" . "
-                            + "?verb <conll:deprel> \"pred\" . "
+                            + "?verb <conll:deprel> \"aux\" . "
                             + "?preposition <conll:head> ?verb ."
                             + "?preposition <conll:cpostag> \"PREP\" . "
                             + "?preposition <conll:deprel> \"pp\" ."
@@ -50,7 +49,7 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_1";
+		return "SPARQLPattern_DE_5_a";
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String preposition = null;
+                String prep = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -75,7 +74,7 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 prep = qs.get("?prep").toString();
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -88,8 +87,8 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getAdjective(model, lexicon, sentences, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
+                    Templates.getIntransitiveVerb(model, lexicon, sentences,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

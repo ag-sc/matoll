@@ -16,46 +16,57 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_1 extends SparqlPattern{
+public class SparqlPattern_DE_8_old extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_1.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_8_old.class.getName());
 	
-        
-        /*
-        ADJ
-        */
+	/*
+	 * PropSubj:Barbara Amiel
+	PropObj:Conrad Black
+	sentence:Conrad Black heiratete im Juli 1992 die englische Journalistin und Schriftstellerin Barbara Amiel * 4. Dezember 1940 , die damals Kolumnistin der Londoner Times war und vor dieser Ehe mit Conrad Black bereits mit David Graham , George Jonas und Gary Smith verheiratet gewesen war . 
+	1	Conrad	Conrad	N	NE	_|Nom|Sg	3	subj	_	_ 
+	2	Black	Black	FM	FM	_|Nom|Sg	1	app	_	_ 
+	3	heiratete	heiraten	V	VVFIN	3|Sg|Past|_	0	root	_	_ 
+	4	im	im	PREP	APPRART	Dat	3	pp	_	_ 
+	5	Juli	Juli	N	NE	Masc|Dat|Sg	4	pn	_	_ 
+	6	1992	1992	CARD	CARD	_	5	app	_	_ 
+	7	die	die	ART	ART	Def|Fem|Akk|Sg	9	det	_	_ 
+	8	englische	englisch	ADJA	ADJA	Pos|Fem|Akk|Sg|_|	9	attr	_	_ 
+	9	Journalistin	Journalistin	N	NN	Fem|Akk|Sg	3	obja	_	_ 
+			----------------------*/
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
-                            + "?e1 <conll:deprel> \"subj\" . "
-                            + "?e1 <conll:head> ?sein. "
-                            + "?sein <conll:lemma> \"sein\". "
-                            + "?verb <conll:form> ?lemma . "
-                            + "?verb <conll:head> ?sein . "
-                            + "?verb <conll:cpostag> \"V\" . "
-                            + "?verb <conll:deprel> \"pred\" . "
-                            + "?preposition <conll:head> ?verb ."
-                            + "?preposition <conll:cpostag> \"PREP\" . "
-                            + "?preposition <conll:deprel> \"pp\" ."
-                            + "?preposition <conll:lemma> ?prep ."
-                            + "?e2 <conll:deprel> \"pn\" . "
-                            + "?e2 <conll:head> ?preposition. "
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
+                            + "?e1 <conll:form> ?e1_form . "
+                            + "?e1 <conll:deprel> ?e1_grammar . "
+                            + "FILTER regex(?e1_grammar, \"subj\") ."
+                            + "?e1 <conll:head> ?y . "
+                            + "?y <conll:cpostag> ?lemma_pos . "
+                            + "FILTER regex(?lemma_pos, \"V\") ."
+                            + "?y <conll:lemma> ?lemma . "
+                            + "?e2 <conll:head> ?y . "
+                            + "?e2 <conll:deprel> ?e2_grammar . "
+                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
             return query;
         }
+			
+
+			
+
 	
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_1";
+		return "SPARQLPattern_DE_8";
 	}
 
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
-
+		
 		List<String> sentences = this.getSentences(model);
 		
                 model.enterCriticalSection(Lock.READ) ;
@@ -64,7 +75,6 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String preposition = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -75,7 +85,6 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -88,9 +97,11 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getAdjective(model, lexicon, sentences, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    Templates.getTransitiveVerb(model, lexicon,sentences, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
+		
+		
 		
 	}
 

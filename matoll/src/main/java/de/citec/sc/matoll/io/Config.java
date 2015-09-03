@@ -32,15 +32,15 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_10;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_b;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_b;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_8;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_9;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
@@ -129,15 +129,15 @@ public class Config {
 					Patterns = new ArrayList<SparqlPattern>();
 					
 					Patterns.add(new SparqlPattern_DE_1());
-					Patterns.add(new SparqlPattern_DE_2());
-					Patterns.add(new SparqlPattern_DE_3());
-					Patterns.add(new SparqlPattern_DE_4());
-					Patterns.add(new SparqlPattern_DE_5());
-					Patterns.add(new SparqlPattern_DE_6());
-					Patterns.add(new SparqlPattern_DE_7());
-					Patterns.add(new SparqlPattern_DE_8());
-					Patterns.add(new SparqlPattern_DE_9());
-					Patterns.add(new SparqlPattern_DE_10());
+                                        Patterns.add(new SparqlPattern_DE_2());
+                                        Patterns.add(new SparqlPattern_DE_3_a());
+                                        Patterns.add(new SparqlPattern_DE_3_b());
+                                        Patterns.add(new SparqlPattern_DE_4());
+                                        Patterns.add(new SparqlPattern_DE_5_a());
+                                        Patterns.add(new SparqlPattern_DE_5_b());
+                                        Patterns.add(new SparqlPattern_DE_6());
+                                        Patterns.add(new SparqlPattern_DE_7_a());
+                                        Patterns.add(new SparqlPattern_DE_7_b());
 					
 					logger.info("Adding patterns 1-10 (DE) to pattern library \n");
 				}

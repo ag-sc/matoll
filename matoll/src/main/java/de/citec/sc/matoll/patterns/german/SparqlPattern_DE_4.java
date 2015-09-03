@@ -21,36 +21,29 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 	
 	Logger logger = LogManager.getLogger(SparqlPattern_DE_4.class.getName());
 	
-	/*
-	 * 24	Big	Big	ADV	ADJD	_	25	adv	_	_ 
-25	Stone	Stone	ADJA	ADJA	_|_|Gen|Sg|_	26 attr
-26	Lake	Lake	N	NN	_|Gen|Sg	22	gmod	_	_ 
-27	,	,	$,	$,	_	0	root	_	_ 
-28	der	der	ART	ART	Def|_|Gen|_	29	det	_	_ 
-29	Quelle	Quell	N	NN	_|Gen|_	26	app	_	_ 
-30	des	das	ART	ART	Def|_|Gen|Sg	31	det	_	_ 
-31	Minnesota	Minnesota	N	NE	_|Gen|Sg	29	gmod	_	_ 
-32	River	River	N	NE	_|Gen|Sg	31	app	_	_ 
-	 */
-	//ohnePrep
+        /*
+        Transitive
+        */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE{"
-                            + "?e1 <conll:cpostag> \"N\" . "
-                            + "?y <conll:deprel> \"app\" . "
-                            + "?y <conll:cpostag> \"N\" . "
-                            + "?y <conll:lemma> ?lemma . "
-                            + "?y <conll:head> ?e1 . "
-                            + "?e2 <conll:head> ?y . "
-                            + "?e2 <conll:deprel> ?e2_grammar . "
-                            + "FILTER( regex(?e2_grammar, \"obj\") || regex(?e2_grammar, \"gmod\") || regex(?e2_grammar, \"pn\"))"
-                            + "?e2 <conll:cpostag> \"N\". "
+            String query = "SELECT ?lemma ?additional_lemma ?e1_arg ?e2_arg  WHERE {"
+                            + "?e1 <conll:deprel> \"subj\" . "
+                            + "?e1 <conll:head> ?verb. "
+                            + "?verb <conll:lemma> ?lemma . "
+                            + "?verb <conll:cpostag> \"V\" . "
+                            + "{?e2 <conll:deprel> \"obja\" . }"
+                            + "UNION"
+                            + "{?e2 <conll:deprel> \"objd\" . }"
+                            + "?e2 <conll:head> ?verb. "
+                            + "OPTIONAL "
+                            + "{?lemma_addition <connl:head> ?verb . "
+                            + "?lemma_addidtion <conll:deprel> \"obji\". "
+                            + "?lemma_addition <connl:lemma> ?additional_lemma .} "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
             return query;
         }
-	
 	
 	
 	@Override
@@ -60,15 +53,16 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
-		
+
 		List<String> sentences = this.getSentences(model);
-                
+		
                 model.enterCriticalSection(Lock.READ) ;
-                QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
+		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
-                String noun = null;
+                String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
+                String additional_lemma = "";
 
                 try {
                  while ( rs.hasNext() ) {
@@ -76,9 +70,13 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 
 
                          try{
-                                 noun = qs.get("?lemma").toString();
+                                 verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
+                                 try{
+                                     additional_lemma = qs.get("?additional_lemma").toString();
+                                 }
+                                 catch (Exception e){}
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -91,12 +89,12 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null) {
-                    Templates.getNounPossessive(model, lexicon, sentences, noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    if(!additional_lemma.equals("")){
+                        Templates.getTransitiveVerb(model, lexicon, sentences, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    }
+                    else Templates.getTransitiveVerb(model, lexicon, sentences,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
-		
-		
-		
 		
 	}
 

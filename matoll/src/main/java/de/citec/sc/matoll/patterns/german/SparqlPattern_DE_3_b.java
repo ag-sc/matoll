@@ -16,31 +16,26 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_1 extends SparqlPattern{
+public class SparqlPattern_DE_3_b extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_1.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_3_b.class.getName());
 	
-        
         /*
-        ADJ
+        Noun Possessive
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma  ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
                             + "?e1 <conll:head> ?sein. "
                             + "?sein <conll:lemma> \"sein\". "
-                            + "?verb <conll:form> ?lemma . "
-                            + "?verb <conll:head> ?sein . "
-                            + "?verb <conll:cpostag> \"V\" . "
-                            + "?verb <conll:deprel> \"pred\" . "
-                            + "?preposition <conll:head> ?verb ."
-                            + "?preposition <conll:cpostag> \"PREP\" . "
-                            + "?preposition <conll:deprel> \"pp\" ."
-                            + "?preposition <conll:lemma> ?prep ."
-                            + "?e2 <conll:deprel> \"pn\" . "
-                            + "?e2 <conll:head> ?preposition. "
+                            + "?noun1 <conll:lemma> ?lemma . "
+                            + "?noun1 <conll:head> ?sein . "
+                            + "?noun1 <conll:cpostag> \"N\" . "
+                            + "?noun1 <conll:deprel> \"pred\" . "
+                            + "?e2 <conll:deprel> \"gmod\" . "
+                            + "?e2 <conll:head> ?noun1. "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -50,7 +45,7 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_1";
+		return "SPARQLPattern_DE_3_b";
 	}
 
 	@Override
@@ -61,10 +56,9 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
-                String verb = null;
+                String noun = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String preposition = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -72,10 +66,9 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
 
 
                          try{
-                                 verb = qs.get("?lemma").toString();
+                                 noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -88,8 +81,8 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getAdjective(model, lexicon, sentences, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+		if(noun!=null && e1_arg!=null && e2_arg!=null) {
+                    Templates.getNounPossessive(model, lexicon, sentences, noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

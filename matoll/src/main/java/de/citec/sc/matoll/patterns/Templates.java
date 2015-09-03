@@ -45,12 +45,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(noun);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_Noun");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term+"_as_PossessiveNoun");
             }
             else
             {
                     entry.setCanonicalForm(noun);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_Noun");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun+"_as_PossessiveNoun");
             }
             
             
