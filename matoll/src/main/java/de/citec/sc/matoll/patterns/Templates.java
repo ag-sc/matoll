@@ -21,7 +21,7 @@ import de.citec.sc.matoll.utils.Lemmatizer;
 public class Templates {
 	
    
-	public static void getNoun(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getNounPossessive(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
 
@@ -56,7 +56,7 @@ public class Templates {
             
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 
-            behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+            behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPossessiveFrame");
 
             // System.out.print(entry+"\n");
 
@@ -66,7 +66,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -93,7 +93,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","subject",null));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -160,7 +160,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",preposition));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","subject",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -184,7 +184,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/adpositionalObject","subject",preposition));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","object",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -244,7 +244,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",preposition));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","subject",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -268,7 +268,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject","subject",preposition));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg","object",null));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","object"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","object"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","subject"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -433,7 +433,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",preposition));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
@@ -457,7 +457,7 @@ public class Templates {
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
                     behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","subject",preposition));
 
-                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subfOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
                     sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 
                     entry.addSyntacticBehaviour(behaviour,sense);
