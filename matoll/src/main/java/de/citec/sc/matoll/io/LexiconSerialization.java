@@ -268,48 +268,6 @@ public class LexiconSerialization {
 
 		}
 			
-//                /*
-//                TODO: Check!
-//                */
-//                int synbehaviour_counter = 0;
-//                for(SyntacticBehaviour synbehaviour : entry.getSenseBehaviours()){
-//                    synbehaviour_counter+=1;
-//                    if (synbehaviour != null)
-//                    {
-//			model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)));
-//			model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
-//                        for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-//                            //synarc.getArgumentType();
-//                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+synarc.getValue()));                    
-//                         }
-//			
-//                    }
-//                }
-		
-		
-		
-//		Provenance provenance = entry.getProvenance();
-//		
-//		if (provenance != null)
-//		{
-//			SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ");			
-//			model.add(model.createResource(entry.getURI()), PROVO.generatedBy, model.createResource(entry.getURI()+"#Activity"));
-//			model.add(model.createResource(entry.getURI()+"#Activity"), RDF.type, PROVO.Activity);
-//			
-//			if (provenance.getStartedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.startedAtTime, model.createLiteral(df.format(provenance.getStartedAtTime())));
-//			
-//			if (provenance.getEndedAtTime() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.endedatTime, model.createLiteral(df.format(provenance.getEndedAtTime())));
-//			
-//                        if (provenance.getConfidence() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.confidence, model.createTypedLiteral(provenance.getConfidence()));
-//		
-//			if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.associatedWith, model.createResource(provenance.getAgent()));
-//
-//                        if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
-//
-//			
-//			
-//			
-//		}
 		
 	}
 
