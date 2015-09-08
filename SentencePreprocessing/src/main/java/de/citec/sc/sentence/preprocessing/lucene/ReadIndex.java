@@ -125,7 +125,7 @@ public class ReadIndex {
 	}
 	
         
-        private List<List<String>> runStrictSearch(String subj, String obj, boolean strict)
+        private List<List<String>> runStrictSearch(String subj, String obj, String subj_uri, String obj_uri, boolean strict)
 			throws IOException {
             Set<String> cache = new HashSet<>();
             List<List<String>> results = new ArrayList<>();
@@ -169,6 +169,8 @@ public class ReadIndex {
                       result.add(sentence);
                       result.add(subj);
                       result.add(obj);
+                      result.add(subj_uri);
+                      result.add(obj_uri);
                       results.add(result);
                       cache.add(sentence);
                   }
@@ -207,7 +209,7 @@ public class ReadIndex {
 		
                 entities.stream().forEach((entity) -> {
                     try {
-                        for(List<String> sentence_item : this.runStrictSearch(entity.get(0), entity.get(1),true)){
+                        for(List<String> sentence_item : this.runStrictSearch(entity.get(0), entity.get(1),entity.get(2),entity.get(3),true)){
                             if(!unique_sentence.contains(sentence_item.get(0))){
                                 sentences.add(sentence_item);
                                 unique_sentence.add(sentence_item.get(0));

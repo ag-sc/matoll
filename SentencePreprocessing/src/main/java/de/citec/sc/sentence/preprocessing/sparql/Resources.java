@@ -70,10 +70,13 @@ public class Resources {
 	    }
 	    for(String x:entities_raw.split("\n")){
 	    	/*
-	    	 * 1,3 are the uri's
+	    	 * 0,3 are the uri's
 	    	 */
-	    	String subj = x.split("\t")[1];
-	    	String obj = x.split("\t")[2];
+                String[] entity_tmp = x.split("\t");
+	    	String subj = entity_tmp[1];
+	    	String obj = entity_tmp[2];
+                String subj_uri = entity_tmp[0];
+                String obj_uri = entity_tmp[3];
 	    	
 	    	List<String> pair = new ArrayList<String>();
 	    	
@@ -83,6 +86,8 @@ public class Resources {
 
                     pair.add(subj);
                     pair.add(obj);
+                    pair.add(subj_uri);
+                    pair.add(obj_uri);
 
                     String signature_1 = subj+obj;
                     String signature_2 = obj+subj;

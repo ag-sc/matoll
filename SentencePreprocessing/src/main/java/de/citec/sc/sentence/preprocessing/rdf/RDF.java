@@ -15,7 +15,7 @@ import org.apache.jena.rdf.model.Resource;
 public class RDF {
 	
 	
-	private static void convertSentenceToRDF(Model default_model,String input_sentence, String propSubj, String propObj, Language language, String uri, int counter){
+	private static void convertSentenceToRDF(Model default_model,String input_sentence, String propSubj, String propObj, String propSubj_uri, String propObj_uri ,Language language, String uri, int counter){
 		String class_token = "class"+Integer.toString(counter);
 		
 		String plain_sentence = "";
@@ -108,8 +108,14 @@ public class RDF {
                                 string_builder.append("property subject: ");
                                 string_builder.append(input.get(1));
                                 string_builder.append("\n");
+                                string_builder.append("property subject uri: ");
+                                string_builder.append(input.get(3));
+                                string_builder.append("\n");
                                 string_builder.append("property object: ");
                                 string_builder.append(input.get(2));
+                                string_builder.append("\n");
+                                string_builder.append("property object uri: ");
+                                string_builder.append(input.get(4));
                                 string_builder.append("\n");
                                 string_builder.append("sentence:: \n");
                                 string_builder.append(input_sentence.replace("\t\t", "\n"));
@@ -118,7 +124,9 @@ public class RDF {
 
                             String propSubj = input.get(1);
                             String propObj = input.get(2);
-                            convertSentenceToRDF(default_model,input_sentence,propSubj,propObj,language,uri,counter);
+                            String propSubj_uri = input.get(3);
+                            String propObj_uri = input.get(4);
+                            convertSentenceToRDF(default_model,input_sentence,propSubj,propObj,propSubj_uri,propObj_uri,language,uri,counter);
                     }
                     long timestamp = System.currentTimeMillis();
                     OutputStream output_stream_turtel = new FileOutputStream(path_to_write+Long.toString(timestamp)+".ttl");
