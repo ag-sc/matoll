@@ -47,85 +47,8 @@ public class ReadIndex {
 	}
 	
 	
-	private List<List<String>> runSearch(String subj, String obj,int sentence_lenght)
-			throws IOException {
-            Set<String> cache = new HashSet<>();
-            List<List<String>> results = new ArrayList<>();
-            try {
-
-                    //Generate Boolean query out of term
-                    BooleanQuery booleanQuery = new BooleanQuery();
-
-                    subj = preprocessing(subj);
-                    obj = preprocessing(obj);
-                    if (!language.equals(Language.JA)) {
-                            if(subj.length()<=2||obj.length()<=2) return results;
-                    }
-                    String term = subj+" "+obj;
-                    if (language.equals(Language.JA)) {
-                            QueryParser queryParser = new QueryParser("sentence", analyzer);
-                            queryParser.setDefaultOperator(QueryParser.Operator.AND);
-                            try {
-                                    // TODO JapaneseAnalyzer removes stop words by default; leave it that way?
-                                    if (queryParser.parse(subj).toString().length()==0 || queryParser.parse(obj).toString().length()==0) return results;
-                                    booleanQuery.add(queryParser.parse(term), BooleanClause.Occur.MUST);
-                            } catch (Exception e) {
-                                    System.err.println("Problem with "+term);
-                            }
-                    } else {
-                            String[] tmp = term.split(" ");
-                            //or/and/not has to be checked here, otherwise I would for example remove the or from order, or notice etc
-                            for (String x : tmp){
-                                    if(!x.equals("")&&!x.toLowerCase().equals("or")&&!x.toLowerCase().equals("and")&&!x.toLowerCase().equals("not")&&x.length()>2){
-                                            try{
-                                                    booleanQuery.add(new QueryParser("plain", analyzer).parse(x.toLowerCase()), BooleanClause.Occur.MUST);
-                                            }
-                                            catch(Exception e){
-                                                    System.err.println("Problem with "+x);
-                                            }
-                                    }
-                            }
-                    }
-                //int hitsPerPage = 1000;
-                int hitsPerPage = 100;
-		    
-		    
-	        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage);
-	        searcher.search(booleanQuery, collector);
-	        
-	        ScoreDoc[] hits = collector.topDocs().scoreDocs;
-
-	        for(int i=0;i<hits.length;++i) {
-	          int docId = hits[i].doc;
-	          Document d = searcher.doc(docId);
-	          ArrayList<String> result = new ArrayList<>();
-	          String sentence = d.get("parsed");
-	          if((sentence.split("\t\t")).length<=sentence_lenght){
-	        	  if(!cache.contains(sentence)){
-	        		  result.add(sentence);
-			          result.add(subj);
-			          result.add(obj);
-			          results.add(result);
-			          cache.add(sentence);
-	        	  }
-	        	  
-	          }
-	          
-	        }
-		}
-		catch(Exception e){
-			//System.out.println("Error in term: "+subj+" "+obj);
-			//e.printStackTrace();
-			//System.out.println();
-			//indexReader.close();
-			//return results_fail;
-		}
-		
-		return results;
-	}
-	
         
-        private List<List<String>> runStrictSearch(String subj, String obj, String subj_uri, String obj_uri, boolean strict)
+        private List<List<String>> runSearch(String subj, String obj, String subj_uri, String obj_uri, boolean strict)
 			throws IOException {
             Set<String> cache = new HashSet<>();
             List<List<String>> results = new ArrayList<>();
@@ -209,7 +132,7 @@ public class ReadIndex {
 		
                 entities.stream().forEach((entity) -> {
                     try {
-                        for(List<String> sentence_item : this.runStrictSearch(entity.get(0), entity.get(1),entity.get(2),entity.get(3),true)){
+                        for(List<String> sentence_item : this.runSearch(entity.get(0), entity.get(1),entity.get(2),entity.get(3),true)){
                             if(!unique_sentence.contains(sentence_item.get(0))){
                                 sentences.add(sentence_item);
                                 unique_sentence.add(sentence_item.get(0));
