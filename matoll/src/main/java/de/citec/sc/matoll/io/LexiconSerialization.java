@@ -245,8 +245,11 @@ public class LexiconSerialization {
                                                 }
                                             }
 //                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
-                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
-                                         }
+                                            String syn_signature = synarc.getArgumentType()+insert_value;
+                                            if(!syn_signatures.contains(syn_signature)){
+                                                model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
+                                                syn_signatures.add(syn_signature);
+                                            }                                         }
 
                                     }
 
