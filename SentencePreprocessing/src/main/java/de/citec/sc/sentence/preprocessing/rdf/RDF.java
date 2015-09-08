@@ -31,6 +31,8 @@ public class RDF {
 		Resource res_class_token = default_model.createResource("class:"+class_token)
 				.addProperty(default_model.createProperty("own:subj"),propSubj.toLowerCase())
 				.addProperty(default_model.createProperty("own:obj"),propObj.toLowerCase())
+                                .addProperty(default_model.createProperty("own:subjuri"),default_model.createLiteral(propSubj_uri))
+                                .addProperty(default_model.createProperty("own:objuri"),default_model.createLiteral(propObj_uri))
 				.addProperty(default_model.createProperty("conll:reference"),uri)
 				.addProperty(default_model.createProperty("conll:language"),language.toString().toLowerCase())
 				.addProperty(default_model.createProperty("conll:sentence"),plain_sentence);
