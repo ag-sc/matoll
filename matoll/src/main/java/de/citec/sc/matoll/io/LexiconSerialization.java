@@ -14,6 +14,7 @@ import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
+import de.citec.sc.matoll.core.SenseArgument;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
@@ -26,6 +27,7 @@ import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -108,19 +110,23 @@ public class LexiconSerialization {
 	private void serialize(LexicalEntry entry, Model model, String baseURI) {
             
                 int numberReturnedSentences = 5;
+                
+                Set<String> syn_signatures = new HashSet<>();
                 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
+                
+                if(entry.getPreposition()!=null){
+                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition().getCanonicalForm()));
+                    model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()+" ("+entry.getPreposition().getCanonicalForm()+")"));
+                }
+                else{
+                    model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()));
+                }
 		
-                model.add(model.createResource(entry.getURI()), model.createProperty("http://www.w3.org/2000/01/rdf-schema#label"), model.createLiteral(entry.getCanonicalForm()));
                 model.add(model.createResource(entry.getURI()), LEMON.language, model.createLiteral(entry.getLanguage().toString().toLowerCase()));
 
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()+"@"+entry.getLanguage().toString().toLowerCase()));
-                
-                if(entry.getPreposition()!=null)
-                    model.add(model.createResource(entry.getURI()), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition().getCanonicalForm()));
-                
-
                 
                 
                 String dbnary_uri = dbnary.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""),entry.getLanguage());
@@ -134,7 +140,6 @@ public class LexiconSerialization {
                         model.add(model.createResource(entry.getURI()), OWL.sameAs, model.createResource(tmp_uri));
                     }
                 }
-		
                 //System.out.println("entry.getReferences().size():"+entry.getReferences().size());
 		if (entry.getReferences().size()>0)
 		{
@@ -168,7 +173,6 @@ public class LexiconSerialization {
                                     model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createLiteral(pattern));
                                 else{
                                     model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.pattern, model.createResource(baseURI+"pattern_"+pattern));
-                                    //model.add(model.createResource(baseURI+"pattern#"+pattern), PROVO.query, model.createLiteral(patternSparqlMapping.get(pattern)));
                                 }
                             }
 
@@ -186,21 +190,22 @@ public class LexiconSerialization {
                                         model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                                         long timestamp = System.currentTimeMillis();
                                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
-//                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
-//                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(entry.getURI()+"#arg"+Integer.toString(ref_counter)+"_"+synarc.getValue()));
                                             
                                             String insert_value = entry.getURI()+"#"+Long.toString(timestamp)+synarc.getValue();
                                             if(synarc.getValue().length()>13 && StringUtils.isNumeric(synarc.getValue().substring(0, 13))){
                                                 insert_value = entry.getURI()+"#"+synarc.getValue().substring(13);
                                             }
-                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
-                                            model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
-//                                            if (synarc.getValue().contains("object")){
-//                                                 if(!entry.getPreposition().equals("")){
-//                                                    model.add(model.createResource(insert_value), LEMON.marker, model.createResource(baseURI+"preposition_"+entry.getPreposition())); 
-//                                                 }
-//                                                       
-//                                            }
+                                            for(SenseArgument argument : sense.getSenseArgs()){
+                                                if(argument.getValue().equals(synarc.getValue())){
+                                                    model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),model.createProperty(argument.getArgumenType()),model.createResource(insert_value));
+                                                }
+                                            }
+//                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
+                                            String syn_signature = synarc.getArgumentType()+insert_value;
+                                            if(!syn_signatures.contains(syn_signature)){
+                                                model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
+                                                syn_signatures.add(syn_signature);
+                                            }
                                         }
 
                                     }
@@ -234,7 +239,12 @@ public class LexiconSerialization {
                                             if(synarc.getValue().length()>13 && StringUtils.isNumeric(synarc.getValue().substring(0, 13))){
                                                 insert_value = entry.getURI()+"#"+synarc.getValue().substring(13);
                                             }
-                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
+                                            for(SenseArgument argument : sense.getSenseArgs()){
+                                                if(argument.getValue().equals(synarc.getValue())){
+                                                    model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),model.createProperty(argument.getArgumenType()),model.createResource(insert_value));
+                                                }
+                                            }
+//                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
                                          }
 

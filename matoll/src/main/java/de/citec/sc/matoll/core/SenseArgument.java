@@ -49,14 +49,6 @@ public class SenseArgument {
 
 	@Override
 	public boolean equals(Object obj) {
-		/*
-                TODO: Check and work on equals function in SenseArgument;
-                e.g.
-                http://lemon-model.net/lemon#isA 1435741664634subject
-                turns out to be the same like
-                http://lemon-model.net/lemon#isA 1435741664634object
-                */
-		// System.out.print("I am in equals (SenseArgument)\n");
 		
 		if (this == obj)
 			return true;
