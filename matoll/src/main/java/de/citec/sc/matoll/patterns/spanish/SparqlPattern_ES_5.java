@@ -110,17 +110,12 @@ public class SparqlPattern_ES_5 extends SparqlPattern{
 	 */
         @Override
         public String getQuery() {
-            String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-
-            + "?comma <conll:lemma> \",\". "
-            + "?comma <conll:deprel> \"punct\". "
-            + "?comma <conll:head> ?e1 ."		
-
+            String query= "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"	
             + "?noun <conll:postag> ?lemma_pos . "
             + "FILTER regex(?lemma_pos, \"NC\") ."
             + "?noun <conll:lemma> ?lemma . "
             + "?noun <conll:head> ?e1 ."
-
+            + "?noun <conll:deprel> \"MOD\" ."
             + "?p <conll:head> ?noun ."
             + "?p <conll:deprel> \"COMP\" ."
             + "?p <conll:postag> ?prep_pos ."
