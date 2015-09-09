@@ -37,7 +37,7 @@ public class Provenance {
     */
     Double OverallPropertyEntryRatio = 0.0; 
 
-    List<String> Sentences = new ArrayList<>();
+    List<Sentence> Sentences = new ArrayList<>();
 
     public HashSet<String> getPatternset() {
         return patternset;
@@ -48,8 +48,8 @@ public class Provenance {
         if(Sentences.isEmpty()) return 0.0;
         else{
             double avg = 0.0;
-            List<String> sentences = getShortestSentences(5);
-            for(String sentence:sentences)avg+=sentence.length();
+            List<Sentence> sentences = getShortestSentences(5);
+            for(Sentence sentence:sentences)avg+=sentence.getSentence().length();
             avg = avg/sentences.size();
 
             return avg;
@@ -121,23 +121,23 @@ public class Provenance {
 		return EndedAtTime;
 	}
         
-        public List<String> getSentences() {
+        public List<Sentence> getSentences() {
 		return Sentences;
 	}
 
 
-	public void addSentences(List<String> sentences) {
+	public void addSentences(List<Sentence> sentences) {
 		Sentences.addAll(sentences);
 		
 	}
 
 
-	public void setSentences(List<String> sentences) {
+	public void setSentences(List<Sentence> sentences) {
 		Sentences = sentences;
 		
 	}
         
-        public void addSentence(String sentence) {
+        public void addSentence(Sentence sentence) {
 		Sentences.add(sentence);
 		
 	}
@@ -147,13 +147,13 @@ public class Provenance {
          * @param k number of sentences
          * @return 
          */
-        public List<String> getShortestSentences(int k){
-            List<String> sentences = new ArrayList<>();
-            Map<String, Integer> map = new HashMap<String, Integer>();
-            Sentences.stream().forEach((sentence) -> { map.put(sentence, sentence.length());});
-            Map<String,Integer> sortedMap = sortByComparator(map);
+        public List<Sentence> getShortestSentences(int k){
+            List<Sentence> sentences = new ArrayList<>();
+            Map<Sentence, Integer> map = new HashMap<Sentence, Integer>();
+            Sentences.stream().forEach((sentence) -> { map.put(sentence, sentence.getSentence().length());});
+            Map<Sentence,Integer> sortedMap = sortByComparator(map);
             int counter = 0;
-            for(String key : sortedMap.keySet()){
+            for(Sentence key : sortedMap.keySet()){
                 if(counter<k)sentences.add(key);
                 counter++;
             }
@@ -161,24 +161,24 @@ public class Provenance {
         }
         
         //http://www.mkyong.com/java/how-to-sort-a-map-in-java/
-        private static Map<String, Integer> sortByComparator(Map<String, Integer> unsortMap) {
+        private static Map<Sentence, Integer> sortByComparator(Map<Sentence, Integer> unsortMap) {
  
 		// Convert Map to List
-		List<Map.Entry<String, Integer>> list = 
-			new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+		List<Map.Entry<Sentence, Integer>> list = 
+			new LinkedList<Map.Entry<Sentence, Integer>>(unsortMap.entrySet());
  
 		// Sort list with comparator, to compare the Map values
-		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-			public int compare(Map.Entry<String, Integer> o1,
-                                           Map.Entry<String, Integer> o2) {
+		Collections.sort(list, new Comparator<Map.Entry<Sentence, Integer>>() {
+			public int compare(Map.Entry<Sentence, Integer> o1,
+                                           Map.Entry<Sentence, Integer> o2) {
 				return (o1.getValue()).compareTo(o2.getValue());
 			}
 		});
  
 		// Convert sorted map back to a Map
-		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-		for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext();) {
-			Map.Entry<String, Integer> entry = it.next();
+		Map<Sentence, Integer> sortedMap = new LinkedHashMap<Sentence, Integer>();
+		for (Iterator<Map.Entry<Sentence, Integer>> it = list.iterator(); it.hasNext();) {
+			Map.Entry<Sentence, Integer> entry = it.next();
 			sortedMap.put(entry.getKey(), entry.getValue());
 		}
 		return sortedMap;

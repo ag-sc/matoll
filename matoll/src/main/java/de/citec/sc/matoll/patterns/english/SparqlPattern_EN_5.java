@@ -13,6 +13,7 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
@@ -80,7 +81,6 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
         @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
-		List<String> sentences = this.getSentences(model);
                 QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
@@ -107,7 +107,8 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
                 qExec.close() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
-                    Templates.getTransitiveVerb(model, lexicon, sentences, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Sentence sentence = this.returnSentence(model);
+                    Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 		
 

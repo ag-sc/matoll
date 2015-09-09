@@ -76,7 +76,7 @@ public class LexicalEntry {
                     if(mappingReferenceProvenance.containsKey(sense)){
                         Provenance provenance = mappingReferenceProvenance.get(sense);
                         if(provenance.getPatternset()!=null)for(String pattern:provenance.getPatternset())string+="Pattern: "+pattern+"\n";
-                        if(provenance.getSentences()!=null)for(String sentence:provenance.getShortestSentences(5))string+="Sentence: "+sentence+"\n";
+                        if(provenance.getSentences()!=null)for(Sentence sentence:provenance.getShortestSentences(5))string+="Sentence: "+sentence.getSentence()+"\n";
                     }
                 }
 		

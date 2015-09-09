@@ -15,12 +15,14 @@ import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Dbnary;
 import de.citec.sc.matoll.utils.Stopwords;
 import de.citec.sc.matoll.utils.Uby;
+import de.citec.sc.matoll.vocabularies.DBLEXIPEDIA;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
@@ -161,8 +163,20 @@ public class LexiconSerialization {
                             if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.associatedWith, model.createLiteral(provenance.getAgent()));
                             if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
                             if(provenance.getSentences()!=null){
-                               for(String sentence : provenance.getShortestSentences(numberReturnedSentences)){
-                                   model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
+                                int sentence_counter = 0;
+                               for(Sentence sentence : provenance.getShortestSentences(numberReturnedSentences)){
+//                                   model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
+                                   sentence_counter+=1;
+                                   model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)));
+                                   model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfProp, model.createLiteral(sentence.getSubjOfProp()));
+                                   model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfProp, model.createLiteral(sentence.getObjOfProp()));
+                                   model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.sentence, model.createLiteral(sentence.getSentence()));
+                                   if(sentence.getSubjOfProp_uri()!=null){
+                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfPropURI, model.createLiteral(sentence.getSubjOfProp_uri()));
+                                   }
+                                   if(sentence.getObjOfProp_uri()!=null){
+                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfProp, model.createLiteral(sentence.getObjOfProp_uri()));
+                                   }
                                }
                             }
                             

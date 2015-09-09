@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
@@ -54,7 +55,6 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		List<String> sentences = this.getSentences(model);
 		
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
@@ -90,10 +90,11 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                 model.leaveCriticalSection() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    Sentence sentence = this.returnSentence(model);
                     if(!additional_lemma.equals("")){
-                        Templates.getTransitiveVerb(model, lexicon, sentences, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                        Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
                     }
-                    else Templates.getTransitiveVerb(model, lexicon, sentences,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    else Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

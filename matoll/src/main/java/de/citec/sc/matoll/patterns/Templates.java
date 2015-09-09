@@ -13,6 +13,7 @@ import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
@@ -21,7 +22,7 @@ import de.citec.sc.matoll.utils.Lemmatizer;
 public class Templates {
 	
    
-	public static void getNounPossessive(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getNounPossessive(Model model, Lexicon lexicon, Sentence sentence, String noun, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
 
@@ -33,7 +34,7 @@ public class Templates {
             provenance.setFrequency(1);
             provenance.addPattern(pattern_name);
 
-            sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+            provenance.addSentence(sentence);
 
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -119,7 +120,7 @@ public class Templates {
 	
 	
 	
-	public static void getNounWithPrep(Model model, Lexicon lexicon, List<String> sentences, String noun, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getNounWithPrep(Model model, Lexicon lexicon, Sentence sentence, String noun, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
             Sense sense = new Sense();
@@ -131,7 +132,7 @@ public class Templates {
             Provenance provenance = new Provenance();
             provenance.addPattern(pattern_name);
             provenance.setFrequency(1);
-            sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+            provenance.addSentence(sentence);
 
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -208,7 +209,7 @@ public class Templates {
 	}
 	
 	
-	public static void getAdjective(Model model, Lexicon lexicon, List<String> sentences, String adjective, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
+	public static void getAdjective(Model model, Lexicon lexicon, Sentence sentence, String adjective, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective+"_as_Adjective_withPrep_"+preposition);
@@ -221,7 +222,7 @@ public class Templates {
             Provenance provenance = new Provenance();
             provenance.setFrequency(1);
             provenance.addPattern(pattern_name);
-            sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+            provenance.addSentence(sentence);
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
 
@@ -295,7 +296,7 @@ public class Templates {
 	
 	
 	
-	public static void getTransitiveVerb(Model model, Lexicon lexicon, List<String> sentences, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+	public static void getTransitiveVerb(Model model, Lexicon lexicon, Sentence sentence, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
             LexicalEntry entry = new LexicalEntry(language);
 
             
@@ -308,7 +309,7 @@ public class Templates {
             Provenance provenance = new Provenance();
             provenance.addPattern(pattern_name);
             provenance.setFrequency(1);
-            sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+            provenance.addSentence(sentence);
 
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();
@@ -389,10 +390,9 @@ public class Templates {
 	
 	
 	
-	public static void getIntransitiveVerb(Model model, Lexicon lexicon,  List<String> sentences, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+	public static void getIntransitiveVerb(Model model, Lexicon lexicon,  Sentence sentence, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 
             LexicalEntry entry = new LexicalEntry(language);
-            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb+"_as_IntransitiveVerb_withPrep_"+preposition);
             entry.setPreposition(new Preposition(language,preposition));
             Sense sense = new Sense();
 
@@ -402,7 +402,7 @@ public class Templates {
             Provenance provenance = new Provenance();
             provenance.setFrequency(1);
             provenance.addPattern(pattern_name);
-            sentences.stream().forEach((sentence) -> {provenance.addSentence(sentence);});
+            provenance.addSentence(sentence);
 
 
             SyntacticBehaviour behaviour = new SyntacticBehaviour();

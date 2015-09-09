@@ -24,6 +24,7 @@ import de.citec.sc.matoll.core.Provenance;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
@@ -398,7 +399,7 @@ public class LexiconLoader {
         String agent = "";
         Date starttime = null;
         Date endtime = null;
-        List<String> sentences = new ArrayList<String>();
+        List<Sentence> sentences = new ArrayList<>();
         HashSet<String> patterns = new HashSet<String>();
         String preposition;
         while (iter.hasNext()) {
@@ -474,7 +475,7 @@ public class LexiconLoader {
 
                          Statement stmt_sentence = iter_sentence.next();
                          if (stmt_sentence != null) {
-                             sentences.add(stmt_sentence.getObject().toString());
+                             //sentences.add(stmt_sentence.getObject().toString());
                          }
                     }
                      

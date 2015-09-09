@@ -13,6 +13,7 @@ import org.apache.jena.query.ResultSet;
 
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
@@ -105,8 +106,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
         }
 	
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
-		
-		List<String> sentences = this.getSentences(model);
   
                 QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
@@ -137,7 +136,8 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 qExec.close() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-                    Templates.getIntransitiveVerb(model, lexicon, sentences, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    Sentence sentence = this.returnSentence(model);
+                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
                 
 		

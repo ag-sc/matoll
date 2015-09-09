@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
@@ -55,7 +56,6 @@ public class SparqlPattern_DE_5_a extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		List<String> sentences = this.getSentences(model);
 		
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
@@ -88,7 +88,8 @@ public class SparqlPattern_DE_5_a extends SparqlPattern{
                 model.leaveCriticalSection() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
-                    Templates.getIntransitiveVerb(model, lexicon, sentences,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    Sentence sentence = this.returnSentence(model);
+                    Templates.getIntransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

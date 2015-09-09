@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
@@ -85,7 +86,6 @@ public class SparqlPattern_EN_4 extends SparqlPattern {
         @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		List<String> sentences = this.getSentences(model);
                 
                 QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
@@ -123,10 +123,11 @@ public class SparqlPattern_EN_4 extends SparqlPattern {
                 qExec.close() ;
     
 		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                    Sentence sentence = this.returnSentence(model);
                     if(!lemma_addition.equals("")){
-                        Templates.getAdjective(model, lexicon, sentences, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                        Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
                     }
-                    else Templates.getAdjective(model, lexicon, sentences, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    else Templates.getAdjective(model, lexicon, sentence, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 				
 	}
