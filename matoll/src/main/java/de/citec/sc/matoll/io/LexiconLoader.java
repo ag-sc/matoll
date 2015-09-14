@@ -28,6 +28,7 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.matoll.vocabularies.DBLEXIPEDIA;
 import de.citec.sc.matoll.vocabularies.LEMON;
 import de.citec.sc.matoll.vocabularies.LEXINFO;
 import de.citec.sc.matoll.vocabularies.OWL;
@@ -207,8 +208,8 @@ public class LexiconLoader {
                         Only way to map sense with syntactic arguments is the unique identifier for the syntactic argument.
                         */
                         if (!predicate.toString().equals(RDF.type.toString())){
-                        behaviour.add(new SyntacticArgument(predicate.toString(),argument_value,preposition));
-                        argument_value_list.add(argument_value);
+                            behaviour.add(new SyntacticArgument(predicate.toString(),argument_value,preposition));
+                            argument_value_list.add(argument_value);
                         }
                     }	
                      boolean add_bahaviour = true;
@@ -475,6 +476,8 @@ public class LexiconLoader {
 
                          Statement stmt_sentence = iter_sentence.next();
                          if (stmt_sentence != null) {
+                             
+                             sentences.add(getSentenceObject(stmt_sentence.getObject().toString(),model));
                              //sentences.add(stmt_sentence.getObject().toString());
                          }
                     }
@@ -653,6 +656,49 @@ public class LexiconLoader {
         qExec.close() ; 
         
         return pattern_name;
+    }
+
+    private Sentence getSentenceObject(String subject, Model model) {
+       
+        String query = "Select DISTINCT ?sentence ?subjOfProp ?objOfProp ?subjOfPropURI ?objOfPropURI WHERE{"
+                + "<"+subject+"> <"+DBLEXIPEDIA.sentence+"> ?sentence. "
+                + "<"+subject+"> <"+DBLEXIPEDIA.subjOfProp+"> ?subjOfProp. "
+                + "<"+subject+"> <"+DBLEXIPEDIA.objOfProp+"> ?objOfProp. "
+                + "OPTIONAL{"
+                + "<"+subject+"> <"+DBLEXIPEDIA.subjOfPropURI+"> ?subjOfPropURI . "
+                + "<"+subject+"> <"+DBLEXIPEDIA.objOfPropURI+"> ?objOfPropURI . }}";
+        QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
+        ResultSet rs = qExec.execSelect() ;
+        Sentence sentence = null;
+        try {
+         while ( rs.hasNext() ) {
+                 QuerySolution qs = rs.next();
+                 try{
+                         String plain_sentence = qs.get("?sentence").toString();
+                         String subjOfProp = qs.get("?subjOfProp").toString();
+                         String objOfProp = qs.get("?objOfProp").toString();
+                         sentence = new Sentence(plain_sentence,subjOfProp,objOfProp);
+                         try{
+                             String subjOfPropURI = qs.get("?subjOfPropURI").toString();
+                             String objOfPropURI = qs.get("?objOfPropURI").toString();
+                             sentence.setObjOfProp_uri(objOfPropURI);
+                             sentence.setSubjOfProp_uri(subjOfPropURI);
+                         }
+                         catch(Exception e){}
+                  }
+                 catch(Exception e){
+                     e.printStackTrace();
+                }
+             }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        qExec.close() ; 
+        
+        
+        return sentence;
+        
     }
         
         
