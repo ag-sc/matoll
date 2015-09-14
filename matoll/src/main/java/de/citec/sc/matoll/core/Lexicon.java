@@ -1,11 +1,18 @@
 package de.citec.sc.matoll.core;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Lexicon {
@@ -243,8 +250,80 @@ public class Lexicon {
                     .filter(e->e.getPreposition()!=null)
                     .map((LexicalEntry e)->{return e.getPreposition();})
                     .collect(Collectors.toList());
-            
-            
             return prepositions;
+        }
+        
+        /**
+         * Returns all top k (e.g. 1000) senses, created by a given pattern from the lexicon
+         * @param pattern_name
+         * @param topK
+         * @return 
+         */
+        public List<String> getTopKEntriesForPattern(String pattern_name, int topK){
+            System.out.println("Start with: "+pattern_name);
+            List<String> results = new ArrayList<>();
+            Map<Sense,Integer> hm = new HashMap<>();
+            Map<String,List<Provenance>> hm2 = new HashMap<>();
+            
+            
+            class EntryClass{
+                LexicalEntry entry;
+                int frequency = 0;
+
+                public LexicalEntry getEntry() {
+                    return entry;
+                }
+
+                public int getFrequency() {
+                    return frequency;
+                }
+                public EntryClass(LexicalEntry entry, int frequency){
+                    this.entry = entry;
+                    this.frequency=frequency;
+                }
+            }
+            
+            List<EntryClass> test = new ArrayList<>();
+            
+            entries.stream().forEach((entry) -> {
+                entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
+                    Provenance provenance = entry.getProvenance(sense);
+                    if (provenance.getPatternset().contains(pattern_name)) {
+                        LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
+                        newEntry.setPOS(entry.getPOS());
+                        newEntry.setURI(entry.getURI());
+                        newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
+                        newEntry.addProvenance(provenance, sense);
+                        if(entry.getPreposition()!=null){
+                            newEntry.setPreposition(entry.getPreposition());
+                        }
+                        newEntry.setCanonicalForm(entry.getCanonicalForm());
+                        EntryClass tmp = new EntryClass(newEntry,provenance.getFrequency());
+                        test.add(tmp);
+                    }
+                });
+            });
+         
+            
+            Collections.sort(test, (EntryClass ec1, EntryClass ec2) ->{
+                    return Integer.valueOf(ec2.getFrequency()).compareTo(ec1.getFrequency());
+            });
+            int counter = 0;
+            for(EntryClass ec : test){
+                if(counter<topK){
+                    LexicalEntry entry = ec.getEntry();
+                    String output = entry.getCanonicalForm()+" "+ec.getFrequency()+" "+entry.getPOS();
+                    output = entry.getReferences().stream().map((r) -> " "+r.getURI()).reduce(output, String::concat);
+                    if(entry.getPreposition()!=null) output+=" "+entry.getPreposition().getCanonicalForm();
+                    for(Sense sense : entry.getSenseBehaviours().keySet()){
+                        Provenance provenance = entry.getProvenance(sense);
+                        for(Sentence sentence : provenance.getShortestSentences(5)) output+=" "+sentence.getSentence();
+                    }
+                    results.add(output);
+                }
+                counter+=1;
+                
+            }
+            return results;
         }
 }
