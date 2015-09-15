@@ -1,18 +1,24 @@
 package de.citec.sc.matoll.core;
+import de.citec.sc.matoll.io.LexiconSerialization;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 
 
 public class Lexicon {
@@ -254,17 +260,19 @@ public class Lexicon {
         }
         
         /**
-         * Returns all top k (e.g. 1000) senses, created by a given pattern from the lexicon
-         * @param pattern_name
-         * @param topK
+         * Returns all top k (e.g. 1000) senses, created by a given pattern from the lexicon. Additionaly writes each selected entry into a septerated file.
+         * @param pattern_name Name of the pattern to look for
+         * @param topK Number of best (according to frequency) entries (senses) with are returned
+         * @param path Path to folder, where each entry is saved
          * @return 
          */
-        public List<String> getTopKEntriesForPattern(String pattern_name, int topK){
+        public List<String> getTopKEntriesForPattern(String pattern_name, int topK, String path){
             System.out.println("Start with: "+pattern_name);
             List<String> results = new ArrayList<>();
             Map<Sense,Integer> hm = new HashMap<>();
             Map<String,List<Provenance>> hm2 = new HashMap<>();
             
+            LexiconSerialization serial = new LexiconSerialization(false);
             
             class EntryClass{
                 LexicalEntry entry;
@@ -312,7 +320,8 @@ public class Lexicon {
             for(EntryClass ec : test){
                 if(counter<topK){
                     LexicalEntry entry = ec.getEntry();
-                    String output = entry.getCanonicalForm()+" "+ec.getFrequency()+" "+entry.getPOS();
+                    String name = pattern_name+"_"+Integer.toString(counter);
+                    String output = name+" "+entry.getCanonicalForm()+" "+ec.getFrequency()+" "+entry.getPOS();
                     output = entry.getReferences().stream().map((r) -> " "+r.getURI()).reduce(output, String::concat);
                     if(entry.getPreposition()!=null) output+=" "+entry.getPreposition().getCanonicalForm();
                     for(Sense sense : entry.getSenseBehaviours().keySet()){
@@ -320,6 +329,26 @@ public class Lexicon {
                         for(Sentence sentence : provenance.getShortestSentences(5)) output+=" "+sentence.getSentence();
                     }
                     results.add(output);
+                    System.out.println(output);
+                    /*
+                    Write each entry in seperate File
+                    */
+                    Lexicon output_lexicon = new Lexicon();
+                    output_lexicon.setBaseURI(baseURI);
+                    output_lexicon.addEntry(entry);
+                    Model model = ModelFactory.createDefaultModel();
+                    serial.serialize(output_lexicon, model);		
+                    try {
+                        FileOutputStream out = new FileOutputStream(new File(path+name+".ttl"));
+                        RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+                        out.close();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Lexicon.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Lexicon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
                 }
                 counter+=1;
                 
