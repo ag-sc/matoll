@@ -40,6 +40,7 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.ModelFactory;
 
 
 
@@ -393,7 +394,6 @@ public class LexiconLoader {
     private Provenance getProvenance(RDFNode rdf_sense, Resource loaded_entry,Model model) {
         Statement stmt;
         Provenance provenance = new Provenance();
-        
         StmtIterator iter = model.listStatements(null, PROVO.generatedBy, (RDFNode) null);
         int frequency = 0;
         double confidence = 0.0;
@@ -477,13 +477,14 @@ public class LexiconLoader {
                          Statement stmt_sentence = iter_sentence.next();
                          if (stmt_sentence != null) {
                              
-                             sentences.add(getSentenceObject(stmt_sentence.getObject().toString(),model));
+                             Sentence sentence = getSentenceObject(stmt_sentence.getObject().toString(),model);
+                             if(sentence!=null) sentences.add(sentence);
                              //sentences.add(stmt_sentence.getObject().toString());
                          }
                     }
                      
                  }
-                 catch(Exception e){};
+                 catch(Exception e){e.printStackTrace();};
                  
              }
         }
@@ -660,41 +661,35 @@ public class LexiconLoader {
 
     private Sentence getSentenceObject(String subject, Model model) {
        
-        String query = "Select DISTINCT ?sentence ?subjOfProp ?objOfProp ?subjOfPropURI ?objOfPropURI WHERE{"
-                + "<"+subject+"> <"+DBLEXIPEDIA.sentence+"> ?sentence. "
-                + "<"+subject+"> <"+DBLEXIPEDIA.subjOfProp+"> ?subjOfProp. "
-                + "<"+subject+"> <"+DBLEXIPEDIA.objOfProp+"> ?objOfProp. "
-                + "OPTIONAL{"
-                + "<"+subject+"> <"+DBLEXIPEDIA.subjOfPropURI+"> ?subjOfPropURI . "
-                + "<"+subject+"> <"+DBLEXIPEDIA.objOfPropURI+"> ?objOfPropURI . }}";
-        QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
-        ResultSet rs = qExec.execSelect() ;
         Sentence sentence = null;
-        try {
-         while ( rs.hasNext() ) {
-                 QuerySolution qs = rs.next();
-                 try{
-                         String plain_sentence = qs.get("?sentence").toString();
-                         String subjOfProp = qs.get("?subjOfProp").toString();
-                         String objOfProp = qs.get("?objOfProp").toString();
-                         sentence = new Sentence(plain_sentence,subjOfProp,objOfProp);
-                         try{
-                             String subjOfPropURI = qs.get("?subjOfPropURI").toString();
-                             String objOfPropURI = qs.get("?objOfPropURI").toString();
-                             sentence.setObjOfProp_uri(objOfPropURI);
-                             sentence.setSubjOfProp_uri(subjOfPropURI);
-                         }
-                         catch(Exception e){}
-                  }
-                 catch(Exception e){
-                     e.printStackTrace();
-                }
-             }
+        StmtIterator iter = model.listStatements(model.createResource(subject), DBLEXIPEDIA.sentence, (RDFNode) null);
+        Statement stmt;
+        String plain_sentence = null;
+        String subjOfProp  = null;
+        String objOfProp = null;
+        
+        while (iter.hasNext()) {
+             stmt = iter.next();
+             plain_sentence = stmt.getObject().toString();
         }
-        catch(Exception e){
-            e.printStackTrace();
+        
+        
+        iter = model.listStatements(model.createResource(subject), DBLEXIPEDIA.subjOfProp, (RDFNode) null);
+        while (iter.hasNext()) {
+             stmt = iter.next();
+             subjOfProp = stmt.getObject().toString();
         }
-        qExec.close() ; 
+        
+        iter = model.listStatements(model.createResource(subject), DBLEXIPEDIA.objOfProp, (RDFNode) null);
+        while (iter.hasNext()) {
+             stmt = iter.next();
+             objOfProp = stmt.getObject().toString();
+        }
+        
+        if(objOfProp!=null && subjOfProp!=null && plain_sentence!=null){
+            sentence = new Sentence(plain_sentence,subjOfProp,objOfProp);
+            //System.out.println(sentence.toString());
+        }
         
         
         return sentence;

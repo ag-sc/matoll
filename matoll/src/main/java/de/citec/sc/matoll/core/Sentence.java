@@ -74,6 +74,11 @@ public class Sentence {
         hash = 67 * hash + Objects.hashCode(this.objOfProp);
         return hash;
     }
+    
+    @Override
+    public String toString(){
+        return sentence+";"+subjOfProp+";"+objOfProp;
+    }
 
 
     
