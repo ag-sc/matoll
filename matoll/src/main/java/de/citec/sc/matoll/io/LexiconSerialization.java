@@ -112,7 +112,7 @@ public class LexiconSerialization {
 	private void serialize(LexicalEntry entry, Model model, String baseURI) {
             
                 int numberReturnedSentences = 5;
-                
+                int sentence_counter = 0;
                 Set<String> syn_signatures = new HashSet<>();
                 		
 		model.add(model.createResource(entry.getURI()),RDF.type,LEMON.LexicalEntry);
@@ -163,7 +163,7 @@ public class LexiconSerialization {
                             if (provenance.getAgent() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.associatedWith, model.createLiteral(provenance.getAgent()));
                             if (provenance.getFrequency() != null) model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.frequency, model.createTypedLiteral(provenance.getFrequency()));
                             if(provenance.getSentences()!=null){
-                                int sentence_counter = 0;
+                                
                                for(Sentence sentence : provenance.getShortestSentences(numberReturnedSentences)){
 //                                   model.add(model.createResource(entry.getURI()+"#Activity"+Integer.toString(ref_counter)), PROVO.sentence, model.createTypedLiteral(sentence));
                                    sentence_counter+=1;
