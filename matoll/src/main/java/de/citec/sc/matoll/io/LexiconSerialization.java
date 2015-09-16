@@ -175,7 +175,7 @@ public class LexiconSerialization {
                                        model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfPropURI, model.createLiteral(sentence.getSubjOfProp_uri()));
                                    }
                                    if(sentence.getObjOfProp_uri()!=null){
-                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfProp, model.createLiteral(sentence.getObjOfProp_uri()));
+                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfPropURI, model.createLiteral(sentence.getObjOfProp_uri()));
                                    }
                                }
                             }
