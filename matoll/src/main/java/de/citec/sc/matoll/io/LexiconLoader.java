@@ -688,8 +688,22 @@ public class LexiconLoader {
         
         if(objOfProp!=null && subjOfProp!=null && plain_sentence!=null){
             sentence = new Sentence(plain_sentence,subjOfProp,objOfProp);
-            //System.out.println(sentence.toString());
+            
+            iter = model.listStatements(model.createResource(subject), DBLEXIPEDIA.objOfPropURI, (RDFNode) null);
+            while (iter.hasNext()) {
+                 stmt = iter.next();
+                 sentence.setObjOfProp_uri(stmt.getObject().toString());
+            }
+
+
+            iter = model.listStatements(model.createResource(subject), DBLEXIPEDIA.subjOfPropURI, (RDFNode) null);
+            while (iter.hasNext()) {
+                 stmt = iter.next();
+                 sentence.setSubjOfProp_uri(stmt.getObject().toString());
+            }
         }
+        
+        
         
         
         return sentence;

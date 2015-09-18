@@ -15,9 +15,9 @@ import org.apache.jena.rdf.model.Property;
  */
 public class DBLEXIPEDIA {
     private static Model defaultModel = ModelFactory.createDefaultModel(); 
-    public static Property objOfProp = defaultModel.createProperty("http://dblexipedia.org#objOfProp");
-    public static Property subjOfProp = defaultModel.createProperty("http://dblexipedia.org#subjOfProp");
-    public static Property sentence = defaultModel.createProperty("http://dblexipedia.org#sentence");
-    public static Property objOfPropURI = defaultModel.createProperty("http://dblexipedia.org#objOfPropURI");
-    public static Property subjOfPropURI = defaultModel.createProperty("http://dblexipedia.org#subjOfPropURI");
+    public static Property objOfProp = defaultModel.createProperty("http://dblexipedia.org/info#objOfProp");
+    public static Property subjOfProp = defaultModel.createProperty("http://dblexipedia.org/info#subjOfProp");
+    public static Property sentence = defaultModel.createProperty("http://dblexipedia.org/info#sentence");
+    public static Property objOfPropURI = defaultModel.createProperty("http://dblexipedia.org/info#objOfPropURI");
+    public static Property subjOfPropURI = defaultModel.createProperty("http://dblexipedia.org/info#subjOfPropURI");
 }
