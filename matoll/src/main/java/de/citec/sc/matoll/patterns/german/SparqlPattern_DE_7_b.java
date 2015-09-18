@@ -43,7 +43,7 @@ public class SparqlPattern_DE_7_b extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_7_a";
+		return "SPARQLPattern_DE_7_b";
 	}
 
 	@Override
