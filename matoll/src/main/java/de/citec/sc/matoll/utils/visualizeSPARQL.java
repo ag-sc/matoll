@@ -13,6 +13,16 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
@@ -34,8 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
-import org.jgrapht.*;
-import org.jgrapht.graph.*;
 
 /**
  *
@@ -65,6 +73,16 @@ public class visualizeSPARQL {
         Patterns_ES.add(new SparqlPattern_ES_7b());
         Patterns_ES.add(new SparqlPattern_ES_8());
         Patterns_ES.add(new SparqlPattern_ES_9());
+        Patterns_DE.add(new SparqlPattern_DE_1());
+        Patterns_DE.add(new SparqlPattern_DE_2());
+        Patterns_DE.add(new SparqlPattern_DE_3_a());
+        Patterns_DE.add(new SparqlPattern_DE_3_b());
+        Patterns_DE.add(new SparqlPattern_DE_4());
+        Patterns_DE.add(new SparqlPattern_DE_5_a());
+        Patterns_DE.add(new SparqlPattern_DE_5_b());
+        Patterns_DE.add(new SparqlPattern_DE_6());
+        Patterns_DE.add(new SparqlPattern_DE_7_a());
+        Patterns_DE.add(new SparqlPattern_DE_7_b());
         
         writePatterns(Patterns_EN, Language.EN);
         writePatterns(Patterns_ES, Language.ES);

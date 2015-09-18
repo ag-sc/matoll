@@ -171,12 +171,12 @@ public class LexiconSerialization {
                                    model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfProp, model.createLiteral(sentence.getSubjOfProp()));
                                    model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfProp, model.createLiteral(sentence.getObjOfProp()));
                                    model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.sentence, model.createLiteral(sentence.getSentence()));
-                                   if(sentence.getSubjOfProp_uri()!=null){
-                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfPropURI, model.createLiteral(sentence.getSubjOfProp_uri()));
-                                   }
-                                   if(sentence.getObjOfProp_uri()!=null){
-                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfPropURI, model.createLiteral(sentence.getObjOfProp_uri()));
-                                   }
+//                                   if(sentence.getSubjOfProp_uri()!=null){
+//                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.subjOfPropURI, model.createResource(sentence.getSubjOfProp_uri()));
+//                                   }
+//                                   if(sentence.getObjOfProp_uri()!=null){
+//                                       model.add(model.createResource(entry.getURI()+"#Sentence"+Integer.toString(sentence_counter)), DBLEXIPEDIA.objOfPropURI, model.createResource(sentence.getObjOfProp_uri()));
+//                                   }
                                }
                             }
                             
@@ -200,8 +200,7 @@ public class LexiconSerialization {
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {
-                                        model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
-                                        model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+                                        
                                         long timestamp = System.currentTimeMillis();
                                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
                                             
@@ -217,6 +216,8 @@ public class LexiconSerialization {
 //                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             String syn_signature = synarc.getArgumentType()+insert_value;
                                             if(!syn_signatures.contains(syn_signature)){
+                                                model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
+                                                model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                                                 model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
                                                 syn_signatures.add(syn_signature);
                                             }
@@ -245,8 +246,7 @@ public class LexiconSerialization {
                                     synbehaviour_counter+=1;
                                     if (synbehaviour != null)
                                     {
-                                        model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
-                                        model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
+                                        
                                         long timestamp = System.currentTimeMillis();
                                         for( SyntacticArgument synarc:synbehaviour.getSynArgs()){
                                             String insert_value = entry.getURI()+"#"+Long.toString(timestamp)+synarc.getValue();
@@ -261,6 +261,8 @@ public class LexiconSerialization {
 //                                            model.add(model.createResource(entry.getURI()+"#Sense"+Integer.toString(ref_counter)),LEMON.isA,model.createResource(insert_value));
                                             String syn_signature = synarc.getArgumentType()+insert_value;
                                             if(!syn_signatures.contains(syn_signature)){
+                                                model.add(model.createResource(entry.getURI()), LEMON.syntacticBehaviour, model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)));
+                                                model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)), RDF.type, model.createResource(synbehaviour.getFrame()));
                                                 model.add(model.createResource(entry.getURI()+"#SynBehaviour"+Integer.toString(ref_counter)+"_"+Integer.toString(synbehaviour_counter)),model.createProperty(synarc.getArgumentType()),model.createResource(insert_value));
                                                 syn_signatures.add(syn_signature);
                                             }                                         }
