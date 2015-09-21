@@ -61,16 +61,17 @@ public class RelativeClauses {
                        + " }";           
                 break;
                 
-            case JA: 
+            default: 
                 
-                sparql = ""; // TODO           
-                break;
+                sparql = null;            
         }
     }
     
     public Set<Set<RDFNode>> computeCoreference(Model model) {
                 
         Set<Set<RDFNode>> coreferenceSets = new HashSet<>();
+        
+        if (sparql == null) return coreferenceSets;
         
         Query query = QueryFactory.create(sparql);
         QueryExecution qe = QueryExecutionFactory.create(query,model);
