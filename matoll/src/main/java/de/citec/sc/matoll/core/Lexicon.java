@@ -266,9 +266,9 @@ public class Lexicon {
          * @param path Path to folder, where each entry is saved
          * @return 
          */
-        public List<String> getTopKEntriesForPattern(String pattern_name, int topK, String path){
+        public Set<String> getTopKEntriesForPattern(String pattern_name, int topK, String path){
             System.out.println("Start with: "+pattern_name);
-            List<String> results = new ArrayList<>();
+            Set<String> results = new HashSet<>();
             Map<Sense,Integer> hm = new HashMap<>();
             Map<String,List<Provenance>> hm2 = new HashMap<>();
             
@@ -321,12 +321,13 @@ public class Lexicon {
                 if(counter<topK){
                     LexicalEntry entry = ec.getEntry();
                     String name = pattern_name+"_"+Integer.toString(counter);
-                    String output = name+" "+entry.getCanonicalForm()+" "+ec.getFrequency()+" "+entry.getPOS();
-                    output = entry.getReferences().stream().map((r) -> " "+r.getURI()).reduce(output, String::concat);
-                    if(entry.getPreposition()!=null) output+=" "+entry.getPreposition().getCanonicalForm();
+                    String output = name+"\t"+entry.getCanonicalForm()+"\t"+ec.getFrequency()+"\t"+entry.getPOS();
+                    output = entry.getReferences().stream().map((r) -> "\t"+r.getURI()).reduce(output, String::concat);
+                    if(entry.getPreposition()!=null) output+="\t"+entry.getPreposition().getCanonicalForm();
+                    else{output+="\t\t";}
                     for(Sense sense : entry.getSenseBehaviours().keySet()){
                         Provenance provenance = entry.getProvenance(sense);
-                        for(Sentence sentence : provenance.getShortestSentences(5)) output+=" "+sentence.getSentence();
+                        for(Sentence sentence : provenance.getShortestSentences(5)) output+="\t"+sentence.getSentence()+" sop:"+sentence.getSubjOfProp()+" oop:"+sentence.getObjOfProp();
                     }
                     results.add(output);
                     System.out.println(output);
@@ -355,4 +356,101 @@ public class Lexicon {
             }
             return results;
         }
+
+        public Set<String> getTopKEntriesForURI(String givenURI, int topK, Language givenLanguage,String path){
+            System.out.println("Start with: "+givenURI);
+            Set<String> results = new HashSet<>();
+            Map<Sense,Integer> hm = new HashMap<>();
+            Map<String,List<Provenance>> hm2 = new HashMap<>();
+            
+            LexiconSerialization serial = new LexiconSerialization(false);
+            
+            class EntryClass{
+                LexicalEntry entry;
+                int frequency = 0;
+
+                public LexicalEntry getEntry() {
+                    return entry;
+                }
+
+                public int getFrequency() {
+                    return frequency;
+                }
+                public EntryClass(LexicalEntry entry, int frequency){
+                    this.entry = entry;
+                    this.frequency=frequency;
+                }
+            }
+            
+            List<EntryClass> test = new ArrayList<>();
+            
+            entries.stream().forEach((entry) -> {
+                entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
+                    if(entry.getLanguage().equals(givenLanguage)){
+                        
+                        Provenance provenance = entry.getProvenance(sense);
+                        if (sense.getReference().getURI().contains(givenURI)) {
+                            LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
+                            newEntry.setPOS(entry.getPOS());
+                            newEntry.setURI(entry.getURI());
+                            newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
+                            newEntry.addProvenance(provenance, sense);
+                            if(entry.getPreposition()!=null){
+                                newEntry.setPreposition(entry.getPreposition());
+                            }
+                            newEntry.setCanonicalForm(entry.getCanonicalForm());
+                            EntryClass tmp = new EntryClass(newEntry,provenance.getFrequency());
+                            test.add(tmp);
+                        }
+                    }
+                });
+            });
+         
+            
+            Collections.sort(test, (EntryClass ec1, EntryClass ec2) ->{
+                    return Integer.valueOf(ec2.getFrequency()).compareTo(ec1.getFrequency());
+            });
+            int counter = 0;
+            for(EntryClass ec : test){
+                if(counter<topK){
+                    LexicalEntry entry = ec.getEntry();
+                    String name = givenLanguage.toString()+"_"+givenURI.replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+"_"+Integer.toString(counter);
+                    String output = name+"\t"+entry.getCanonicalForm()+"\t"+ec.getFrequency()+"\t"+entry.getPOS();
+                    output = entry.getReferences().stream().map((r) -> "\t"+r.getURI()).reduce(output, String::concat);
+                    if(entry.getPreposition()!=null) output+="\t"+entry.getPreposition().getCanonicalForm();
+                    else{output+="\t\t";}
+                    for(Sense sense : entry.getSenseBehaviours().keySet()){
+                        Provenance provenance = entry.getProvenance(sense);
+                        for(Sentence sentence : provenance.getShortestSentences(5)) output+="\t"+sentence.getSentence()+" sop:"+sentence.getSubjOfProp()+" oop:"+sentence.getObjOfProp();
+                    }
+                    results.add(output);
+                    System.out.println(output);
+                    /*
+                    Write each entry in seperate File
+                    */
+                    Lexicon output_lexicon = new Lexicon();
+                    output_lexicon.setBaseURI(baseURI);
+                    output_lexicon.addEntry(entry);
+                    Model model = ModelFactory.createDefaultModel();
+                    serial.serialize(output_lexicon, model);		
+                    try {
+                        FileOutputStream out = new FileOutputStream(new File(path+name+".ttl"));
+                        RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+                        out.close();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Lexicon.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Lexicon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                }
+                counter+=1;
+                
+            }
+            return results;
+        }
+
+
 }
+
