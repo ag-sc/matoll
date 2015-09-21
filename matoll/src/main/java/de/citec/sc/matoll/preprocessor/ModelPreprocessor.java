@@ -35,13 +35,13 @@ public class ModelPreprocessor {
 	
         Language    language;
         
-	Set<String> POS;
+	Set<String> DEP;
 
 	
 	public ModelPreprocessor(Language language)
 	{
                 this.language = language; 
-		POS = new HashSet<String>();
+		DEP = new HashSet<String>();
                 doCoref = false;
 	}
 	        
@@ -62,7 +62,7 @@ public class ModelPreprocessor {
 		
 		senseArgs = new HashMap<String,String>();
 		
-		getMapings(Int2NodeMapping,Node2IntMapping,model);
+		getMappings(Int2NodeMapping,Node2IntMapping,model);
 		
 		List<Hypothesis> hypotheses;
 		
@@ -77,7 +77,7 @@ public class ModelPreprocessor {
 			{
 				// System.out.print("Final hypo: "+hypo.toString());
 				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,POS);
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
 				
 				if (root != null) 
 				{
@@ -96,7 +96,7 @@ public class ModelPreprocessor {
 				
 				// System.out.print("Final hypo: "+hypo.toString());
 				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,POS);
+				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
 				
 				if (root != null) 
 				{	
@@ -119,7 +119,7 @@ public class ModelPreprocessor {
          * @param node2IntMapping
          * @param model 
          */
-	private void getMapings(HashMap<Integer, String> int2NodeMapping,
+	private void getMappings(HashMap<Integer, String> int2NodeMapping,
 			HashMap<String, Integer> node2IntMapping, Model model) {
 		
 		StmtIterator iter;
@@ -315,8 +315,8 @@ public class ModelPreprocessor {
 		doCoref = b;	
 	}
 
-	public void setPOS(Set<String> pos) {
-		POS = pos;		
+	public void setDEP(Set<String> dep) {
+		DEP = dep;		
 	}
         
         public void setLanguage(Language l) {

@@ -32,6 +32,11 @@ import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.classifiers.WEKAclassifier;
 import de.citec.sc.matoll.core.Language;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
 import de.citec.sc.matoll.utils.Learning;
 
 import org.apache.jena.riot.RDFDataMgr;
@@ -40,6 +45,7 @@ import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
@@ -168,9 +174,47 @@ public class Matoll {
 		                
 		
 		// Creating preprocessor
-		
+//		
 		ModelPreprocessor preprocessor = new ModelPreprocessor(language);
                 preprocessor.setCoreferenceResolution(coreference);
+                switch (language) {
+                    
+                    case EN: 
+                        Set<String> dep = new HashSet<>();
+                        dep.add("prep");
+                        dep.add("appos");
+                        dep.add("nn");
+                        dep.add("dobj");
+                        dep.add("pobj");
+                        preprocessor.setDEP(dep);
+                        break;
+                        
+                    case DE: 
+                        dep = new HashSet<>();
+                        dep.add("pp");
+                        dep.add("pn");
+                        dep.add("obja");
+                        dep.add("objd");
+                        dep.add("app");
+                        preprocessor.setDEP(dep);
+                        break;
+                        
+                    case ES: 
+                        dep = new HashSet<>();
+                        dep.add("MOD");
+                        dep.add("COMP");
+                        dep.add("DO");
+                        dep.add("OBLC");
+                        dep.add("BYAG");
+                        preprocessor.setDEP(dep);
+                        break;
+                        
+                        
+                    case JA: 
+                        break;
+                        //TODO
+                                                    
+                }
 				
 		Lexicon automatic_lexicon = new Lexicon();
                 automatic_lexicon.setBaseURI(config.getBaseUri());
@@ -226,7 +270,7 @@ public class Matoll {
                     .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                     .map((File f)->{
                         logger.info("Processing: "+f.toString());
-                        return createLexicon(f,config,sl);
+                        return createLexicon(f,config,sl,preprocessor);
                     })
                     .collect(Collectors.toList());
                 
@@ -286,10 +330,8 @@ public class Matoll {
 			
 	}
         
-        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl) {
+        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl, ModelPreprocessor preprocessor) {
             Language language = config.getLanguage();
-            ModelPreprocessor preprocessor = new ModelPreprocessor(language);
-            preprocessor.setCoreferenceResolution(config.getCoreference());
             PatternLibrary library = new PatternLibrary();
             if(language == Language.EN){
                 library.setLemmatizer(sl);
