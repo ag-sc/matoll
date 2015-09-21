@@ -24,7 +24,7 @@ public class Coreference {
     
     public void computeCoreference(Model model, Language language) throws Exception {
     
-        Set<Set<RDFNode>> coreferenceSets = new HashSet<Set<RDFNode>>();
+        Set<Set<RDFNode>> coreferenceSets = new HashSet<>();
         
         // 1. Select corefering tokens
         
@@ -41,7 +41,7 @@ public class Coreference {
         
         for (Set<RDFNode> coreferenceSet : coreferenceSets) {
 
-             Set<RDFNode> senseArgs = new HashSet<RDFNode>();
+             Set<RDFNode> senseArgs = new HashSet<>();
 
              for (RDFNode token : coreferenceSet) {
                   String sparql = "SELECT ?senseArg WHERE { "
