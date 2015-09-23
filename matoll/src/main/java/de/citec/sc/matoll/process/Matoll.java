@@ -32,12 +32,8 @@ import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.classifiers.WEKAclassifier;
 import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
 import de.citec.sc.matoll.utils.Learning;
+import de.citec.sc.matoll.utils.Stopwords;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -46,11 +42,7 @@ import org.xml.sax.SAXException;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toList;
-import java.util.stream.Stream;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -96,6 +88,7 @@ public class Matoll {
 		String output;
 		double frequency = 2.0;
                 
+                Stopwords stopwords=new Stopwords();
 		
 		HashMap<String,Double> maxima; 
 		maxima = new HashMap<String,Double>();
@@ -270,7 +263,7 @@ public class Matoll {
                     .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
                     .map((File f)->{
                         logger.info("Processing: "+f.toString());
-                        return createLexicon(f,config,sl,preprocessor);
+                        return createLexicon(f,config,sl,preprocessor,stopwords);
                     })
                     .collect(Collectors.toList());
                 
@@ -330,7 +323,7 @@ public class Matoll {
 			
 	}
         
-        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl, ModelPreprocessor preprocessor) {
+        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl, ModelPreprocessor preprocessor, Stopwords stopwords) {
             Language language = config.getLanguage();
             PatternLibrary library = new PatternLibrary();
             if(language == Language.EN){
@@ -344,21 +337,17 @@ public class Matoll {
             Model model = RDFDataMgr.loadModel(file.toString());
             try{
                 List<Model> sentences = getSentences(model);
-                sentences.stream().map((sentence) -> {
-                    //System.out.println(sentence.toString());
+                sentences.stream().forEach((sentence) -> {
                     String obj = getObject(sentence);
                     String subj = getSubject(sentence);
-                    String reference = getReference(sentence);
-                    preprocessor.preprocess(sentence,subj,obj);
-                    return sentence;
-                }).forEach((sentence) -> {
-                    //logger.info("Extract lexical entry for: "+sentence.toString()+"\n");
-                    library.extractLexicalEntries(sentence, lexicon);
+                    if (!stopwords.isStopword(obj, language) && !stopwords.isStopword(subj, language)) {
+                        String reference = getReference(sentence);
+                        preprocessor.preprocess(sentence,subj,obj);
+                        library.extractLexicalEntries(sentence, lexicon);
+                    }
                 });
-                model.close();
-                // FileOutputStream output = new FileOutputStream(new File(file.toString().replaceAll(".ttl", "_pci.ttl")));
-
-                // RDFDataMgr.write(output, model, RDFFormat.TURTLE) ;
+                
+                
             }
             catch(Exception e){
             }
