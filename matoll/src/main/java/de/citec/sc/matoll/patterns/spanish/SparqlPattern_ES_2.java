@@ -48,7 +48,6 @@ public class SparqlPattern_ES_2 extends SparqlPattern{
                     + "FILTER regex(?pos, \"VSI\") ."
                     + "?copula <conll:lemma> \"ser\" ."
 
-                    + "?noun <conll:lemma> ?lemma . "
                     + "?noun <conll:head> ?copula . "
                     + "?noun <conll:cpostag> \"n\" . "
                     + "?noun <conll:deprel> \"ATR\" ."

@@ -36,25 +36,29 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
 	
-	// TODO: concatenate ?noun and ?lemma as lemma of the lexical entry, literally, no lemmatization
+	// TODO: concatenate ?noun and ?adjective (wenn es existiert) as lemma of the lexical entry, literally, no lemmatization
 	// further checks need to be done here actually, but using the adjective as before was clearly wrong
 	// ideally we would check that the adjective actually directly follows the noun
+
 	
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-                            + "?adjective <conll:lemma> ?lemma . "
-                            + "?adjective <conll:head> ?blank . "
+            String query = "SELECT ?lemma ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+                            + " OPTIONAL {"
+                            + "?adjective <conll:form> ?adjective_lemma . "
+                            + "?adjective <conll:head> ?noun . "
                             + "?adjective <conll:deprel> \"MOD\" . "
-                            + "?adjective <conll:postag> \"AQ0FS0\". "
-                            + "?noun <conll:head> ?noun. "
+                            + "?adjective <conll:postag> \"AQ0FS0\".  }"
+                            + "?noun <conll:head> ?verb. "
                             + "?noun <conll:deprel> \"ATR\". "
+                            + "?noun <conll:lemma> ?lemma ."
                             + "?verb <conll:postag> ?verb_pos . "
+                            + "?verb <conll:lemma> \"ser\" . "
                             + "FILTER regex(?verb_pos, \"VS\") ."
                             + "?e1 <conll:head> ?verb . "
                             + "?e1 <conll:deprel> ?e1_grammar . "
                             + "FILTER regex(?e1_grammar, \"SUBJ\") ."
-                            + "?p <conll:head> ?blank . "
+                            + "?p <conll:head> ?noun . "
                             + "?p <conll:deprel> \"MOD\". "
                             + "?p <conll:postag> \"SPS00\". "
                             + "?p <conll:lemma> ?prep . "
@@ -83,6 +87,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String adjective_lemma = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -93,7 +98,11 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                                  noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 preposition = qs.get("?prep").toString();
+                                 try{
+                                     adjective_lemma = qs.get("?prep").toString();
+                                 }
+                                 catch(Exception e){};
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -107,7 +116,10 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    if(adjective_lemma!=null)
+                        Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    else
+                        Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 	}

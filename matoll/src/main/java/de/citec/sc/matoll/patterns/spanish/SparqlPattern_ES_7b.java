@@ -79,7 +79,7 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 
                             + "?verb <conll:postag> ?verb_pos ."
                             + "FILTER regex(?verb_pos, \"VMIS\") ."
-                + "?verb <conll:lemma> ?lemma ."
+                            + "?verb <conll:lemma> ?lemma ."
 
                             + "?se <conll:lemma> \"se\" ."
                             + "?se <conll:deprel> \"DO\" ."
@@ -144,7 +144,7 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    Templates.getTransitiveVerb(model, lexicon, sentence, verb+"+se", e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 				

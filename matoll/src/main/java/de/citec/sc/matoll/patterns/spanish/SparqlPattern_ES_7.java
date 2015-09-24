@@ -48,7 +48,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-                            + "?verb <conll:cpostag> ?verb_pos ."
+                            + "?verb <conll:postag> ?verb_pos ."
                             + "?verb <conll:lemma> ?lemma ."
                             + "FILTER regex(?verb_pos, \"VMIS\") ."
 
@@ -114,7 +114,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, "se "+verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 	
