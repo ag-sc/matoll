@@ -99,6 +99,11 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                     + "?p <conll:form> ?prep . "
                     + "?e2 <conll:head> ?p . "
                     + "?e2 <conll:deprel> \"pobj\". "
+                    + "OPTIONAL {"
+                    + "?dobj <conll:head> ?y . "
+                    + "?dobj <conll:form> ?dobj_form ."
+                    + "?dobj <conll:deprel> \"dobj\" ."
+                    + "}"
                     + "?e1 <own:senseArg> ?e1_arg. "
                     + "?e2 <own:senseArg> ?e2_arg. "
                     + "}";
@@ -113,6 +118,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String dobj_form = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -123,7 +129,12 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 preposition = qs.get("?prep").toString();
+                                 try{
+                                     dobj_form = qs.get("?dobj_form").toString();
+                                 }catch(Exception e){
+                                    e.printStackTrace();
+                                    }
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -137,6 +148,10 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
+                    if(dobj_form!=null){
+                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+" "+dobj_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    }
+                    else 
                     Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
                 
