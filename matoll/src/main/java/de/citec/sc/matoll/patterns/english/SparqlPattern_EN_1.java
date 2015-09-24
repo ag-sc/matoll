@@ -148,7 +148,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
                     if(dobj_form!=null){
-                        System.out.println(verb+" "+dobj_form);
+//                        System.out.println(verb+" "+dobj_form);
                         Templates.getIntransitiveVerb(model, lexicon, sentence, verb+" "+dobj_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
                     }
                     else 
