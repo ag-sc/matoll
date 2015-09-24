@@ -77,7 +77,8 @@ public class SparqlPattern_ES_6 extends SparqlPattern{
 
 
                             + "?e2 <conll:head> ?p ."
-                            + "?e2 <conll:deprel> \"COMP\"."
+                            + "{?e2 <conll:deprel> \"COMP\". } UNION "
+                            + "{?e2 <conll:deprel> \"MOD\". }"
                             //oder MOD?
 
                             + "?e1 <own:senseArg> ?e1_arg. "

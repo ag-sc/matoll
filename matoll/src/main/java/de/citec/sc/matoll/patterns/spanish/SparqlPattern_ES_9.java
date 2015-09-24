@@ -98,7 +98,9 @@ Neuer parse:
                             + "FILTER regex(?prep_pos, \"SPS\") ."
                             + "?p <conll:lemma> ?prep . "
                             // can be OBLC as well
-                            + "?p <conll:deprel> \"MOD\" ."
+                            + "{?p <conll:deprel> \"MOD\" .}"
+                            + "UNION "
+                            + "{?p <conll:deprel> \"OBLC\" .}"
 
 
                             + "?e2 <conll:head> ?p . "

@@ -64,7 +64,8 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
                             + "FILTER regex(?prep_pos, \"SPS\") ."
                             + "?p <conll:lemma> ?prep . "
                             // can be OBLC as well
-                            + "?p <conll:deprel> \"BYAG\" ."
+                            + "{?p <conll:deprel> \"BYAG\" .} UNION "
+                            + "{?p <conll:deprel> \"OBLC\" .}"
 
                             + "?e2 <conll:head> ?p . "
                             + "?e2 <conll:deprel> \"COMP\" . "

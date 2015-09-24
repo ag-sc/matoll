@@ -53,8 +53,9 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
                             + "FILTER regex(?verb_pos, \"VMIS\") ."
 
                             // "DO" can also be "MPAS"
-                            + "?se <conll:lemma> \"se\" ."
-                            + "?se <conll:deprel> \"DO\" ."
+                            + "?se <conll:form> \"se\" ."
+                            + "{?se <conll:deprel> \"DO\" .} UNION "
+                            + "{?se <conll:deprel> \"MPAS\" .}"
                             + "?se <conll:head> ?verb ."
 
                             + "?e1 <conll:head> ?verb."
@@ -63,7 +64,8 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 
                             // can be OBLC instead of MOD
                             + "?p <conll:head> ?verb."
-                            + "?p <conll:deprel> \"MOD\" ."
+                            + "{?p <conll:deprel> \"MOD\" .} UNION "
+                            + "{?p <conll:deprel> \"OBCL\" .} "
                             + "?p <conll:lemma> ?prep. "
 
                             + "?e2 <conll:head> ?p."

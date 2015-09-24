@@ -48,7 +48,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                             + "?adjective <conll:form> ?adjective_lemma . "
                             + "?adjective <conll:head> ?noun . "
                             + "?adjective <conll:deprel> \"MOD\" . "
-                            + "?adjective <conll:postag> \"AQ0FS0\".  }"
+                            + "?adjective <conll:cpostag> \"a\".  }"
                             + "?noun <conll:head> ?verb. "
                             + "?noun <conll:deprel> \"ATR\". "
                             + "?noun <conll:lemma> ?lemma ."
@@ -64,8 +64,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                             + "?p <conll:lemma> ?prep . "
                             + "?e2 <conll:head> ?p . "
                             + "?e2 <conll:cpostag> \"n\" . "
-                            + "?e2 <conll:deprel> ?e2_grammar . "
-                            + "FILTER regex(?e2_grammar, \"COMP\") ."
+                            + "?e2 <conll:deprel> \"COMP\" . "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
