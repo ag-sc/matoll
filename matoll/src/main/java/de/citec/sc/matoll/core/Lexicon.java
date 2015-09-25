@@ -262,11 +262,13 @@ public class Lexicon {
         /**
          * Returns all top k (e.g. 1000) senses, created by a given pattern from the lexicon. Additionaly writes each selected entry into a septerated file.
          * @param pattern_name Name of the pattern to look for
-         * @param topK Number of best (according to frequency) entries (senses) with are returned
+     * @param topK
+         * @param min
+         * @param max
          * @param path Path to folder, where each entry is saved
          * @return 
          */
-        public Set<String> getTopKEntriesForPattern(String pattern_name, int topK, String path){
+        public Set<String> getTopKEntriesForPattern(String pattern_name, int topK, int min, int max, String path){
             System.out.println("Start with: "+pattern_name);
             Set<String> results = new HashSet<>();
             Map<Sense,Integer> hm = new HashMap<>();
@@ -297,17 +299,20 @@ public class Lexicon {
                 entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
                     Provenance provenance = entry.getProvenance(sense);
                     if (provenance.getPatternset().contains(pattern_name)) {
-                        LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
-                        newEntry.setPOS(entry.getPOS());
-                        newEntry.setURI(entry.getURI());
-                        newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
-                        newEntry.addProvenance(provenance, sense);
-                        if(entry.getPreposition()!=null){
-                            newEntry.setPreposition(entry.getPreposition());
+                        if(provenance.getFrequency()>=min && provenance.getFrequency()<=max){
+                            LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
+                            newEntry.setPOS(entry.getPOS());
+                            newEntry.setURI(entry.getURI());
+                            newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
+                            newEntry.addProvenance(provenance, sense);
+                            if(entry.getPreposition()!=null){
+                                newEntry.setPreposition(entry.getPreposition());
+                            }
+                            newEntry.setCanonicalForm(entry.getCanonicalForm());
+                            EntryClass tmp = new EntryClass(newEntry,provenance.getFrequency());
+                            test.add(tmp);
                         }
-                        newEntry.setCanonicalForm(entry.getCanonicalForm());
-                        EntryClass tmp = new EntryClass(newEntry,provenance.getFrequency());
-                        test.add(tmp);
+                        
                     }
                 });
             });
@@ -319,18 +324,40 @@ public class Lexicon {
             int counter = 0;
             for(EntryClass ec : test){
                 if(counter<topK){
+                    Set<String> frameset = new HashSet<>();
                     LexicalEntry entry = ec.getEntry();
-                    String name = pattern_name+"_"+Integer.toString(counter);
-                    String output = name+"\t"+entry.getCanonicalForm()+"\t"+ec.getFrequency()+"\t"+entry.getPOS();
-                    output = entry.getReferences().stream().map((r) -> "\t"+r.getURI()).reduce(output, String::concat);
+                    String name = pattern_name+"_"+Integer.toString(counter)+"_"+Integer.toString(min)+"_"+Integer.toString(max);
+                    String output = "\t\t"+entry.getCanonicalForm();
                     if(entry.getPreposition()!=null) output+="\t"+entry.getPreposition().getCanonicalForm();
-                    else{output+="\t\t";}
+                    else{output+="\t";}
+                     for(Sense sense : entry.getSenseBehaviours().keySet()){
+                         for( SyntacticBehaviour s : entry.getSenseBehaviours().get(sense)){
+                             String tmp_frame = s.getFrame().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","lexinfo:");
+                             if(!frameset.contains(tmp_frame)){
+                                 output+="\t"+tmp_frame;
+                                 frameset.add(tmp_frame);
+                             }
+                             
+                         }
+                     }
+                    
+                    output = entry.getReferences().stream().map((r) -> "\t"+r.getURI().replace("http://dbpedia.org/ontology/","dbo:")).reduce(output, String::concat);
+                    
                     for(Sense sense : entry.getSenseBehaviours().keySet()){
                         Provenance provenance = entry.getProvenance(sense);
-                        for(Sentence sentence : provenance.getShortestSentences(5)) output+="\t"+sentence.getSentence()+" sop:"+sentence.getSubjOfProp()+" oop:"+sentence.getObjOfProp();
+                        int sentence_counter =  0;
+                        for(Sentence sentence : provenance.getShortestSentences(5)) {
+                            output+="\t"+sentence.getSentence()+" sop:"+sentence.getSubjOfProp()+" oop:"+sentence.getObjOfProp();
+                            sentence_counter+=1;
+                        }
+                        while (sentence_counter<5){
+                            output+="\t";
+                            sentence_counter+=1;
+                        }
                     }
+                    output+="\t"+name;
                     results.add(output);
-                    System.out.println(output);
+                    //System.out.println(output);
                     /*
                     Write each entry in seperate File
                     */
