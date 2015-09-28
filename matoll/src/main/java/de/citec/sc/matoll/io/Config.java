@@ -39,6 +39,7 @@ import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_a;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_b;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6_b;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_a;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
@@ -136,6 +137,7 @@ public class Config {
                                         Patterns.add(new SparqlPattern_DE_5_a());
                                         Patterns.add(new SparqlPattern_DE_5_b());
                                         Patterns.add(new SparqlPattern_DE_6());
+                                        Patterns.add(new SparqlPattern_DE_6_b());
                                         Patterns.add(new SparqlPattern_DE_7_a());
                                         Patterns.add(new SparqlPattern_DE_7_b());
 					
