@@ -27,11 +27,18 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma ?particle ?prep ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
                             + "?e1 <conll:head> ?verb. "
                             + "?verb <conll:lemma> ?lemma . "
                             + "?verb <conll:cpostag> \"V\" . "
+                            + "NOT EXISTS{?blank <conll:head> ?verb. "
+                            + "{?blank <conll:deprel> \"obja\" .} UNION "
+                            + "{?blank <conll:deprel> \"objd\" .}}"
+                            + "OPTIONAL{ "
+                            + "?blankparticle <conll:head> ?verb . "
+                            + "?blankparticle <conll:deprel> \"avz\" ."
+                            + "?blankparticle <conll:form> ?particle .}"
                             + "?preposition <conll:head> ?verb ."
                             + "?preposition <conll:cpostag> \"PREP\" . "
                             + "?preposition <conll:deprel> \"pp\" ."
@@ -61,6 +68,7 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String prep = null;
+                String particle = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -72,6 +80,10 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
                                  prep = qs.get("?prep").toString();
+                                 try{
+                                  particle = qs.get("?particle").toString();	   
+                                 }
+                                 catch(Exception e){}
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -86,7 +98,10 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getIntransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    if(particle!=null)
+                        Templates.getIntransitiveVerb(model, lexicon, sentence,particle+verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    else
+                        Templates.getIntransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

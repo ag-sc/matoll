@@ -84,8 +84,10 @@ public class SparqlPattern_DE_5_b extends SparqlPattern{
                 model.leaveCriticalSection() ;
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    /*
+                    //Not needed in the Moment
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());*/
             } 
 		
 	}
