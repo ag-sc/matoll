@@ -54,7 +54,6 @@ public class SparqlPattern_DE_5_b extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;

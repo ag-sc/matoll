@@ -32,7 +32,7 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
                             + "?e1 <conll:head> ?verb. "
                             + "?verb <conll:lemma> ?lemma . "
                             + "?verb <conll:cpostag> \"V\" . "
-                            + "NOT EXISTS{?blank <conll:head> ?verb. "
+                            + "FILTER NOT EXISTS{?blank <conll:head> ?verb. "
                             + "{?blank <conll:deprel> \"obja\" .} UNION "
                             + "{?blank <conll:deprel> \"objd\" .}}"
                             + "OPTIONAL{ "
@@ -60,7 +60,6 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
@@ -69,7 +68,6 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
                 String e2_arg = null;
                 String prep = null;
                 String particle = null;
-
                 try {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
@@ -95,7 +93,6 @@ public class SparqlPattern_DE_6 extends SparqlPattern{
                 }
                 qExec.close() ;
                 model.leaveCriticalSection() ;
-    
 		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
                     Sentence sentence = this.returnSentence(model);
                     if(particle!=null)

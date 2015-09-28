@@ -38,7 +38,7 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                             + "?e2 <conll:head> ?verb. "
                             + "OPTIONAL "
                             + "{?lemma_addition <connl:head> ?verb . "
-                            + "?lemma_addidtion <conll:deprel> \"obji\". "
+                            + "{?lemma_addidtion <conll:deprel> \"obji\".} UNION {?lemma_addidtion <conll:deprel> \"avz\". } "
                             + "?lemma_addition <connl:lemma> ?additional_lemma .} "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
@@ -55,7 +55,6 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-		
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;

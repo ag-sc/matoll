@@ -135,7 +135,7 @@ public class Config {
                                         Patterns.add(new SparqlPattern_DE_3_b());
                                         Patterns.add(new SparqlPattern_DE_4());
                                         Patterns.add(new SparqlPattern_DE_5_a());
-                                        Patterns.add(new SparqlPattern_DE_5_b());
+                                        //Patterns.add(new SparqlPattern_DE_5_b());
                                         Patterns.add(new SparqlPattern_DE_6());
                                         Patterns.add(new SparqlPattern_DE_6_b());
                                         Patterns.add(new SparqlPattern_DE_7_a());
