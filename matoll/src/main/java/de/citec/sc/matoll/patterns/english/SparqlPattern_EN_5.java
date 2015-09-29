@@ -54,7 +54,7 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
         
         @Override
     public String getQuery() {
-	String query = "SELECT ?lemma ?e1_arg ?e2_arg WHERE"
+	String query = "SELECT ?lemma ?e1_arg ?prt_form ?e2_arg WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
 			+ "?e1 <conll:deprel> \"nsubj\" . "
@@ -65,6 +65,11 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
 			+ "FILTER regex(?lemma_pos, \"VB\") ."
 			+ "?y <conll:deprel> ?lemma_grammar . "
 			+ "?y <conll:form> ?lemma . "
+                        + "OPTIONAL {"
+                        + "?prt <conll:head> ?y . "
+                        + "?prt <conll:form> ?prt_form ."
+                        + "?prt <conll:deprel> \"prt\" ."
+                        + "}"
 			+ "?e2 <conll:head> ?y . "
 			+ "?e2 <conll:deprel>  \"dobj\" . "
 			+ "?e2 <conll:form> ?e2_form . "
@@ -86,6 +91,7 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
+                String prt_form = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -95,6 +101,12 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
+                                 
+                                 try{
+                                     prt_form = qs.get("?prt_form").toString();
+                                 }catch(Exception e){
+                                    }
+                                 
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -108,7 +120,11 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    if(prt_form!=null){
+                        Templates.getTransitiveVerb(model, lexicon, sentence, verb+" "+prt_form, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    }
+                    else
+                        Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
 		
 

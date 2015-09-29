@@ -82,7 +82,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma ?prt_form ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
                     + "{?y <conll:cpostag> \"VB\" .}"
                     + "UNION"
                     + "{?y <conll:cpostag> \"VBD\" .}"
@@ -104,6 +104,11 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                     + "?dobj <conll:form> ?dobj_form ."
                     + "?dobj <conll:deprel> \"dobj\" ."
                     + "}"
+                    + "OPTIONAL {"
+                    + "?prt <conll:head> ?y . "
+                    + "?prt <conll:form> ?prt_form ."
+                    + "?prt <conll:deprel> \"prt\" ."
+                    + "}"
                     + "?e1 <own:senseArg> ?e1_arg. "
                     + "?e2 <own:senseArg> ?e2_arg. "
                     + "}";
@@ -119,6 +124,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 String e2_arg = null;
                 String preposition = null;
                 String dobj_form = null;
+                String prt_form = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -134,6 +140,10 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                                      dobj_form = qs.get("?dobj_form").toString();
                                  }catch(Exception e){
                                     }
+                                 try{
+                                     prt_form = qs.get("?prt_form").toString();
+                                 }catch(Exception e){
+                                    }
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -147,12 +157,26 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    if(dobj_form!=null){
-//                        System.out.println(verb+" "+dobj_form);
-                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+" "+dobj_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    String cannonicalform = "";
+                    if(dobj_form!=null && prt_form!=null){
+                        cannonicalform = verb+" "+dobj_form +" "+prt_form;
                     }
-                    else 
-                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                    else if(dobj_form==null && prt_form!=null){
+                        cannonicalform = verb+" "+prt_form;
+                    }
+                    else if(dobj_form!=null && prt_form==null){
+                        cannonicalform = verb+" "+dobj_form;
+                    }
+                    else{
+                        cannonicalform = verb;
+                    }
+                    Templates.getIntransitiveVerb(model, lexicon, sentence, cannonicalform, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+//                    if(dobj_form!=null){
+////                        System.out.println(verb+" "+dobj_form);
+//                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+" "+dobj_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+//                    }
+//                    else 
+//                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
                 
 		
