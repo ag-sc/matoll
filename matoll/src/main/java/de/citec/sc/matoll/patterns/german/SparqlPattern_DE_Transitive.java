@@ -17,30 +17,29 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_1 extends SparqlPattern{
+public class SparqlPattern_DE_Transitive extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_1.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_Transitive.class.getName());
 	
-        
         /*
-        ADJ
+        Transitive
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma ?additional_lemma ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
-                            + "?e1 <conll:head> ?sein. "
-                            + "?sein <conll:lemma> \"sein\". "
-                            + "?verb <conll:form> ?lemma . "
-                            + "?verb <conll:head> ?sein . "
-//                            + "?verb <conll:cpostag> \"V\" . "
-                            + "?verb <conll:deprel> \"pred\" . "
-                            + "?preposition <conll:head> ?verb ."
-                            + "?preposition <conll:deprel> \"pp\" ."
-                            + "?preposition <conll:lemma> ?prep ."
-                            + "?e2 <conll:deprel> \"pn\" . "
-                            + "?e2 <conll:head> ?preposition. "
+                            + "?e1 <conll:head> ?verb. "
+                            + "?verb <conll:lemma> ?lemma . "
+                            + "?verb <conll:cpostag> \"V\" . "
+                            + "{?e2 <conll:deprel> \"obja\" . }"
+                            + "UNION"
+                            + "{?e2 <conll:deprel> \"objd\" . }"
+                            + "?e2 <conll:head> ?verb. "
+                            + "OPTIONAL "
+                            + "{?lemma_addition <connl:head> ?verb . "
+                            + "{?lemma_addidtion <conll:deprel> \"obji\".} UNION {?lemma_addidtion <conll:deprel> \"avz\". } "
+                            + "?lemma_addition <connl:lemma> ?additional_lemma .} "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -50,18 +49,19 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_1";
+		return "SPARQLPattern_DE_4";
 	}
 
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
+
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String preposition = null;
+                String additional_lemma = "";
 
                 try {
                  while ( rs.hasNext() ) {
@@ -72,7 +72,10 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 try{
+                                     additional_lemma = qs.get("?additional_lemma").toString();
+                                 }
+                                 catch (Exception e){}
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -85,9 +88,13 @@ public class SparqlPattern_DE_1 extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getAdjective(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    if(!additional_lemma.equals("")){
+                        System.out.println(additional_lemma+" "+verb+"  "+getID());
+                        Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    }
+                    else Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

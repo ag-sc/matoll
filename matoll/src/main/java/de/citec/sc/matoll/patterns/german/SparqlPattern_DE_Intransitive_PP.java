@@ -17,29 +17,34 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_4 extends SparqlPattern{
+public class SparqlPattern_DE_Intransitive_PP extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_4.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_Intransitive_PP.class.getName());
 	
         /*
-        Transitive
+        Intransitive + pp
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?additional_lemma ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma ?particle ?prep ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
                             + "?e1 <conll:head> ?verb. "
                             + "?verb <conll:lemma> ?lemma . "
                             + "?verb <conll:cpostag> \"V\" . "
-                            + "{?e2 <conll:deprel> \"obja\" . }"
-                            + "UNION"
-                            + "{?e2 <conll:deprel> \"objd\" . }"
-                            + "?e2 <conll:head> ?verb. "
-                            + "OPTIONAL "
-                            + "{?lemma_addition <connl:head> ?verb . "
-                            + "{?lemma_addidtion <conll:deprel> \"obji\".} UNION {?lemma_addidtion <conll:deprel> \"avz\". } "
-                            + "?lemma_addition <connl:lemma> ?additional_lemma .} "
+                            + "FILTER NOT EXISTS{?blank <conll:head> ?verb. "
+                            + "{?blank <conll:deprel> \"obja\" .} UNION "
+                            + "{?blank <conll:deprel> \"objd\" .}}"
+                            + "OPTIONAL{ "
+                            + "?blankparticle <conll:head> ?verb . "
+                            + "?blankparticle <conll:deprel> \"avz\" ."
+                            + "?blankparticle <conll:form> ?particle .}"
+                            + "?preposition <conll:head> ?verb ."
+                            + "?preposition <conll:cpostag> \"PREP\" . "
+                            + "?preposition <conll:deprel> \"pp\" ."
+                            + "?preposition <conll:lemma> ?prep ."
+                            + "?e2 <conll:deprel> \"pn\" . "
+                            + "?e2 <conll:head> ?preposition. "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -49,7 +54,7 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_4";
+		return "SPARQLPattern_DE_6";
 	}
 
 	@Override
@@ -61,8 +66,8 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String additional_lemma = "";
-
+                String prep = null;
+                String particle = null;
                 try {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
@@ -72,10 +77,11 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
+                                 prep = qs.get("?prep").toString();
                                  try{
-                                     additional_lemma = qs.get("?additional_lemma").toString();
+                                  particle = qs.get("?particle").toString();	   
                                  }
-                                 catch (Exception e){}
+                                 catch(Exception e){}
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -87,13 +93,13 @@ public class SparqlPattern_DE_4 extends SparqlPattern{
                 }
                 qExec.close() ;
                 model.leaveCriticalSection() ;
-    
-		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    if(!additional_lemma.equals("")){
-                        Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-                    }
-                    else Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    if(particle!=null){
+                        System.out.println(particle+verb+"  "+getID());
+                        Templates.getIntransitiveVerb(model, lexicon, sentence,particle+verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    }else
+                        Templates.getIntransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

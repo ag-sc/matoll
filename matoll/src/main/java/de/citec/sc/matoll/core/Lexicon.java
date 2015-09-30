@@ -330,16 +330,6 @@ public class Lexicon {
                     String output = "\t\t"+entry.getCanonicalForm();
                     if(entry.getPreposition()!=null) output+="\t"+entry.getPreposition().getCanonicalForm();
                     else{output+="\t";}
-                     for(Sense sense : entry.getSenseBehaviours().keySet()){
-                         for( SyntacticBehaviour s : entry.getSenseBehaviours().get(sense)){
-                             String tmp_frame = s.getFrame().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","lexinfo:");
-                             if(!frameset.contains(tmp_frame)){
-                                 output+="\t"+tmp_frame;
-                                 frameset.add(tmp_frame);
-                             }
-                             
-                         }
-                     }
                     
                     output = entry.getReferences().stream().map((r) -> "\t"+r.getURI().replace("http://dbpedia.org/ontology/","dbo:")).reduce(output, String::concat);
                     
@@ -355,6 +345,16 @@ public class Lexicon {
                             sentence_counter+=1;
                         }
                     }
+                    for(Sense sense : entry.getSenseBehaviours().keySet()){
+                         for( SyntacticBehaviour s : entry.getSenseBehaviours().get(sense)){
+                             String tmp_frame = s.getFrame().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","lexinfo:");
+                             if(!frameset.contains(tmp_frame)){
+                                 output+="\t"+tmp_frame;
+                                 frameset.add(tmp_frame);
+                             }
+                             
+                         }
+                     }
                     output+="\t"+name;
                     results.add(output);
                     //System.out.println(output);

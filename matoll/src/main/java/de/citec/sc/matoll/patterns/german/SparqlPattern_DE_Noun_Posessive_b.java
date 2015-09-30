@@ -17,23 +17,26 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_7_b extends SparqlPattern{
+public class SparqlPattern_DE_Noun_Posessive_b extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_7_b.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_Noun_Posessive_b.class.getName());
 	
         /*
-        APPOS
+        Noun Possessive
         */
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma  ?e1_arg ?e2_arg  WHERE {"
-                            + "?noun <conll:head> ?e1. "
-                            + "?noun <conll:lemma> ?lemma . "
-                            + "?noun <conll:cpostag> \"N\" . "
-                            + "?noun <conll:deprel> \"app\" ."
+                            + "?e1 <conll:deprel> \"subj\" . "
+                            + "?e1 <conll:head> ?sein. "
+                            + "?sein <conll:lemma> \"sein\". "
+                            + "?noun1 <conll:lemma> ?lemma . "
+                            + "?noun1 <conll:head> ?sein . "
+                            + "?noun1 <conll:cpostag> \"N\" . "
+                            + "?noun1 <conll:deprel> \"pred\" . "
                             + "?e2 <conll:deprel> \"gmod\" . "
-                            + "?e2 <conll:head> ?noun. "
+                            + "?e2 <conll:head> ?noun1. "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -43,7 +46,7 @@ public class SparqlPattern_DE_7_b extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_7_b";
+		return "SPARQLPattern_DE_3_b";
 	}
 
 	@Override
@@ -79,7 +82,7 @@ public class SparqlPattern_DE_7_b extends SparqlPattern{
     
 		if(noun!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getNounPossessive(model, lexicon, sentence,noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    Templates.getNounPossessive(model, lexicon, sentence, noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

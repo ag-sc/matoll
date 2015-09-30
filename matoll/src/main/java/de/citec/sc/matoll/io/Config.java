@@ -31,17 +31,17 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Predicative_Adjective;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Intransitive_PP;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_c;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
@@ -129,17 +129,17 @@ public class Config {
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
-					Patterns.add(new SparqlPattern_DE_1());
-                                        Patterns.add(new SparqlPattern_DE_2());
-                                        Patterns.add(new SparqlPattern_DE_3_a());
-                                        Patterns.add(new SparqlPattern_DE_3_b());
-                                        Patterns.add(new SparqlPattern_DE_4());
-                                        Patterns.add(new SparqlPattern_DE_5_a());
-                                        //Patterns.add(new SparqlPattern_DE_5_b());
-                                        Patterns.add(new SparqlPattern_DE_6());
-                                        Patterns.add(new SparqlPattern_DE_6_b());
-                                        Patterns.add(new SparqlPattern_DE_7_a());
-                                        Patterns.add(new SparqlPattern_DE_7_b());
+					Patterns.add(new SparqlPattern_DE_Predicative_Adjective());
+                                        Patterns.add(new SparqlPattern_DE_Noun_PP_a());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_a());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_b());
+                                        Patterns.add(new SparqlPattern_DE_Transitive());
+                                        Patterns.add(new SparqlPattern_DE_Transitive_Passive_a());
+                                        //Patterns.add(new SparqlPattern_DE_Transitive_Passive_b());
+                                        Patterns.add(new SparqlPattern_DE_Intransitive_PP());
+                                        Patterns.add(new SparqlPattern_DE_Refelexive_Transitive());
+                                        Patterns.add(new SparqlPattern_DE_Noun_PP_b());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_c());
 					
 					logger.info("Adding patterns 1-10 (DE) to pattern library \n");
 				}
