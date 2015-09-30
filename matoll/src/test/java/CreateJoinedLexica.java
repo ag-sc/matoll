@@ -14,16 +14,17 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_1;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_2;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_3_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_4;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_5_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_6;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_7_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Predicative_Adjective;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_a;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Intransitive_PP;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_c;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
@@ -57,52 +58,52 @@ public class CreateJoinedLexica {
     public static void main(String[] args) throws FileNotFoundException, IOException{
         LexiconLoader loader = new LexiconLoader();
         
-        Lexicon eins = loader.loadFromFile("/Users/swalter/Downloads/ResultsSeptember2015/dbpedia2014_DE_Full_beforeTraining.ttl");
-        System.out.println("Loaded first lexicon");
-        Lexicon zwei = loader.loadFromFile("/Users/swalter/Downloads/ResultsSeptember2015/dbpedia2014Full_new_beforeTraining.ttl");
-        System.out.println("Loaded second lexicon");
-        zwei.setBaseURI("http://localhost:8080/");
-        Lexicon drei = loader.loadFromFile("/Users/swalter/Downloads/ResultsSeptember2015/dbpedia2014_ES_Full_beforeTraining.ttl");
-        System.out.println("Loaded third lexicon");//System.out.println(eins.getEntries().size());
-        System.out.println(zwei.getEntries().size());
+        Lexicon zwei = loader.loadFromFile("/Users/swalter/Desktop/dbpedia2014_DE_Full_beforeTraining.ttl");
+        System.out.println("Loaded first lexicon: ");
+//        Lexicon zwei = loader.loadFromFile("/Users/swalter/Downloads/ResultsSeptember2015/dbpedia2014Full_new_beforeTraining.ttl");
+//        System.out.println("Loaded second lexicon");
+//        zwei.setBaseURI("http://localhost:8080/");
+//        Lexicon drei = loader.loadFromFile("/Users/swalter/Downloads/ResultsSeptember2015/dbpedia2014_ES_Full_beforeTraining.ttl");
+//        System.out.println("Loaded third lexicon");//System.out.println(eins.getEntries().size());
+//        System.out.println(zwei.getEntries().size());
         //System.out.println(drei.getEntries().size());
 //        
 ////        zwei.addLexicon(eins);
 ////        zwei.addLexicon(drei);
-        for(LexicalEntry lex : eins.getEntries())zwei.addEntry(lex);
-        for(LexicalEntry lex : drei.getEntries())zwei.addEntry(lex);
+//        for(LexicalEntry lex : eins.getEntries())zwei.addEntry(lex);
+//        for(LexicalEntry lex : drei.getEntries())zwei.addEntry(lex);
         System.out.println(zwei.getEntries().size());
 //        
         List<SparqlPattern> patterns = new ArrayList<>();
 					
-        patterns.add(new SparqlPattern_EN_1());
-        patterns.add(new SparqlPattern_EN_2());
-        patterns.add(new SparqlPattern_EN_3());
-        patterns.add(new SparqlPattern_EN_4());
-        patterns.add(new SparqlPattern_EN_5());
-        patterns.add(new SparqlPattern_EN_6());
-        patterns.add(new SparqlPattern_DE_1());
-        patterns.add(new SparqlPattern_DE_2());
-        patterns.add(new SparqlPattern_DE_3_a());
-        patterns.add(new SparqlPattern_DE_3_b());
-        patterns.add(new SparqlPattern_DE_4());
-        patterns.add(new SparqlPattern_DE_5_a());
-        patterns.add(new SparqlPattern_DE_5_b());
-        patterns.add(new SparqlPattern_DE_6());
-        patterns.add(new SparqlPattern_DE_7_a());
-        patterns.add(new SparqlPattern_DE_7_b());
-        patterns.add(new SparqlPattern_ES_1());
-        patterns.add(new SparqlPattern_ES_2());
-        patterns.add(new SparqlPattern_ES_2b());
-        patterns.add(new SparqlPattern_ES_2c());
-        patterns.add(new SparqlPattern_ES_3());
-        patterns.add(new SparqlPattern_ES_4());
-        patterns.add(new SparqlPattern_ES_5());
-        patterns.add(new SparqlPattern_ES_6());
-        patterns.add(new SparqlPattern_ES_7());
-        patterns.add(new SparqlPattern_ES_7b());
-        patterns.add(new SparqlPattern_ES_8());
-        patterns.add(new SparqlPattern_ES_9());
+//        patterns.add(new SparqlPattern_EN_1());
+//        patterns.add(new SparqlPattern_EN_2());
+//        patterns.add(new SparqlPattern_EN_3());
+//        patterns.add(new SparqlPattern_EN_4());
+//        patterns.add(new SparqlPattern_EN_5());
+//        patterns.add(new SparqlPattern_EN_6());
+        patterns.add(new SparqlPattern_DE_Predicative_Adjective());
+        patterns.add(new SparqlPattern_DE_Noun_PP_a());
+        patterns.add(new SparqlPattern_DE_Noun_Posessive_a());
+        patterns.add(new SparqlPattern_DE_Noun_Posessive_b());
+        patterns.add(new SparqlPattern_DE_Transitive());
+        patterns.add(new SparqlPattern_DE_Transitive_Passive_a());
+        patterns.add(new SparqlPattern_DE_Intransitive_PP());
+        patterns.add(new SparqlPattern_DE_Refelexive_Transitive());
+        patterns.add(new SparqlPattern_DE_Noun_PP_b());
+        patterns.add(new SparqlPattern_DE_Noun_Posessive_c());
+//        patterns.add(new SparqlPattern_ES_1());
+//        patterns.add(new SparqlPattern_ES_2());
+//        patterns.add(new SparqlPattern_ES_2b());
+//        patterns.add(new SparqlPattern_ES_2c());
+//        patterns.add(new SparqlPattern_ES_3());
+//        patterns.add(new SparqlPattern_ES_4());
+//        patterns.add(new SparqlPattern_ES_5());
+//        patterns.add(new SparqlPattern_ES_6());
+//        patterns.add(new SparqlPattern_ES_7());
+//        patterns.add(new SparqlPattern_ES_7b());
+//        patterns.add(new SparqlPattern_ES_8());
+//        patterns.add(new SparqlPattern_ES_9());
         PatternLibrary library = new PatternLibrary();
         library.setPatterns(patterns);
         
@@ -110,100 +111,100 @@ public class CreateJoinedLexica {
 ////        /*
 ////        Build lexicon only with senses with a frequency > 1
 ////        */
-        Lexicon lexicon = new Lexicon();
-        
-        zwei.getEntries().stream().forEach((entry) -> {
-                entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
-                    Provenance provenance = entry.getProvenance(sense);
-                        if(provenance.getFrequency()>1){
-                            LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
-                            newEntry.setPOS(entry.getPOS());
-                            newEntry.setURI(entry.getURI());
-                            newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
-                            newEntry.addProvenance(provenance, sense);
-                            if(entry.getPreposition()!=null){
-                                newEntry.setPreposition(entry.getPreposition());
-                            }
-                            newEntry.setCanonicalForm(entry.getCanonicalForm());
-                            lexicon.addEntry(entry);
-                        }
-                });
-            });
-        System.out.println(lexicon.getEntries().size());
+//        Lexicon lexicon = new Lexicon();
+////        
+//        zwei.getEntries().stream().forEach((entry) -> {
+//                entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
+//                    Provenance provenance = entry.getProvenance(sense);
+//                        if(provenance.getFrequency()>1 && provenance.getSentences().size()>1){
+//                            LexicalEntry newEntry = new LexicalEntry(entry.getLanguage());
+//                            newEntry.setPOS(entry.getPOS());
+//                            newEntry.setURI(entry.getURI());
+//                            newEntry.addAllSyntacticBehaviour(entry.getSenseBehaviours().get(sense), sense);
+//                            newEntry.addProvenance(provenance, sense);
+//                            if(entry.getPreposition()!=null){
+//                                newEntry.setPreposition(entry.getPreposition());
+//                            }
+//                            newEntry.setCanonicalForm(entry.getCanonicalForm());
+//                            lexicon.addEntry(entry);
+//                        }
+//                });
+//            });
+//        System.out.println(lexicon.getEntries().size());
 //        
         
         
-//        
-//        for(SparqlPattern x:patterns){
-//            String path = "/Users/swalter/Desktop/PatternAnalyse/";
-//            String output =  "";
-//            int min = 1;
-//            int max = 1;
-//            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
-//                output+=s+"\n";
-//            }
-//            PrintWriter writer;
-//            try {
-//                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
-//                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#Frame\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name");
-//                    writer.println(output);
-//                    writer.close();
-//            } catch (FileNotFoundException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//            }
-//            
-//            
-//            output =  "";
-//            min = 2;
-//            max = 10;
-//            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
-//                output+=s+"\n";
-//            }
-//            try {
-//                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
-//                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#Frame\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name");
-//                    writer.println(output);
-//                    writer.close();
-//            } catch (FileNotFoundException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//            }
-//            
-//            output =  "";
-//            min = 11;
-//            max = 100;
-//            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
-//                output+=s+"\n";
-//            }
-//            try {
-//                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
-//                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#Frame\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name");
-//                    writer.println(output);
-//                    writer.close();
-//            } catch (FileNotFoundException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//            }
-//            
-//            
-//            output =  "";
-//            min = 101;
-//            max = 100000;
-//            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
-//                output+=s+"\n";
-//            }
-//            try {
-//                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
-//                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#Frame\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name");
-//                    writer.println(output);
-//                    writer.close();
-//            } catch (FileNotFoundException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//            }
-//              
-//        }
+        
+        for(SparqlPattern x:patterns){
+            String path = "/Users/swalter/Desktop/PatternAnalyseDE2/";
+            String output =  "";
+            int min = 1;
+            int max = 1;
+            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
+                output+=s+"\n";
+            }
+            PrintWriter writer;
+            try {
+                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
+                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name\t#Frame");
+                    writer.println(output);
+                    writer.close();
+            } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            
+            
+            output =  "";
+            min = 2;
+            max = 10;
+            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
+                output+=s+"\n";
+            }
+            try {
+                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
+                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name\t#Frame");
+                    writer.println(output);
+                    writer.close();
+            } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            
+            output =  "";
+            min = 11;
+            max = 100;
+            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
+                output+=s+"\n";
+            }
+            try {
+                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
+                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name\t#Frame");
+                    writer.println(output);
+                    writer.close();
+            } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            
+            
+            output =  "";
+            min = 101;
+            max = 100000;
+            for(String s: zwei.getTopKEntriesForPattern(x.getID(),100,min,max,path)){
+                output+=s+"\n";
+            }
+            try {
+                    writer = new PrintWriter(path+"CSV/"+x.getID()+"_"+Integer.toString(min)+"_"+Integer.toString(max)+".csv");
+                    writer.println("#Eintrag\t#Semantik\t#CannonicalForm\t#Preposition\t#URI\t#Sentence1\t#Sentence2\t#Sentence3\t#Sentence4\t#Sentence5\t#name\t#Frame");
+                    writer.println(output);
+                    writer.close();
+            } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+              
+        }
         
 //        for(Reference ref:zwei.getReferences()){
 //            
@@ -263,7 +264,7 @@ public class CreateJoinedLexica {
 //            
 //        }
         
-        
+//        System.out.println("Write");
 //        LexiconSerialization serial = new LexiconSerialization(library.getPatternSparqlMapping(),true);
 //        Model model = ModelFactory.createDefaultModel();
 //        serial.serialize(lexicon, model);		
