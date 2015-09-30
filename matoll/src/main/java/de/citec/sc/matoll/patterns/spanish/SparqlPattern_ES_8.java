@@ -52,7 +52,7 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
 
                             + "?participle <conll:postag> ?participle_pos . "
                             + "FILTER regex(?participle_pos, \"VMP\") ."
-                            + "?participle <conll:lemma> ?lemma . "
+                            + "?participle <conll:form> ?lemma . "
                             + "?participle <conll:head> ?copula . "
                             + "?participle <conll:deprel> \"ATR\" . "
 

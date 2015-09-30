@@ -81,15 +81,36 @@ Neuer parse:
 	 */
 	
 	// intransitive + pp
-	// Constraint: no direct object
-	@Override
+	// Constraint: no direct object Kein Verb unterm Objekt und wenn doch mit ins lemma nehmen.
+        //<Wenn "se" (siehe Beispiel papier) drunter hängt, dann ins lemma, also lemma+se
+        /*
+        ID:532
+property subject: Manal
+property subject uri: http://dbpedia.org/resource/Manal
+property object: 1971
+property object uri: 1971-01-01^^http://www.w3.org/2001/XMLSchema#gYear
+sentence:: 
+1	En	en	s	SPS00	_	5	MOD	_	_
+2	1971	1971	z	Z	_	1	COMP	_	_
+3	Manal	manal	n	NP00000	_	5	SUBJ	_	_
+4	se	se	p	P00CN000	_	5	DO	_	_
+5	separó	separar	v	VMIS3S0	_	0	ROOT	_	_
+6	.	.	f	Fp	_	5	punct	_	_
+
+
+        */
+        @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?e1_arg ?se_form ?e2_arg ?prep  WHERE {"
 
                             + "?verb <conll:postag> ?verb_pos . "
                             + "FILTER regex(?verb_pos, \"VMI\") ."
                             + "?verb <conll:lemma> ?lemma . "
 
+                            + "OPTIONAL{"
+                            + "?se <conll:head> ?verb. "
+                            + "?se <conll:deprel> \"DO\"."
+                            + "?se <conll:form> ?se_form. }"
                             + "?e1 <conll:head> ?verb . "
                             + "?e1 <conll:deprel> \"SUBJ\". "
 
@@ -112,7 +133,7 @@ Neuer parse:
             return query;
         }
         /*
-        TODO Es darf nichts geben, was unter dem Verb hängt. Negation
+        TODO Es darf nichts geben, was unter dem Verb hängt. Negation; wenn doch, dann ins lemma
         */
 			
 	@Override
@@ -130,6 +151,7 @@ Neuer parse:
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String se_form = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -140,7 +162,12 @@ Neuer parse:
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 preposition = qs.get("?prep").toString();
+                                 try{
+                                     se_form = qs.get("?se_form").toString();
+                                  }
+                                 catch(Exception e){}
+                                 
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -154,7 +181,11 @@ Neuer parse:
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    if(se_form!=null){
+                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    }
+                    else
+                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 		
