@@ -54,7 +54,7 @@ public class SparqlPattern_DE_Transitive_Passive_a extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_5_a";
+		return "SparqlPattern_DE_Transitive_Passive_a";
 	}
 
 	@Override

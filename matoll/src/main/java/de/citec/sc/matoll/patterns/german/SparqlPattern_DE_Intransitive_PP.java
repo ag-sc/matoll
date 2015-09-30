@@ -54,7 +54,7 @@ public class SparqlPattern_DE_Intransitive_PP extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_6";
+		return "SparqlPattern_DE_Intransitive_PP";
 	}
 
 	@Override

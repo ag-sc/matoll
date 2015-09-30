@@ -50,7 +50,7 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_1";
+		return "SparqlPattern_DE_Predicative_Adjective";
 	}
 
 	@Override

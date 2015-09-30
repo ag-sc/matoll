@@ -57,7 +57,7 @@ public class SparqlPattern_DE_Refelexive_Transitive extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_6_b";
+		return "SparqlPattern_DE_Refelexive_Transitive";
 	}
 
 	@Override

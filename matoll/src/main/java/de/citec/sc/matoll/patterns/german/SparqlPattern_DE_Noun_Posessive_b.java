@@ -46,7 +46,7 @@ public class SparqlPattern_DE_Noun_Posessive_b extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_3_b";
+		return "SparqlPattern_DE_Noun_Posessive_b";
 	}
 
 	@Override

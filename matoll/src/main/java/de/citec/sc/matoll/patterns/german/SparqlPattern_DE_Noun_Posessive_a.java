@@ -49,7 +49,7 @@ public class SparqlPattern_DE_Noun_Posessive_a extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_3_a";
+		return "SparqlPattern_DE_Noun_Posessive_a";
 	}
 
 	@Override

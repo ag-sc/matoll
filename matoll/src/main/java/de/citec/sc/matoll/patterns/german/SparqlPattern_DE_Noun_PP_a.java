@@ -50,7 +50,7 @@ public class SparqlPattern_DE_Noun_PP_a extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_DE_2";
+		return "SparqlPattern_DE_Noun_PP_a";
 	}
 
 	@Override
