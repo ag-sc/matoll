@@ -96,7 +96,6 @@ public class SparqlPattern_DE_Intransitive_PP extends SparqlPattern{
 		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
                     Sentence sentence = this.returnSentence(model);
                     if(particle!=null){
-                        System.out.println(particle+verb+"  "+getID());
                         Templates.getIntransitiveVerb(model, lexicon, sentence,particle+verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
                     }else
                         Templates.getIntransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
