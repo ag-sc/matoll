@@ -340,10 +340,16 @@ public class Matoll {
                 sentences.stream().forEach((sentence) -> {
                     String obj = getObject(sentence);
                     String subj = getSubject(sentence);
-                    if (!stopwords.isStopword(obj, language) && !stopwords.isStopword(subj, language)) {
+                    if (!stopwords.isStopword(obj, language) 
+                            && !stopwords.isStopword(subj, language) 
+                            && !subj.equals(obj) 
+                            && !subj.contains(obj) 
+                            && !obj.contains(subj)) {
                         String reference = getReference(sentence);
-                        preprocessor.preprocess(sentence,subj,obj);
-                        library.extractLexicalEntries(sentence, lexicon);
+                        if(!reference.equals("http://dbpedia.org/ontology/type")&&!reference.equals("http://dbpedia.org/ontology/isPartOf")){
+                            preprocessor.preprocess(sentence,subj,obj);
+                            library.extractLexicalEntries(sentence, lexicon);
+                        }
                     }
                 });
                 
@@ -439,16 +445,12 @@ public class Matoll {
          * @return 
          */
 	private static String getReference(Model model) {
-		StmtIterator iter = model.listStatements(null,model.getProperty("own:reference"), (RDFNode) null);
-		
+		StmtIterator iter = model.listStatements(null,model.getProperty("conll:reference"), (RDFNode) null);
 		Statement stmt;
-		
 		while (iter.hasNext()) {
-						
 			stmt = iter.next();
-			
-	        return stmt.getObject().toString();
-	    }
+                   return stmt.getObject().toString();
+                }
 		
 		return null;
 	}
