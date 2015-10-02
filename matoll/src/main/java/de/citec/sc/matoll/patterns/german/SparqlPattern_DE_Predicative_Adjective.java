@@ -26,6 +26,23 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
         /*
         ADJ
         */
+//        
+//        ID:7
+//property subject: António Damásio
+//property subject uri: http://dbpedia.org/resource/Antonio_Damasio
+//property object: Hanna Damásio
+//property object uri: http://dbpedia.org/resource/Hanna_Damasio
+//sentence:: 
+//1	António	António	N	NE	_|Nom|Sg	3	subj	_	_ 
+//2	Damásio	Damásio	N	NE	_|Nom|Sg	1	app	_	_ 
+//3	ist	sein	V	VAFIN	3|Sg|Pres|Ind	0	root	_	_ 
+//4	verheiratet	verheiratet	ADV	ADJD	Pos|	3	pred	_	_ 
+//5	mit	mit	PREP	APPR	Dat	3	pp	_	_ 
+//6	Hanna	Hanna	N	NE	_|Dat|_	5	pn	_	_ 
+//7	Damásio	Damásio	N	NE	_|Dat|_	6	app	_	_ 
+//8	.	.	$.	$.	_	0	root	_	_ 
+
+        
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?prep ?e1_arg ?e2_arg  WHERE {"
@@ -34,7 +51,8 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
                             + "?sein <conll:lemma> \"sein\". "
                             + "?verb <conll:form> ?lemma . "
                             + "?verb <conll:head> ?sein . "
-                            + "?verb <conll:cpostag> \"V\" . "
+                            + "{?verb <conll:cpostag> \"ADV\" . } UNION"
+                            + "{?verb <conll:cpostag> \"V\" .} "
                             + "?verb <conll:deprel> \"pred\" . "
                             + "?preposition <conll:head> ?verb ."
                             + "?preposition <conll:deprel> \"pp\" ."
