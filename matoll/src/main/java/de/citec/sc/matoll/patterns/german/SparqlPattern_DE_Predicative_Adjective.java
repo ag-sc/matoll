@@ -41,6 +41,15 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
 //6	Hanna	Hanna	N	NE	_|Dat|_	5	pn	_	_ 
 //7	Damásio	Damásio	N	NE	_|Dat|_	6	app	_	_ 
 //8	.	.	$.	$.	_	0	root	_	_ 
+        
+//1	Paul	Paul	N	NE	_|Nom|Sg	3	subj	_	_ 
+//2	Biya	Biya	N	NE	_|Nom|Sg	1	app	_	_ 
+//3	ist	sein	V	VAFIN	3|Sg|Pres|Ind	0	root	_	_ 
+//4	verheiratet	verheiratet	ADV	ADJD	Pos|	3	adv	_	_ 
+//5	mit	mit	PREP	APPR	Dat	3	pp	_	_ 
+//6	Chantal	Chantal	N	NE	_|Dat|_	5	pn	_	_ 
+//7	Biya	Biya	N	NE	_|Dat|_	6	app	_	_ 
+//8	(	(	$(	$(	_	0	root	_	_ 
 
         
         @Override
@@ -53,7 +62,8 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
                             + "?verb <conll:head> ?sein . "
                             + "{?verb <conll:cpostag> \"ADV\" . } UNION"
                             + "{?verb <conll:cpostag> \"V\" .} "
-                            + "?verb <conll:deprel> \"pred\" . "
+                            + "{?verb <conll:deprel> \"pred\" . } UNION "
+                            + "{?verb <conll:deprel> \"adv\" . }"
                             //+ "?preposition <conll:head> ?verb ."
                             + "?preposition <conll:head> ?sein ."
                             + "?preposition <conll:deprel> \"pp\" ."
