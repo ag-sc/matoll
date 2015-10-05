@@ -479,7 +479,96 @@ public class Templates {
 
 	}
                 
-	
+    public static void getReflexiveTransitiveVerbWihoutPrep(Model model, Lexicon lexicon,  Sentence sentence, String verb, String e1_arg, String e2_arg, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+
+            LexicalEntry entry = new LexicalEntry(language);
+            Sense sense = new Sense();
+
+            Reference ref = new SimpleReference(reference);
+            sense.setReference(ref);
+
+            Provenance provenance = new Provenance();
+            provenance.setFrequency(1);
+            provenance.addPattern(pattern_name);
+            provenance.addSentence(sentence);
+
+
+            SyntacticBehaviour behaviour = new SyntacticBehaviour();
+            
+            
+             if (Lemmatizer != null)
+            {
+                    String term = Lemmatizer.getLemma(verb);
+                    //logger.debug("Lemmatized cannonical form:"+term+"/n");
+                    entry.setCanonicalForm(term);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_").replace("+","_")+"_as_ReflexiveTransitiveVerb_withoutPrep");
+            }
+            else
+            {
+                    entry.setCanonicalForm(verb);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb.replace(" ","_").replace("+","_")+"_as_ReflexiveTransitiveVerb_withoutPrep");
+            }
+             
+             
+            entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+
+            behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#ReflexiveTransitivePPFrame");
+
+
+            if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))
+            {
+
+                    behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+                    behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",null));
+
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+                    entry.addSyntacticBehaviour(behaviour,sense);
+                    entry.addProvenance(provenance,sense);
+
+                    if(isAlpha(verb)){
+                        lexicon.addEntry(entry);
+
+                        //logger.debug("Found entry:"+entry+"\n");
+                    }
+                    else{
+                        //logger.debug("Dit not add entry, beause of label: "+verb);
+                    }
+
+
+            }	
+
+            else if (e1_arg.equals("http://lemon-model.net/lemon#objOfProp") && e2_arg.equals("http://lemon-model.net/lemon#subjOfProp"))
+            {
+
+                    behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","object",null));
+                    behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","subject",null));
+
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+                    sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+                    entry.addSyntacticBehaviour(behaviour,sense);
+                    entry.addProvenance(provenance,sense);
+
+                    if(isAlpha(verb)){
+                        lexicon.addEntry(entry);
+
+                        //logger.debug("Found entry:"+entry+"\n");
+                    }
+                    else{
+                        //logger.debug("Dit not add entry, beause of label: "+verb);
+                    }
+
+
+            }	
+            else{
+                    //logger.debug("no argument mapping found -> No entry added \n"+"e1_arg:"+e1_arg+"\n"+"e2_arg:"+e2_arg+"\n");
+
+            }
+
+	}
+                        
 	public static void getIntransitiveVerb(Model model, Lexicon lexicon,  Sentence sentence, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 
             LexicalEntry entry = new LexicalEntry(language);
@@ -570,6 +659,12 @@ public class Templates {
             }
 
 	}
+        
+        
+        
+        
+        
+        
         
         
         private static boolean isAlpha(String label) {

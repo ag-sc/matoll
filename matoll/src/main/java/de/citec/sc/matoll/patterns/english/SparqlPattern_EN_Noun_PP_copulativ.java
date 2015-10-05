@@ -17,7 +17,7 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_EN_3 extends SparqlPattern {
+public class SparqlPattern_EN_Noun_PP_copulativ extends SparqlPattern {
 
 	/*################################
 entity1_form:shriram
@@ -69,7 +69,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
 */
 	
-		Logger logger = LogManager.getLogger(SparqlPattern_EN_3.class.getName());
+		Logger logger = LogManager.getLogger(SparqlPattern_EN_Noun_PP_copulativ.class.getName());
 
         @Override
     public String getQuery() {
@@ -155,7 +155,7 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
         @Override
 	public String getID() {
-		return "SPARQLPattern_EN_3";
+		return "SparqlPattern_EN_Noun_PP_copulativ";
 	}
 
 }

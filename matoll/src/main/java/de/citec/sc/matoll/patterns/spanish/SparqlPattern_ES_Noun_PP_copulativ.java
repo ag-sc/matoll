@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_3 extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_copulativ extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_3.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulativ.class.getName());
 	
 	
 	/*
@@ -73,7 +73,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_3";
+		return "SparqlPattern_ES_Noun_PP_copulativ";
 	}
 
 	@Override

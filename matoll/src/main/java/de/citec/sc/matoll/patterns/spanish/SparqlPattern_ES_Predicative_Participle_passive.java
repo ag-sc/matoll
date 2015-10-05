@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_8 extends SparqlPattern{
+public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_8.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle_passive.class.getName());
 	
 	
 	// should be subsumed by 3 or 4 or 6...
@@ -112,9 +112,9 @@ public class SparqlPattern_ES_8 extends SparqlPattern{
                 }
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null & !preposition.equals("por")) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    Templates.getAdjective(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 	}

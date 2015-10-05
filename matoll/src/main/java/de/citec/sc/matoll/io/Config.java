@@ -25,35 +25,35 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.citec.sc.matoll.patterns.SparqlPattern;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_1;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_2;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_3;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_4;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_5;
-import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_6;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Intransitive_PP;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_appos;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_copulativ;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_passive;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Transitive_Verb;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_copulativ;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Predicative_Adjective;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive_b;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_a;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_b;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Transitive_Passive_optional;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Intransitive_PP;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_b;
-import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Posessive_c;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive_PP;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_appos;
+import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive_appos;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2c;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_3;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_4;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_5;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_6;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_WithoutCopulativ;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulativ_b;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulativ_withHop;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulativ;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos_b;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7b;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_8;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_9;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_withoutPrep;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_passive;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_PP;
 
 public class Config {
 
@@ -116,12 +116,12 @@ public class Config {
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
-					Patterns.add(new SparqlPattern_EN_1());
-					Patterns.add(new SparqlPattern_EN_2());
-					Patterns.add(new SparqlPattern_EN_3());
-					Patterns.add(new SparqlPattern_EN_4());
-					Patterns.add(new SparqlPattern_EN_5());
-					Patterns.add(new SparqlPattern_EN_6());
+					Patterns.add(new SparqlPattern_EN_Intransitive_PP());
+					Patterns.add(new SparqlPattern_EN_Noun_PP_appos());
+					Patterns.add(new SparqlPattern_EN_Noun_PP_copulativ());
+					Patterns.add(new SparqlPattern_EN_Predicative_Participle_passive());
+					Patterns.add(new SparqlPattern_EN_Transitive_Verb());
+					Patterns.add(new SparqlPattern_EN_Predicative_Participle_copulativ());
 					
 					logger.info("Adding patterns 1-8 (EN) to pattern library \n");
 				}
@@ -130,16 +130,16 @@ public class Config {
 					Patterns = new ArrayList<SparqlPattern>();
 					
 					Patterns.add(new SparqlPattern_DE_Predicative_Adjective());
-                                        Patterns.add(new SparqlPattern_DE_Noun_PP_a());
-                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_a());
-                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_b());
+                                        Patterns.add(new SparqlPattern_DE_Noun_PP());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Possessive());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Possessive_b());
                                         Patterns.add(new SparqlPattern_DE_Transitive());
-                                        Patterns.add(new SparqlPattern_DE_Transitive_Passive_a());
-                                        //Patterns.add(new SparqlPattern_DE_Transitive_Passive_b());
+                                        Patterns.add(new SparqlPattern_DE_Transitive_Passive());
+                                        //Patterns.add(new SparqlPattern_DE_Transitive_Passive_optional());
                                         Patterns.add(new SparqlPattern_DE_Intransitive_PP());
-                                        Patterns.add(new SparqlPattern_DE_Refelexive_Transitive());
-                                        Patterns.add(new SparqlPattern_DE_Noun_PP_b());
-                                        Patterns.add(new SparqlPattern_DE_Noun_Posessive_c());
+                                        Patterns.add(new SparqlPattern_DE_Refelexive_Transitive_PP());
+                                        Patterns.add(new SparqlPattern_DE_Noun_PP_appos());
+                                        Patterns.add(new SparqlPattern_DE_Noun_Possessive_appos());
 					
 					logger.info("Adding patterns 1-10 (DE) to pattern library \n");
 				}
@@ -149,17 +149,17 @@ public class Config {
 					Patterns = new ArrayList<SparqlPattern>();
 					
 					Patterns.add(new SparqlPattern_ES_1());
-					Patterns.add(new SparqlPattern_ES_2());
-                                        Patterns.add(new SparqlPattern_ES_2b());
-                                        Patterns.add(new SparqlPattern_ES_2c());
-					Patterns.add(new SparqlPattern_ES_3());
-					Patterns.add(new SparqlPattern_ES_4());
-					Patterns.add(new SparqlPattern_ES_5());
-					Patterns.add(new SparqlPattern_ES_6());
+					Patterns.add(new SparqlPattern_ES_Predicative_Participle_WithoutCopulativ());
+                                        Patterns.add(new SparqlPattern_ES_Noun_PP_copulativ_b());
+                                        Patterns.add(new SparqlPattern_ES_Noun_PP_copulativ_withHop());
+					Patterns.add(new SparqlPattern_ES_Noun_PP_copulativ());
+					Patterns.add(new SparqlPattern_ES_Noun_PP_appos_b());
+					Patterns.add(new SparqlPattern_ES_Noun_PP_appos());
+					Patterns.add(new SparqlPattern_ES_Predicative_Participle());
 					Patterns.add(new SparqlPattern_ES_7());
-                                        Patterns.add(new SparqlPattern_ES_7b());
-					Patterns.add(new SparqlPattern_ES_8());
-					Patterns.add(new SparqlPattern_ES_9());
+                                        Patterns.add(new SparqlPattern_ES_Reflexive_Transitive_withoutPrep());
+					Patterns.add(new SparqlPattern_ES_Predicative_Participle_passive());
+					Patterns.add(new SparqlPattern_ES_Reflexive_Transitive_PP());
                                         
 					
 					logger.info("Adding patterns 1-9 (ES) to pattern library \n");

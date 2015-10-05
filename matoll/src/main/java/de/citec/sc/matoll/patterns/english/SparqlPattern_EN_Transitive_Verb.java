@@ -17,9 +17,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_EN_5 extends SparqlPattern {
+public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 
-	Logger logger = LogManager.getLogger(SparqlPattern_EN_5.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_Transitive_Verb.class.getName());
 	
 	
 	/*	PropSubj:Juana EnrÃ­quez
@@ -135,7 +135,7 @@ public class SparqlPattern_EN_5 extends SparqlPattern {
 
         @Override
 	public String getID() {
-		return "SPARQLPattern_EN_5";
+		return "SPARQLPattern_EN_Transitive_Verb";
 	}
 
 }

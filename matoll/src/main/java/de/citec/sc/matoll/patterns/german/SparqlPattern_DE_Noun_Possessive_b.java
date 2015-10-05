@@ -17,10 +17,10 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_Noun_Posessive_b extends SparqlPattern{
+public class SparqlPattern_DE_Noun_Possessive_b extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_Noun_Posessive_b.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_Noun_Possessive_b.class.getName());
 	
         /*
         Noun Possessive
@@ -46,7 +46,7 @@ public class SparqlPattern_DE_Noun_Posessive_b extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SparqlPattern_DE_Noun_Posessive_b";
+		return "SparqlPattern_DE_Noun_Possessive_b";
 	}
 
 	@Override

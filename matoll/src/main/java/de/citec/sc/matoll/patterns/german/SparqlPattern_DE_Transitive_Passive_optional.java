@@ -5,35 +5,36 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
-import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.shared.Lock;
 
-public class SparqlPattern_DE_Noun_Posessive_c extends SparqlPattern{
+public class SparqlPattern_DE_Transitive_Passive_optional extends SparqlPattern{
 
 	
-	Logger logger = LogManager.getLogger(SparqlPattern_DE_Noun_Posessive_c.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_DE_Transitive_Passive_optional.class.getName());
 	
         /*
-        APPOS
+        Passive (optional pattern)
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma  ?e1_arg ?e2_arg  WHERE {"
-                            + "?noun <conll:head> ?e1. "
-                            + "?noun <conll:lemma> ?lemma . "
-                            + "?noun <conll:cpostag> \"N\" . "
-                            + "?noun <conll:deprel> \"app\" ."
-                            + "?e2 <conll:deprel> \"gmod\" . "
-                            + "?e2 <conll:head> ?noun. "
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg  WHERE {"
+                            + "?e1 <conll:deprel> \"subj\" . "
+                            + "?e1 <conll:head> ?werden. "
+                            + "?werden <conll:lemma> \"werden\". "
+                            + "?verb <conll:lemma> ?lemma . "
+                            + "?verb <conll:head> ?werden . "
+                            + "?verb <conll:cpostag> \"V\" . "
+                            + "?verb <conll:deprel> \"aux\" . "
+                            + "{?e2 <conll:deprel> \"objd\" .} "
+                            + "UNION"
+                            + "{?e2 <conll:deprel> \"obja\" .} "
+                            + "?e2 <conll:head> ?verb. "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -43,7 +44,7 @@ public class SparqlPattern_DE_Noun_Posessive_c extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SparqlPattern_DE_Noun_Posessive_c";
+		return "SparqlPattern_DE_Transitive_Passive_optional";
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class SparqlPattern_DE_Noun_Posessive_c extends SparqlPattern{
                 model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
-                String noun = null;
+                String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
 
@@ -62,7 +63,7 @@ public class SparqlPattern_DE_Noun_Posessive_c extends SparqlPattern{
 
 
                          try{
-                                 noun = qs.get("?lemma").toString();
+                                 verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
                           }
@@ -77,9 +78,11 @@ public class SparqlPattern_DE_Noun_Posessive_c extends SparqlPattern{
                 qExec.close() ;
                 model.leaveCriticalSection() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                    /*
+                    //Not needed in the Moment
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getNounPossessive(model, lexicon, sentence,noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());*/
             } 
 		
 	}

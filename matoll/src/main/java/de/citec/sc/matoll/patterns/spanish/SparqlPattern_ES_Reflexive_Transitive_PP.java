@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_9 extends SparqlPattern{
+public class SparqlPattern_ES_Reflexive_Transitive_PP extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_9.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Reflexive_Transitive_PP.class.getName());
 	
 	// Pattern 9 seems to work
 	
@@ -138,7 +138,7 @@ sentence::
 			
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_9";
+		return "SparqlPattern_ES_Reflexive_Transitive_PP";
 	}
 
 	@Override
@@ -182,10 +182,10 @@ sentence::
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
                     if(se_form!=null){
-                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                     }
                     else
-                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 		

@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_7b extends SparqlPattern{
+public class SparqlPattern_ES_Reflexive_Transitive_withoutPrep extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_7b.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Reflexive_Transitive_withoutPrep.class.getName());
 	
 	// X y Y se casaron
 	
@@ -109,7 +109,7 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_7b";
+		return "SparqlPattern_ES_Reflexive_Transitive_withoutPrep";
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class SparqlPattern_ES_7b extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getTransitiveVerb(model, lexicon, sentence, verb+"+se", e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    Templates.getReflexiveTransitiveVerbWihoutPrep(model, lexicon, sentence, verb+"+se", e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 				

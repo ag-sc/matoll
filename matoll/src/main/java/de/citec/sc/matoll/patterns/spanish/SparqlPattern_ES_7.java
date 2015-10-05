@@ -113,11 +113,15 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
                     e.printStackTrace();
                 }
                 qExec.close() ;
+                
+                /*
+                don't use this pattern in the moment
+                */
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		/*if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, "se "+verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-            } 
+                 } */
 		
 	
 	}

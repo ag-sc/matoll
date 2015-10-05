@@ -19,9 +19,9 @@ import de.citec.sc.matoll.patterns.Templates;
 
 
 
-public class SparqlPattern_EN_1 extends SparqlPattern {
+public class SparqlPattern_EN_Intransitive_PP extends SparqlPattern {
 
-	Logger logger = LogManager.getLogger(SparqlPattern_EN_1.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_Intransitive_PP.class.getName());
 	
 
 	
@@ -183,7 +183,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	}
 
 	public String getID() {
-		return "SPARQLPattern_EN_1";
+		return "SPARQLPattern_EN_Intransitive_PP";
 	}
 
 

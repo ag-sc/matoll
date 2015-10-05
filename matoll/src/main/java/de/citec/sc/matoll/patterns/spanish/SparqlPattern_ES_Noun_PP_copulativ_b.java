@@ -16,24 +16,28 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_2c extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_copulativ_b extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_2c.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulativ_b.class.getName());
 	
-//	ID:83
-//	property subject: Funhouse
-//	property object: Pink
-//	sentence:: 
-//	1	Glitter_In_The_Air	glitter_in_the_air	n	NP00000	_	2	SUBJ
-//	2	es	ser	v	VSIP3S0	_	0	ROOT
-//	3	una	uno	d	DI0FS0	_	4	SPEC
-//	4	canción	canción	n	NCFS000	_	2	ATR
-//	5	de	de	s	SPS00	_	4	COMP
-//	6	la	el	d	DA0FS0	_	7	SPEC
-//	7	cantante	cantante	n	NCCS000	_	5	COMP
-//	8	estadounidense	estadounidense	a	AQ0CS0	_	7	MOD
-//	9	Pink	pink	n	NP00000	_	7	MOD
+	
+	
+	/*
+	1	T'Pel	t'pel	n	NCMS000	_	2	SUBJ	_	_
+	2	es	ser	v	VSIP3S0	_	0	ROOT	_	_
+	3	la	el	d	DA0FS0	_	4	SPEC	_	_
+	4	esposa	esposo	n	NCFS000	_	2	ATR	_	_
+	5	de	de	s	SPS00	_	4	MOD	_	_
+	6	Tuvok	tuvok	n	NP00000	_	5	COMP	_	_
+	7	.	.	f	Fp	_	6	punct	_	_
 
+	 */
+        
+        /*
+        Eventuell Adjective  hinzu nehmen
+        
+        
+        */
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
@@ -55,25 +59,21 @@ public class SparqlPattern_ES_2c extends SparqlPattern{
                             + "?p <conll:head> ?noun . "
                             + "?p <conll:lemma> ?prep . "
 
-                            + "?noun2 <conll:head> ?p . "
-                            + "?noun2 <conll:cpostag> \"n\" . "
-                            + "?noun2 <conll:deprel> \"COMP\" ."
-
                             + "?subj <conll:head> ?copula . "
                             + "?subj <conll:deprel> \"SUBJ\" . "
 
-                            + "?pobj <conll:head> ?noun2 . "
-                            + "?pobj <conll:deprel> \"MOD\" . "
+                            + "?pobj <conll:head> ?p . "
+                            + "?pobj <conll:deprel> \"COMP\" . "
 
                             + "?subj <own:senseArg> ?e1_arg. "
                             + "?pobj <own:senseArg> ?e2_arg. "
                             + "}";
             return query;
         }
-	
+                        
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_2c";
+		return "SparqlPattern_ES_Noun_PP_copulativ_b";
 	}
 
 	@Override

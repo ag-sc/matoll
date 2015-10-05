@@ -116,6 +116,7 @@ public class SparqlPattern_DE_Predicative_Adjective extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
+                    System.out.println("MATCHED");
                     Templates.getAdjective(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		

@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_4 extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_appos_b extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_4.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_appos_b.class.getName());
 	
 	
 
@@ -75,7 +75,7 @@ public class SparqlPattern_ES_4 extends SparqlPattern{
         }
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_4";
+		return "SparqlPattern_ES_Noun_PP_appos_b";
 	}
 
 	@Override
