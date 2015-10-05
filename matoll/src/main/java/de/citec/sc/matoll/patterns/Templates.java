@@ -512,7 +512,7 @@ public class Templates {
              
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
 
-            behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#ReflexiveTransitivePPFrame");
+            behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#ReflexiveTransitiveFrame");
 
 
             if (e1_arg.equals("http://lemon-model.net/lemon#subjOfProp") && e2_arg.equals("http://lemon-model.net/lemon#objOfProp"))

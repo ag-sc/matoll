@@ -42,7 +42,7 @@ import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Intransitive_PP;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive_PP;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive_appos;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Verb;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_WithoutCopulativ;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulativ_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulativ_withHop;
@@ -148,7 +148,7 @@ public class Config {
 				{
 					Patterns = new ArrayList<SparqlPattern>();
 					
-					Patterns.add(new SparqlPattern_ES_1());
+					Patterns.add(new SparqlPattern_ES_Transitive_Verb());
 					Patterns.add(new SparqlPattern_ES_Predicative_Participle_WithoutCopulativ());
                                         Patterns.add(new SparqlPattern_ES_Noun_PP_copulativ_b());
                                         Patterns.add(new SparqlPattern_ES_Noun_PP_copulativ_withHop());
