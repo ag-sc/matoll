@@ -52,12 +52,13 @@ public class VerySimpleLexiconEvaluation {
                     try{
                         if(onlyProperties){
                             String uri = ref.getURI();
-                            String tmp_uri = uri.replace("http://dbpedia.org/", "");
+                            String tmp_uri = uri.replace("http://dbpedia.org/ontology/", "");
                             if(!Character.isUpperCase(tmp_uri.charAt(0))){
                                 List<String>tmp = new ArrayList<>();
                                 tmp.add(pos);
                                 tmp.add(form);
                                 tmp.add(uri);
+//                                System.out.println(uri);
                                 if(hm.containsKey(uri)){
                                     List<List<String>> tmp_list = hm.get(uri);
                                     tmp_list.add(tmp);
@@ -150,6 +151,7 @@ public class VerySimpleLexiconEvaluation {
 //            System.out.println("\n\n");
         }
         Double global_recall=roundDown3(recall/hm_gold.size());
+        System.out.println("hm_gold.size():"+hm_gold.size());
         Double global_precision=roundDown3(precision/hm_gold.size());
         overall_results.add(global_precision);
         overall_results.add(global_recall);

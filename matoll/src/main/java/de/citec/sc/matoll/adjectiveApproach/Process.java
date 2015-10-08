@@ -248,6 +248,7 @@ public class Process {
 
                 sense.setReference(ref);
                 
+                //System.out.println(adjective);
                 entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective.replace(" ","_")+"_as_AdjectiveRestriction");
 				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
@@ -286,11 +287,23 @@ public class Process {
 		
 		entry.addProvenance(provenance,sense);
 		
-		if(distribution>=0.5&&!object_uri.contains("%")){
+		if(distribution>=0.5&&!object_uri.contains("%") && isAlpha(adjective.replace(" ", "")) && isAlpha(frag(object_uri).replace("_",""))){
                     lexicon.addEntry(entry);
                 }
 		
 	}
+        
+         private static boolean isAlpha(String label) {
+            char[] chars = label.toCharArray();
+
+            for (char c : chars) {
+                if(!Character.isLetter(c)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
 	private static void writeSingleArffFile(String path, String arff_prefix,
 			AdjectiveObject adjectiveobject,HashSet<String> subLabelList,
