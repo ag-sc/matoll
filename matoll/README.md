@@ -159,7 +159,11 @@ The following is an example for the config.xml
 </Config>
 
 ````
+Using the input examples above and the currently (October 2015) implemented pattern, the results for the DBpedia 2014 ontology are the following:
 
+*	[English] (http://dblexipedia.org/public/dbpedia2014_EN.ttl)
+* 	[German] (http://dblexipedia.org/public/dbpedia2014_DE.ttl)
+*  [Spanish] (http://dblexipedia.org/public/dbpedia2014_ES.ttl)
 
 ## Label-based Approach
 

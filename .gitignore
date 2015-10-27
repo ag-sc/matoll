@@ -27,3 +27,5 @@ matoll/nb-configuration.xml
 matoll/run.sh
 
 *.ttl
+
+matoll/matoll.iml
