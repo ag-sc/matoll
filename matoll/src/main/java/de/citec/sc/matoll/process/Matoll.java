@@ -1,8 +1,5 @@
 package de.citec.sc.matoll.process;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -32,6 +30,8 @@ import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.classifiers.WEKAclassifier;
 import de.citec.sc.matoll.core.Language;
+import de.citec.sc.matoll.core.Provenance;
+import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.utils.Learning;
 import de.citec.sc.matoll.utils.Stopwords;
 
@@ -40,9 +40,7 @@ import org.apache.jena.riot.RDFFormat;
 
 import org.xml.sax.SAXException;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -54,7 +52,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 public class Matoll {
  
         
-	private static Logger logger = LogManager.getLogger(Matoll.class.getName());
+//	private static Logger logger = LogManager.getLogger(Matoll.class.getName());
         
         
         
@@ -70,19 +68,15 @@ public class Matoll {
          */
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 			
-		//Logger logger = LogManager.getLogger(Matoll.class.getName());
-
                 
 
 		String directory;
 		String mode = "train";
 		String gold_standard_lexicon;
-		String model_file = "model";
 		String output_lexicon;
 		String configFile;
 		Language language;
 		String classi;
-		//final Config config = null;
 		boolean coreference = false;
 		int no_entries = 1000;
 		String output;
@@ -120,7 +114,7 @@ public class Matoll {
 	
 		gold_standard_lexicon = config.getGoldStandardLexicon();
 		
-		model_file = config.getModel();
+		String model_file = config.getModel();
 		
 		output_lexicon = config.getOutputLexicon();
 		output = config.getOutput();
@@ -228,54 +222,54 @@ public class Matoll {
 		
 		String reference = null;
 		
-		List<Model> sentences;
+		List<Model> sentences = new ArrayList<>();
                 
                 List<File> list_files = new ArrayList<>();
                  
                 if(config.getFiles().isEmpty()){
                     File folder = new File(directory);
                     File[] files = folder.listFiles();
-                    list_files.addAll(Arrays.asList(files));
+                    for(File file : files){
+                        if (file.toString().contains(".ttl")) list_files.add(file);
+                    }
                 }
                 else{
                     list_files.addAll(config.getFiles());
                 }
-		
+		                
                 
-//                ForkJoinPool commonPool = ForkJoinPool.commonPool();
-//                System.out.println(commonPool.getParallelism());   
-//                /*
-//                add -Djava.util.concurrent.ForkJoinPool.common.parallelism=5 in run.sh
-//                */
-
-//                Stream<Lexicon> stream;
-//            stream = list_files.parallelStream()
-//                    .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
-//                    .map((File f)->{
-//                        logger.info("Processing: "+f.toString());
-//                        return createLexicon(f,config,sl);
-//                    });
-//                Callable<List<Lexicon>> task = () -> stream.collect(toList());
-//                ForkJoinPool forkJoinPool = new ForkJoinPool(2);
-//                List<Lexicon> lexicon_list = forkJoinPool.submit(task).get();
-                
-                List<Lexicon> lexicon_list= list_files.stream()
-                    .filter(f->f.isFile()&&f.toString().endsWith(".ttl"))
-                    .map((File f)->{
-                        logger.info("Processing: "+f.toString());
-                        return createLexicon(f,config,sl,preprocessor,stopwords);
-                    })
-                    .collect(Collectors.toList());
+                TObjectIntHashMap<String> freq = new TObjectIntHashMap<String>();
                 
                 
-                lexicon_list.stream().forEach((l) -> {
-                    automatic_lexicon.addLexicon(l);
-                 });
-                       
+                for(File file:list_files){
+                    Model model = RDFDataMgr.loadModel(file.toString());
+                    sentences.clear();
+                    sentences = getSentences(model);
+                    for(Model sentence: sentences){
+                        obj = getObject(sentence);
+                        subj = getSubject(sentence);
+                        if (!stopwords.isStopword(obj, language) 
+                                && !stopwords.isStopword(subj, language) 
+                                && !subj.equals(obj) 
+                                && !subj.contains(obj) 
+                                && !obj.contains(subj)) {
+                            reference = getReference(sentence);
+                            if(!reference.equals("http://dbpedia.org/ontology/type")&&!reference.equals("http://dbpedia.org/ontology/isPartOf")){
+                                preprocessor.preprocess(sentence,subj,obj);
+                                freq.adjustOrPutValue(reference, 1, 1);
+                                library.extractLexicalEntries(sentence, automatic_lexicon);
+                            }
+                        }
+                    }
+                    model.close();
+                }
+            
+                calculateConfidence(automatic_lexicon,freq);  
+                normalizeConfidence(automatic_lexicon);
                 
 		
-		logger.info("Extracted all entries \n");
-		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
+//		logger.info("Extracted all entries \n");
+//		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
 		
 		LexiconSerialization serializer = new LexiconSerialization(library.getPatternSparqlMapping(),config.removeStopwords());
 		
@@ -293,7 +287,7 @@ public class Matoll {
                 
                 WEKAclassifier classifier = new WEKAclassifier(language);
 		
-		logger.info("Starting "+mode+"\n");	
+//		logger.info("Starting "+mode+"\n");	
 		boolean predict = true;
 		if (mode.equals("train"))
 		{
@@ -306,8 +300,8 @@ public class Matoll {
                 else{
                     Learning.doPrediction(automatic_lexicon, gold, classifier, output, language);
                 }
-		writeByReference(automatic_lexicon,language);
-                logger.info("Write lexicon to "+output_lexicon+"\n");
+//		writeByReference(automatic_lexicon,language);
+//                logger.info("Write lexicon to "+output_lexicon+"\n");
                 model = ModelFactory.createDefaultModel();
 
                 serializer.serialize(automatic_lexicon, model);
@@ -323,46 +317,6 @@ public class Matoll {
 			
 	}
         
-        private static Lexicon createLexicon(File file, Config config, StanfordLemmatizer sl, ModelPreprocessor preprocessor, Stopwords stopwords) {
-            Language language = config.getLanguage();
-            PatternLibrary library = new PatternLibrary();
-            if(language == Language.EN){
-                library.setLemmatizer(sl);
-            }
-            library.setPatterns(config.getPatterns());
-                
-            Lexicon lexicon = new Lexicon();
-            lexicon.setBaseURI(config.getBaseUri());
-
-            Model model = RDFDataMgr.loadModel(file.toString());
-            try{
-                List<Model> sentences = getSentences(model);
-                sentences.stream().forEach((sentence) -> {
-                    String obj = getObject(sentence);
-                    String subj = getSubject(sentence);
-                    if (!stopwords.isStopword(obj, language) 
-                            && !stopwords.isStopword(subj, language) 
-                            && !subj.equals(obj) 
-                            && !subj.contains(obj) 
-                            && !obj.contains(subj)) {
-                        String reference = getReference(sentence);
-                        if(!reference.equals("http://dbpedia.org/ontology/type")&&!reference.equals("http://dbpedia.org/ontology/isPartOf")){
-                            preprocessor.preprocess(sentence,subj,obj);
-                            library.extractLexicalEntries(sentence, lexicon);
-                        }
-                    }
-                });
-                
-                
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-            
-            
-            return lexicon;
-            
-        }
         
         
 
@@ -396,49 +350,8 @@ public class Matoll {
 			
 		}
 	}
-//        /**
-//         * 
-//         * @param vector
-//         * @param max
-//         * @return 
-//         */
-//	private static FeatureVector normalize(FeatureVector vector, HashMap<String,Double> max) {
-//		
-//		HashMap<String,Double> map;
-//		
-//		map = vector.getFeatureMap();
-//		
-//		for (String feature: map.keySet())
-//		{
-//			map.put(feature, new Double(map.get(feature).doubleValue() / max.get(feature).doubleValue()));
-//		}
-//		
-//		return vector;
-//		
-//	}
-        /**
-         * 
-         * @param feature
-         * @param value
-         * @param map 
-         */
-	private static void updateMaximum(String feature, Double value, HashMap<String,Double> map) {
-		
-		
-		if (map.containsKey(feature))
-		{
-		
-			if (value > map.get(feature))
-			{
-				map.put(feature, value);
-			}
-		}
-		else
-		{
-			map.put(feature, value);
-		}
-		
-	}
+
+
         /**
          * 
          * @param model
@@ -565,5 +478,60 @@ public class Matoll {
 		
 		return null;
 	}
+
+    private static void calculateConfidence(Lexicon automatic_lexicon, TObjectIntHashMap<String> freq) {
+        for(LexicalEntry entry: automatic_lexicon.getEntries()){
+            int value_2 = getFrequencySameCanonicalForm(entry.getCanonicalForm(),automatic_lexicon);
+            for(Sense sense : entry.getSenseBehaviours().keySet()){
+                Provenance prov = entry.getProvenance(sense);
+                String uri = sense.getReference().getURI();
+                double value_1 = (prov.getFrequency()+0.0)/freq.get(uri);
+                double value_3 = (prov.getFrequency()+0.0)/value_2;
+                /*
+                Harmonic mean between the ratio of Frequency of the sense over the number of sentences in the property 
+                and the ratio of frequency of the sense over the number of senses of other entries with the same cannonical form
+                */
+                prov.setConfidence((2*value_1*value_3)/(value_1+value_3));
+            }
+        }
+    }
+
+    private static int getFrequencySameCanonicalForm(String canonicalForm, Lexicon automatic_lexicon) {
+        int value = 0;
+        for(LexicalEntry entry: automatic_lexicon.getEntriesWithCanonicalForm(canonicalForm)){
+            for(Sense sense:entry.getSenseBehaviours().keySet()){
+                Provenance prov = entry.getProvenance(sense);
+                value+=prov.getFrequency();
+            }
+        }
+        return value;
+    }
+
+    /*
+    normalizes all confidence values by the highest confidence value in the lexicon
+    */
+    private static void normalizeConfidence(Lexicon automatic_lexicon) {
+        double highestConfidence = 0.0;
+        for(LexicalEntry entry: automatic_lexicon.getEntries()){
+            for(Sense sense : entry.getSenseBehaviours().keySet()){
+                Provenance prov = entry.getProvenance(sense);
+                if(prov.getConfidence()>highestConfidence) highestConfidence = prov.getConfidence();
+            }
+        }
+        
+        System.out.println("Greatest confidence is:"+highestConfidence);
+        
+        for(LexicalEntry entry: automatic_lexicon.getEntries()){
+            for(Sense sense : entry.getSenseBehaviours().keySet()){
+                Provenance prov = entry.getProvenance(sense);
+                double confidence = prov.getConfidence();
+                double normalised_confidence = confidence/highestConfidence;
+                prov.setConfidence(normalised_confidence);
+            }
+        }
+        
+    }
+    
+    
 
 }
