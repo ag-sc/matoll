@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class VerySimpleLexiconEvaluation {
+public class LemmaBasedEvaluation {
     
 
 
-	public static List<Double> evaluate(Lexicon automatic, Lexicon gold, boolean onlyProperties) {
+	public static List<Double> evaluate(Lexicon automatic, Lexicon gold, boolean onlyProperties,boolean macro_averaged) {
             
             Map<String,List<List<String>>> hm_automatic = new HashMap<>();
             Map<String,List<List<String>>> hm_gold = new HashMap<>();
@@ -22,25 +22,57 @@ public class VerySimpleLexiconEvaluation {
             */
             createMap(automatic,hm_automatic,onlyProperties);
             createMap(gold,hm_gold,onlyProperties);
-//            System.out.println("gold");
-//            for(String key : hm_gold.keySet()){
-//                System.out.println(hm_gold.get(key));
-//            }
-//            
-//            System.out.println("\n\n");
-//            System.out.println("automatic");
-//            for(String key : hm_automatic.keySet()){
-//                System.out.println(hm_automatic.get(key));
-//            }
-//            System.out.println("\n\n");
+            /*
+            Then do evaluation based on the map
+            */
+            if (macro_averaged)
+                return macro_averagedEvaluation(hm_automatic,hm_gold);
+            else
+                return micro_averagedEvaluation(hm_automatic,hm_gold);
+
+            
+        }
+        
+        
+       public static List<Double> evaluate(Lexicon automatic, Lexicon gold, boolean onlyProperties, List<String> uris, boolean macro_averaged) {
+            
+            Map<String,List<List<String>>> hm_automatic = new HashMap<>();
+            Map<String,List<List<String>>> hm_gold = new HashMap<>();
+                        
+            /*
+            First create map with reference as key and an array with pos,form and ref for each sese/ref in each entry
+            */
+            createMap(automatic,hm_automatic,onlyProperties);
+            createMap(gold,hm_gold,onlyProperties);
+            
+            Map<String,List<List<String>>> hm_automatic_new = new HashMap<>();
+            Map<String,List<List<String>>> hm_gold_new = new HashMap<>();
+            
+            for(String uri : hm_automatic.keySet()){
+                if(uris.contains(uri)){
+                    hm_automatic_new.put(uri, hm_automatic.get(uri));
+                }
+            }
+            
+            for(String uri : hm_gold.keySet()){
+                if(uris.contains(uri)){
+                    hm_gold_new.put(uri, hm_gold.get(uri));
+                }
+            }
+
             
             /*
             Then do evaluation based on the map
             */
-            return doSimpleEvaluation(hm_automatic,hm_gold);
+            if (macro_averaged)
+                return macro_averagedEvaluation(hm_automatic_new,hm_gold_new);
+            else
+                return micro_averagedEvaluation(hm_automatic_new,hm_gold_new);
 
             
         }
+                
+                
         
 
         
@@ -55,7 +87,7 @@ public class VerySimpleLexiconEvaluation {
                             String tmp_uri = uri.replace("http://dbpedia.org/ontology/", "");
                             if(!Character.isUpperCase(tmp_uri.charAt(0))){
                                 List<String>tmp = new ArrayList<>();
-                                tmp.add(pos);
+                                tmp.add(pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"));
                                 tmp.add(form);
                                 tmp.add(uri);
 //                                System.out.println(uri);
@@ -74,7 +106,7 @@ public class VerySimpleLexiconEvaluation {
                         else{
                             String uri = ref.getURI();
                             List<String>tmp = new ArrayList<>();
-                            tmp.add(pos);
+                            tmp.add(pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"));
                             tmp.add(form);
                             tmp.add(uri);
                             if(hm.containsKey(uri)){
@@ -100,7 +132,7 @@ public class VerySimpleLexiconEvaluation {
             }
         }
 
-    private static List<Double> doSimpleEvaluation(Map<String, List<List<String>>> hm_automatic, Map<String, List<List<String>>> hm_gold) {
+    private static List<Double> macro_averagedEvaluation(Map<String, List<List<String>>> hm_automatic, Map<String, List<List<String>>> hm_gold) {
         /*
         Calculate Recall/Precision per Property(from gold) and average at the end over number properties gold
         */
@@ -126,14 +158,9 @@ public class VerySimpleLexiconEvaluation {
                         }
                     }
                 }
-//                System.out.println("URI:"+uri);
                 double local_recall = (correct_entries+0.0)/lenght_gold;
                 double local_precision = (correct_entries+0.0)/lenght_automatic;
-//                System.out.println("lenght_gold:"+lenght_gold);
-//                System.out.println("lenght_automatic:"+lenght_automatic);
-//                System.out.println("correct_entries:"+correct_entries);
-//                System.out.println("local_recall:"+local_recall);
-//                System.out.println("local_precision:"+local_precision);
+//                System.out.println(uri+":"+local_recall);
                 recall+=local_recall;
                 precision+=local_precision;
 
@@ -143,15 +170,11 @@ public class VerySimpleLexiconEvaluation {
                 /*
                 if no entry for a uri from gold is found in automatic lexicon, set precision to 1.0
                 */
-//                System.out.println("URI:"+uri);
-//                System.out.println("local_recall:0.0");
-//                System.out.println("local_precision:1.0");
                 precision+=1.0;
             }
-//            System.out.println("\n\n");
         }
+
         Double global_recall=roundDown3(recall/hm_gold.size());
-        System.out.println("hm_gold.size():"+hm_gold.size());
         Double global_precision=roundDown3(precision/hm_gold.size());
         overall_results.add(global_precision);
         overall_results.add(global_recall);
@@ -159,6 +182,50 @@ public class VerySimpleLexiconEvaluation {
         
         return overall_results;
     }
+    
+    
+    
+    
+    private static List<Double> micro_averagedEvaluation(Map<String, List<List<String>>> hm_automatic, Map<String, List<List<String>>> hm_gold) {
+
+        int global_correct_entries = 0;
+        double precision = 0.0;
+        
+        List<Double> overall_results = new ArrayList<Double>();
+        int number_entries_gold = 0;
+        int number_entries_automatic = 0;
+        
+        for(String uri : hm_gold.keySet()){
+            List<List<String>> entries_gold = hm_gold.get(uri);
+            number_entries_gold+=entries_gold.size();
+            if(hm_automatic.containsKey(uri)){
+                List<List<String>> entries_automatic = hm_automatic.get(uri);
+                number_entries_automatic+=entries_automatic.size();
+                int correct_entries = 0;
+                int lenght_gold = entries_gold.size();
+                int lenght_automatic = entries_automatic.size();
+                for(List<String> entry_gold:entries_gold){
+                    for(List<String> entry_automatic:entries_automatic){
+                        if(entry_gold.get(0).equals(entry_automatic.get(0)) 
+                                && entry_gold.get(1).equals(entry_automatic.get(1)) 
+                                && entry_gold.get(2).equals(entry_automatic.get(2))){
+                            correct_entries+=1;
+                            break;
+                        }
+                    }
+                }
+                global_correct_entries+=correct_entries;
+            }
+        }
+        Double global_recall=roundDown3((global_correct_entries+0.0)/number_entries_gold);
+        Double global_precision=roundDown3((global_correct_entries+0.0)/number_entries_automatic);
+        overall_results.add(global_precision);
+        overall_results.add(global_recall);
+        overall_results.add(roundDown3((2*global_recall*global_precision)/(global_recall+global_precision)));
+        
+        return overall_results;
+    }
+    
     
     public static double roundDown3(double d) {
         return (long) (d * 1e3) / 1e3;
