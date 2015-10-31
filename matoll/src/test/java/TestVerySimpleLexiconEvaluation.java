@@ -1,7 +1,10 @@
 
 import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.evaluation.VerySimpleLexiconEvaluation;
+import de.citec.sc.matoll.core.Reference;
+import de.citec.sc.matoll.evaluation.LemmaBasedEvaluation;
 import de.citec.sc.matoll.io.LexiconLoader;
+import de.citec.sc.matoll.io._LexiconLoaderGreaterK_;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,58 +19,37 @@ public class TestVerySimpleLexiconEvaluation {
 
     public static void main(String[] args){
                 
-        LexiconLoader loader = new LexiconLoader();
-		
-        Lexicon gold = loader.loadFromFile("../lexica/foaf.ttl");
-        Lexicon gold1 = loader.loadFromFile("../dbpedia_en.rdf");
-        Lexicon lexicon1 = loader.loadFromFile("../lexica/foaf_1.ttl");
-        Lexicon lexicon2 = loader.loadFromFile("/Users/swalter/Documents/Test/dbpedia2014Full_new_beforeTraining.ttl");
+
+        _LexiconLoaderGreaterK_ loader = new _LexiconLoaderGreaterK_(1);
+        LexiconLoader normalloader = new LexiconLoader();
+        Lexicon gold = normalloader.loadFromFile("../dbpedia_en.rdf");
+        Lexicon lex = loader.loadFromFile("/Users/swalter/Downloads/ResultsEndOktober/dbpedia2014Full_new_beforeTraining.ttl");
         
-        List<Double> result = VerySimpleLexiconEvaluation.evaluate(gold, gold,false);
-        System.out.println("----------");
-        System.out.println("Should be true:");
-        System.out.println(result.get(0).equals(1.0)&&result.get(1).equals(1.0)&&result.get(2).equals(1.0));
-        System.out.println("----------");
         
-        result = VerySimpleLexiconEvaluation.evaluate(gold1, gold1,true);
-        System.out.println("Should be true:");
-        System.out.println(result.get(0).equals(1.0)&&result.get(1).equals(1.0)&&result.get(2).equals(1.0));
-        System.out.println("----------");
+        List<String> uris = new ArrayList<>();
+        uris.add("http://dbpedia.org/ontology/spouse");
+        uris.add("http://dbpedia.org/ontology/elevation");
+        uris.add("http://dbpedia.org/ontology/deathCause");
+        uris.add("http://dbpedia.org/ontology/deathPlace");
+        uris.add("http://dbpedia.org/ontology/village");
+        uris.add("http://dbpedia.org/ontology/writer");
+        uris.add("http://dbpedia.org/ontology/successor");
+        uris.add("http://dbpedia.org/ontology/foundedBy");
+        uris.add("http://dbpedia.org/ontology/developer");
+        uris.add("http://dbpedia.org/ontology/creator");
+        uris.add("http://dbpedia.org/ontology/populationPlace");
+//        for(Reference ref : lex.getReferences()) uris.add(ref.getURI());
         
-        result = VerySimpleLexiconEvaluation.evaluate(gold, gold1,false);
-        System.out.println("Should be false:");
-        System.out.println(result.get(0).equals(1.0)&&result.get(1).equals(1.0)&&result.get(2).equals(1.0));
+        List<Double> result = LemmaBasedEvaluation.evaluate(lex, gold,true,uris,true);
         System.out.println("----------");
-        
-        result = VerySimpleLexiconEvaluation.evaluate(gold1, gold,false);
-        System.out.println("Should be false:");
-        System.out.println(result.get(0).equals(1.0)&&result.get(1).equals(1.0)&&result.get(2).equals(1.0));
+        System.out.println(result.get(0)+","+result.get(1)+","+result.get(2));
         System.out.println("----------");
         
-        result = VerySimpleLexiconEvaluation.evaluate(lexicon1, gold,false);
-        System.out.println("Should be true:");
-        System.out.println(result.get(0).equals(1.0)&&result.get(1).equals(0.733));
-//gold
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, friend@en, http://xmlns.com/foaf/0.1/know]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#adjective, acquainted@en, http://xmlns.com/foaf/0.1/friend], [http://www.lexinfo.net/ontology/2.0/lexinfo#noun, friend@en, http://xmlns.com/foaf/0.1/friend], [http://www.lexinfo.net/ontology/2.0/lexinfo#verb, know@en, http://xmlns.com/foaf/0.1/friend]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, project@en, http://xmlns.com/foaf/0.1/Project]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, member@en, http://xmlns.com/foaf/0.1/member]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, person@en, http://xmlns.com/foaf/0.1/Person]]
-//
-//
-//
-//automatic
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, friend@en, http://xmlns.com/foaf/0.1/friend], [http://www.lexinfo.net/ontology/2.0/lexinfo#verb, know@en, http://xmlns.com/foaf/0.1/friend]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, project@en, http://xmlns.com/foaf/0.1/Project]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, member@en, http://xmlns.com/foaf/0.1/member]]
-//[[http://www.lexinfo.net/ontology/2.0/lexinfo#noun, person@en, http://xmlns.com/foaf/0.1/Person]]
+        result = LemmaBasedEvaluation.evaluate(lex, gold,true,uris,false);
+        System.out.println("----------");
+        System.out.println(result.get(0)+","+result.get(1)+","+result.get(2));
         System.out.println("----------");
         
-        result = VerySimpleLexiconEvaluation.evaluate(lexicon2, gold1,true);
-        System.out.println(result.get(0));
-        System.out.println(result.get(1));
-        System.out.println(result.get(2));
-        System.out.println("----------");
-        
+
     }
 }
