@@ -58,16 +58,9 @@ public class SparqlPattern_ES_Noun_PP_appos_b extends SparqlPattern{
 
                             + "?e1 <conll:head> ?p ."
                             + "?e1 <conll:deprel> \"COMP\" ."
-
-                            // can be MOD or COMP, choosing "MOD" for now
                             + "?e2 <conll:head> ?e1."
-                            + "?e2 <conll:deprel> ?e2_deprel."
-                            + "FILTER regex(?e2_deprel, \"MOD\") ."
-
-                            + "?comma <conll:lemma> \",\". "
-                            + "?comma <conll:deprel> \"punct\". "
-                            + "?comma <conll:head> ?e1 ."
-
+                            + "{?e2 <conll:deprel> \"MOD\".} UNION "
+                            + "{?e2 <conll:deprel> \"COMP\".}"
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
