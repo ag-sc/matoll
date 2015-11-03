@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,10 +40,10 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
         public String getQuery() {
             String query = "SELECT ?lemma ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
                             + " OPTIONAL {"
-                            + "?adjective <conll:form> ?adjective_lemma . "
-                            + "?adjective <conll:head> ?noun . "
-                            + "?adjective <conll:deprel> \"MOD\" . "
-                            + "?adjective <conll:cpostag> \"a\".  }"
+                                 + "?adjective <conll:form> ?adjective_lemma . "
+                                 + "?adjective <conll:head> ?noun . "
+                                 + "?adjective <conll:deprel> \"MOD\" . "
+                                 + "?adjective <conll:cpostag> \"a\".  }"
                             + "?noun <conll:head> ?verb. "
                             + "?noun <conll:deprel> \"ATR\". "
                             + "?noun <conll:lemma> ?lemma ."
@@ -52,8 +51,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                             + "?verb <conll:lemma> \"ser\" . "
                             + "FILTER regex(?verb_pos, \"VS\") ."
                             + "?e1 <conll:head> ?verb . "
-                            + "?e1 <conll:deprel> ?e1_grammar . "
-                            + "FILTER regex(?e1_grammar, \"SUBJ\") ."
+                            + "?e1 <conll:deprel> \"SUBJ\". "
                             + "?p <conll:head> ?noun . "
                             + "?p <conll:deprel> \"MOD\". "
                             + "?p <conll:postag> \"SPS00\". "

@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,14 +33,13 @@ public class SparqlPattern_ES_Noun_PP_copulative_b extends SparqlPattern{
 	 */
         
         /*
-        Eventuell Adjective  hinzu nehmen
+        TODO:Eventuell Adjective  hinzu nehmen
         
         
         */
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
-
                             + "?copula <conll:postag> ?pos . "
                             // can be VSII1S0 or "v"
                             + "FILTER regex(?pos, \"VSI\") ."

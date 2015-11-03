@@ -111,6 +111,7 @@ sentence::
                             + "?se <conll:head> ?verb. "
                             + "?se <conll:deprel> \"DO\"."
                             + "?se <conll:form> ?se_form. }"
+                    
                             + "?e1 <conll:head> ?verb . "
                             + "?e1 <conll:deprel> \"SUBJ\". "
 
@@ -118,7 +119,6 @@ sentence::
                             + "?p <conll:postag> ?prep_pos . "
                             + "FILTER regex(?prep_pos, \"SPS\") ."
                             + "?p <conll:lemma> ?prep . "
-                            // can be OBLC as well
                             + "{?p <conll:deprel> \"MOD\" .}"
                             + "UNION "
                             + "{?p <conll:deprel> \"OBLC\" .}"
@@ -132,9 +132,7 @@ sentence::
                             + "}";
             return query;
         }
-        /*
-        TODO Es darf nichts geben, was unter dem Verb hängt. Negation; wenn doch, dann ins lemma
-        */
+
 			
 	@Override
 	public String getID() {

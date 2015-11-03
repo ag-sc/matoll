@@ -62,9 +62,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
                             + "?p <conll:head> ?participle . "
                             + "?p <conll:postag> ?prep_pos . "
                             + "FILTER regex(?prep_pos, \"SPS\") ."
-//                            + "?p <conll:lemma> ?prep . "
                             + "?p <conll:lemma> \"por\" . "
-                            // can be OBLC as well
                             + "{?p <conll:deprel> \"BYAG\" .} UNION "
                             + "{?p <conll:deprel> \"OBLC\" .}"
 

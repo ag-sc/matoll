@@ -43,7 +43,7 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
 
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?form ?e1_arg ?e2_arg  WHERE {"
 
                             + "?copula <conll:lemma> \"estar\" ."
                             + "?copula <conll:postag> ?copula_pos ."
@@ -52,7 +52,8 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
 
                             + "?participle <conll:postag> ?participle_pos . "
                             + "FILTER regex(?participle_pos, \"VMP\") ."
-                            + "?participle <conll:form> ?lemma . "
+                            + "?participle <conll:form> ?form . "
+                            + "?participle <conll:lemma> ?lemma . "
                             + "?participle <conll:head> ?copula . "
                             + "?participle <conll:deprel> \"ATR\" . "
 
@@ -62,7 +63,7 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
                             + "?p <conll:head> ?participle . "
                             + "?p <conll:postag> ?prep_pos . "
                             + "FILTER regex(?prep_pos, \"SPS\") ."
-                            + "?p <conll:lemma> ?prep . "
+                            + "?p <conll:lemma> \"por\" . "
                             // can be OBLC as well
                             + "{?p <conll:deprel> \"BYAG\" .} UNION "
                             + "{?p <conll:deprel> \"OBLC\" .}"
@@ -78,7 +79,7 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
 			
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_8";
+		return "SparqlPattern_ES_Predicative_Participle_passive";
 	}
 
 	@Override
@@ -86,10 +87,11 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
 		
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
-                String noun = null;
+                String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String verb_lemma = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -97,10 +99,10 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
 
 
                          try{
-                                 noun = qs.get("?lemma").toString();
+                                 verb = qs.get("?form").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 verb_lemma = qs.get("?lemma").toString();
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -112,10 +114,15 @@ public class SparqlPattern_ES_Predicative_Participle_passive extends SparqlPatte
                 }
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null & !preposition.equals("por")) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getAdjective(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-            } 
+                    Templates.getAdjective(model, lexicon, sentence, verb, e1_arg, e2_arg, "por", this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    /*
+                    Also create a transitive verb, whoch changed arguments and the lemmatized verb.
+                    */
+                    Templates.getTransitiveVerb(model, lexicon, sentence, verb_lemma, e2_arg, e1_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+
+                } 
 		
 	}
 

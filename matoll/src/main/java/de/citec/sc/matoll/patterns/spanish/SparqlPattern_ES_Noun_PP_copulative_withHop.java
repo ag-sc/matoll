@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +47,6 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                             + "?noun <conll:cpostag> \"n\" . "
                             + "?noun <conll:deprel> \"ATR\" ."
 
-                            // can be also COMP
                             + "?p <conll:deprel> \"COMP\" . "
                             + "?p <conll:postag> ?prep_pos ."
                             + "FILTER regex(?prep_pos, \"SPS\") ."

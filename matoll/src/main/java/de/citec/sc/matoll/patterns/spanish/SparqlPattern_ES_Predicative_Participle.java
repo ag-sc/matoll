@@ -44,6 +44,8 @@ public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
 10	con	con	s	SPS00	_	8	MOD
 11	"	"	f	Fe	_	10	COMP
 12	Christopher	christopher	n	NP00000	_	8	MOD
+        
+        
 
 // create 6c
  * 
