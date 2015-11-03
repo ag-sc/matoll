@@ -46,12 +46,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(noun);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_")+"_as_PossessiveNoun");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_PossessiveNoun");
             }
             else
             {
                     entry.setCanonicalForm(noun);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun.replace(" ","_")+"_as_PossessiveNoun");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(noun)+"_as_PossessiveNoun");
             }
             
             
@@ -143,12 +143,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(noun);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_")+"_as_Noun_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_Noun_withPrep_"+preposition);
             }
             else
             {
                     entry.setCanonicalForm(noun);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+noun.replace(" ","_")+"_as_Noun_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(noun)+"_as_Noun_withPrep_"+preposition);
             }
 
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
@@ -212,7 +212,7 @@ public class Templates {
 	public static void getAdjective(Model model, Lexicon lexicon, Sentence sentence, String adjective, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language, String pattern_name) {
 	        		 
             LexicalEntry entry = new LexicalEntry(language);
-            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective.replace(" ","_")+"_as_Adjective_withPrep_"+preposition);
+            entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(adjective)+"_as_Adjective_withPrep_"+preposition);
             entry.setPreposition(new Preposition(language,preposition));
             Sense sense = new Sense();
 
@@ -321,12 +321,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_")+"_as_TransitiveVerb");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_TransitiveVerb");
             }
             else
             {
                     entry.setCanonicalForm(verb);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb.replace(" ","_")+"_as_TransitiveVerb");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(verb)+"_as_TransitiveVerb");
             }
             
             entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
@@ -388,7 +388,7 @@ public class Templates {
 
 	}
 	
-		public static void getReflexiveTransitiveVerb(Model model, Lexicon lexicon,  Sentence sentence, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
+        public static void getReflexiveTransitiveVerb(Model model, Lexicon lexicon,  Sentence sentence, String verb, String e1_arg, String e2_arg, String preposition, String reference,Logger logger,Lemmatizer Lemmatizer, Language language,String pattern_name) {
 
             LexicalEntry entry = new LexicalEntry(language);
             entry.setPreposition(new Preposition(language,preposition));
@@ -411,12 +411,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_")+"_as_ReflexiveTransitiveVerb_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_ReflexiveTransitiveVerb_withPrep_"+preposition);
             }
             else
             {
                     entry.setCanonicalForm(verb);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb.replace(" ","_")+"_as_ReflexiveTransitiveVerb_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(verb)+"_as_ReflexiveTransitiveVerb_withPrep_"+preposition);
             }
              
              
@@ -501,12 +501,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_").replace("+","_")+"_as_ReflexiveTransitiveVerb_withoutPrep");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_ReflexiveTransitiveVerb_withoutPrep");
             }
             else
             {
                     entry.setCanonicalForm(verb);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb.replace(" ","_").replace("+","_")+"_as_ReflexiveTransitiveVerb_withoutPrep");
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(verb)+"_as_ReflexiveTransitiveVerb_withoutPrep");
             }
              
              
@@ -592,12 +592,12 @@ public class Templates {
                     String term = Lemmatizer.getLemma(verb);
                     //logger.debug("Lemmatized cannonical form:"+term+"/n");
                     entry.setCanonicalForm(term);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+term.replace(" ","_")+"_as_IntransitiveVerb_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(term)+"_as_IntransitiveVerb_withPrep_"+preposition);
             }
             else
             {
                     entry.setCanonicalForm(verb);
-                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+verb.replace(" ","_")+"_as_IntransitiveVerb_withPrep_"+preposition);
+                    entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+cleanTerm(verb)+"_as_IntransitiveVerb_withPrep_"+preposition);
             }
              
              
@@ -668,6 +668,9 @@ public class Templates {
         
         
         private static boolean isAlpha(String label) {
+            if(label.length()<=2) return false;
+            label = cleanTerm(label);
+            label = label.replace("_","");
             char[] chars = label.toCharArray();
 
             for (char c : chars) {
@@ -675,8 +678,20 @@ public class Templates {
                     return false;
                 }
             }
-
             return true;
+        }
+        
+        
+        private static String cleanTerm(String input){
+            String output = input
+//                    input.replace("ü", "ue")
+//                    .replace("ö", "oe")
+//                    .replace("ß", "ss")
+                    .replace("-", "_")
+                    .replace(" ", "_")
+                    .replace("\"", "")
+                    .replace("+", "_");
+            return output;
         }
 	
 

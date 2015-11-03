@@ -155,7 +155,9 @@ public class Lexicon {
 	
 	public List<LexicalEntry> getEntriesWithCanonicalForm(String canonicalForm)
 	{
-                return map.get(canonicalForm);
+            return map.get(canonicalForm);
+
+                
 
 	}
 	
