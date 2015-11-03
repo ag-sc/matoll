@@ -43,7 +43,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
 
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg   WHERE {"
 
                             + "?copula <conll:lemma> \"estar\" ."
                             + "?copula <conll:postag> ?copula_pos ."
@@ -62,7 +62,8 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
                             + "?p <conll:head> ?participle . "
                             + "?p <conll:postag> ?prep_pos . "
                             + "FILTER regex(?prep_pos, \"SPS\") ."
-                            + "?p <conll:lemma> ?prep . "
+//                            + "?p <conll:lemma> ?prep . "
+                            + "?p <conll:lemma> \"por\" . "
                             // can be OBLC as well
                             + "{?p <conll:deprel> \"BYAG\" .} UNION "
                             + "{?p <conll:deprel> \"OBLC\" .}"
@@ -78,7 +79,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
 			
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_8";
+		return "SPARQLPattern_ES_Transitive_passive";
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
                                  noun = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+//                                 preposition = qs.get("?prep").toString();	
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -112,7 +113,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
                 }
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null & preposition.equals("por")) {
+		if(noun!=null && e1_arg!=null && e2_arg!=null) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getTransitiveVerb(model, lexicon, sentence, noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
