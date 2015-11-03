@@ -1,7 +1,5 @@
 package de.citec.sc.matoll.patterns.english;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,11 +27,17 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
+                        //TODO: modifier, also in diesem Fall zusätzlich adjektiv hinzunehmen. Superlativ
 			+"OPTIONAL{"
-			+ "?modifier <conll:head> ?y. "
+			+ "{?modifier <conll:head> ?y. "
 			+ "?modifier <conll:form> ?prefix. "
-			+ "?modifier <conll:deprel> \"nn\"."
+			+ "?modifier <conll:deprel> \"nn\".}"
+                        + " UNION "
+                        + "{?modifier <conll:head> ?y. "
+			+ "?modifier <conll:form> ?prefix. "
+			+ "?modifier <conll:cpostag> \"JJ\".}"
 			+"} "
+                        //"Mount Apo is the highest point in the Philippines and dominates the skyline"
                         + "{?e1 <conll:head> ?y . "
                         + "?e1 <conll:deprel> \"appos\"."
                         + "}"

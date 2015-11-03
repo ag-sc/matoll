@@ -1,7 +1,5 @@
 package de.citec.sc.matoll.patterns.english;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -100,14 +98,14 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                     + "?e2 <conll:head> ?p . "
                     + "?e2 <conll:deprel> \"pobj\". "
                     + "OPTIONAL {"
-                    + "?dobj <conll:head> ?y . "
-                    + "?dobj <conll:form> ?dobj_form ."
-                    + "?dobj <conll:deprel> \"dobj\" ."
+                        + "?dobj <conll:head> ?y . "
+                        + "?dobj <conll:form> ?dobj_form ."
+                        + "?dobj <conll:deprel> \"dobj\" ."
                     + "}"
                     + "OPTIONAL {"
-                    + "?prt <conll:head> ?y . "
-                    + "?prt <conll:form> ?prt_form ."
-                    + "?prt <conll:deprel> \"prt\" ."
+                         + "?prt <conll:head> ?y . "
+                         + "?prt <conll:form> ?prt_form ."
+                         + "?prt <conll:deprel> \"prt\" ."
                     + "}"
                     + "?e1 <own:senseArg> ?e1_arg. "
                     + "?e2 <own:senseArg> ?e2_arg. "
@@ -171,12 +169,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                         cannonicalform = verb;
                     }
                     Templates.getIntransitiveVerb(model, lexicon, sentence, cannonicalform, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-//                    if(dobj_form!=null){
-////                        System.out.println(verb+" "+dobj_form);
-//                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb+" "+dobj_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-//                    }
-//                    else 
-//                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
             } 
                 
 		

@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -134,7 +133,7 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
 
         @Override
 	public String getID() {
-		return "SparqlPattern_EN_Predicative_Participle_passive";
+		return "SparqlPattern_EN_Transitive_passive";
 	}
 
 }

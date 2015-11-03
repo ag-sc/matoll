@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,12 +21,6 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
 	Logger logger = LogManager.getLogger(SparqlPattern_EN_Predicative_Participle_copulative.class.getName());
 
 	
-	// für Adjective mit JJ, drunter hängende Verb erst einmal ignorieren
-	/*
-	 * TODO: How to add lemma addition?
-	 */
-        
-        POS tag von y müsste partizip sein. (JJ oder VBN)
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
@@ -35,7 +28,9 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
                             + "?e1 <conll:cpostag> ?e1_pos . "
                             //+ "FILTER regex(?e1_pos, \"NN\") ."
                             + "?e1 <conll:head> ?y . "
-                            + "?y <conll:cpostag> \"JJ\" . "
+                            + "{?y <conll:cpostag> \"JJ\" . }"
+                            + " UNION "
+                            + "{?y <conll:cpostag> \"VBN\" . }"
                             + "?y <conll:form> ?lemma . "
                             +"OPTIONAL{"
                             + "?lemma_nn <conll:head> ?y. "

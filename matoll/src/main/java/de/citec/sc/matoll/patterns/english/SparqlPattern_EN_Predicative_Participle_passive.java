@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,9 +48,8 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
 	----------------------
 	IGONORE sitarist: so x is married to y
 	 */
-	/*
-	 * TODO: Check lemma addition
-	 */
+
+	 
         
         @Override
         public String getQuery() {
