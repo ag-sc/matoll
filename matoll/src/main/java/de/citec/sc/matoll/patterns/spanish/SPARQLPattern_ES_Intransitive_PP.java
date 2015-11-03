@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_7 extends SparqlPattern{
+public class SPARQLPattern_ES_Intransitive_PP extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_7.class.getName());
+	Logger logger = LogManager.getLogger(SPARQLPattern_ES_Intransitive_PP.class.getName());
 
 // aus spouse	
 	
@@ -45,24 +45,28 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
         // X verheiratet sich mit Y
         // -> Reflexiv 
         // X heiratete Y -> Transitive
+        
+        /*
+        TODO: "se" has to be optional.
+        If "se" is found, create a ReflexiveTransitiveVerb, otherwise create an Intransitive entry
+        */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?e1_arg ?se_form ?e2_arg ?prep  WHERE {"
                             + "?verb <conll:postag> ?verb_pos ."
                             + "?verb <conll:lemma> ?lemma ."
                             + "FILTER regex(?verb_pos, \"VMIS\") ."
-
-                            // "DO" can also be "MPAS"
-                            + "?se <conll:form> \"se\" ."
-                            + "{?se <conll:deprel> \"DO\" .} UNION "
-                            + "{?se <conll:deprel> \"MPAS\" .}"
-                            + "?se <conll:head> ?verb ."
+                            + "OPTIONAL{"
+                                 + "?se <conll:form> \"se\" ."
+                                 + "{?se <conll:deprel> \"DO\" .} UNION "
+                                 + "{?se <conll:deprel> \"MPAS\" .}"
+                                 + "?se <conll:head> ?verb ."
+                                 + "?se <conll:form> ?se_form ."
+                            + "}"
 
                             + "?e1 <conll:head> ?verb."
                             + "?e1 <conll:deprel> \"SUBJ\" ."
 
-
-                            // can be OBLC instead of MOD
                             + "?p <conll:head> ?verb."
                             + "{?p <conll:deprel> \"MOD\" .} UNION "
                             + "{?p <conll:deprel> \"OBCL\" .} "
@@ -79,7 +83,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
 			
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_7";
+		return "SPARQLPattern_ES_Intransitive_PP";
 	}
 
 	@Override
@@ -92,6 +96,7 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                String se_form = null;
 
                 try {
                  while ( rs.hasNext() ) {
@@ -102,7 +107,13 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
+                                 preposition = qs.get("?prep").toString();
+                                 try{
+                                     
+                                 }
+                                 catch(Exception e){
+                                     se_form = qs.get("?se_form").toString();
+                                 }
                           }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
@@ -114,14 +125,15 @@ public class SparqlPattern_ES_7 extends SparqlPattern{
                 }
                 qExec.close() ;
                 
-                /*
-                don't use this pattern in the moment
-                */
     
-		/*if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
-                    Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, "se "+verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                 } */
+                    if(se_form!=null)
+                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, "se "+verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    else
+                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+
+                }
 		
 	
 	}

@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Noun_PP_copulativ_withHop extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulativ_withHop.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulative_withHop.class.getName());
 	
 //	ID:83
 //	property subject: Funhouse
@@ -73,7 +73,7 @@ public class SparqlPattern_ES_Noun_PP_copulativ_withHop extends SparqlPattern{
 	
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Noun_PP_copulativ_withHop";
+		return "SparqlPattern_ES_Noun_PP_copulative_withHop";
 	}
 
 	@Override

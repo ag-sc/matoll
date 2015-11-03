@@ -17,9 +17,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_EN_Predicative_Participle_copulativ extends SparqlPattern {
+public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPattern {
 
-	Logger logger = LogManager.getLogger(SparqlPattern_EN_Predicative_Participle_copulativ.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_EN_Predicative_Participle_copulative.class.getName());
 
 	
 	// für Adjective mit JJ, drunter hängende Verb erst einmal ignorieren
@@ -27,6 +27,7 @@ public class SparqlPattern_EN_Predicative_Participle_copulativ extends SparqlPat
 	 * TODO: How to add lemma addition?
 	 */
         
+        POS tag von y müsste partizip sein. (JJ oder VBN)
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
@@ -104,7 +105,7 @@ public class SparqlPattern_EN_Predicative_Participle_copulativ extends SparqlPat
 
         @Override
 	public String getID() {
-		return "SparqlPattern_EN_Predicative_Participle_copulativ";
+		return "SparqlPattern_EN_Predicative_Participle_copulative";
 	}
 
 }

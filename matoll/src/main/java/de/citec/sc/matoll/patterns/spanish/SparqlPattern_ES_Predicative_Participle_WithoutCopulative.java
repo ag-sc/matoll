@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Predicative_Participle_WithoutCopulativ extends SparqlPattern{
+public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle_WithoutCopulativ.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle_WithoutCopulative.class.getName());
 	
 	
 
@@ -78,7 +78,7 @@ public class SparqlPattern_ES_Predicative_Participle_WithoutCopulativ extends Sp
                         
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Predicative_Participle_WithoutCopulativ";
+		return "SparqlPattern_ES_Predicative_Participle_WithoutCopulative";
 	}
 
 	@Override

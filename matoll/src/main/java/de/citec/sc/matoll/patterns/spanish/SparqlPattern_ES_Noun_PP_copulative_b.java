@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Noun_PP_copulativ_b extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_copulative_b extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulativ_b.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulative_b.class.getName());
 	
 	
 	

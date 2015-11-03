@@ -16,9 +16,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Noun_PP_copulativ extends SparqlPattern{
+public class SparqlPattern_ES_Noun_PP_copulative extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulativ.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Noun_PP_copulative.class.getName());
 	
 	
 	/*
@@ -36,10 +36,6 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 7	Flickr	flickr	n	NP00000	_	6	COMP
 	 */
 	
-	// TODO: concatenate ?noun and ?adjective (wenn es existiert) as lemma of the lexical entry, literally, no lemmatization
-	// further checks need to be done here actually, but using the adjective as before was clearly wrong
-	// ideally we would check that the adjective actually directly follows the noun
-
 	
         @Override
         public String getQuery() {
@@ -73,7 +69,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 	
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Noun_PP_copulativ";
+		return "SparqlPattern_ES_Noun_PP_copulative";
 	}
 
 	@Override
