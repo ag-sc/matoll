@@ -35,12 +35,12 @@ import de.citec.sc.matoll.vocabularies.OWL;
 import de.citec.sc.matoll.vocabularies.PROVO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.ModelFactory;
 
 
 
@@ -60,13 +60,10 @@ public class LexiconLoader {
 		 Resource loaded_entry;
 		 
 		 Lexicon lexicon = new Lexicon();
-                 		 
-		 
 		 
 		 StmtIterator iter = model.listStatements(null, LEMON.canonicalForm, (RDFNode) null);
-		 
+
 		 while (iter.hasNext()) {
-			 
 			 stmt = iter.next();
 			 
 			 loaded_entry = stmt.getSubject();
@@ -100,6 +97,21 @@ public class LexiconLoader {
                          */
                          entry.setCanonicalForm(getCanonicalForm(loaded_entry,model));
                          
+                         /*
+                          *Alternative Form 
+                          */
+                         
+                         try{
+                             Set<String> otherForms = getAlternativeForms(loaded_entry,model);
+                             if(!otherForms.isEmpty()){
+                                 for(String a : otherForms){
+                                     entry.addAlternativeForms(a);
+                                 }
+                                 
+                             }
+                         }
+                         catch(Exception e) {e.printStackTrace();};
+                         
                          
                          entry.setPreposition(new Preposition(language,getPreposition(loaded_entry,model)));
                          
@@ -118,7 +130,6 @@ public class LexiconLoader {
 				 
 		 }
 			 
-		 
 		 return lexicon;
 		 
 	}
@@ -283,50 +294,85 @@ public class LexiconLoader {
 		return value;
 	}
 
-	private static String getCanonicalForm(Resource subject, Model model) {
+    private static String getCanonicalForm(Resource subject, Model model) {
 		
-		Resource canonicalForm;
-		
-		Statement stmt;
-		
-		Literal form;
-		
+        Resource canonicalForm;
 
-		stmt = subject.getProperty(LEMON.canonicalForm);
+        Statement stmt;
+
+        Literal form;
+
+
+        stmt = subject.getProperty(LEMON.canonicalForm);
+
+        if (stmt != null)
+        {
+                canonicalForm = (Resource) stmt.getObject();
+
+                if (canonicalForm != null)
+                {
+                        stmt = canonicalForm.getProperty(LEMON.writtenRep);
+
+                        if (stmt != null)
+                        {
+                        form = (Literal) canonicalForm.getProperty(LEMON.writtenRep).getObject();
+                                if (form.toString().contains("@")){
+                                    return form.toString().split("@")[0];
+                                }
+                                else return form.toString();
+                        }
+                        else
+                        {
+                                return null;
+                        }
+
+                }
+                else
+                {
+                        return null;
+                }
+        }
+        else
+        {
+                // //System.out.print("Entry "+loaded_entry+" has no canonical form!!!\n");
+                return null;
+        }		
+    }
+    
+    private static Set<String> getAlternativeForms(Resource subject, Model model) {
 		
-		if (stmt != null)
-		{
-			canonicalForm = (Resource) stmt.getObject();
-			
-			if (canonicalForm != null)
-			{
-				stmt = canonicalForm.getProperty(LEMON.writtenRep);
-				
-				if (stmt != null)
-				{
-				form = (Literal) canonicalForm.getProperty(LEMON.writtenRep).getObject();
-                                        if (form.toString().contains("@")){
-                                            return form.toString().split("@")[0];
-                                        }
-					return form.toString();
-				}
-				else
-				{
-					return null;
-				}
-				
-			}
-			else
-			{
-				return null;
-			}
-		}
-		else
-		{
-			// //System.out.print("Entry "+loaded_entry+" has no canonical form!!!\n");
-			return null;
-		}		
-	}
+        Resource otherForm;
+        Set<String> forms = new HashSet<>();
+
+        Statement stmt;
+
+        Literal form;
+
+
+        stmt = subject.getProperty(LEMON.canonicalForm);
+
+        if (stmt != null)
+        {
+                otherForm = (Resource) stmt.getObject();
+
+                if (otherForm != null)
+                {
+                        stmt = otherForm.getProperty(LEMON.otherForm);
+
+                        if (stmt != null)
+                        {
+                        form = (Literal) otherForm.getProperty(LEMON.otherForm).getObject();
+                                if (form.toString().contains("@")){
+                                    forms.add(form.toString().split("@")[0]);
+                                }
+                                else forms.add(form.toString());
+                        }
+                }
+        }
+
+        return forms;
+    }
+    
 
 
     private Language getLanguage(Resource subject, Model model) {
@@ -605,32 +651,35 @@ public class LexiconLoader {
 
         Literal form;
         String preposition = "";
-            stmt = subject.getProperty(LEMON.marker);
-            if(stmt!=null){
-                String query = "Select ?prep WHERE{"
-                        + "<"+stmt.getObject().toString()+"> <"+LEMON.canonicalForm+">  ?canonicalForm .\n" 
-                        +"  ?canonicalForm <"+LEMON.writtenRep+"> ?prep }";
-                QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
-                ResultSet rs = qExec.execSelect() ;
+        stmt = subject.getProperty(LEMON.marker);
+        if(stmt!=null){
+            preposition_entry = (Resource) stmt.getObject();
+            stmt = preposition_entry.getProperty(LEMON.canonicalForm);
+            if (stmt != null)
+            {
+                canonicalForm = (Resource) stmt.getObject();
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
-                         try{
-                                 preposition = qs.get("?prep").toString();	
-                          }
-                         catch(Exception e){
+                if (canonicalForm != null)
+                {
+                    stmt = canonicalForm.getProperty(LEMON.writtenRep);
+
+                    if (stmt != null)
+                    {
+                        form = (Literal) canonicalForm.getProperty(LEMON.writtenRep).getObject();
+                        if (form.toString().contains("@")){
+                            return form.toString().split("@")[0];
                         }
-                     }
+                        else{
+                            return form.toString();
+                        }
+                    }
                 }
-                catch(Exception e){
-                }
-                qExec.close() ;  
             }
-        if(preposition.contains("@")) return preposition.split("@")[0];
-        return preposition;
-    }
 
+        }
+    return "";
+    }
+            
     private List getPatternWrittenRepresentation(RDFNode pattern,Model model) {
         List<String> pattern_name = new ArrayList<>();
 

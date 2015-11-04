@@ -77,7 +77,7 @@ public class LexiconSerialization {
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEXINFO.partOfSpeech,model.createResource("http://www.lexinfo.net/ontology/2.0/lexinfo#preposition"));
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"));
                     //model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep.getCanonicalForm()+"@"+prep.getLanguage().toString().toLowerCase()));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createTypedLiteral(prep.getCanonicalForm(),"@"+prep.getLanguage().toString().toLowerCase()));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep.getCanonicalForm()+"@"+prep.getLanguage().toString().toLowerCase()));
 
                     
                     
