@@ -23,7 +23,7 @@ import org.apache.jena.riot.RDFFormat;
 
 public class Lexicon {
 
-	HashMap<String,List<LexicalEntry>> map;
+	//HashMap<String,List<LexicalEntry>> map;
 	
 	List<LexicalEntry> entries;
 	
@@ -35,7 +35,7 @@ public class Lexicon {
 	{
 		entries = new ArrayList<LexicalEntry>();
 		
-		map = new HashMap<String,List<LexicalEntry>>();
+//		map = new HashMap<String,List<LexicalEntry>>();
 		
 		references = new HashSet<Reference>();
                 
@@ -46,7 +46,7 @@ public class Lexicon {
 	{
 		entries = new ArrayList<LexicalEntry>();
 		
-		map = new HashMap<String,List<LexicalEntry>>();
+//		map = new HashMap<String,List<LexicalEntry>>();
 		
 		references = new HashSet<Reference>();
 		
@@ -66,19 +66,6 @@ public class Lexicon {
 		{
 			entries.add(entry);
 		
-			ArrayList<LexicalEntry> list;
-		
-			if (map.containsKey(entry.getCanonicalForm()))
-			{
-				list = (ArrayList<LexicalEntry>) map.get(entry.getCanonicalForm());
-				list.add(entry);
-			}
-			else
-			{
-				list = new ArrayList<LexicalEntry>();
-				list.add(entry);
-				map.put(entry.getCanonicalForm(), list);
-			}
 		}
 		else
 		{   
@@ -89,15 +76,11 @@ public class Lexicon {
                         LexicalEntry containedEntry;
 	
 			containedEntry = getLexicalEntry(entry);
-		                        
-//                        
-//			List<String> sentences = new ArrayList<String>();
-//                        sentences.addAll(entry.getSentences());
-//                        sentences.addAll(containedEntry.getSentences());
-//                        
-//			
-//			
-//			containedEntry.setSentences(sentences);
+                        //if entry of URI is the same, but different forms appear, add alternative forms
+                        if(!containedEntry.getCanonicalForm().equals(entry.getCanonicalForm())){
+                            containedEntry.addAlternativeForms(entry.getCanonicalForm());
+                        }
+                        if(!entry.getAlternativeForms().isEmpty()) containedEntry.addAlternativeFormsAll(entry.getAlternativeForms());
                         
                         HashMap<Sense, HashSet<SyntacticBehaviour>> senseBehaviours = entry.getSenseBehaviours();
                         senseBehaviours.keySet().stream().map((sense) -> {
@@ -155,7 +138,12 @@ public class Lexicon {
 	
 	public List<LexicalEntry> getEntriesWithCanonicalForm(String canonicalForm)
 	{
-            return map.get(canonicalForm);
+            List<LexicalEntry> results = new ArrayList<>();
+            for(LexicalEntry entry: entries){
+                if(entry.getCanonicalForm().equals(canonicalForm)) results.add(entry);
+            }
+            
+            return results;
 
                 
 
@@ -203,18 +191,28 @@ public class Lexicon {
 		return entries.contains(entry);
 	}
 	
-	public LexicalEntry getLexicalEntry(LexicalEntry entry)
-	{
-		if (entries.contains(entry))
-		{
-			for (LexicalEntry containedEntry: this.getEntriesWithCanonicalForm(entry.getCanonicalForm()))
-			{
-				if (entry.equals(containedEntry)) return containedEntry;
-			}
-		}
-		
-		return null;
-	}
+        public LexicalEntry getLexicalEntry(LexicalEntry entry){
+            String uri = entry.getURI();
+            for(LexicalEntry containedEntry : entries){
+                /// if URI are euqal, then we assume the whole entry is the same (but maybe contains different senses)
+                if(containedEntry.getURI().equals(uri)) return containedEntry;
+            }
+            return null;
+        }
+                
+//	public LexicalEntry getLexicalEntry(LexicalEntry entry)
+//	{
+//		if (entries.contains(entry))
+//		{
+//                        //check here fore all entries with the same URI....
+//			for (LexicalEntry containedEntry: this.getEntriesWithCanonicalForm(entry.getCanonicalForm()))
+//			{
+//				if (entry.equals(containedEntry)) return containedEntry;
+//			}
+//		}
+//		
+//		return null;
+//	}
 	
 	public Iterator<LexicalEntry> iterator()
 	{

@@ -8,6 +8,8 @@ public class LexicalEntry {
 	String URI;
 	
 	String CanonicalForm;
+        Set<String> AlternativeForms = new HashSet<String>();
+
 	
 	String POS;
         
@@ -43,12 +45,26 @@ public class LexicalEntry {
             this.language = language;
 	}
 	
+        public Set<String> getAlternativeForms() {
+            return AlternativeForms;
+        }
 
+        public void setAlternativeForms(Set AlternativeForms) {
+            this.AlternativeForms = AlternativeForms;
+        }
+        
+        public void addAlternativeForms(String alternativeForm) {
+            this.AlternativeForms.add(alternativeForm);
+        }
+        public void addAlternativeFormsAll(Set alternativeForms) {
+            this.AlternativeForms.addAll(alternativeForms);
+        }
 
 	public void setCanonicalForm(String canonicalForm)
 	{
 		CanonicalForm = canonicalForm;
 	}
+        
 	
 	public String getCanonicalForm()
 	{

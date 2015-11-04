@@ -76,12 +76,16 @@ public class LexiconSerialization {
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEMON.language,model.createLiteral(prep.getLanguage().toString().toLowerCase()));
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEXINFO.partOfSpeech,model.createResource("http://www.lexinfo.net/ontology/2.0/lexinfo#preposition"));
                     model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()), LEMON.canonicalForm, model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"));
-                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep.getCanonicalForm()+"@"+prep.getLanguage().toString().toLowerCase()));
+                    //model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(prep.getCanonicalForm()+"@"+prep.getLanguage().toString().toLowerCase()));
+                    model.add(model.createResource(lexicon.getBaseURI()+"preposition_"+prep.getCanonicalForm()+"#CanonicalForm"), LEMON.writtenRep, model.createTypedLiteral(prep.getCanonicalForm(),"@"+prep.getLanguage().toString().toLowerCase()));
+
+                    
+                    
                 }
 		
 		for (LexicalEntry entry: lexicon.getEntries())
 		{
-                    if(!entry.getURI().contains(" ")){
+                    if(!entry.getURI().contains(" ") && !entry.getURI().contains("[")&& !entry.getURI().contains("\"")){
                         boolean add_entry = true;
                         if(entry.getPreposition()!=null){
                             /*
@@ -129,6 +133,11 @@ public class LexiconSerialization {
 
 		model.add(model.createResource(entry.getURI()), LEMON.canonicalForm, model.createResource(entry.getURI()+"#CanonicalForm"));
 		model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.writtenRep, model.createLiteral(entry.getCanonicalForm()+"@"+entry.getLanguage().toString().toLowerCase()));
+                if(!entry.getAlternativeForms().isEmpty()){
+                    for(String alternativeForm : entry.getAlternativeForms()){
+                        model.add(model.createResource(entry.getURI()+"#CanonicalForm"), LEMON.otherForm, model.createLiteral(alternativeForm+"@"+entry.getLanguage().toString().toLowerCase()));
+                    }
+                }
                 
                 
                 String dbnary_uri = dbnary.getURI(entry.getCanonicalForm(), entry.getPOS().replace("http://www.lexinfo.net/ontology/2.0/lexinfo#",""),entry.getLanguage());

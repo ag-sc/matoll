@@ -683,10 +683,9 @@ public class Templates {
         
         
         private static String cleanTerm(String input){
-            String output = input
-//                    input.replace("ü", "ue")
-//                    .replace("ö", "oe")
-//                    .replace("ß", "ss")
+            String output = input.replace("ü", "ue")
+                    .replace("ö", "oe")
+                    .replace("ß", "ss")
                     .replace("-", "_")
                     .replace(" ", "_")
                     .replace("\"", "")
