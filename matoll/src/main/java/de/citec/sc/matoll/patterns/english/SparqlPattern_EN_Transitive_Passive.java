@@ -68,7 +68,7 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                             + "{"
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
-                            + "?lemma_nn <conll:deprel> \"advmod\". }"
+                            + "?lemma_nn <conll:deprel> \"advmod\". "
                             + "} UNION"
                             + "{?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
