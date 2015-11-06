@@ -1,8 +1,24 @@
 <Config>
    <Language>EN</Language>
    <Coreference>True</Coreference>
-   <GoldStandardLexicon>/Users/cimiano/GitHubSC/matoll/lexica/dbpedia_en.rdf</GoldStandardLexicon>
-   <OutputLexicon>Run_EN_P6_coref.lex</OutputLexicon>
-   <Output>Run_EN_P6_coref.eval</Output>
-   <NumLexItems>1000</NumLexItems>
+  
+<GoldStandardLexicon>../lexica/dbpedia_en.rdf</GoldStandardLexicon>
+   <OutputLexicon>spouse.lex</OutputLexicon>
+   <Output>spouse.eval</Output>
+   <NumLexItems>50</NumLexItems>
+   <Patterns>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_1</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2b</Pattern>
+    	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_2c</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_3</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_4</Pattern>
+  	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_5</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_6</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_7b</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_8</Pattern>
+	<Pattern>de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_9</Pattern>
+   </Patterns> 
 </Config>
+
