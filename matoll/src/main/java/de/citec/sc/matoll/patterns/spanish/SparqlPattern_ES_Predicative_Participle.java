@@ -123,7 +123,7 @@ public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
 
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?form ?e1_arg ?e2_arg ?prep  WHERE {"
 
 			 + "{?auxpass <conll:lemma> \"ser\" .} UNION "
 			 + "{?auxpass <conll:lemma> \"estar\" .}"
