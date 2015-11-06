@@ -233,7 +233,6 @@ public class SparqlPattern_ES_Predicative_Participle_Passive extends SparqlPatte
 
 
                          try{
-                                 participle = qs.get("?form").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
                                  e2_arg = qs.get("?e2_arg").toString();	
                                  lemma = qs.get("?lemma").toString();

@@ -231,12 +231,12 @@ public class SparqlPattern_ES_Predicative_Participle_Copulative extends SparqlPa
                             + "?copula <conll:lemma> \"ser\" ."
                             + "?copula <conll:cpostag> \"v\" ."
 
-							+ "?e1 <conll:head> ?copula ."
-							+ "?e1 <conll:deprel> \"SUBJ\"."
-                            
-					        + "?noun <conll:head> ?copula ."
-					        + "?noun <conll:deprel> \"ATR\". "
-					        + "?noun <conll:cpostag> \"n\". " 
+                            + "?e1 <conll:head> ?copula ."
+                            + "?e1 <conll:deprel> \"SUBJ\"."
+
+                            + "?noun <conll:head> ?copula ."
+                            + "?noun <conll:deprel> \"ATR\". "
+                            + "?noun <conll:cpostag> \"n\". " 
 					        
                             + "?participle <conll:lemma> ?lemma ."
                             + "?participle <conll:form> ?form ."
