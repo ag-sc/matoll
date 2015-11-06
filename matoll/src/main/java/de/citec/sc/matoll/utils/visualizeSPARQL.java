@@ -25,7 +25,6 @@ import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive_appos;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Verb;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_WithoutCopulative;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative_withHop;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative;
@@ -34,7 +33,6 @@ import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle;
 import de.citec.sc.matoll.patterns.spanish.SPARQLPattern_ES_Intransitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_withoutPrep;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_passive;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_passive;
 import java.io.FileNotFoundException;
@@ -66,7 +64,6 @@ public class visualizeSPARQL {
         Patterns_EN.add(new SparqlPattern_EN_Transitive_Passive());
 					
         Patterns_ES.add(new SparqlPattern_ES_Transitive_Verb());
-        Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_WithoutCopulative());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative_b());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative_withHop());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative());
@@ -75,7 +72,6 @@ public class visualizeSPARQL {
         Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle());
         Patterns_ES.add(new SPARQLPattern_ES_Intransitive_PP());
         Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_withoutPrep());
-        Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_passive());
         Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_PP());
         Patterns_ES.add(new SparqlPattern_ES_Transitive_passive());
         

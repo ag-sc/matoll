@@ -16,7 +16,7 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
+public class SparqlPattern_ES_Predicative_Participle_Copulative extends SparqlPattern{
 
 	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle.class.getName());
 	
@@ -236,7 +236,7 @@ public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
                             
 					        + "?noun <conll:head> ?copula ."
 					        + "?noun <conll:deprel> \"ATR\". "
-					        + "?noun <conll:cpostag> \"n\". 
+					        + "?noun <conll:cpostag> \"n\". " 
 					        
                             + "?participle <conll:lemma> ?lemma ."
                             + "?participle <conll:form> ?form ."
@@ -263,7 +263,7 @@ public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
 			
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Predicative_Participle";
+		return "SparqlPattern_ES_Predicative_Participle_Copulative";
 	}
 
 	@Override
@@ -299,14 +299,14 @@ public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
                 }
                 qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(participle!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getAdjective(model, lexicon, sentence, participle, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                                 
                     if (preposition.equals("por"))
                     {
                     	// we need the 
-                    	Templates.getTransitive(model, lexicon, sentence, lemma, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,ge
+                    	Templates.getTransitiveVerb(model, lexicon, sentence, lemma, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                     }
 		
 		}

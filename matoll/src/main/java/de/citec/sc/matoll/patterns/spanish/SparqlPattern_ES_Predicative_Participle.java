@@ -15,9 +15,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends SparqlPattern{
+public class SparqlPattern_ES_Predicative_Participle extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle_WithoutCopulative.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle.class.getName());
 	
 	
 
@@ -120,7 +120,7 @@ public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends S
 //	22	Mandriva	mandriva	n	NP00000	_	21	COMP	_	_
 //	23	.	.	f	Fp	_	22	punct	_	_
 	
-	 */
+
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
@@ -143,7 +143,7 @@ public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends S
 			 + "?p <conll:postag> \"SPS00\"."
 			 + "{?p <conll:deprel> \"BYAG\" .} UNION"
 			 + "{?p <conll:deprel> \"MOD\". } UNION"
-			 + "{?p <conll:deprel> \"PP-LOC\". }
+			 + "{?p <conll:deprel> \"PP-LOC\". } "
 			
 			 + "?e2 <conll:head> ?p ."
 			 + "{?e2 <conll:deprel> \"COMP\". } UNION "
@@ -151,13 +151,13 @@ public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends S
 			
 			
 			 + "?e1 <own:senseArg> ?e1_arg. "
-			 + "?e2 <own:senseArg> ?e2_arg. "
+			 + "?e2 <own:senseArg> ?e2_arg. }";
             return query;
         }
                         
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Predicative_Participle_WithoutCopulative";
+		return "SparqlPattern_ES_Predicative_Participle";
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class SparqlPattern_ES_Predicative_Participle_WithoutCopulative extends S
                 }
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(participle!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getAdjective(model, lexicon, sentence, participle, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                     
