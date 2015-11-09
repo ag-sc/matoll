@@ -30,8 +30,9 @@ import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative_w
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle;
 import de.citec.sc.matoll.patterns.spanish.SPARQLPattern_ES_Intransitive_PP;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Copulative;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Passive;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_withoutPrep;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_passive;
@@ -69,7 +70,8 @@ public class visualizeSPARQL {
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_appos_b());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_appos());
-        Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle());
+        Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_Copulative());
+        Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_Passive());
         Patterns_ES.add(new SPARQLPattern_ES_Intransitive_PP());
         Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_withoutPrep());
         Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_PP());

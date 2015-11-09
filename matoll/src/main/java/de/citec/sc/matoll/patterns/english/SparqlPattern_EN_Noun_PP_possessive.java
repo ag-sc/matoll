@@ -61,9 +61,9 @@ sentence::
                         +"?addition <connl:head> ?noun . "
                         +"?addition <conll:form> ?prefix . "
                         +"?addition <conll:deprel> \"amod\" . "
-                        +"?verb <conll:form> \"made\" . "
+                        //+"?verb <conll:form> \"made\" . "
                         //verb is root
-                        +" ?verb <conll:deprel> \"null\" . "
+                        //+" ?verb <conll:deprel> \"null\" . "
                         +"?p2 <conll:head> ?verb . "
                         +"?p2 <connl:deprel> \"prep\" . "
                         +"?e2 <connl:head> ?p2 . "

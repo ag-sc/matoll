@@ -54,7 +54,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                             + "?e1 <conll:deprel> \"SUBJ\". "
                             + "?p <conll:head> ?noun . "
                             + "?p <conll:deprel> \"MOD\". "
-                            + "?p <conll:postag> \"SPS00\". "
+                            + "?p <conll:cpostag> \"s\". "
                             + "?p <conll:lemma> ?prep . "
                             + "?e2 <conll:head> ?p . "
                             + "?e2 <conll:cpostag> \"n\" . "
@@ -93,7 +93,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                                  e2_arg = qs.get("?e2_arg").toString();	
                                  preposition = qs.get("?prep").toString();
                                  try{
-                                     adjective_lemma = qs.get("?prep").toString();
+                                     adjective_lemma = qs.get("?adjective_lemma").toString();
                                  }
                                  catch(Exception e){};
                           }

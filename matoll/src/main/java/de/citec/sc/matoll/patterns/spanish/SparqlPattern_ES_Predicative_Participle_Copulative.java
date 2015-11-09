@@ -18,7 +18,7 @@ import de.citec.sc.matoll.patterns.Templates;
 
 public class SparqlPattern_ES_Predicative_Participle_Copulative extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Predicative_Participle_Copulative.class.getName());
 	
 
 //	D:555
