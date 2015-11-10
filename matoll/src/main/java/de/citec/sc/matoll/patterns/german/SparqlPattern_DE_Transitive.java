@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +14,6 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import org.apache.jena.shared.Lock;
 
 public class SparqlPattern_DE_Transitive extends SparqlPattern{
 
@@ -55,7 +53,6 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
 	@Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 
-                model.enterCriticalSection(Lock.READ) ;
 		QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String verb = null;
@@ -63,32 +60,29 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                 String e2_arg = null;
                 String additional_lemma = "";
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                int number = 0;
+                while ( rs.hasNext() ) {
+                    QuerySolution qs = rs.next();
+                    number+=1;
 
 
-                         try{
-                                 verb = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 try{
-                                     additional_lemma = qs.get("?additional_lemma").toString();
-                                 }
-                                 catch (Exception e){}
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
+                    try{
+                            verb = qs.get("?lemma").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();	
+                            try{
+                                additional_lemma = qs.get("?additional_lemma").toString();
+                            }
+                            catch (Exception e){}
                      }
+                    catch(Exception e){
+                   e.printStackTrace();
+                   }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
                 qExec.close() ;
-                model.leaveCriticalSection() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null && number == 1) {
                     Sentence sentence = this.returnSentence(model);
                     if(!additional_lemma.equals("")){
                         Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
