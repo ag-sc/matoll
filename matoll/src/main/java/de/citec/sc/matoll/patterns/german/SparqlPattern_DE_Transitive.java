@@ -25,7 +25,7 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
         */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?additional_lemma ?e1_arg ?e2_arg  WHERE {"
+            String query = "SELECT ?lemma ?additional_lemma ?avz ?e1_arg ?e2_arg  WHERE {"
                             + "?e1 <conll:deprel> \"subj\" . "
                             + "?e1 <conll:head> ?verb. "
                             + "?verb <conll:lemma> ?lemma . "
@@ -36,8 +36,12 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                             + "?e2 <conll:head> ?verb. "
                             + "OPTIONAL "
                             + "{?lemma_addition <connl:head> ?verb . "
-                            + "{?lemma_addidtion <conll:deprel> \"obji\".} UNION {?lemma_addidtion <conll:deprel> \"avz\". } "
-                            + "?lemma_addition <connl:lemma> ?additional_lemma .} "
+                            + "{?lemma_addidtion <conll:deprel> \"obji\". "
+                            + "?lemma_addition <connl:lemma> ?additional_lemma . }"
+                            + " UNION "
+                            + "{?lemma_addidtion <conll:deprel> \"avz\". "
+                            + "?lemma_addition <conll:form> ?avz .} "
+                            + "} "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
                             + "}";
@@ -58,7 +62,8 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                 String verb = null;
                 String e1_arg = null;
                 String e2_arg = null;
-                String additional_lemma = "";
+                String additional_lemma = null;
+                String avz = null;
 
                 int number = 0;
                 while ( rs.hasNext() ) {
@@ -74,6 +79,10 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                                 additional_lemma = qs.get("?additional_lemma").toString();
                             }
                             catch (Exception e){}
+                            try{
+                                avz = qs.get("?avz").toString();
+                            }
+                            catch (Exception e){}
                      }
                     catch(Exception e){
                    e.printStackTrace();
@@ -84,10 +93,15 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && number == 1) {
                     Sentence sentence = this.returnSentence(model);
-                    if(!additional_lemma.equals("")){
+                    if(additional_lemma!=null){
                         Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
                     }
-                    else Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    if(avz!=null){
+                        Templates.getTransitiveVerb(model, lexicon, sentence, avz+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                    }
+                    
+                    if(avz==null && additional_lemma==null) 
+                        Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
             } 
 		
 	}

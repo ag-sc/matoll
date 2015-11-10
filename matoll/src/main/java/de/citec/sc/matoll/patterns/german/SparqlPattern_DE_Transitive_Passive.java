@@ -36,7 +36,7 @@ public class SparqlPattern_DE_Transitive_Passive extends SparqlPattern{
                             + "OPTIONAL{ "
                             + "?blank <conll:head> ?verb . "
                             + "?blank <conll:deprel> \"avz\" ."
-                            + " ?blank <conll:form> ?particle .}"
+                            + "?blank <conll:form> ?particle .}"
                             + "?preposition <conll:head> ?verb ."
                             + "?preposition <conll:cpostag> \"PREP\" . "
                             + "?preposition <conll:deprel> \"pp\" ."
