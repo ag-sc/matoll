@@ -15,6 +15,10 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.apache.jena.query.ResultSetFormatter;
 
 public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPattern {
 
@@ -60,10 +64,12 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
                 String e2_arg = null;
                 String preposition = null;
                 String lemma_addition = "";
+                
+                int number = 0;
 
-                try {
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
+                         number+=1;
 
                          try{
                                  adjective = qs.get("?lemma").toString();
@@ -81,13 +87,10 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
 	     	    	e.printStackTrace();
                         }
                      }
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
                 qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     if(!lemma_addition.equals("")){
                         Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());

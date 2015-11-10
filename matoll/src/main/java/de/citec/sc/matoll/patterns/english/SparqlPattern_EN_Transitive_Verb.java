@@ -14,6 +14,9 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
+import java.util.List;
+import org.apache.jena.query.ResultSetFactory;
+import org.apache.jena.query.ResultSetFormatter;
 
 public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 
@@ -59,7 +62,6 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 			+ "?e1 <conll:cpostag> ?e1_pos . "
 			+ "?e1 <conll:head> ?y . "
 			+ "?y <conll:cpostag> ?lemma_pos . "
-			// pci: Warum nicht nur VBD und VBZ?
 			+ "FILTER regex(?lemma_pos, \"VB\") ."
 			+ "?y <conll:deprel> ?lemma_grammar . "
 			+ "?y <conll:form> ?lemma . "
@@ -90,33 +92,30 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
                 String e1_arg = null;
                 String e2_arg = null;
                 String prt_form = null;
+                int number = 0;
+                while ( rs.hasNext() ) {
+                        QuerySolution qs = rs.next();
+                        number+=1;
+                        try{
+                                verb = qs.get("?lemma").toString();
+                                e1_arg = qs.get("?e1_arg").toString();
+                                e2_arg = qs.get("?e2_arg").toString();	
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                                try{
+                                    prt_form = qs.get("?prt_form").toString();
+                                }catch(Exception e){
+                                   }
 
-                         try{
-                                 verb = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 
-                                 try{
-                                     prt_form = qs.get("?prt_form").toString();
-                                 }catch(Exception e){
-                                    }
-                                 
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
-                     }
+                         }
+                        catch(Exception e){
+                       e.printStackTrace();
+                       }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+                
+
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null&&number==1) {
                     Sentence sentence = this.returnSentence(model);
                     if(prt_form!=null){
                         Templates.getTransitiveVerb(model, lexicon, sentence, verb+" "+prt_form, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());

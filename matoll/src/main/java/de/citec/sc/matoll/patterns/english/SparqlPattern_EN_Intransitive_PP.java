@@ -14,6 +14,9 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
+import java.util.List;
+import org.apache.jena.query.ResultSetFormatter;
+
 
 
 
@@ -113,6 +116,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
             return query;
         }
 	
+        @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
   
                 QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
@@ -123,11 +127,12 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 String preposition = null;
                 String dobj_form = null;
                 String prt_form = null;
-
-                try {
+                
+                int number = 0;
+                
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
-
+                         number+=1;
 
                          try{
                                  verb = qs.get("?lemma").toString();
@@ -146,14 +151,12 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
                         }
-                     }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
+                
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     String cannonicalform = "";
                     if(dobj_form!=null && prt_form!=null){

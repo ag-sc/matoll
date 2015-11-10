@@ -14,6 +14,8 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
+import java.util.List;
+import org.apache.jena.query.ResultSetFormatter;
 
 
 public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
@@ -98,35 +100,33 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                 String e2_arg = null;
                 String preposition = null;
                 String lemma_addition = "";
+                
+                int number = 0;
+                
+                while ( rs.hasNext() ) {
+                        QuerySolution qs = rs.next();
+                        number+=1;
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                        try{
+                                adjective = qs.get("?lemma").toString();
+                                e1_arg = qs.get("?e1_arg").toString();
+                                e2_arg = qs.get("?e2_arg").toString();	
+                                preposition = qs.get("?prep").toString();	
+                                try{
+                                    lemma_addition = qs.get("?lemma_addition").toString();
+                                }
+                                catch(Exception e){
 
+                                }
+                         }
+                        catch(Exception e){
+                       e.printStackTrace();
+                       }
+                    }
 
-                         try{
-                                 adjective = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
-                                 try{
-                                     lemma_addition = qs.get("?lemma_addition").toString();
-                                 }
-                                 catch(Exception e){
-                                     
-                                 }
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
-                     }
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
-                qExec.close() ;
+               qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && preposition.equals("by")) {
+		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && preposition.equals("by")&&number==1) {
                     Sentence sentence = this.returnSentence(model);
                     if(!lemma_addition.equals("")){
                         Templates.getTransitiveVerb(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
