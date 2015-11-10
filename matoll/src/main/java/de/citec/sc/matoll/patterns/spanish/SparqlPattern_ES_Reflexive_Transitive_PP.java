@@ -109,7 +109,11 @@ sentence::
                             + "OPTIONAL{"
                             + "?se <conll:head> ?verb. "
                             + "?se <conll:deprel> \"DO\"."
-                            + "?se <conll:form> ?se_form. }"
+                            + "?se <conll:form> ?se_form. "
+                            + "?verb <conll:wordnumber> ?wordnumber ."
+                            + "?se <conll:wordnumber> ?wordnumber_se ."
+                            + "FILTER(?wordnumber_se > ?wordnumber)."  
+                             + "}"
                     
                             + "?e1 <conll:head> ?verb . "
                             + "?e1 <conll:deprel> \"SUBJ\". "
