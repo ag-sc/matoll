@@ -14,8 +14,6 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import java.util.List;
-import org.apache.jena.query.ResultSetFormatter;
 
 
 public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
@@ -62,19 +60,19 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                             //+ "FILTER regex(?e1_pos, \"NN\") ."
                             + "?e1 <conll:head> ?y . "
                             + "?y <conll:cpostag> ?lemma_pos . "
+                            + "?y <conll:wordnumber> ?wordnumber. "
                             + "{?y <conll:cpostag> \"VBN\" . }"
                             + "UNION"
                             + "{?y <conll:cpostag> \"VBG\" . }"
                             + "?y <conll:form> ?lemma . "
                             +"OPTIONAL{"
-                            + "{"
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
-                            + "?lemma_nn <conll:deprel> \"advmod\". "
-                            + "} UNION"
-                            + "{?lemma_nn <conll:head> ?y. "
-                            + "?lemma_nn <conll:form> ?lemma_addition. "
-                            + "?lemma_nn <conll:deprel> \"nn\". }"
+                            + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
+                            + "{?lemma_nn <conll:deprel> \"advmod\". }"
+                            + " UNION"
+                            + "{?lemma_nn <conll:deprel> \"nn\". }"
+                            + "FILTER(?wordnumber_lemma_nn<?wordnumber)."
                             +"} "
                             + "?verb <conll:head> ?y . "
                             + "?verb <conll:deprel> \"auxpass\" . "

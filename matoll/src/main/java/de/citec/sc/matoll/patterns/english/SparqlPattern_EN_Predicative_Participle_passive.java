@@ -55,12 +55,14 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
         
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
+            String query = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                            + "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
                             + "?e1 <conll:deprel> \"nsubjpass\" . "
                             + "?e1 <conll:cpostag> ?e1_pos . "
                             //+ "FILTER regex(?e1_pos, \"NN\") ."
                             + "?e1 <conll:head> ?y . "
                             + "?y <conll:cpostag> ?lemma_pos . "
+                            + "?y <conll:wordnumber> ?wordnumber ."
                             + "{?y <conll:cpostag> \"VBN\" . }"
                             + "UNION"
                             + "{?y <conll:cpostag> \"VBG\" . }"
@@ -69,6 +71,8 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
                             + "?lemma_nn <conll:deprel> \"nn\"."
+                            + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
+                            + "FILTER(?wordnumber_lemma_nn < ?wordnumber)."
                             +"} "
                             + "?verb <conll:head> ?y . "
                             + "?verb <conll:deprel> \"auxpass\" . "

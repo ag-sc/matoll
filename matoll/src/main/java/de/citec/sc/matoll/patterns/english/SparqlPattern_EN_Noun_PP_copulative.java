@@ -75,7 +75,8 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
 
         @Override
     public String getQuery() {
-        String query = "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
+        String query = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                        + "SELECT ?lemma ?prefix ?e1_arg ?e2_arg ?prep WHERE"
                         +"{ "
                         +"{ ?y <conll:cpostag> \"NN\" . } "
                         + " UNION "
@@ -83,10 +84,13 @@ sentence:Professor Janet Beer is the Vice-Chancellor of Oxford Brookes Universit
                         + " UNION "
                         +"{ ?y <conll:cpostag> \"NNP\" . } "
                         + "?y <conll:form> ?lemma . "
+                        + "?y<conll:wordnumber> ?wordnumber ."
                         +"OPTIONAL{"
                         + "?lemma_nn <conll:head> ?y. "
                         + "?lemma_nn <conll:form> ?prefix. "
                         + "?lemma_nn <conll:deprel> \"nn\"."
+                        + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
+                        + "FILTER(?wordnumber_lemma_nn<?wordnumber)."
                         +"} "
                         + "?verb <conll:head> ?y . "
                         + "?verb <conll:deprel> \"cop\" ."

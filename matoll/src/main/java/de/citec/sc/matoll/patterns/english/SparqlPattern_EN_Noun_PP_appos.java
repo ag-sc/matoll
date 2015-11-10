@@ -14,10 +14,7 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.apache.jena.query.ResultSetFormatter;
+
 
 public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
 
@@ -26,19 +23,19 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
     @Override
     public String getQuery() {
 	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
-			
 			+ "?y <conll:form> ?lemma . "
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
+                        + "?y <conll:wordnumber> ?wordnumber ."
 			+"OPTIONAL{"
-			+ "{?modifier <conll:head> ?y. "
-			+ "?modifier <conll:form> ?prefix. "
-			+ "?modifier <conll:deprel> \"nn\".}"
+                        + "?modifier <conll:head> ?y. "
+                        + "?modifier <conll:form> ?prefix. "
+                        + "?modifier <conll:wordnumber> ?wordnumber_modifier ."
+			+ "{?modifier <conll:deprel> \"nn\". }"
                         + " UNION "
-                        + "{?modifier <conll:head> ?y. "
-			+ "?modifier <conll:form> ?prefix. "
-			+ "?modifier <conll:cpostag> \"JJ\".}"
+			+ "{?modifier <conll:cpostag> \"JJ\".}"
+                        + "FILTER(?wordnumber_modifier<?wordnumber)."                       
 			+"} "
                         //"Mount Apo is the highest point in the Philippines and dominates the skyline"
                         + "{?e1 <conll:head> ?y . "
@@ -64,7 +61,6 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
         @Override
 	public void extractLexicalEntries(Model model, Lexicon lexicon) {
 		
-                
                 QueryExecution qExec = QueryExecutionFactory.create(getQuery(), model) ;
                 ResultSet rs = qExec.execSelect() ;
                 String noun = null;

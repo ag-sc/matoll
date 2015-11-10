@@ -83,7 +83,8 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
 */
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?prt_form ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
+            String query = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                    + "SELECT ?lemma ?prt_form ?prep ?dobj_form ?e1_arg ?e2_arg  WHERE {"
                     + "{?y <conll:cpostag> \"VB\" .}"
                     + "UNION"
                     + "{?y <conll:cpostag> \"VBD\" .}"
@@ -92,6 +93,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                     + "UNION"
                     + "{?y <conll:cpostag> \"VBZ\" .}"
                     + "?y <conll:form> ?lemma . "
+                    + "?y <conll:wordnumber> ?wordnumber ."
                     + "?e1 <conll:head> ?y . "
                     + "?e1 <conll:deprel> ?deprel. "
                     + "FILTER regex(?deprel, \"subj\") ."
@@ -104,11 +106,15 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                         + "?dobj <conll:head> ?y . "
                         + "?dobj <conll:form> ?dobj_form ."
                         + "?dobj <conll:deprel> \"dobj\" ."
+                        + "?dobj <conll:wordnumber> ?wordnumber_dobj ."
+                        + "FILTER(?wordnumber_dobj<?wordnumber)."
                     + "}"
                     + "OPTIONAL {"
                          + "?prt <conll:head> ?y . "
                          + "?prt <conll:form> ?prt_form ."
                          + "?prt <conll:deprel> \"prt\" ."
+                         + "?prt <conll:wordnumber> ?wordnumber_prt ."
+                         + "FILTER(?wordnumber_prt<?wordnumber)."
                     + "}"
                     + "?e1 <own:senseArg> ?e1_arg. "
                     + "?e2 <own:senseArg> ?e2_arg. "

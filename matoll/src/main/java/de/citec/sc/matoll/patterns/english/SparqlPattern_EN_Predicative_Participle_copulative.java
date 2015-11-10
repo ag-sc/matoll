@@ -15,10 +15,7 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.apache.jena.query.ResultSetFormatter;
+
 
 public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPattern {
 
@@ -27,7 +24,8 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
 	
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
+            String query = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                            + "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
                             + "?e1 <conll:deprel> \"nsubj\" . "
                             + "?e1 <conll:cpostag> ?e1_pos . "
                             //+ "FILTER regex(?e1_pos, \"NN\") ."
@@ -36,10 +34,13 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
                             + " UNION "
                             + "{?y <conll:cpostag> \"VBN\" . }"
                             + "?y <conll:form> ?lemma . "
+                            + "?y <conll:wordnumber> ?wordnumber ."
                             +"OPTIONAL{"
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
                             + "?lemma_nn <conll:deprel> \"nn\"."
+                            + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
+                            + "FILTER(?wordnumber_lemma_nn<?wordnumber)."
                             +"} "
                             //+ "?verb <conll:head> ?y . "
                             + "?p <conll:head> ?y . "
