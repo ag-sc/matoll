@@ -80,29 +80,27 @@ public class SparqlPattern_ES_Noun_PP_appos_b extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
+                int number = 0;
 
-                try {
                  while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                     QuerySolution qs = rs.next();
+                     number+=1;
 
 
-                         try{
-                                 noun = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();	
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
-                     }
-                }
-                catch(Exception e){
+                     try{
+                             noun = qs.get("?lemma").toString();
+                             e1_arg = qs.get("?e1_arg").toString();
+                             e2_arg = qs.get("?e2_arg").toString();	
+                             preposition = qs.get("?prep").toString();	
+                      }
+                     catch(Exception e){
                     e.printStackTrace();
-                }
+                    }
+                 }
+
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 		

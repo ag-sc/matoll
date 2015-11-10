@@ -5,7 +5,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -276,38 +275,34 @@ public class SparqlPattern_ES_Predicative_Participle_Copulative extends SparqlPa
                 String preposition = null;
                 String participle = null;
                 String lemma = null;
-
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                int number = 0;
 
 
-                         try{
-                                 participle = qs.get("?form").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();
-                                 lemma = qs.get("?lemma").toString();             
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
+                while ( rs.hasNext() ) {
+                    QuerySolution qs = rs.next();
+                    number+=1;
+
+                    try{
+                            participle = qs.get("?form").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();	
+                            preposition = qs.get("?prep").toString();
+                            lemma = qs.get("?lemma").toString();             
                      }
+                    catch(Exception e){
+                   e.printStackTrace();
+                   }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
                 qExec.close() ;
     
-		if(participle!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(participle!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     Templates.getAdjective(model, lexicon, sentence, participle, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                                 
-                    if (preposition.equals("por"))
-                    {
-                    	// we need the 
-                    	Templates.getTransitiveVerb(model, lexicon, sentence, lemma, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    }
+                    if(preposition.equals("por"))
+                            Templates.getTransitiveVerb(model, lexicon, sentence, lemma, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                    
 		
 		}
 		

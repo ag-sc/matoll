@@ -81,33 +81,31 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                 String e2_arg = null;
                 String preposition = null;
                 String adjective_lemma = null;
+                int number = 0;
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                while ( rs.hasNext() ) {
+                    QuerySolution qs = rs.next();
+                    number+=1;
 
 
-                         try{
-                                 noun = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();
-                                 try{
-                                     adjective_lemma = qs.get("?adjective_lemma").toString();
-                                 }
-                                 catch(Exception e){};
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
+                    try{
+                            noun = qs.get("?lemma").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();	
+                            preposition = qs.get("?prep").toString();
+                            try{
+                                adjective_lemma = qs.get("?adjective_lemma").toString();
+                            }
+                            catch(Exception e){};
                      }
+                    catch(Exception e){
+                   e.printStackTrace();
+                   }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     if(adjective_lemma!=null)
                         Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());

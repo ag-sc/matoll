@@ -15,9 +15,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SPARQLPattern_ES_Intransitive_PP extends SparqlPattern{
+public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SPARQLPattern_ES_Intransitive_PP.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Intransitive_PP.class.getName());
 
 // aus spouse	
 	
@@ -82,7 +82,7 @@ public class SPARQLPattern_ES_Intransitive_PP extends SparqlPattern{
 			
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_Intransitive_PP";
+		return "SparqlPattern_ES_Intransitive_PP";
 	}
 
 	@Override
@@ -96,36 +96,34 @@ public class SPARQLPattern_ES_Intransitive_PP extends SparqlPattern{
                 String e2_arg = null;
                 String preposition = null;
                 String se_form = null;
+                int number = 0;
 
-                try {
-                 while ( rs.hasNext() ) {
-                         QuerySolution qs = rs.next();
+                while ( rs.hasNext() ) {
+                    QuerySolution qs = rs.next();
+                    number+=1;
 
 
-                         try{
-                                 verb = qs.get("?lemma").toString();
-                                 e1_arg = qs.get("?e1_arg").toString();
-                                 e2_arg = qs.get("?e2_arg").toString();	
-                                 preposition = qs.get("?prep").toString();
-                                 try{
-                                     
-                                 }
-                                 catch(Exception e){
-                                     se_form = qs.get("?se_form").toString();
-                                 }
-                          }
-	        	 catch(Exception e){
-	     	    	e.printStackTrace();
-                        }
+                    try{
+                            verb = qs.get("?lemma").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();	
+                            preposition = qs.get("?prep").toString();
+                            try{
+
+                            }
+                            catch(Exception e){
+                                se_form = qs.get("?se_form").toString();
+                            }
                      }
+                    catch(Exception e){
+                   e.printStackTrace();
+                   }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
                 qExec.close() ;
                 
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
                     if(se_form!=null)
                         Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, "se "+verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
