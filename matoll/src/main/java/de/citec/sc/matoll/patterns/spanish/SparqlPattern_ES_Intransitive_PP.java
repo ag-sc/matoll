@@ -52,9 +52,9 @@ public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
         @Override
         public String getQuery() {
             String query = "SELECT ?lemma ?e1_arg ?se_form ?e2_arg ?prep  WHERE {"
-                            + "?verb <conll:postag> ?verb_pos ."
+                            + "?verb <conll:cpostag> \"v\" ."
                             + "?verb <conll:lemma> ?lemma ."
-                            + "FILTER regex(?verb_pos, \"VMIS\") ."
+//                            + "FILTER regex(?verb_pos, \"VMIS\") ."
                             + "OPTIONAL{"
                                  + "?se <conll:form> \"se\" ."
                                  + "{?se <conll:deprel> \"DO\" .} UNION "

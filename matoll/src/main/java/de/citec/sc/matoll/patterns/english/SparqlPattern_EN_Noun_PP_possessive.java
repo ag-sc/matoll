@@ -14,10 +14,6 @@ import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.apache.jena.query.ResultSetFormatter;
 
 public class SparqlPattern_EN_Noun_PP_possessive extends SparqlPattern {
 
@@ -54,23 +50,24 @@ sentence::
     public String getQuery() {
 	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
 			
-                        +"?noun <connl:head> ?verb . "
-                        +"?noun <connl:deprel> \"nsubjpass\" . "
-                        +"?noun <connl:form> ?form . "
+                        +"?noun <conll:head> ?verb . "
+                        +"?noun <conll:deprel> \"nsubjpass\" . "
+                        +"?noun <conll:form> ?form . "
                         +"?p <conll:head> ?noun . "
-                        +"?p <connl:deprel> \"prep\" . "
+                        +"?p <conll:deprel> \"prep\" . "
                         +"?p <conll:form> ?prep . "
                         +"?e1 <conll:head> ?p . "
                         +"?e1 <conll:deprel> \"pobj\" . "
-                        +"?addition <connl:head> ?noun . "
+                        + " OPTIONAL "
+                        +"{?addition <conll:head> ?noun . "
                         +"?addition <conll:form> ?prefix . "
-                        +"?addition <conll:deprel> \"amod\" . "
+                        +"?addition <conll:deprel> \"amod\" . }"
                         //+"?verb <conll:form> \"made\" . "
                         //verb is root
                         //+" ?verb <conll:deprel> \"null\" . "
                         +"?p2 <conll:head> ?verb . "
-                        +"?p2 <connl:deprel> \"prep\" . "
-                        +"?e2 <connl:head> ?p2 . "
+                        +"?p2 <conll:deprel> \"prep\" . "
+                        +"?e2 <conll:head> ?p2 . "
                         +"?e2 <conll:deprel> \"pobj\" . "
 			+ "?e1 <own:senseArg> ?e1_arg. "
 			+ "?e2 <own:senseArg> ?e2_arg. "

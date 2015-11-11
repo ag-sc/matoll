@@ -87,7 +87,7 @@ public class SparqlPattern_ES_Reflexive_Transitive_withoutPrep extends SparqlPat
                             + "?e1 <conll:head> ?verb."
                             + "?e1 <conll:deprel> \"SUBJ\" ."
 
-                            + "?coord <conll:head> ?e1 ."
+                            + "?coord <conll:head> ?verb ."
                             + "?coord <conll:deprel> \"COORD\" ."
                             + "?coord <conll:lemma> \"y\" ."
 

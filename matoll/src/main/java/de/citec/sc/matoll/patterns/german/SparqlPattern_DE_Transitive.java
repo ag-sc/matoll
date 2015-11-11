@@ -21,6 +21,26 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
 	Logger logger = LogManager.getLogger(SparqlPattern_DE_Transitive.class.getName());
 	
         /*
+        ID:1111
+property subject: Rita Hayworth
+property subject uri: http://dbpedia.org/resource/Rita_Hayworth
+property object: James Hill
+property object uri: http://dbpedia.org/resource/James_Hill_(film_producer)
+sentence:: 
+1	James	James	N	NE	_|Nom|Sg	3	subj	_	_ 
+2	Hill	Hill	N	NE	_|Nom|Sg	1	app	_	_ 
+3	schlug	schlagen	V	VVFIN	3|Sg|Past|Ind	0	root	_	_ 
+4	daraufhin	daraufhin	PAV	PAV	_	3	pp	_	_ 
+5	Rita	Rita	N	NE	_|_|_	3	obja	_	_ 
+6	Hayworth	Hayworth	N	NE	_|_|_	5	app	_	_ 
+7	für	für	N	NN	_|_|_	6	app	_	_ 
+8	Leighs	Leigh	N	NN	Masc|Gen|Sg	9	gmod	_	_ 
+9	Rolle	Rolle	N	NN	_|_|_	7	app	_	_ 
+10	vor	vor	PTKVZ	PTKVZ	_	3	avz	_	_ 
+11	.	.	$.	$.	_	0	root	_	_ 
+
+        */
+        /*
         Transitive
         */
         @Override
@@ -35,12 +55,13 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                             + "{?e2 <conll:deprel> \"objd\" . }"
                             + "?e2 <conll:head> ?verb. "
                             + "OPTIONAL "
-                            + "{?lemma_addition <connl:head> ?verb . "
-                            + "{?lemma_addidtion <conll:deprel> \"obji\". "
-                            + "?lemma_addition <connl:lemma> ?additional_lemma . }"
-                            + " UNION "
-                            + "{?lemma_addidtion <conll:deprel> \"avz\". "
-                            + "?lemma_addition <conll:form> ?avz .} "
+                            + "{?lemma_addition <conll:head> ?verb . "
+                            + "?lemma_addidtion <conll:deprel> \"obji\". "
+                            + "?lemma_addidtion <conll:lemma> ?additional_lemma . }"
+                            + " OPTIONAL "
+                            + "{?avz_addidtion <conll:deprel> \"avz\". "
+                            + "?avz_addidtion <conll:head> ?verb . "
+                            + "?avz_addidtion <conll:form> ?avz . "
                             + "} "
                             + "?e1 <own:senseArg> ?e1_arg. "
                             + "?e2 <own:senseArg> ?e2_arg. "
@@ -74,7 +95,8 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                     try{
                             verb = qs.get("?lemma").toString();
                             e1_arg = qs.get("?e1_arg").toString();
-                            e2_arg = qs.get("?e2_arg").toString();	
+                            e2_arg = qs.get("?e2_arg").toString();
+                            
                             try{
                                 additional_lemma = qs.get("?additional_lemma").toString();
                             }
@@ -90,7 +112,7 @@ public class SparqlPattern_DE_Transitive extends SparqlPattern{
                 }
 
                 qExec.close() ;
-    
+                if(number>0)System.out.println(number);
 		if(verb!=null && e1_arg!=null && e2_arg!=null && number == 1) {
                     Sentence sentence = this.returnSentence(model);
                     if(additional_lemma!=null){
