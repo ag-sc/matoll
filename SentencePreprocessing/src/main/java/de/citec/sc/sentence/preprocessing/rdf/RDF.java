@@ -8,6 +8,7 @@ import java.util.List;
 import de.citec.sc.sentence.preprocessing.process.Language;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -52,8 +53,9 @@ public class RDF {
 					String head_token = "token"+Integer.toString(counter)+"_"+head_id;
 					
 					Resource row_subject = default_model.createResource("token:"+token)
-							.addProperty(default_model.createProperty("own:partOf"), res_class_token)
-							.addProperty(default_model.createProperty("conll:wordnumber"), Integer.toString(word_number));
+							.addProperty(default_model.createProperty("own:partOf"), res_class_token);
+//							.addProperty(default_model.createProperty("conll:wordnumber"), Integer.toString(word_number));
+                                        default_model.addLiteral(row_subject, default_model.createProperty("conll:wordnumber"), word_number);
 					
 					
 					String form = x[1].toLowerCase().replace("\"","");
