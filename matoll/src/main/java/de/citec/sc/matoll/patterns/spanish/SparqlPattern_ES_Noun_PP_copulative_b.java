@@ -71,7 +71,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_b extends SparqlPattern{
                         
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Noun_PP_copulativ_b";
+		return "SparqlPattern_ES_Noun_PP_copulative_b";
 	}
 
 	@Override
