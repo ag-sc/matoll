@@ -51,7 +51,7 @@ public class SparqlPattern_ES_Transitive_passive extends SparqlPattern{
 
                             + "?participle <conll:postag> ?participle_pos . "
                             + "FILTER regex(?participle_pos, \"VMP\") ."
-                            + "?participle <conll:form> ?lemma . "
+                            + "?participle <conll:lemma> ?lemma . "
                             + "?participle <conll:head> ?copula . "
                             + "?participle <conll:deprel> \"ATR\" . "
 
