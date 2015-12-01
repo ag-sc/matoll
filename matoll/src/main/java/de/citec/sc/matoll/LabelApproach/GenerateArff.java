@@ -1,4 +1,4 @@
-package de.citec.sc.matoll.adjectiveApproach;
+package de.citec.sc.matoll.labelapproach;
 
 import java.io.File;
 import java.io.FileInputStream;
