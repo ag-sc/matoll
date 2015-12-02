@@ -117,7 +117,6 @@ sentence::
 
         if(noun!=null && e1_arg!=null && e2_arg!=null) {
             Sentence sentence = this.returnSentence(model);
-            System.out.println("found:"+noun);
             Templates.getNounPossessive(model, lexicon, sentence, noun, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
         } 
                 
