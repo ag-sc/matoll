@@ -173,6 +173,7 @@ public class Matoll {
                         dep.add("nn");
                         dep.add("dobj");
                         dep.add("pobj");
+                        dep.add("num");
                         preprocessor.setDEP(dep);
                         break;
                         

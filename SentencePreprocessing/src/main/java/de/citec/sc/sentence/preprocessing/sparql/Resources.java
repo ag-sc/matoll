@@ -92,11 +92,36 @@ public class Resources {
                     String signature_1 = subj+obj;
                     String signature_2 = obj+subj;
 
-                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_pairs)){
+                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2)){
                         entities.add(pair);
                         signature_pairs.add(signature_1);
                         signature_pairs.add(signature_2);
-                    }   
+                    } 
+                    
+                    if(obj.contains(".")){
+                        pair = new ArrayList<String>();
+                        try{
+                            obj = obj.replace(".", "");
+
+                            pair.add(subj);
+                            pair.add(obj);
+                            pair.add(subj_uri);
+                            pair.add(obj_uri);
+
+                            signature_1 = subj+obj;
+                            signature_2 = obj+subj;
+
+                            if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2)){
+                                entities.add(pair);
+                                signature_pairs.add(signature_1);
+                                signature_pairs.add(signature_2);
+                            } 
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                            System.out.println("Problem with: "+subj+" + "+obj);
+                        }
+                    }
                 }
                 catch(Exception e){
                     e.printStackTrace();
