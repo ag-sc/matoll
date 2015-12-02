@@ -22,56 +22,80 @@ import org.apache.logging.log4j.Logger;
  *
  * @author swalter
  */
-public class SparqlPattern_EN_DatatypeNoun_2 extends SparqlPattern{
+public class SparqlPattern_EN_Noun_PP_player extends SparqlPattern{
     
-    Logger logger = LogManager.getLogger(SparqlPattern_EN_DatatypeNoun_2.class.getName());
+    Logger logger = LogManager.getLogger(SparqlPattern_EN_Noun_PP_player.class.getName());
     @Override
     public String getID() {
-        return "SparqlPattern_EN_DatatypeNoun_2";
+        return "SparqlPattern_EN_Noun_PP_player";
     }
 
     /*
-    
 
-    ID:2612
-    property subject: Lingampet
-    property subject uri: http://dbpedia.org/resource/Lingampet
-    property object: 470
-    property object uri: 470^^http://www.w3.org/2001/XMLSchema#integer
-    sentence::
-    1 Lingampet _ NNP NNP _ 2 nsubj _ _
-    2 has _ VBZ VBZ _ 0 null _ _
-    3 an _ DT DT _ 5 det _ _
-    4 average _ JJ JJ _ 5 amod _ _
-    5 elevation _ NN NN _ 2 dobj _ _
-    6 of _ IN IN _ 5 prep _ _
-    7 470 _ CD CD _ 8 num _ _
-    8 meters _ NNS NNS _ 6 pobj _ _
-    9 -LRB- _ -LRB- -LRB- _ 8 dep _ _
-    10 1545 _ CD CD _ 11 num _ _
-    11 feet _ NNS NNS _ 12 measure _ _
-    12 -RRB- _ -RRB- -RRB- _ 9 dep _ _
-    13 . _ . . _ 2 punct _ _
+
+ID:81
+property subject: Itimi Dickson
+property subject uri: http://dbpedia.org/resource/Itimi_Dickson
+property object: Persidafon Dafonsoro
+property object uri: http://dbpedia.org/resource/Persidafon_Dafonsoro
+sentence::
+1 Itimi _ NNP NNP _ 3 nn _ _
+2 Dickson _ NNP NNP _ 3 nn _ _
+3 Edherefe _ NNP NNP _ 9 nsubj _ _
+4 is _ VBZ VBZ _ 9 cop _ _
+5 a _ DT DT _ 9 det _ _
+6 Singapore _ NNP NNP _ 9 nn _ _
+7 international _ JJ JJ _ 9 amod _ _
+8 football _ NN NN _ 9 nn _ _
+9 player _ NN NN _ 0 null _ _
+10 who _ WP WP _ 12 nsubj _ _
+11 currently _ RB RB _ 12 advmod _ _
+12 plays _ VBZ VBZ _ 9 rcmod _ _
+13 for _ IN IN _ 12 prep _ _
+14 Persidafon _ NNP NNP _ 15 nn _ _
+15 Dafonsoro _ NNP NNP _ 13 pobj _ _
+16 . _ . . _ 9 punct _ _
+
+ID:107
+property subject: Rob Evans
+property subject uri: http://dbpedia.org/resource/Rob_Evans_(rugby_player)
+property object: Scarlets
+property object uri: http://dbpedia.org/resource/Scarlets
+sentence::
+1 Rob _ NNP NNP _ 2 nn _ _
+2 Evans _ NNP NNP _ 8 nsubj _ _
+3 is _ VBZ VBZ _ 8 cop _ _
+4 a _ DT DT _ 8 det _ _
+5 Welsh _ NNP NNP _ 8 nn _ _
+6 rugby _ JJ JJ _ 8 amod _ _
+7 union _ NN NN _ 8 nn _ _
+8 player _ NN NN _ 0 null _ _
+9 , _ , , _ 8 punct _ _
+10 currently _ RB RB _ 11 advmod _ _
+11 playing _ VBG VBG _ 8 xcomp _ _
+12 for _ IN IN _ 11 prep _ _
+13 Scarlets _ NNS NNS _ 12 pobj _ _
+14 . _ . . _ 8 punct _ _
+
+
 
     */
     
     @Override
     public String getQuery() {
         String query = "SELECT ?form ?prep ?e1_arg ?e2_arg WHERE {"
-                + "?e1 <conll:head> ?verb . "
+                + "?e1 <conll:head> ?noun . "
                 + "?e1 <conll:deprel> \"nsubj\"."
+                + "?noun <conll:form> ?form. "
+                + "?noun <conll:cpostag> \"NN\". "
+                + "?verb <conll:head> ?noun. "
                 + "?verb <conll:cpostag> ?verb_pos. "
                 + "FILTER regex(?verb_pos, \"VB\") ."
-                + "?noun <conll:head> ?verb . "
-                + "?noun <conll:form> ?form. "
-                + "?noun <conll:deprel> \"dobj\". "
                 + "?p <conll:deprel> \"prep\" . "
-                + "?p <conll:head> ?noun. "
+                + "?p <conll:head> ?verb. "
                 + "?p <conll:form> ?prep. "
-                + "?unit <conll:head> ?p. "
-                + "{?unit <conll:deprel> \"pobj\".} UNION {?unit <conll:deprel> \"dep\". } "
-                + "?e2 <conll:deprel> \"num\". "
-                + "?e2 <conll:head> ?unit. "
+                + "?e2 <conll:deprel> \"pobj\". "
+                + "?e2 <conll:head> ?p. "
                 + "?e1 <own:senseArg> ?e1_arg. "
                 + "?e2 <own:senseArg> ?e2_arg. "
                 + "}";
@@ -105,6 +129,7 @@ public class SparqlPattern_EN_DatatypeNoun_2 extends SparqlPattern{
 
         if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
             Sentence sentence = this.returnSentence(model);
+//            System.out.println("found:"+noun);
             Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg,preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
         } 
                 

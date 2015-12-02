@@ -92,7 +92,7 @@ public class Resources {
                     String signature_1 = subj+obj;
                     String signature_2 = obj+subj;
 
-                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2)){
+                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
                         entities.add(pair);
                         signature_pairs.add(signature_1);
                         signature_pairs.add(signature_2);
@@ -111,7 +111,7 @@ public class Resources {
                             signature_1 = subj+obj;
                             signature_2 = obj+subj;
 
-                            if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2)){
+                            if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
                                 entities.add(pair);
                                 signature_pairs.add(signature_1);
                                 signature_pairs.add(signature_2);

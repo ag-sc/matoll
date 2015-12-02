@@ -31,6 +31,7 @@ import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Intransitive_PP;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_copulative;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_possessive;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_player;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_passive;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Transitive_Verb;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_copulative;
@@ -129,6 +130,7 @@ public class Config {
                                         Patterns.add(new SparqlPattern_EN_Noun_PP_possessive());
                                         Patterns.add(new SparqlPattern_EN_DatatypeNoun());
 					Patterns.add(new SparqlPattern_EN_DatatypeNoun_2());
+                                        Patterns.add((new SparqlPattern_EN_Noun_PP_player()));
 					logger.info("Adding patterns 1-9 (EN) to pattern library \n");
 				}
 				if (Language.equals(DE))

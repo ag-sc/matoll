@@ -72,7 +72,7 @@ public class ReadIndex {
                     booleanQuery.add(new QueryParser("plain", analyzer).parse(obj.toLowerCase()), BooleanClause.Occur.MUST);
                 }
                 
-                System.out.println(booleanQuery.toString());
+//                System.out.println(booleanQuery.toString());
                     
                 
                 int hitsPerPage = 99;
