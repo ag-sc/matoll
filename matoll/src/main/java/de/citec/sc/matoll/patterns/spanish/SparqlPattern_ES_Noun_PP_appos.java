@@ -122,8 +122,7 @@ public class SparqlPattern_ES_Noun_PP_appos extends SparqlPattern{
             + "?p <conll:lemma> ?prep ."
 
             + "?e2 <conll:head> ?p ."
-            + "?e2 <conll:deprel> ?e1_deprel ."
-            + "FILTER regex(?e1_deprel, \"COMP\") ."
+            + "?e2 <conll:deprel> \"COMP\". "
 
             + "?e1 <own:senseArg> ?e1_arg. "
             + "?e2 <own:senseArg> ?e2_arg. "

@@ -15,9 +15,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Reflexive_Transitive_withoutPrep extends SparqlPattern{
+public class SparqlPattern_ES_Transitive_Reciprocal extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Reflexive_Transitive_withoutPrep.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Transitive_Reciprocal.class.getName());
 	
 	// X y Y se casaron
 	
@@ -108,7 +108,7 @@ public class SparqlPattern_ES_Reflexive_Transitive_withoutPrep extends SparqlPat
 	
 	@Override
 	public String getID() {
-		return "SparqlPattern_ES_Reflexive_Transitive_withoutPrep";
+		return "SparqlPattern_ES_Transitive_Reciprocal";
 	}
 
 	@Override

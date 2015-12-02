@@ -50,6 +50,29 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
 	----------------------
 	IGONORE sitarist: so x is married to y
 	 */
+        
+        /*
+        other example:
+        ID:5
+property subject: Ford Galaxie
+property subject uri: http://dbpedia.org/resource/Ford_Galaxie
+property object: Australia
+property object uri: http://dbpedia.org/resource/Australia
+sentence:: 
+1	The	_	DT	DT	_	3	det	_	_
+2	Ford	_	NNP	NNP	_	3	nn	_	_
+3	Galaxie	_	NNP	NNP	_	6	nsubjpass	_	_
+4	was	_	VBD	VBD	_	6	auxpass	_	_
+5	also	_	RB	RB	_	6	advmod	_	_
+6	produced	_	VBN	VBN	_	0	null	_	_
+7	in	_	IN	IN	_	6	prep	_	_
+8	Australia	_	NNP	NNP	_	7	pobj	_	_
+9	from	_	IN	IN	_	6	prep	_	_
+10	1965	_	CD	CD	_	9	pobj	_	_
+11	to	_	TO	TO	_	10	prep	_	_
+12	1969	_	CD	CD	_	11	pobj	_	_
+13	.	_	.	.	_	6	punct	_	_
+        */
 
 	 
         
@@ -58,11 +81,7 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
             String query = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                             + "SELECT ?lemma ?lemma_addition ?prep ?e1_arg ?e2_arg WHERE{"
                             + "?e1 <conll:deprel> \"nsubjpass\" . "
-                            + "?e1 <conll:cpostag> ?e1_pos . "
-                            //+ "FILTER regex(?e1_pos, \"NN\") ."
                             + "?e1 <conll:head> ?y . "
-                            + "?y <conll:cpostag> ?lemma_pos . "
-                            + "?y <conll:wordnumber> ?wordnumber ."
                             + "{?y <conll:cpostag> \"VBN\" . }"
                             + "UNION"
                             + "{?y <conll:cpostag> \"VBG\" . }"
@@ -71,12 +90,10 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
                             + "?lemma_nn <conll:deprel> \"nn\"."
-                            + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
-                            + "FILTER(?wordnumber_lemma_nn < ?wordnumber)."
                             +"} "
                             + "?verb <conll:head> ?y . "
                             + "?verb <conll:deprel> \"auxpass\" . "
-                            + "?p <conll:head> ?y . "
+                            + "{?p <conll:head> ?y . } "
                             + "?p <conll:deprel> \"prep\" . "
                             + "?p <conll:form> ?prep . "
                             + "?e2 <conll:head> ?p . "
@@ -99,11 +116,11 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
                 String preposition = null;
                 String lemma_addition = "";
                 
-                int number = 0;
+
                 
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
-                        number+=1;
+
 
                         try{
                                 adjective = qs.get("?lemma").toString();
@@ -124,7 +141,7 @@ public class SparqlPattern_EN_Predicative_Participle_passive extends SparqlPatte
                  
                 qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && !preposition.equals("by")&& number==1) {
+		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && !preposition.equals("by")) {
                     Sentence sentence = this.returnSentence(model);
                     if(!lemma_addition.equals("")){
                         Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());

@@ -10,6 +10,7 @@ import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Intransitive_PP;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_copulative;
+import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Noun_PP_possessive;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_passive;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Transitive_Verb;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_Predicative_Participle_copulative;
@@ -24,7 +25,7 @@ import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Intransitive_PP;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Noun_Possessive_appos;
 import de.citec.sc.matoll.patterns.german.SparqlPattern_DE_Refelexive_Transitive_PP;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Verb;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative_b;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative_withHop;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_copulative;
@@ -33,7 +34,7 @@ import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Intransitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Copulative;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Passive;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_withoutPrep;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Reciprocal;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_passive;
 import java.io.FileNotFoundException;
@@ -62,9 +63,10 @@ public class visualizeSPARQL {
         Patterns_EN.add(new SparqlPattern_EN_Predicative_Participle_passive());
         Patterns_EN.add(new SparqlPattern_EN_Transitive_Verb());
         Patterns_EN.add(new SparqlPattern_EN_Predicative_Participle_copulative());
+        Patterns_EN.add(new SparqlPattern_EN_Noun_PP_possessive());
         Patterns_EN.add(new SparqlPattern_EN_Transitive_Passive());
 					
-        Patterns_ES.add(new SparqlPattern_ES_Transitive_Verb());
+        Patterns_ES.add(new SparqlPattern_ES_Transitive());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative_b());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative_withHop());
         Patterns_ES.add(new SparqlPattern_ES_Noun_PP_copulative());
@@ -73,7 +75,7 @@ public class visualizeSPARQL {
         Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_Copulative());
         Patterns_ES.add(new SparqlPattern_ES_Predicative_Participle_Passive());
         Patterns_ES.add(new SparqlPattern_ES_Intransitive_PP());
-        Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_withoutPrep());
+        Patterns_ES.add(new SparqlPattern_ES_Transitive_Reciprocal());
         Patterns_ES.add(new SparqlPattern_ES_Reflexive_Transitive_PP());
         Patterns_ES.add(new SparqlPattern_ES_Transitive_passive());
         
@@ -100,7 +102,15 @@ public class visualizeSPARQL {
         
         String prefix = "\\begin{figure}\n"
                     +"\\centering\n"
-                    +"\\begin{tikzpicture}\n";
+                    +"\\begin{tikzpicture}[\n" +
+                    "    scale = 0.7, transform shape, thick,\n" +
+                    "    every node/.style = {draw, circle, minimum size = 10mm},\n" +
+                    "    grow = down,  % alignment of characters\n" +
+                    "    level 1/.style = {sibling distance=3cm},\n" +
+                    "    level 2/.style = {sibling distance=4cm}, \n" +
+                    "    level 3/.style = {sibling distance=2cm}, \n" +
+                    "    level distance = 2.3cm\n" +
+                    "  ]\n";
         
         String suffix = "\\end{tikzpicture}\n"
                     +"\\caption{Visualisation for "+name+"}\n"

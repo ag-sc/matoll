@@ -15,9 +15,9 @@ import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 
-public class SparqlPattern_ES_Transitive_Verb extends SparqlPattern{
+public class SparqlPattern_ES_Transitive extends SparqlPattern{
 
-	Logger logger = LogManager.getLogger(SparqlPattern_ES_Transitive_Verb.class.getName());
+	Logger logger = LogManager.getLogger(SparqlPattern_ES_Transitive.class.getName());
 	
 	
 	/*
@@ -65,7 +65,7 @@ x verb y - ohne preposition
 	
 	@Override
 	public String getID() {
-		return "SPARQLPattern_ES_Transitive_Verb";
+		return "SPARQLPattern_ES_Transitive";
 	}
 
 	@Override
