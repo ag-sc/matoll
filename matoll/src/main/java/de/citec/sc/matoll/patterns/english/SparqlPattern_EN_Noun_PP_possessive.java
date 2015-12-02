@@ -48,7 +48,7 @@ sentence::
         */
     @Override
     public String getQuery() {
-	String query = "SELECT ?prefix ?prep ?lemma ?e1_arg ?e2_arg WHERE {"
+	String query = "SELECT ?prefix ?prep ?form ?e1_arg ?e2_arg WHERE {"
 			
                         +"?noun <conll:head> ?verb . "
                         +"?noun <conll:deprel> \"nsubjpass\" . "
@@ -95,7 +95,7 @@ sentence::
                         QuerySolution qs = rs.next();
                         number+=1;
                         try{
-                                noun = qs.get("?lemma").toString();
+                                noun = qs.get("?form").toString();
                                 e1_arg = qs.get("?e1_arg").toString();
                                 e2_arg = qs.get("?e2_arg").toString();	
                                 preposition = qs.get("?prep").toString();
