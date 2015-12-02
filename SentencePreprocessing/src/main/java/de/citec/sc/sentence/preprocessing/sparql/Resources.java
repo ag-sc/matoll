@@ -92,11 +92,36 @@ public class Resources {
                     String signature_1 = subj+obj;
                     String signature_2 = obj+subj;
 
-                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_pairs)){
+                    if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
                         entities.add(pair);
                         signature_pairs.add(signature_1);
                         signature_pairs.add(signature_2);
-                    }   
+                    } 
+                    
+                    if(obj.contains(".")){
+                        pair = new ArrayList<String>();
+                        try{
+                            obj = obj.replace(".", "");
+
+                            pair.add(subj);
+                            pair.add(obj);
+                            pair.add(subj_uri);
+                            pair.add(obj_uri);
+
+                            signature_1 = subj+obj;
+                            signature_2 = obj+subj;
+
+                            if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
+                                entities.add(pair);
+                                signature_pairs.add(signature_1);
+                                signature_pairs.add(signature_2);
+                            } 
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                            System.out.println("Problem with: "+subj+" + "+obj);
+                        }
+                    }
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -135,42 +160,19 @@ public class Resources {
                 if (term.contains("<http://dbpedia.org/datatype/")) {
 			term = term.split("<http://dbpedia.org/datatype/")[0];
 		}
-                term = term.replace("^", "");
                 if (term.contains("|")) {
 			term = term.split("\\|")[0];
 		}
-		
-		/*
-		 * 3: 62.0^^http://www.w3.org/2001/XMLSchema#double
-		 */
-		
-		if(term.contains("XMLSchema#double")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#double", "");
-		}
-		
-		/*
-		 * capacity:A.S.D. Torrecuso Calcio	1500^^http://www.w3.org/2001/XMLSchema#integer
-		 */
-		if(term.contains("XMLSchema#integer")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#integer", "");
-		}
-		
-		/*
-		 * ^^httpwww.w3.org2001XMLSchema#decimal
-		 */
-		if(term.contains("XMLSchema#decimal")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#decimal", "");
-		}
                 
-                /*
-                0001-12-290200^^httpwww.w3.org2001XMLSchema#gMonthDay
-                */
-                if(term.contains("200^^httpwww.w3.org2001XMLSchema#gMonthDay")){
-			term = term.replace("200^^httpwww.w3.org2001XMLSchema#gMonthDay", "");
-		}
+                if(term.contains("^^")){
+                    term = term.split("\\^\\^")[0];
+                }
                 
-                term = term.replace("^^<http://www.w3.org/2001/XMLSchema#float", "");
-                term = term.replace("^^<http://www.w3.org/2001/XMLSchema#string>", "");
+                if(term.contains(",")){
+                    term = term.split(",")[0];
+                }
+		
+		
                 term = term.replace("\"","");
                 
                 
