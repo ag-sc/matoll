@@ -17,39 +17,48 @@ import org.apache.commons.io.IOUtils;
 
 public class Resources {
 
-	public static void retrieveEntities(List<List<String>> properties, String resourceFolder, String endpoint, Language language){
-            /*
-             * Slash works only for Unix-based systems
-             */
-            if(!resourceFolder.endsWith("/")) resourceFolder+="/";
-
-            List<String> empty_properties = new ArrayList<String>();
-
-            for(List<String> property:properties){
-                    String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
-                    boolean check_ontologyfolder = checkFolder(resourceFolder+property.get(1));
-                    boolean check_namespacefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2));
-                    boolean check_languagefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
-                    boolean check_propertyFile = checkPropertyNameFile(pathToPropertyFile);
-                    if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_propertyFile) getEntitiesFromServer(property,endpoint,pathToPropertyFile,empty_properties);
-            }
-                
-            PrintWriter writer;
-            try {
-                writer = new PrintWriter("empty_properties"+language.toString()+".txt");
-                for(String p: empty_properties) writer.println(p);
-                writer.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-		
-	}
+    /*
+    OLD -> probably remove it
+    */
+//	public static void retrieveEntities(List<List<String>> properties, String resourceFolder, String endpoint, Language language){
+//            /*
+//             * Slash works only for Unix-based systems
+//             */
+//            if(!resourceFolder.endsWith("/")) resourceFolder+="/";
+//
+//            List<String> empty_properties = new ArrayList<String>();
+//
+//            for(List<String> property:properties){
+//                    String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+//                    boolean check_ontologyfolder = checkFolder(resourceFolder+property.get(1));
+//                    boolean check_namespacefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2));
+//                    boolean check_languagefolder = checkFolder(resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3));
+//                    boolean check_propertyFile = checkPropertyNameFile(pathToPropertyFile);
+//                    if(check_ontologyfolder&&check_languagefolder&&check_namespacefolder&&check_propertyFile) getEntitiesFromServer(property,endpoint,pathToPropertyFile,empty_properties);
+//            }
+//                
+//            PrintWriter writer;
+//            try {
+//                writer = new PrintWriter("empty_properties"+language.toString()+".txt");
+//                for(String p: empty_properties) writer.println(p);
+//                writer.close();
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//		
+//	}
 	
 	public static List<List<String>> loadEntities(List<String> property, String resourceFolder) throws IOException{
 		List<List<String>> entities = new ArrayList<List<String>>();
                 Set<String> signature_pairs = new HashSet<String>();
-		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+                String name = property.get(0).replace("http://","");
+                name = name.replace(".org","");
+                name = name.replace("/","_");
+//		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+                String pathToPropertyFile = "";
+                if(resourceFolder.endsWith("/")) pathToPropertyFile = resourceFolder+name;
+                else pathToPropertyFile = resourceFolder+"/"+name;
 		String entities_raw = "";
 		
 		File f = new File(pathToPropertyFile);
@@ -94,6 +103,7 @@ public class Resources {
 
                     if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
                         entities.add(pair);
+                        System.out.println(subj+":"+obj);
                         signature_pairs.add(signature_1);
                         signature_pairs.add(signature_2);
                     } 
@@ -113,6 +123,7 @@ public class Resources {
 
                             if(!signature_pairs.contains(signature_1)&&!signature_pairs.contains(signature_2) && !subj_uri.equals(obj_uri) && !subj.contains(obj) && !obj.contains(subj)){
                                 entities.add(pair);
+                                System.out.println(subj+":"+obj);
                                 signature_pairs.add(signature_1);
                                 signature_pairs.add(signature_2);
                             } 
@@ -185,14 +196,14 @@ public class Resources {
 		return term;
 	}
 
-	private static void getEntitiesFromServer(List<String> property,
-			String endpoint, String path, List<String> empty_properties) {
-		List<String> entities = Sparql.retrieveEntities(endpoint, property.get(0), property.get(3));
-		if(!entities.isEmpty()) writeEntries(entities,path);
-                else{
-                    empty_properties.add(property.get(0));
-                }
-	}
+//	private static void getEntitiesFromServer(List<String> property,
+//			String endpoint, String path, List<String> empty_properties) {
+//		List<String> entities = Sparql.retrieveEntities(endpoint, property.get(0), property.get(3));
+//		if(!entities.isEmpty()) writeEntries(entities,path);
+//                else{
+//                    empty_properties.add(property.get(0));
+//                }
+//	}
 
 	private static void writeEntries(List<String> entities, String path) {
 		try{

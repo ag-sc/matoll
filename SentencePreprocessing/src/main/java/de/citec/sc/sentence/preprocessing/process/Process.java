@@ -54,11 +54,14 @@ public class Process {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!folderToSaveResourcesSentences.endsWith("/")) folderToSaveResourcesSentences+="/";
-		System.out.println("Retrieve Entities");
-		de.citec.sc.sentence.preprocessing.sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint, language);
-		System.out.println("Done");
-		System.out.println();
+                /*
+                Do retrieving part offline.
+                */
+//		if(!folderToSaveResourcesSentences.endsWith("/")) folderToSaveResourcesSentences+="/";
+//		System.out.println("Retrieve Entities");
+//		de.citec.sc.sentence.preprocessing.sparql.Resources.retrieveEntities(properties, folderToSaveResourcesSentences, endpoint, language);
+//		System.out.println("Done");
+//		System.out.println();
 		
 		
 		if(with_sentences){

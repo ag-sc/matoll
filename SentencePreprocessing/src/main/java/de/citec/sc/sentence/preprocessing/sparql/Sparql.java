@@ -81,7 +81,7 @@ public class Sparql {
     private static int getNumberEntityPairs(String property, String endpoint) {
         int numbers = 0;
         String queryString = "SELECT (COUNT(DISTINCT *) as ?count) WHERE{?x <"+property+"> ?y}";
-//        System.out.println(queryString);
+        System.out.println(queryString);
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
         ResultSet results = qexec.execSelect();
