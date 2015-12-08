@@ -28,13 +28,16 @@ import de.citec.sc.matoll.core.Reference;
 import de.citec.sc.matoll.core.Restriction;
 import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.SenseArgument;
+import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
+import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +80,8 @@ public class Process {
 		
 		MaxentTagger tagger = new MaxentTagger(path_to_tagger_model);
 		Morphology mp = new Morphology();
+                
+                Wordnet wordnet = new Wordnet(path_to_wordnet);
 		
 		/*
 		 * Overall Feature
@@ -91,6 +96,7 @@ public class Process {
 		 * Lexicon
 		 */
 		Lexicon lexicon = new Lexicon();
+                lexicon.setBaseURI("http://localhost:8080/");
 		
 		
 		/*
@@ -135,11 +141,11 @@ public class Process {
 		
 		System.out.println("Done preprosessing");
 		
-		HashSet<String> properties = importer.getProperties();
-		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
+//		HashSet<String> properties = importer.getProperties();
+//		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
                 HashSet<String> classes = importer.getClasses();
-		runClassApproach(classes,lexicon,path_to_wordnet);
+		runClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -176,9 +182,9 @@ public class Process {
 		
 	}
 
-	private static void createLexicalEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
+	private static void createRestrictionClassEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
                 LexicalEntry entry = new LexicalEntry(Language.EN);
-		entry.setCanonicalForm(adjective+"@en");
+		entry.setCanonicalForm(adjective);
                 
 		
 		Sense sense = new Sense();
@@ -428,7 +434,7 @@ public class Process {
                                          System.out.println("Frequency:"+adjectiveObject.getFrequency());
                                          System.out.println();*/
                                          try{
-                                             createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
+                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
                                             csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                          }
                                          catch(Exception e){
@@ -456,8 +462,56 @@ public class Process {
                 
     }
 
-    private static void runClassApproach(HashSet<String> classes, Lexicon lexicon, String path_to_wordnet) {
-        System.out.println("TODO");
+    private static void runClassApproach(HashSet<String> classes, Lexicon lexicon, Wordnet wordnet) {
+        for(String uri : classes){
+            String[] tmp = uri.split("/");
+            String label = tmp[tmp.length-1].toLowerCase();
+            label = label.replace("_"," ");
+            Set<String> canonicalForms = new HashSet<>();
+            canonicalForms.add(label);
+            canonicalForms.addAll(wordnet.getAllSynonyms(label));
+            for(String c : canonicalForms){
+                c = c.replace("_"," ");
+                createClassEntry(c,lexicon,uri);
+            }
+            
+        }
+    }
+
+    private static void createClassEntry(String label, Lexicon lexicon, String uri) {
+        LexicalEntry entry = new LexicalEntry(Language.EN);
+        entry.setCanonicalForm(label);
+
+
+        Sense sense = new Sense();
+        Reference ref = new SimpleReference(uri);
+        sense.setReference(ref);
+
+        Provenance provenance = new Provenance();
+        provenance.setFrequency(1);
+
+        sense.setReference(ref);
+
+        //System.out.println(adjective);
+        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_ClassEntry");
+
+        entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+
+        SyntacticBehaviour behaviour = new SyntacticBehaviour();
+        behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+        entry.addSyntacticBehaviour(behaviour,sense);
+
+        entry.addProvenance(provenance,sense);
+
+        lexicon.addEntry(entry);
+        
     }
 
 }
