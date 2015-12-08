@@ -1,0 +1,15 @@
+1	mixed-sex	http://dbpedia.org/ontology/gender	mixed-sex education	2230	<adj> education	JJ NN	0.6	0.1111111111111111	0.14285714285714285	sex	0.4736842105263158	true	false	1
+0	world	http://dbpedia.org/ontology/gender	western world	1	western <adj>	NNP NNP	0.6	0.1111111111111111	0.14285714285714285	rld	0.3846153846153846	false	true	2
+1	female	http://dbpedia.org/ontology/gender	female	123	<adj>	NN	0.6	0.1111111111111111	0.14285714285714285	ale	1.0	true	true	1
+1	male	http://dbpedia.org/ontology/gender	male	175	<adj>	NN	0.6	0.1111111111111111	0.14285714285714285	ale	1.0	true	true	1
+1	single-sex	http://dbpedia.org/ontology/gender	single-sex education	46	<adj> education	JJ NN	0.6	0.1111111111111111	0.14285714285714285	sex	0.5	true	false	1
+0	comprehensive	http://dbpedia.org/ontology/gender	barry comprehensive school	1	barry <adj> school	NNP NNP NNP	0.6	0.1111111111111111	0.14285714285714285	ive	0.5	false	false	2
+0	grammatical	http://dbpedia.org/ontology/gender	grammatical gender	3	<adj> gender	JJ NN	0.6	0.1111111111111111	0.14285714285714285	cal	0.6111111111111112	true	false	1
+1	unisex	http://dbpedia.org/ontology/gender	unisex	4	<adj>	NNP	0.6	0.1111111111111111	0.14285714285714285	sex	1.0	true	true	1
+1	female	http://dbpedia.org/ontology/gender	male and female	1	male and <adj>	NN CC NN	0.6	0.1111111111111111	0.14285714285714285	ale	0.4	false	true	3
+0	sixth	http://dbpedia.org/ontology/gender	sixth form	7	<adj> form	JJ NN	0.6	0.1111111111111111	0.14285714285714285	xth	0.5	true	false	1
+1	italian	http://dbpedia.org/ontology/gender	italian language	1	<adj> language	JJ NN	0.6	0.1111111111111111	0.14285714285714285	ian	0.4375	true	false	1
+1	romansh	http://dbpedia.org/ontology/gender	romansh language	1	<adj> language	NNP NN	0.6	0.1111111111111111	0.14285714285714285	nsh	0.4375	true	false	1
+1	albanian	http://dbpedia.org/ontology/gender	albanian language	1	<adj> language	JJ NN	0.6	0.1111111111111111	0.14285714285714285	ian	0.47058823529411764	true	false	1
+0	sexual	http://dbpedia.org/ontology/gender	sexual differentiation	1	<adj> differentiation	JJ NN	0.6	0.1111111111111111	0.14285714285714285	ual	0.2727272727272727	true	false	1
+0	benedict	http://dbpedia.org/ontology/gender	benedict	1	<adj>	NNP	0.6	0.1111111111111111	0.14285714285714285	ict	1.0	true	true	1

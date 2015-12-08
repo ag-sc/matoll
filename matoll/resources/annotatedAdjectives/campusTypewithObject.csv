@@ -1,0 +1,117 @@
+1	urban	http://dbpedia.org/ontology/campusType	urban	384	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	1.0	true	true	1
+1	suburban	http://dbpedia.org/ontology/campusType	suburban	406	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	1.0	true	true	1
+1	rural	http://dbpedia.org/ontology/campusType	rural	159	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	1.0	true	true	1
+1	exurban	http://dbpedia.org/ontology/campusType	exurban	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	1.0	true	true	1
+1	suburban	http://dbpedia.org/ontology/campusType	rural, suburban	2	rural, <adj>	JJ , JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.5333333333333333	false	true	2
+1	residential	http://dbpedia.org/ontology/campusType	residential	10	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ial	1.0	true	true	1
+1	large	http://dbpedia.org/ontology/campusType	large	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	rge	1.0	true	true	1
+1	urban	http://dbpedia.org/ontology/campusType	(, urban and forest,toronto campus	1	(, <adj> and forest,toronto campus	-LRB- , JJ CC NN , NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.1470588235294118	false	false	2
+0	setting	http://dbpedia.org/ontology/campusType	in a rural ontario setting	1	in a rural ontario <adj>	IN DT JJ NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.2692307692307693	false	true	5
+0	country	http://dbpedia.org/ontology/campusType	country	2	<adj>	NN	0.612565445026178	0.013333333333333334	0.017857142857142856	try	1.0	true	true	1
+0	single	http://dbpedia.org/ontology/campusType	single building	3	<adj> building	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	gle	0.4	true	false	1
+0	middle	http://dbpedia.org/ontology/campusType	divided middle school building and highschool.	1	divided <adj> school building and highschool.	VBN JJ NN NN CC NN .	0.612565445026178	0.013333333333333334	0.017857142857142856	dle	0.13043478260869568	false	false	2
+1	large	http://dbpedia.org/ontology/campusType	large suburb	1	<adj> suburb	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	rge	0.41666666666666663	true	false	1
+1	outdoor	http://dbpedia.org/ontology/campusType	outdoor	6	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	oor	1.0	true	true	1
+1	closed	http://dbpedia.org/ontology/campusType	closed	15	<adj>	VBN	0.612565445026178	0.013333333333333334	0.017857142857142856	sed	1.0	true	true	1
+0	fringe	http://dbpedia.org/ontology/campusType	rural, fringe	12	rural, <adj>	JJ , NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.46153846153846156	false	true	2
+1	large	http://dbpedia.org/ontology/campusType	suburb; large	1	suburb; <adj>	NN : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	rge	0.3846153846153846	false	true	2
+1	distant	http://dbpedia.org/ontology/campusType	town, distant	1	town, <adj>	NN , JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ant	0.5384615384615384	false	true	2
+1	large	http://dbpedia.org/ontology/campusType	suburb, large territory	1	suburb, <adj> territory	NN , JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	rge	0.21739130434782605	false	false	2
+1	concrete	http://dbpedia.org/ontology/campusType	urban(spacious with concrete structures)	1	urban(spacious with <adj> structures)	NNP -LRB- JJ IN JJ NNS -RRB-	0.612565445026178	0.013333333333333334	0.017857142857142856	ete	0.19999999999999996	false	false	3
+0	downtown	http://dbpedia.org/ontology/campusType	downtown	1	<adj>	NN	0.612565445026178	0.013333333333333334	0.017857142857142856	own	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/campusType	green	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	een	1.0	true	true	1
+0	country	http://dbpedia.org/ontology/campusType	urban country	1	urban <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	try	0.5384615384615384	false	true	2
+1	public	http://dbpedia.org/ontology/campusType	public	2	<adj>	NN	0.612565445026178	0.013333333333333334	0.017857142857142856	lic	1.0	true	true	1
+0	small	http://dbpedia.org/ontology/campusType	small city	14	<adj> city	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	all	0.5	true	false	1
+0	mid-size	http://dbpedia.org/ontology/campusType	urban fringe of a mid-size city	2	urban fringe of a <adj> city	JJ NN IN DT JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ize	0.25806451612903225	false	false	5
+1	closed	http://dbpedia.org/ontology/campusType	closed campus	6	<adj> campus	NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	sed	0.46153846153846156	true	false	1
+1	open	http://dbpedia.org/ontology/campusType	open concept	1	<adj> concept	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	pen	0.33333333333333337	true	false	1
+1	open	http://dbpedia.org/ontology/campusType	open	6	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	pen	1.0	true	true	1
+0	old	http://dbpedia.org/ontology/campusType	residential surroundings/ old town pasadena	1	residential surroundings/ <adj> town pasadena	JJ NNS : JJ NN NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	old	0.06976744186046513	false	false	3
+0	fringe	http://dbpedia.org/ontology/campusType	rural fringe	2	rural <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.5	false	true	2
+0	small	http://dbpedia.org/ontology/campusType	small town	5	<adj> town	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	all	0.5	true	false	1
+0	elementary	http://dbpedia.org/ontology/campusType	elementary school	1	<adj> school	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ary	0.5882352941176471	true	false	1
+1	indoor	http://dbpedia.org/ontology/campusType	indoor	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	oor	1.0	true	true	1
+1	pentagonal	http://dbpedia.org/ontology/campusType	pentagonal	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	nal	1.0	true	true	1
+1	rural	http://dbpedia.org/ontology/campusType	rural area	1	<adj> area	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.5	true	false	1
+1	private	http://dbpedia.org/ontology/campusType	private school	1	<adj> school	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ate	0.5	true	false	1
+1	rural	http://dbpedia.org/ontology/campusType	urban and rural	1	urban and <adj>	NNP CC NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.33333333333333337	false	true	3
+1	urban	http://dbpedia.org/ontology/campusType	residential, urban	1	residential, <adj>	JJ , JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.2777777777777778	false	true	2
+0	8	http://dbpedia.org/ontology/campusType	urban ward 8	1	urban ward <adj>	NNP NNP CD	0.612565445026178	0.013333333333333334	0.017857142857142856	8	0.08333333333333337	false	true	3
+0	overlooking	http://dbpedia.org/ontology/campusType	campus overlooking the kennebecasis river	1	campus <adj> the kennebecasis river	NN VBG DT NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.2682926829268293	false	false	2
+1	metropolitan	http://dbpedia.org/ontology/campusType	metropolitan	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	tan	1.0	true	true	1
+0	open	http://dbpedia.org/ontology/campusType	urban with lots of trees, grass and open space	1	urban with lots of trees, grass and <adj> space	NNP IN NNS IN NNS , NN CC JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	pen	0.08695652173913049	false	false	8
+0	on	http://dbpedia.org/ontology/campusType	suburban on the delaware river	1	suburban <adj> the delaware river	JJ IN DT NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	on	0.06666666666666665	false	false	2
+1	private	http://dbpedia.org/ontology/campusType	large private campus	2	large <adj> campus	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ate	0.35	false	false	2
+1	black	http://dbpedia.org/ontology/campusType	black	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ack	1.0	true	true	1
+1	suburban	http://dbpedia.org/ontology/campusType	rural / suburban	3	rural / <adj>	JJ : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.5	false	true	3
+1	concrete	http://dbpedia.org/ontology/campusType	concrete building, playground	2	<adj> building, playground	JJ NN , NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ete	0.27586206896551724	true	false	1
+1	private	http://dbpedia.org/ontology/campusType	private	4	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ate	1.0	true	true	1
+0	middle	http://dbpedia.org/ontology/campusType	pre, elementary, and middle school	1	pre, elementary, and <adj> school	JJ , JJ , CC JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	dle	0.17647058823529416	false	false	4
+1	residential	http://dbpedia.org/ontology/campusType	residential / day scholar	1	<adj> / day scholar	JJ : NN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ial	0.43999999999999995	true	false	1
+0	adult	http://dbpedia.org/ontology/campusType	suburban adult	1	suburban <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ult	0.3571428571428571	false	true	2
+0	small	http://dbpedia.org/ontology/campusType	small village	1	<adj> village	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	all	0.3846153846153846	true	false	1
+0	viii	http://dbpedia.org/ontology/campusType	dha phase viii	1	dha phase <adj>	NN NN NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	iii	0.2857142857142857	false	true	3
+0	14th	http://dbpedia.org/ontology/campusType	sl-10, 14th street, khayaban-e-shaheen	1	sl-10, <adj> street, khayaban-e-shaheen	NN , JJ NN , NN	0.612565445026178	0.013333333333333334	0.017857142857142856	4th	0.10526315789473684	false	false	2
+1	multiple	http://dbpedia.org/ontology/campusType	multiple	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ple	1.0	true	true	1
+1	open	http://dbpedia.org/ontology/campusType	suburban- open campus.	1	suburban- <adj> campus.	JJ : JJ NN .	0.612565445026178	0.013333333333333334	0.017857142857142856	pen	0.18181818181818177	false	false	2
+0	primary	http://dbpedia.org/ontology/campusType	primary school	1	<adj> school	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ary	0.5	true	false	1
+1	urban	http://dbpedia.org/ontology/campusType	urban riverfront	1	<adj> riverfront	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.3125	true	false	1
+0	high	http://dbpedia.org/ontology/campusType	high school	3	<adj> school	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	igh	0.36363636363636365	true	false	1
+0	setting	http://dbpedia.org/ontology/campusType	rural ontario setting	1	rural ontario <adj>	JJ NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.33333333333333337	false	true	3
+0	82	http://dbpedia.org/ontology/campusType	rural; private 82 acres	1	rural; private <adj> acres	JJ : JJ CD NNS	0.612565445026178	0.013333333333333334	0.017857142857142856	82	0.08695652173913049	false	false	3
+0	limited	http://dbpedia.org/ontology/campusType	limited access with security	1	<adj> access with security	JJ NN IN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ted	0.25	true	false	1
+1	central	http://dbpedia.org/ontology/campusType	central city	1	<adj> city	NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.5833333333333333	true	false	1
+0	west	http://dbpedia.org/ontology/campusType	86 west gate	1	86 <adj> gate	CD NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	est	0.33333333333333337	false	false	2
+1	open	http://dbpedia.org/ontology/campusType	open campus	1	<adj> campus	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	pen	0.36363636363636365	true	false	1
+1	suburban	http://dbpedia.org/ontology/campusType	outer suburban	1	outer <adj>	JJ JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.5714285714285714	false	true	2
+1	rural	http://dbpedia.org/ontology/campusType	large rural community	1	large <adj> community	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.23809523809523814	false	false	2
+0	one	http://dbpedia.org/ontology/campusType	one  story building,	1	<adj>  story building,	CD NN NN ,	0.612565445026178	0.013333333333333334	0.017857142857142856	one	0.15000000000000002	true	false	1
+0	public	http://dbpedia.org/ontology/campusType	residential public school	1	residential <adj> school	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	lic	0.24	false	false	2
+1	small	http://dbpedia.org/ontology/campusType	small	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	all	1.0	true	true	1
+1	residential	http://dbpedia.org/ontology/campusType	residential school	2	<adj> school	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ial	0.6111111111111112	true	false	1
+0	fringe	http://dbpedia.org/ontology/campusType	urban fringe	1	urban <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.5	false	true	2
+0	setting	http://dbpedia.org/ontology/campusType	urban setting	1	urban <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.5384615384615384	false	true	2
+0	first	http://dbpedia.org/ontology/campusType	first campus romklao 2007/08	1	<adj> campus romklao 2007/08	NNP NN NNP CD	0.612565445026178	0.013333333333333334	0.017857142857142856	rst	0.1785714285714286	true	false	1
+0	co-ed	http://dbpedia.org/ontology/campusType	co-ed	1	<adj>	VBN	0.612565445026178	0.013333333333333334	0.017857142857142856	-ed	1.0	true	true	1
+1	rural	http://dbpedia.org/ontology/campusType	large district type, rural campus	1	large district type, <adj> campus	JJ NN NN , NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.1515151515151515	false	false	4
+1	multi-story	http://dbpedia.org/ontology/campusType	modern, multi-story	1	modern, <adj>	JJ , JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ory	0.5789473684210527	false	true	2
+0	setting	http://dbpedia.org/ontology/campusType	rural setting	1	rural <adj>	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.5384615384615384	false	true	2
+1	new	http://dbpedia.org/ontology/campusType	new	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	new	1.0	true	true	1
+0	6	http://dbpedia.org/ontology/campusType	6 acres	1	<adj> acres	CD NNS	0.612565445026178	0.013333333333333334	0.017857142857142856	6	0.1428571428571429	true	false	1
+1	rural	http://dbpedia.org/ontology/campusType	wooded; rural	1	wooded; <adj>	VBN : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ral	0.3846153846153846	false	true	2
+0	fringe	http://dbpedia.org/ontology/campusType	town; fringe	3	town; <adj>	NN : NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.5	false	true	2
+1	international	http://dbpedia.org/ontology/campusType	international	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	nal	1.0	true	true	1
+1	international	http://dbpedia.org/ontology/campusType	private international school	1	private <adj> school	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nal	0.4642857142857143	false	false	2
+1	secondary	http://dbpedia.org/ontology/campusType	secondary	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ary	1.0	true	true	1
+0	south	http://dbpedia.org/ontology/campusType	suburban south galt	1	suburban <adj> galt	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	uth	0.26315789473684215	false	false	2
+0	like	http://dbpedia.org/ontology/campusType	shaped like an eagle; letter 'w'	1	shaped <adj> an eagle; letter 'w'	VBN IN DT NNP : NN `` NNP ''	0.612565445026178	0.013333333333333334	0.017857142857142856	ike	0.125	false	false	2
+1	compact	http://dbpedia.org/ontology/campusType	closed and compact	1	closed and <adj>	VBN CC JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	act	0.38888888888888884	false	true	3
+0	fringe	http://dbpedia.org/ontology/campusType	suburban/urban rural fringe	1	suburban/urban rural <adj>	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.2222222222222222	false	true	3
+1	expanded	http://dbpedia.org/ontology/campusType	built 1931, expanded 1964, 1986	1	built 1931, <adj> 1964, 1986	VBN CD , VBN CD , CD	0.612565445026178	0.013333333333333334	0.017857142857142856	ded	0.25806451612903225	false	false	3
+0	5th	http://dbpedia.org/ontology/campusType	203 college street, 5th floor.	1	203 college street, <adj> floor.	CD NNP NNP , JJ NN .	0.612565445026178	0.013333333333333334	0.017857142857142856	5th	0.09999999999999998	false	false	4
+0	40	http://dbpedia.org/ontology/campusType	40 acres	1	<adj> acres	CD NNS	0.612565445026178	0.013333333333333334	0.017857142857142856	40	0.25	true	false	1
+0	public	http://dbpedia.org/ontology/campusType	public school system	1	<adj> school system	JJ NN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	lic	0.30000000000000004	true	false	1
+1	primary	http://dbpedia.org/ontology/campusType	primary	2	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ary	1.0	true	true	1
+1	rectangular	http://dbpedia.org/ontology/campusType	rectangular	1	<adj>	JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	lar	1.0	true	true	1
+1	private	http://dbpedia.org/ontology/campusType	large private campus in cbd	1	large <adj> campus in cbd	JJ JJ NN IN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ate	0.2592592592592593	false	false	2
+0	setting	http://dbpedia.org/ontology/campusType	residential garden-style setting	1	residential garden-style <adj>	JJ JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.21875	false	true	3
+0	midsize	http://dbpedia.org/ontology/campusType	city: midsize	1	city: <adj>	NN : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ize	0.5384615384615384	false	true	2
+0	joined	http://dbpedia.org/ontology/campusType	formerly used to be under t.u but now it has joined the h.s.e.b since 2066 b.s	1	formerly used to be under t.u but now it has <adj> the h.s.e.b since 2066 b.s	RB VBN TO VB IN NNP CC RB PRP VBZ VBN DT NN IN CD NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ned	0.07692307692307687	false	false	11
+1	contemporary	http://dbpedia.org/ontology/campusType	contemporary	1	<adj>	NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	ary	1.0	true	true	1
+0	setting	http://dbpedia.org/ontology/campusType	mountain setting	1	mountain <adj>	NN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.4375	false	true	2
+0	fringe	http://dbpedia.org/ontology/campusType	rural; fringe	7	rural; <adj>	JJ : NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.46153846153846156	false	true	2
+0	setting	http://dbpedia.org/ontology/campusType	suburban/rural ontario setting	1	suburban/rural ontario <adj>	JJ NNP NN	0.612565445026178	0.013333333333333334	0.017857142857142856	ing	0.23333333333333328	false	true	3
+1	large	http://dbpedia.org/ontology/campusType	large city	1	<adj> city	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	rge	0.5	true	false	1
+0	national	http://dbpedia.org/ontology/campusType	rural, san bernardino national forest	1	rural, san bernardino <adj> forest	JJ , NNP NNP NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	nal	0.21621621621621623	false	false	4
+0	national	http://dbpedia.org/ontology/campusType	suburban, adjacent to nairobi national park	1	suburban, adjacent to nairobi <adj> park	JJ , JJ TO NNP NNP NNP	0.612565445026178	0.013333333333333334	0.017857142857142856	nal	0.18604651162790697	false	false	5
+1	urban	http://dbpedia.org/ontology/campusType	suburban, urban	1	sub<adj>, <adj>	JJ , JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ban	0.33333333333333337	false	true	2
+1	distant	http://dbpedia.org/ontology/campusType	rural; distant	6	rural; <adj>	JJ : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ant	0.5	false	true	2
+1	big	http://dbpedia.org/ontology/campusType	big field	1	<adj> field	JJ NN	0.612565445026178	0.013333333333333334	0.017857142857142856	big	0.33333333333333337	true	false	1
+1	remote	http://dbpedia.org/ontology/campusType	town; remote	3	town; <adj>	NN : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ote	0.5	false	true	2
+0	free	http://dbpedia.org/ontology/campusType	green and pollution free	1	green and pollution <adj>	JJ CC NN JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ree	0.16666666666666663	false	true	4
+1	remote	http://dbpedia.org/ontology/campusType	rural; remote	6	rural; <adj>	JJ : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ote	0.46153846153846156	false	true	2
+0	1	http://dbpedia.org/ontology/campusType	3 in urban, 1 in suburb	1	3 in urban, <adj> in suburb	CD IN JJ , CD IN NN	0.612565445026178	0.013333333333333334	0.017857142857142856	1	0.04347826086956519	false	false	4
+0	fringe	http://dbpedia.org/ontology/campusType	city; fringe	1	city; <adj>	NN : NN	0.612565445026178	0.013333333333333334	0.017857142857142856	nge	0.5	false	true	2
+1	distant	http://dbpedia.org/ontology/campusType	town; distant	1	town; <adj>	NN : JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ant	0.5384615384615384	false	true	2
+1	christian	http://dbpedia.org/ontology/campusType	christian co-educational	1	<adj> co-educational	NNP JJ	0.612565445026178	0.013333333333333334	0.017857142857142856	ian	0.375	true	false	1

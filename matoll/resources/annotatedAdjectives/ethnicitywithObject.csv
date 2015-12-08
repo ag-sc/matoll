@@ -1,0 +1,327 @@
+1	bengali	http://dbpedia.org/ontology/ethnicity	bengali people	113	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.5	true	false	1
+1	swiss	http://dbpedia.org/ontology/ethnicity	swiss people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	iss	0.41666666666666663	true	false	1
+1	french	http://dbpedia.org/ontology/ethnicity	french people	35	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	nch	0.46153846153846156	true	false	1
+1	iranian	http://dbpedia.org/ontology/ethnicity	iranian peoples	5	<adj> peoples	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.4666666666666667	true	false	1
+1	pashtun	http://dbpedia.org/ontology/ethnicity	pashtun people	42	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	tun	0.5	true	false	1
+1	bengali	http://dbpedia.org/ontology/ethnicity	bengali hindus	92	<adj> hindus	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	white american	45	white <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	israeli	http://dbpedia.org/ontology/ethnicity	israeli jews	4	<adj> jews	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	eli	0.5833333333333333	true	false	1
+1	filipino	http://dbpedia.org/ontology/ethnicity	filipino people	24	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ino	0.5333333333333333	true	false	1
+1	bengali	http://dbpedia.org/ontology/ethnicity	bengali brahmins	1	<adj> brahmins	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.4375	true	false	1
+1	irish	http://dbpedia.org/ontology/ethnicity	irish people	50	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.41666666666666663	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	african american	116	african <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	american jews	54	<adj> jews	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.6153846153846154	true	false	1
+1	arab	http://dbpedia.org/ontology/ethnicity	arab people	30	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	rab	0.36363636363636365	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	english american	18	english <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	english	http://dbpedia.org/ontology/ethnicity	english people	75	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	german american	13	german <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	basque	http://dbpedia.org/ontology/ethnicity	basque people	7	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	que	0.46153846153846156	true	false	1
+1	black	http://dbpedia.org/ontology/ethnicity	black people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ack	0.41666666666666663	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	irish american	20	irish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	chuvash	http://dbpedia.org/ontology/ethnicity	chuvash people	2	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ash	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	italian american	29	italian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	kurdish	http://dbpedia.org/ontology/ethnicity	kurdish people	13	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	han chinese	27	han <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.6363636363636364	false	true	2
+1	hungarian	http://dbpedia.org/ontology/ethnicity	hungarian people	20	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5625	true	false	1
+0	levant	http://dbpedia.org/ontology/ethnicity	levant	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ant	1.0	true	true	1
+1	portuguese	http://dbpedia.org/ontology/ethnicity	portuguese people	7	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5882352941176471	true	false	1
+1	punjabi	http://dbpedia.org/ontology/ethnicity	punjabi people	26	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	abi	0.5	true	false	1
+1	somali	http://dbpedia.org/ontology/ethnicity	somali people	50	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.46153846153846156	true	false	1
+1	spanish	http://dbpedia.org/ontology/ethnicity	spanish people	24	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	turkish	http://dbpedia.org/ontology/ethnicity	turkish people	28	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+0	czech	http://dbpedia.org/ontology/ethnicity	polish minority in the czech republic	16	polish minority in the <adj> republic	JJ NN IN DT NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ech	0.1351351351351351	false	false	5
+1	brazilian	http://dbpedia.org/ontology/ethnicity	brazilian people	4	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5625	true	false	1
+1	caucasian	http://dbpedia.org/ontology/ethnicity	caucasian race	155	<adj> race	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.6428571428571428	true	false	1
+1	singaporean	http://dbpedia.org/ontology/ethnicity	chinese singaporean	1	chinese <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.5789473684210527	false	true	2
+1	mexican	http://dbpedia.org/ontology/ethnicity	mexican people	7	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	chinese people	29	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5	true	false	1
+0	ethnic	http://dbpedia.org/ontology/ethnicity	ethnic germans	7	<adj> germans	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.4285714285714286	true	false	1
+1	vietnamese	http://dbpedia.org/ontology/ethnicity	vietnamese people	4	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5882352941176471	true	false	1
+1	gujarati	http://dbpedia.org/ontology/ethnicity	gujarati people	5	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ati	0.5333333333333333	true	false	1
+1	dutch	http://dbpedia.org/ontology/ethnicity	dutch burghers	1	<adj> burghers	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	tch	0.3571428571428571	true	false	1
+1	hakka	http://dbpedia.org/ontology/ethnicity	hakka people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	kka	0.41666666666666663	true	false	1
+1	white	http://dbpedia.org/ontology/ethnicity	white people	151	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ite	0.41666666666666663	true	false	1
+1	british	http://dbpedia.org/ontology/ethnicity	white british	107	white <adj>	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5384615384615384	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	chinese american	16	chinese <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	lithuanian	http://dbpedia.org/ontology/ethnicity	lithuanian people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5882352941176471	true	false	1
+1	turkish	http://dbpedia.org/ontology/ethnicity	turkish cypriots	6	<adj> cypriots	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.4375	true	false	1
+1	mi'kmaq	http://dbpedia.org/ontology/ethnicity	mi'kmaq people	2	<adj> people	NNP `` NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	maq	0.5	true	false	1
+1	tamil	http://dbpedia.org/ontology/ethnicity	sri lankan tamil people	23	sri lankan <adj> people	NNP NNP NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	mil	0.21739130434782605	false	false	3
+1	american	http://dbpedia.org/ontology/ethnicity	turkish american	1	turkish <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	arab	http://dbpedia.org/ontology/ethnicity	arab citizens of israel	1	<adj> citizens of israel	NNP NNPS IN NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	rab	0.17391304347826086	true	false	1
+1	hispanic	http://dbpedia.org/ontology/ethnicity	hispanic america	2	<adj> america	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.5	true	false	1
+0	britain	http://dbpedia.org/ontology/ethnicity	great britain	1	great <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ain	0.5384615384615384	false	true	2
+1	scottish	http://dbpedia.org/ontology/ethnicity	scottish people	17	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5333333333333333	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	dominican american	3	dominican <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	european american	18	european <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	greek american	3	greek <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	caribbean	http://dbpedia.org/ontology/ethnicity	caribbean	3	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	1.0	true	true	1
+1	chukchi	http://dbpedia.org/ontology/ethnicity	chukchi people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	chi	0.5	true	false	1
+1	galician	http://dbpedia.org/ontology/ethnicity	galician people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	latvian american	1	latvian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	japanese	http://dbpedia.org/ontology/ethnicity	japanese people	162	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+1	kyrgyz	http://dbpedia.org/ontology/ethnicity	kyrgyz people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	gyz	0.46153846153846156	true	false	1
+0	united	http://dbpedia.org/ontology/ethnicity	native americans in the united states	14	native americans in the <adj> states	JJ NNPS IN DT NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.16216216216216217	false	false	5
+1	persian	http://dbpedia.org/ontology/ethnicity	persian people	8	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	polish american	4	polish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	turkic	http://dbpedia.org/ontology/ethnicity	turkic peoples	1	<adj> peoples	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	kic	0.4285714285714286	true	false	1
+1	white	http://dbpedia.org/ontology/ethnicity	white	2	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ite	1.0	true	true	1
+0	rican	http://dbpedia.org/ontology/ethnicity	puerto rican people	18	puerto <adj> people	NNP NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.26315789473684215	false	false	2
+1	serer	http://dbpedia.org/ontology/ethnicity	serer people	4	<adj> people	JJR NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	rer	0.41666666666666663	true	false	1
+0	united	http://dbpedia.org/ontology/ethnicity	guyanese in the united kingdom	1	guyanese in the <adj> kingdom	JJ IN DT NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.19999999999999996	false	false	4
+1	american	http://dbpedia.org/ontology/ethnicity	indian american	5	indian <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	inuit	http://dbpedia.org/ontology/ethnicity	inuit	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	uit	1.0	true	true	1
+1	indigenous	http://dbpedia.org/ontology/ethnicity	indigenous peoples of the americas	9	<adj> peoples of the americas	JJ NNS IN DT NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ous	0.2941176470588235	true	false	1
+0	dutch	http://dbpedia.org/ontology/ethnicity	pennsylvania dutch	1	pennsylvania <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	tch	0.2777777777777778	false	true	2
+1	shan	http://dbpedia.org/ontology/ethnicity	shan people	8	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	han	0.36363636363636365	true	false	1
+1	british	http://dbpedia.org/ontology/ethnicity	black british	8	black <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5384615384615384	false	true	2
+1	british	http://dbpedia.org/ontology/ethnicity	british african-caribbean people	6	<adj> african-caribbean people	JJ JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.21875	true	false	1
+1	indian	http://dbpedia.org/ontology/ethnicity	indian people	11	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.46153846153846156	true	false	1
+1	ottoman	http://dbpedia.org/ontology/ethnicity	armenians in the ottoman empire	2	armenians in the <adj> empire	NNPS IN DT NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.22580645161290325	false	false	4
+1	azerbaijani	http://dbpedia.org/ontology/ethnicity	azerbaijani people	8	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ani	0.6111111111111112	true	false	1
+1	italian	http://dbpedia.org/ontology/ethnicity	italian jews	1	<adj> jews	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5833333333333333	true	false	1
+1	british	http://dbpedia.org/ontology/ethnicity	british people	13	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	sinhalese	http://dbpedia.org/ontology/ethnicity	sinhalese people	34	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5625	true	false	1
+0	white	http://dbpedia.org/ontology/ethnicity	white earth band of ojibwe	1	<adj> earth band of ojibwe	JJ NN NN IN NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ite	0.1923076923076923	true	false	1
+1	hispanic	http://dbpedia.org/ontology/ethnicity	hispanic	11	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	1.0	true	true	1
+1	kashmiri	http://dbpedia.org/ontology/ethnicity	kashmiri people	13	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	iri	0.5333333333333333	true	false	1
+1	multiracial	http://dbpedia.org/ontology/ethnicity	multiracial	3	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ial	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	japanese american	16	japanese <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+0	united	http://dbpedia.org/ontology/ethnicity	demography of the united kingdom	2	demography of the <adj> kingdom	NN IN DT NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.1875	false	false	4
+1	american	http://dbpedia.org/ontology/ethnicity	trinidadian and tobagonian american	1	trinidadian and tobagonian <adj>	NNP CC NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.22857142857142854	false	true	4
+1	indian	http://dbpedia.org/ontology/ethnicity	indian	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	bangladeshi	http://dbpedia.org/ontology/ethnicity	bangladeshi	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	shi	1.0	true	true	1
+1	dutch	http://dbpedia.org/ontology/ethnicity	dutch people	16	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	tch	0.41666666666666663	true	false	1
+0	britain	http://dbpedia.org/ontology/ethnicity	irish migration to great britain	2	irish migration to great <adj>	JJ NN TO JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ain	0.21875	false	true	5
+1	chinese	http://dbpedia.org/ontology/ethnicity	chinese indonesians	8	<adj> indonesians	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.368421052631579	true	false	1
+1	flemish	http://dbpedia.org/ontology/ethnicity	flemish people	2	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	assamese	http://dbpedia.org/ontology/ethnicity	assamese language	2	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.47058823529411764	true	false	1
+1	english	http://dbpedia.org/ontology/ethnicity	english language	1	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.4375	true	false	1
+1	chilean	http://dbpedia.org/ontology/ethnicity	chilean people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.5	true	false	1
+1	brazilian	http://dbpedia.org/ontology/ethnicity	german brazilian	2	german <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5625	false	true	2
+1	indian	http://dbpedia.org/ontology/ethnicity	british indian	3	british <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.4285714285714286	false	true	2
+1	indigenous	http://dbpedia.org/ontology/ethnicity	indigenous peoples in colombia	1	<adj> peoples in colombia	JJ NNS IN NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ous	0.33333333333333337	true	false	1
+1	asian	http://dbpedia.org/ontology/ethnicity	asian people	2	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.41666666666666663	true	false	1
+1	ashkenazi	http://dbpedia.org/ontology/ethnicity	ashkenazi jews	12	<adj> jews	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	azi	0.6428571428571428	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	croatian american	1	croatian <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	ancient	http://dbpedia.org/ontology/ethnicity	ancient egypt	2	<adj> egypt	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ent	0.5384615384615384	true	false	1
+1	bengali	http://dbpedia.org/ontology/ethnicity	bengali language	4	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.4375	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	hungarian american	4	hungarian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	false	true	2
+1	christian	http://dbpedia.org/ontology/ethnicity	christian	2	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	korean american	8	korean <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	indigenous	http://dbpedia.org/ontology/ethnicity	indigenous australians	7	<adj> australians	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ous	0.4545454545454546	true	false	1
+1	japanese	http://dbpedia.org/ontology/ethnicity	japanese language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.47058823529411764	true	false	1
+1	latvian	http://dbpedia.org/ontology/ethnicity	latvian people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	true	false	1
+1	malagasy	http://dbpedia.org/ontology/ethnicity	malagasy people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	asy	0.5333333333333333	true	false	1
+1	malay	http://dbpedia.org/ontology/ethnicity	malay language	1	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	lay	0.3571428571428571	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	mexican american	11	mexican <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	norwegian american	3	norwegian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	false	true	2
+0	south	http://dbpedia.org/ontology/ethnicity	south asia	7	<adj> asia	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	uth	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	russian american	6	russian <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	tajik	http://dbpedia.org/ontology/ethnicity	tajik people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	jik	0.41666666666666663	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	scottish american	5	scottish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	sri lankan american	1	sri lankan <adj>	NNP NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	3
+1	american	http://dbpedia.org/ontology/ethnicity	filipino american	4	filipino <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	latino	http://dbpedia.org/ontology/ethnicity	hispanic and latino americans	13	hispanic and <adj> americans	NNP CC NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ino	0.2068965517241379	false	false	3
+1	hindu	http://dbpedia.org/ontology/ethnicity	hindu	46	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ndu	1.0	true	true	1
+1	albanian	http://dbpedia.org/ontology/ethnicity	albanian language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.47058823529411764	true	false	1
+1	russian	http://dbpedia.org/ontology/ethnicity	russian language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.4375	true	false	1
+1	malayali	http://dbpedia.org/ontology/ethnicity	malayali	6	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	1.0	true	true	1
+1	colombian	http://dbpedia.org/ontology/ethnicity	colombian people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5625	true	false	1
+1	brahmin	http://dbpedia.org/ontology/ethnicity	goud saraswat brahmin	4	goud saraswat <adj>	NNP NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	min	0.33333333333333337	false	true	3
+1	haitian	http://dbpedia.org/ontology/ethnicity	haitian people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	true	false	1
+1	european	http://dbpedia.org/ontology/ethnicity	new zealand european	4	new zealand <adj>	NNP NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.4	false	true	3
+1	canadian	http://dbpedia.org/ontology/ethnicity	irish canadian	2	irish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5714285714285714	false	true	2
+0	north	http://dbpedia.org/ontology/ethnicity	north india	1	<adj> india	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	rth	0.4545454545454546	true	false	1
+1	pacific	http://dbpedia.org/ontology/ethnicity	pacific islander	1	<adj> islander	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	fic	0.4375	true	false	1
+1	sindhi	http://dbpedia.org/ontology/ethnicity	sindhi people	6	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	dhi	0.46153846153846156	true	false	1
+1	japanese	http://dbpedia.org/ontology/ethnicity	filipino japanese	1	filipino <adj>	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	dutch american	1	dutch <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	welsh	http://dbpedia.org/ontology/ethnicity	welsh people	11	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	lsh	0.41666666666666663	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	vietnamese american	3	vietnamese <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	2
+0	ethnic	http://dbpedia.org/ontology/ethnicity	ethnic groups in europe	2	<adj> groups in europe	JJ NNS IN NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.26086956521739135	true	false	1
+1	iraqi	http://dbpedia.org/ontology/ethnicity	iraqi people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	aqi	0.41666666666666663	true	false	1
+1	thai	http://dbpedia.org/ontology/ethnicity	thai people	5	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	hai	0.36363636363636365	true	false	1
+1	german	http://dbpedia.org/ontology/ethnicity	swabian german	1	swabian <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.4285714285714286	false	true	2
+0	afrikaner	http://dbpedia.org/ontology/ethnicity	afrikaner	3	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ner	1.0	true	true	1
+1	tibetan	http://dbpedia.org/ontology/ethnicity	tibetan people	3	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	tan	0.5	true	false	1
+1	berber	http://dbpedia.org/ontology/ethnicity	berber people	3	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ber	0.46153846153846156	true	false	1
+0	wild	http://dbpedia.org/ontology/ethnicity	wild boar	1	<adj> boar	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ild	0.4444444444444444	true	false	1
+0	ethnic	http://dbpedia.org/ontology/ethnicity	south asian ethnic groups	1	south asian <adj> groups	JJ JJ JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.24	false	false	3
+0	druze	http://dbpedia.org/ontology/ethnicity	druze	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	uze	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	austrian american	1	austrian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	chicano	http://dbpedia.org/ontology/ethnicity	chicano	4	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ano	1.0	true	true	1
+1	assyrian	http://dbpedia.org/ontology/ethnicity	assyrian people	4	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	canadian	http://dbpedia.org/ontology/ethnicity	french canadian	4	french <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	false	true	2
+1	german	http://dbpedia.org/ontology/ethnicity	german language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.4	true	false	1
+1	zulu	http://dbpedia.org/ontology/ethnicity	zulu people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ulu	0.36363636363636365	true	false	1
+1	mangalorean	http://dbpedia.org/ontology/ethnicity	mangalorean catholics	6	<adj> catholics	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.5238095238095238	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	palestinian american	1	palestinian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4	false	true	2
+1	british	http://dbpedia.org/ontology/ethnicity	british jews	1	<adj> jews	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5833333333333333	true	false	1
+1	taiwanese	http://dbpedia.org/ontology/ethnicity	taiwanese people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5625	true	false	1
+0	goan	http://dbpedia.org/ontology/ethnicity	goan catholics	4	<adj> catholics	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	oan	0.2857142857142857	true	false	1
+0	country	http://dbpedia.org/ontology/ethnicity	southern basque country	1	southern basque <adj>	NNP JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	try	0.30434782608695654	false	true	3
+1	australian	http://dbpedia.org/ontology/ethnicity	irish australian	1	irish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.625	false	true	2
+1	balinese	http://dbpedia.org/ontology/ethnicity	balinese	1	<adj>	NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	1.0	true	true	1
+1	assamese	http://dbpedia.org/ontology/ethnicity	assamese people	12	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+1	dalmatian	http://dbpedia.org/ontology/ethnicity	dalmatian italians	1	<adj> italians	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	true	false	1
+1	creole	http://dbpedia.org/ontology/ethnicity	sierra leone creole people	2	sierra leone <adj> people	NNP NNP NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ole	0.23076923076923073	false	false	3
+1	palestinian	http://dbpedia.org/ontology/ethnicity	palestinian people	6	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.6111111111111112	true	false	1
+1	ewe	http://dbpedia.org/ontology/ethnicity	ewe people	4	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ewe	0.30000000000000004	true	false	1
+1	manchu	http://dbpedia.org/ontology/ethnicity	manchu language	1	<adj> language	NN NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	chu	0.4	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	chinese people in burma	5	<adj> people in burma	JJ NNS IN NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.30434782608695654	true	false	1
+1	amerasian	http://dbpedia.org/ontology/ethnicity	amerasian	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	finnish american	1	finnish <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+0	east	http://dbpedia.org/ontology/ethnicity	east africa	1	<adj> africa	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ast	0.36363636363636365	true	false	1
+1	georgian	http://dbpedia.org/ontology/ethnicity	georgian people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	romani	http://dbpedia.org/ontology/ethnicity	romani people	2	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ani	0.46153846153846156	true	false	1
+1	tamil	http://dbpedia.org/ontology/ethnicity	tamil language	2	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	mil	0.3571428571428571	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	scotch-irish american	2	scotch-irish <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.38095238095238093	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	ukrainian american	2	ukrainian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	welsh american	2	welsh <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	latino	http://dbpedia.org/ontology/ethnicity	white hispanic and latino americans	2	white hispanic and <adj> americans	NNP NNP CC NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ino	0.17142857142857137	false	false	4
+1	moroccan	http://dbpedia.org/ontology/ethnicity	moroccan jews	2	<adj> jews	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.6153846153846154	true	false	1
+1	pakistani	http://dbpedia.org/ontology/ethnicity	pakistani people	10	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ani	0.5625	true	false	1
+1	muslim	http://dbpedia.org/ontology/ethnicity	muslim	3	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	lim	1.0	true	true	1
+1	tamil	http://dbpedia.org/ontology/ethnicity	tamil people	5	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	mil	0.41666666666666663	true	false	1
+1	british	http://dbpedia.org/ontology/ethnicity	british pakistanis	3	<adj> pakistanis	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.38888888888888884	true	false	1
+0	united	http://dbpedia.org/ontology/ethnicity	puerto ricans in the united states	9	puerto ricans in the <adj> states	NNP NNS IN DT NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.17647058823529416	false	false	5
+1	american	http://dbpedia.org/ontology/ethnicity	indonesian american	1	indonesian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	2
+1	kashmiri	http://dbpedia.org/ontology/ethnicity	kashmiri pandit	6	<adj> pandit	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	iri	0.5333333333333333	true	false	1
+1	cebuano	http://dbpedia.org/ontology/ethnicity	cebuano people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ano	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	portuguese american	2	portuguese <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	2
+1	greek	http://dbpedia.org/ontology/ethnicity	list of greek americans	1	list of <adj> americans	NN IN JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	eek	0.21739130434782605	false	false	3
+1	anglo-norman	http://dbpedia.org/ontology/ethnicity	anglo-norman	4	<adj>	NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	1.0	true	true	1
+0	district	http://dbpedia.org/ontology/ethnicity	kigezi district	8	kigezi <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ict	0.5333333333333333	false	true	2
+1	chechen	http://dbpedia.org/ontology/ethnicity	chechen	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	hen	1.0	true	true	1
+1	aboriginal	http://dbpedia.org/ontology/ethnicity	aboriginal australians	10	<adj> australians	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	nal	0.4545454545454546	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	overseas chinese	1	overseas <adj>	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.4375	false	true	2
+1	indian	http://dbpedia.org/ontology/ethnicity	non-resident indian and person of indian origin	2	non-resident <adj> and person of <adj> origin	JJ JJ CC NN IN JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.12765957446808507	false	false	6
+0	united	http://dbpedia.org/ontology/ethnicity	united kingdom	1	<adj> kingdom	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.4285714285714286	true	false	1
+1	rajasthani	http://dbpedia.org/ontology/ethnicity	rajasthani people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ani	0.5882352941176471	true	false	1
+0	country	http://dbpedia.org/ontology/ethnicity	french basque country	2	french basque <adj>	JJ JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	try	0.33333333333333337	false	true	3
+1	baltic	http://dbpedia.org/ontology/ethnicity	baltic germans	1	<adj> germans	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	tic	0.4285714285714286	true	false	1
+1	sami	http://dbpedia.org/ontology/ethnicity	sami people	4	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ami	0.36363636363636365	true	false	1
+1	javanese	http://dbpedia.org/ontology/ethnicity	javanese people	4	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+1	korean	http://dbpedia.org/ontology/ethnicity	korean language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.4	true	false	1
+1	urdu	http://dbpedia.org/ontology/ethnicity	urdu	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	rdu	1.0	true	true	1
+1	ainu	http://dbpedia.org/ontology/ethnicity	ainu people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	inu	0.36363636363636365	true	false	1
+1	australian	http://dbpedia.org/ontology/ethnicity	japanese australian	1	japanese <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5263157894736843	false	true	2
+1	cornish	http://dbpedia.org/ontology/ethnicity	cornish people	2	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.5	true	false	1
+1	sahrawi	http://dbpedia.org/ontology/ethnicity	sahrawi people	12	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	awi	0.5	true	false	1
+0	united	http://dbpedia.org/ontology/ethnicity	demographics of the united states	1	demographics of the <adj> states	NNS IN DT NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ted	0.18181818181818177	false	false	4
+1	māori	http://dbpedia.org/ontology/ethnicity	māori people	2	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ori	0.41666666666666663	true	false	1
+1	french-speaking	http://dbpedia.org/ontology/ethnicity	french-speaking quebecer	3	<adj> quebecer	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ing	0.625	true	false	1
+1	lebanese	http://dbpedia.org/ontology/ethnicity	lebanese people	5	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+1	persian	http://dbpedia.org/ontology/ethnicity	persian jews	1	<adj> jews	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5833333333333333	true	false	1
+1	bengali	http://dbpedia.org/ontology/ethnicity	bengali literature	1	<adj> literature	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ali	0.38888888888888884	true	false	1
+1	irish	http://dbpedia.org/ontology/ethnicity	irish nationality law	3	<adj> nationality law	JJ NN NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ish	0.23809523809523814	true	false	1
+0	ethnic	http://dbpedia.org/ontology/ethnicity	ethnic groups in indonesia	1	<adj> groups in indonesia	JJ NNS IN NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.23076923076923073	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	cuban american	5	cuban <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	greenlandic	http://dbpedia.org/ontology/ethnicity	greenlandic	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	dic	1.0	true	true	1
+1	breton	http://dbpedia.org/ontology/ethnicity	breton people	2	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ton	0.46153846153846156	true	false	1
+1	filipino	http://dbpedia.org/ontology/ethnicity	chinese filipino	3	chinese <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ino	0.5	false	true	2
+1	brazilian	http://dbpedia.org/ontology/ethnicity	italian brazilian	5	italian <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5294117647058824	false	true	2
+1	manchu	http://dbpedia.org/ontology/ethnicity	manchu people	2	<adj> people	NN NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	chu	0.46153846153846156	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	armenian american	1	armenian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	burmese american	1	burmese <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	crimean	http://dbpedia.org/ontology/ethnicity	crimean tatars	1	<adj> tatars	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	czech american	1	czech <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5714285714285714	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	swedish american	1	swedish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	welsh	http://dbpedia.org/ontology/ethnicity	welsh language	1	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	lsh	0.3571428571428571	true	false	1
+1	brazilian	http://dbpedia.org/ontology/ethnicity	portuguese brazilian	3	portuguese <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.44999999999999996	false	true	2
+1	canadian	http://dbpedia.org/ontology/ethnicity	english canadian	1	english <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	false	true	2
+1	ilocano	http://dbpedia.org/ontology/ethnicity	ilocano people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ano	0.5	true	false	1
+1	papuan	http://dbpedia.org/ontology/ethnicity	papuan people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	uan	0.46153846153846156	true	false	1
+1	anglo-indian	http://dbpedia.org/ontology/ethnicity	anglo-indian	2	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	bangladeshi american	1	bangladeshi <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4	false	true	2
+1	ottoman	http://dbpedia.org/ontology/ethnicity	ottoman greeks	1	<adj> greeks	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.5	true	false	1
+1	liberian	http://dbpedia.org/ontology/ethnicity	liberian	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+0	scots	http://dbpedia.org/ontology/ethnicity	ulster scots people	1	ulster <adj> people	NNP NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ots	0.26315789473684215	false	false	2
+0	ethnic	http://dbpedia.org/ontology/ethnicity	ethnic malays	3	<adj> malays	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nic	0.46153846153846156	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	thai american	1	thai <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.6153846153846154	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	danish american	2	danish <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+0	democratic	http://dbpedia.org/ontology/ethnicity	democratic republic of the congo	1	<adj> republic of the congo	JJ NN IN DT NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	tic	0.3125	true	false	1
+1	greek	http://dbpedia.org/ontology/ethnicity	greek language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	eek	0.3571428571428571	true	false	1
+1	native	http://dbpedia.org/ontology/ethnicity	native hawaiians	3	<adj> hawaiians	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ive	0.375	true	false	1
+1	australian	http://dbpedia.org/ontology/ethnicity	thai australian	1	thai <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.6666666666666667	false	true	2
+1	australian	http://dbpedia.org/ontology/ethnicity	white australian	1	white <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.625	false	true	2
+1	gibraltarian	http://dbpedia.org/ontology/ethnicity	gibraltarian people	3	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.631578947368421	true	false	1
+1	venezuelan	http://dbpedia.org/ontology/ethnicity	venezuelan people	2	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	lan	0.5882352941176471	true	false	1
+0	european	http://dbpedia.org/ontology/ethnicity	argentines of european descent	2	argentines of <adj> descent	NNS IN JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.2666666666666667	false	false	3
+1	australian	http://dbpedia.org/ontology/ethnicity	serbian australian	1	serbian <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5555555555555556	false	true	2
+1	chewa	http://dbpedia.org/ontology/ethnicity	chewa language	1	<adj> language	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ewa	0.3571428571428571	true	false	1
+1	afro-caribbean	http://dbpedia.org/ontology/ethnicity	afro-caribbean	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	1.0	true	true	1
+0	sikh	http://dbpedia.org/ontology/ethnicity	jatt sikh	2	jatt <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ikh	0.4444444444444444	false	true	2
+1	russian	http://dbpedia.org/ontology/ethnicity	german russian	1	german <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	false	true	2
+1	rigvedic	http://dbpedia.org/ontology/ethnicity	list of rigvedic tribes	1	list of <adj> tribes	NN IN JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	dic	0.34782608695652173	false	false	3
+1	pangasinan	http://dbpedia.org/ontology/ethnicity	pangasinan	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	nan	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	french american	1	french <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	black	http://dbpedia.org/ontology/ethnicity	black	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ack	1.0	true	true	1
+1	greek	http://dbpedia.org/ontology/ethnicity	greek cuisine	1	<adj> cuisine	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	eek	0.3846153846153846	true	false	1
+1	latin	http://dbpedia.org/ontology/ethnicity	latin	4	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	tin	1.0	true	true	1
+1	turkmen	http://dbpedia.org/ontology/ethnicity	turkmen language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	men	0.4375	true	false	1
+1	vietnamese	http://dbpedia.org/ontology/ethnicity	vietnamese language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5263157894736843	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	scandinavian american	1	scandinavian <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.38095238095238093	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	ecuadorian american	1	ecuadorian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	2
+1	abenaki	http://dbpedia.org/ontology/ethnicity	abenaki people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	aki	0.5	true	false	1
+1	choctaw	http://dbpedia.org/ontology/ethnicity	choctaw	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	taw	1.0	true	true	1
+1	gujarati	http://dbpedia.org/ontology/ethnicity	gujarati muslims	1	<adj> muslims	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ati	0.5	true	false	1
+1	iranian	http://dbpedia.org/ontology/ethnicity	iranian azerbaijanis	1	<adj> azerbaijanis	JJ NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.35	true	false	1
+0	red	http://dbpedia.org/ontology/ethnicity	red karen	1	<adj> karen	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	red	0.33333333333333337	true	false	1
+1	indo-aryan	http://dbpedia.org/ontology/ethnicity	indo-aryan peoples	1	<adj> peoples	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	yan	0.5555555555555556	true	false	1
+1	hawaiian	http://dbpedia.org/ontology/ethnicity	hawaiian	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	american ethnicity	1	<adj> ethnicity	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	true	false	1
+1	chamorro	http://dbpedia.org/ontology/ethnicity	chamorro people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	rro	0.5333333333333333	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	peruvian american	1	peruvian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	white latin american	2	white latin <adj>	NNP NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4	false	true	3
+1	american	http://dbpedia.org/ontology/ethnicity	israeli american	1	israeli <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	african	http://dbpedia.org/ontology/ethnicity	african immigration to france	1	<adj> immigration to france	JJ NN TO NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.24137931034482762	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	taiwanese american	2	taiwanese <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.4444444444444444	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	bahamian american	1	bahamian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	samoan american	1	samoan <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	false	true	2
+1	german	http://dbpedia.org/ontology/ethnicity	canadians of german ethnicity	1	canadians of <adj> ethnicity	NNPS IN JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.2068965517241379	false	false	3
+1	dominican	http://dbpedia.org/ontology/ethnicity	dominican people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5625	true	false	1
+1	italian	http://dbpedia.org/ontology/ethnicity	filipino italian	1	filipino <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.4375	false	true	2
+1	american	http://dbpedia.org/ontology/ethnicity	afro-latin american	1	afro-latin <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.42105263157894735	false	true	2
+1	armenian	http://dbpedia.org/ontology/ethnicity	armenian language	1	<adj> language	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.47058823529411764	true	false	1
+1	bantu	http://dbpedia.org/ontology/ethnicity	bantu peoples	1	<adj> peoples	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ntu	0.3846153846153846	true	false	1
+1	uzbek	http://dbpedia.org/ontology/ethnicity	uzbek	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	bek	1.0	true	true	1
+1	canadian	http://dbpedia.org/ontology/ethnicity	chinese canadian	1	chinese <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5	false	true	2
+1	balinese	http://dbpedia.org/ontology/ethnicity	balinese people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+1	moroccan	http://dbpedia.org/ontology/ethnicity	moroccan people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5333333333333333	true	false	1
+1	canadian	http://dbpedia.org/ontology/ethnicity	vietnamese canadian	1	vietnamese <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.42105263157894735	false	true	2
+1	singaporean	http://dbpedia.org/ontology/ethnicity	singaporean nationality law	1	<adj> nationality law	JJ NN NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.40740740740740744	true	false	1
+1	grenadian	http://dbpedia.org/ontology/ethnicity	grenadian trinbagonian	1	<adj> trinbagonian	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.40909090909090906	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	canadian american	1	canadian <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	pitjantjatjara	http://dbpedia.org/ontology/ethnicity	pitjantjatjara people	4	<adj> people	NN NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ara	0.6666666666666667	true	false	1
+1	afro-cuban	http://dbpedia.org/ontology/ethnicity	afro-cuban	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ban	1.0	true	true	1
+1	tamil	http://dbpedia.org/ontology/ethnicity	tamil script	1	<adj> script	NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	mil	0.41666666666666663	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	thai chinese	1	thai <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5833333333333333	false	true	2
+1	kabyle	http://dbpedia.org/ontology/ethnicity	kabyle people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	yle	0.46153846153846156	true	false	1
+1	lebanese	http://dbpedia.org/ontology/ethnicity	lebanese immigration to mexico	1	<adj> immigration to mexico	JJ NN TO NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.2666666666666667	true	false	1
+1	syrian	http://dbpedia.org/ontology/ethnicity	syrian people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.46153846153846156	true	false	1
+1	gujarati	http://dbpedia.org/ontology/ethnicity	gujarati	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ati	1.0	true	true	1
+1	australian	http://dbpedia.org/ontology/ethnicity	dutch australian	1	dutch <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.625	false	true	2
+1	guyanese	http://dbpedia.org/ontology/ethnicity	guyanese people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.5333333333333333	true	false	1
+0	rican	http://dbpedia.org/ontology/ethnicity	puerto rican citizenship	1	puerto <adj> citizenship	NNP NNP NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.20833333333333337	false	false	2
+1	chinese	http://dbpedia.org/ontology/ethnicity	russian chinese	1	russian <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.4666666666666667	false	true	2
+1	palestinian	http://dbpedia.org/ontology/ethnicity	palestinian	1	<adj>	NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/ethnicity	british american	2	british <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	arawak	http://dbpedia.org/ontology/ethnicity	arawak peoples	1	<adj> peoples	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	wak	0.4285714285714286	true	false	1
+1	fon	http://dbpedia.org/ontology/ethnicity	fon people	1	<adj> people	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	fon	0.30000000000000004	true	false	1
+1	canarian	http://dbpedia.org/ontology/ethnicity	canarian people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	bolivian	http://dbpedia.org/ontology/ethnicity	bolivian people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	chilean	http://dbpedia.org/ontology/ethnicity	german chilean	1	german <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ean	0.5	false	true	2
+1	tlingit	http://dbpedia.org/ontology/ethnicity	tlingit people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	git	0.5	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	bengali american	1	bengali <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	peruvian	http://dbpedia.org/ontology/ethnicity	peruvian people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.5333333333333333	true	false	1
+1	chinese	http://dbpedia.org/ontology/ethnicity	malaysian chinese	1	malaysian <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ese	0.4117647058823529	false	true	2
+1	armenian	http://dbpedia.org/ontology/ethnicity	armenian	1	<adj>	JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	1.0	true	true	1
+1	ottoman	http://dbpedia.org/ontology/ethnicity	ottoman turks	1	<adj> turks	NNP NNPS	0.5317073170731708	0.006896551724137931	0.02127659574468085	man	0.5384615384615384	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	lebanese american	1	lebanese <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.47058823529411764	false	true	2
+1	akan	http://dbpedia.org/ontology/ethnicity	akan people	1	<adj> people	JJ NNS	0.5317073170731708	0.006896551724137931	0.02127659574468085	kan	0.36363636363636365	true	false	1
+1	american	http://dbpedia.org/ontology/ethnicity	spanish american	1	spanish <adj>	NNP NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	can	0.5	false	true	2
+1	brazilian	http://dbpedia.org/ontology/ethnicity	white brazilian	2	white <adj>	JJ JJ	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.6	false	true	2
+1	greek	http://dbpedia.org/ontology/ethnicity	greek alphabet	1	<adj> alphabet	JJ NN	0.5317073170731708	0.006896551724137931	0.02127659574468085	eek	0.3571428571428571	true	false	1
+1	canadian	http://dbpedia.org/ontology/ethnicity	european canadian	1	european <adj>	JJ NNP	0.5317073170731708	0.006896551724137931	0.02127659574468085	ian	0.47058823529411764	false	true	2

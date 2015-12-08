@@ -1,0 +1,4 @@
+1	european	http://dbpedia.org/ontology/fundedBy	european commission	6	<adj> commission	NNP NNP	1.0	0.25	0.3333333333333333	ean	0.42105263157894735	true	false	1
+1\t european	http://dbpedia.org/ontology/fundedBy	european space agency	1	<adj> space agency	JJ NN NN	1.0	0.25	0.3333333333333333	ean	0.38095238095238093	true	false	1
+0	union	http://dbpedia.org/ontology/fundedBy	european union	5	european <adj>	NNP NNP	1.0	0.25	0.3333333333333333	ion	0.3571428571428571	false	true	2
+0	pharmaceutical	http://dbpedia.org/ontology/fundedBy	european federation of pharmaceutical industries and associations	1	european federation of <adj> industries and associations	NNP NNP IN NNP NNPS CC NNS	1.0	0.25	0.3333333333333333	cal	0.2153846153846154	false	false	4

@@ -51,9 +51,9 @@ public class Process {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
-		String path_annotatedFiles = "/Users/swalter/Backup/Documents/annotatedAdjectives/";
-		String path_raw_files = "/Users/swalter/Backup/Documents/plainAdjectives/";
-		String path_to_write_arff = "/Users/swalter/Desktop/adjective.arff";
+		String path_annotatedFiles = "resources/annotatedAdjectives/";
+		String path_raw_files = "resources/plainAdjectives/";
+		String path_to_write_arff = "adjective.arff";
 		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
 		String path_to_wordnet = "/Users/swalter/Backup/Software/WordNet-3.0";
 		String path_to_objects = "/Users/swalter/Desktop/Resources/";
@@ -69,7 +69,7 @@ public class Process {
 		
 		List<String> csv_output = new ArrayList<String>();
 		
-		OntologyImporter importer = new OntologyImporter("/Users/swalter/Backup/Downloads/dbpedia_2014.owl","RDF/XML");
+		OntologyImporter importer = new OntologyImporter("../dbpedia_2014.owl","RDF/XML");
 		
 		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
 		
@@ -130,72 +130,14 @@ public class Process {
 		/*
 		 * Get Test Data features
 		 */
-		String arff_prefix = createArffPrefix(label_2, label_3, pos, posAdj);
 		
 		System.out.println("Done preprosessing");
-		int counter = 0;
-		int uri_counter = 0;
-		int uri_used = 0;
+		
 		HashSet<String> properties = importer.getProperties();
-//                properties.clear();
-//                properties.add("http://dbpedia.org/ontology/religion");
-		for(String uri:properties){
-			uri_counter+=1;
-			System.out.println("URI:"+uri);
-			System.out.println(uri_counter+"/"+properties.size());
-			try{
-				List<AdjectiveObject> object_list = adjectiveExtractor.start(path_to_objects, uri, tagger, mp);
-				System.out.println(object_list.size());
-				if(object_list.size()>0)uri_used+=1;
-				for(AdjectiveObject adjectiveObject : object_list){
-					/*
-					 * ignore "adjectives", which start with a digit
-					 */
-					if(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))){
-						String tmp = "/tmp/tmp.arff";
-						writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
-						/*
-						 * Load instances to predict.
-						 */
-						 ArffLoader loader = new ArffLoader();
-						 loader.setFile(new File(tmp));
-						 Instances structure = loader.getStructure();
-						 structure.setClassIndex(structure.numAttributes() - 1);
-						 
-						 Instance current;
-						 while ((current = loader.getNextInstance(structure)) != null){
-							 /*
-							  * predict
-							  */
-							 HashMap<Integer, Double> result = prediction.predict(current);
-                                                         for(int key : result.keySet()){
-                                                            if(key==1){
-								 counter+=1;
-								 /*System.out.println("Add to lexica");
-								 System.out.println("Adjective:"+adjectiveObject.getAdjectiveTerm());
-								 System.out.println("Object:"+adjectiveObject.getObject());
-								 System.out.println("Frequency:"+adjectiveObject.getFrequency());
-								 System.out.println();*/
-                                                                 try{
-                                                                     createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
-                                                                    csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
-                                                                 }
-                                                                 catch(Exception e){
-                                                                        e.printStackTrace();
-                                                                 }
-								 
-							 } 
-                                                         }
-                                                         
-							 						 
-						 }
-					}
-				}
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-		}
+		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
+                
+                HashSet<String> classes = importer.getClasses();
+		runClassApproach(classes,lexicon,path_to_wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -203,7 +145,7 @@ public class Process {
 		
 		serializer.serialize(lexicon, model);
 		
-		FileOutputStream out = new FileOutputStream(new File("/Users/swalter/Desktop/adjectives.ttl"));
+		FileOutputStream out = new FileOutputStream(new File("new_adjectives.ttl"));
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
@@ -223,11 +165,7 @@ public class Process {
 		}
 		
 		
-		System.out.println("Properties:"+Integer.toString(properties.size()));
-		System.out.println("Created entries:"+Integer.toString(counter));
-		System.out.println("Average Entries per Property:"+Double.toString((double) counter/properties.size()));
-		System.out.println("Properties with Data:"+Integer.toString(uri_used));
-		System.out.println("Average Entries per Property with data:"+Double.toString((double) counter/uri_used));
+		
 		
 		
 		 
@@ -287,17 +225,21 @@ public class Process {
 		
 		entry.addProvenance(provenance,sense);
 		
-		if(distribution>=0.5&&!object_uri.contains("%") && isAlpha(adjective.replace(" ", "")) && isAlpha(frag(object_uri).replace("_",""))){
+		if(distribution>=0.5 && isAlpha(adjective) && isAlpha(frag(object_uri))){
                     lexicon.addEntry(entry);
                 }
 		
 	}
         
          private static boolean isAlpha(String label) {
+             label = label.replace("-","");
+             label = label.replace("_", "");
+             label = label.replace(" ","");
             char[] chars = label.toCharArray();
 
             for (char c : chars) {
                 if(!Character.isLetter(c)) {
+                    System.out.println("false Label:"+label);
                     return false;
                 }
             }
@@ -437,5 +379,83 @@ public class Process {
             
             return uri.replace(" ","_");
         }
+
+    private static void runAdjectiveApproach(HashSet<String> properties,ExtractData adjectiveExtractor,
+            HashSet<String> posAdj, HashSet<String> pos, HashSet<String> label_3, HashSet<String> label_2, 
+            Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects,
+            List<String> csv_output ) {
+        int counter = 0;
+        int uri_counter = 0;
+        int uri_used = 0;
+        String arff_prefix = createArffPrefix(label_2, label_3, pos, posAdj);
+        for(String uri:properties){
+            uri_counter+=1;
+            System.out.println("URI:"+uri);
+            System.out.println(uri_counter+"/"+properties.size());
+            try{
+                List<AdjectiveObject> object_list = adjectiveExtractor.start(path_to_objects, uri, tagger, mp);
+                System.out.println(object_list.size());
+                if(object_list.size()>0)uri_used+=1;
+                for(AdjectiveObject adjectiveObject : object_list){
+                    /*
+                     * ignore "adjectives", which start with a digit
+                     */
+                    if(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))){
+                            String tmp = "/tmp/tmp.arff";
+                            writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
+                            /*
+                             * Load instances to predict.
+                             */
+                             ArffLoader loader = new ArffLoader();
+                             loader.setFile(new File(tmp));
+                             Instances structure = loader.getStructure();
+                             structure.setClassIndex(structure.numAttributes() - 1);
+
+                             Instance current;
+                             while ((current = loader.getNextInstance(structure)) != null){
+                                 /*
+                                  * predict
+                                  */
+                                 HashMap<Integer, Double> result = prediction.predict(current);
+                                 for(int key : result.keySet()){
+                                    if(key==1){
+                                         counter+=1;
+                                         /*System.out.println("Add to lexica");
+                                         System.out.println("Adjective:"+adjectiveObject.getAdjectiveTerm());
+                                         System.out.println("Object:"+adjectiveObject.getObject());
+                                         System.out.println("Frequency:"+adjectiveObject.getFrequency());
+                                         System.out.println();*/
+                                         try{
+                                             createLexicalEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
+                                            csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
+                                         }
+                                         catch(Exception e){
+                                                e.printStackTrace();
+                                         }
+
+                                 } 
+                            }
+
+
+                             }
+                        }
+                }
+            }
+            catch(Exception e){
+                    e.printStackTrace();
+            }
+        }
+     
+        System.out.println("Properties:"+Integer.toString(properties.size()));
+        System.out.println("Created entries:"+Integer.toString(counter));
+        System.out.println("Average Entries per Property:"+Double.toString((double) counter/properties.size()));
+        System.out.println("Properties with Data:"+Integer.toString(uri_used));
+        System.out.println("Average Entries per Property with data:"+Double.toString((double) counter/uri_used));
+                
+    }
+
+    private static void runClassApproach(HashSet<String> classes, Lexicon lexicon, String path_to_wordnet) {
+        System.out.println("TODO");
+    }
 
 }

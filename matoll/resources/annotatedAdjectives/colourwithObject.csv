@@ -1,0 +1,83 @@
+1	blue	http://dbpedia.org/ontology/colour	navy blue	74	navy <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4444444444444444	false	true	2
+1	black	http://dbpedia.org/ontology/colour	black	167	<adj>	JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	ack	1.0	true	true	1
+1	blue	http://dbpedia.org/ontology/colour	blue	356	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	1.0	true	true	1
+1	gold	http://dbpedia.org/ontology/colour	gold	87	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	old	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/colour	green	263	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	een	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/colour	green politics	6	<adj> politics	JJ NNS	0.680327868852459	0.023809523809523808	0.037037037037037035	een	0.3571428571428571	true	false	1
+1	grey	http://dbpedia.org/ontology/colour	grey	32	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	rey	1.0	true	true	1
+1	purple	http://dbpedia.org/ontology/colour	purple	52	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ple	1.0	true	true	1
+1	red	http://dbpedia.org/ontology/colour	red	503	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	red	1.0	true	true	1
+1	silver	http://dbpedia.org/ontology/colour	silver	12	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ver	1.0	true	true	1
+1	white	http://dbpedia.org/ontology/colour	white	357	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ite	1.0	true	true	1
+1	yellow	http://dbpedia.org/ontology/colour	yellow	145	<adj>	JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	low	1.0	true	true	1
+0	arab	http://dbpedia.org/ontology/colour	flag of the arab revolt	1	flag of the <adj> revolt	NN IN DT NNP NN	0.680327868852459	0.023809523809523808	0.037037037037037035	rab	0.17391304347826086	false	false	4
+1	ultramarine	http://dbpedia.org/ontology/colour	ultramarine	3	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ine	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/colour	shades of green	17	shades of <adj>	NNS IN JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	een	0.33333333333333337	false	true	3
+1	blue	http://dbpedia.org/ontology/colour	maya blue	2	maya <adj>	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4444444444444444	false	true	2
+1	green	http://dbpedia.org/ontology/colour	spring green	1	spring <adj>	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	een	0.41666666666666663	false	true	2
+1	gold	http://dbpedia.org/ontology/colour	old gold	5	old <adj>	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	old	0.5	false	true	2
+1	brown	http://dbpedia.org/ontology/colour	brown	64	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	own	1.0	true	true	1
+1	blue	http://dbpedia.org/ontology/colour	sky blue	7	sky <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.5	false	true	2
+1	magenta	http://dbpedia.org/ontology/colour	magenta	3	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	nta	1.0	true	true	1
+1	blue	http://dbpedia.org/ontology/colour	royal blue	19	royal <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4	false	true	2
+0	minor	http://dbpedia.org/ontology/colour	list of minor dc comics characters	1	list of <adj> dc comics characters	NN IN JJ NN NNS NNS	0.680327868852459	0.023809523809523808	0.037037037037037035	nor	0.1470588235294118	false	false	3
+1	cyan	http://dbpedia.org/ontology/colour	cyan	3	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	yan	1.0	true	true	1
+0	tail	http://dbpedia.org/ontology/colour	tail code	117	<adj> code	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ail	0.4444444444444444	true	false	1
+0	flash	http://dbpedia.org/ontology/colour	flash and circle	1	<adj> and circle	NN CC NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ash	0.3125	true	false	1
+1	blue	http://dbpedia.org/ontology/colour	light blue	16	light <adj>	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4	false	true	2
+1	indigo	http://dbpedia.org/ontology/colour	indigo	1	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	igo	1.0	true	true	1
+1	teal	http://dbpedia.org/ontology/colour	teal	8	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	eal	1.0	true	true	1
+1	white	http://dbpedia.org/ontology/colour	white people	4	<adj> people	JJ NNS	0.680327868852459	0.023809523809523808	0.037037037037037035	ite	0.41666666666666663	true	false	1
+1	vermilion	http://dbpedia.org/ontology/colour	vermilion	1	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ion	1.0	true	true	1
+0	wesleyan	http://dbpedia.org/ontology/colour	wesleyan school	1	<adj> school	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	yan	0.5333333333333333	true	false	1
+1	chestnut	http://dbpedia.org/ontology/colour	chestnut	5	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	nut	1.0	true	true	1
+1	garnet	http://dbpedia.org/ontology/colour	garnet	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	net	1.0	true	true	1
+1	pink	http://dbpedia.org/ontology/colour	pink	9	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ink	1.0	true	true	1
+1	turquoise	http://dbpedia.org/ontology/colour	turquoise	4	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ise	1.0	true	true	1
+1	red	http://dbpedia.org/ontology/colour	dark red	1	dark <adj>	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	red	0.375	false	true	2
+0	thin	http://dbpedia.org/ontology/colour	thin section	7	<adj> section	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	hin	0.33333333333333337	true	false	1
+0	material	http://dbpedia.org/ontology/colour	disruptive pattern material	1	disruptive pattern <adj>	JJ NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ial	0.2962962962962963	false	true	3
+1	gules	http://dbpedia.org/ontology/colour	gules	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	les	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/colour	forest green	4	forest <adj>	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	een	0.41666666666666663	false	true	2
+1	blue	http://dbpedia.org/ontology/colour	columbia blue	15	columbia <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.3076923076923077	false	true	2
+1	crimson	http://dbpedia.org/ontology/colour	crimson	5	<adj>	JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	son	1.0	true	true	1
+1	green	http://dbpedia.org/ontology/colour	midnight green	1	midnight <adj>	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	een	0.3571428571428571	false	true	2
+0	colour	http://dbpedia.org/ontology/colour	facing colour	3	facing <adj>	VBG NN	0.680327868852459	0.023809523809523808	0.037037037037037035	our	0.46153846153846156	false	true	2
+1	amber	http://dbpedia.org/ontology/colour	amber	2	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ber	1.0	true	true	1
+1	ruby	http://dbpedia.org/ontology/colour	ruby	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	uby	1.0	true	true	1
+0	spanish	http://dbpedia.org/ontology/colour	flag of the second spanish republic	2	flag of the second <adj> republic	NN IN DT JJ NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ish	0.19999999999999996	false	false	5
+1	red	http://dbpedia.org/ontology/colour	red beret	1	<adj> beret	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	red	0.33333333333333337	true	false	1
+0	canary	http://dbpedia.org/ontology/colour	flag of the canary islands	1	flag of the <adj> islands	NN IN DT NNP NNPS	0.680327868852459	0.023809523809523808	0.037037037037037035	ary	0.23076923076923073	false	false	4
+1	black	http://dbpedia.org/ontology/colour	gold and black	1	gold and <adj>	NN CC JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	ack	0.3571428571428571	false	true	3
+1	tan	http://dbpedia.org/ontology/colour	tan beret	1	<adj> beret	NNP NN	0.680327868852459	0.023809523809523808	0.037037037037037035	tan	0.33333333333333337	true	false	1
+1	american	http://dbpedia.org/ontology/colour	white american	2	white <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	can	0.5714285714285714	false	true	2
+0	marine	http://dbpedia.org/ontology/colour	flag of the united states marine corps	2	flag of the united states <adj> corps	NN IN DT NNP NNP NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ine	0.1578947368421053	false	false	6
+1	beige	http://dbpedia.org/ontology/colour	beige	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ige	1.0	true	true	1
+1	navy	http://dbpedia.org/ontology/colour	navy	7	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	avy	1.0	true	true	1
+1	rainbow	http://dbpedia.org/ontology/colour	rainbow	2	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	bow	1.0	true	true	1
+1	orange	http://dbpedia.org/ontology/colour	orange	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	nge	1.0	true	true	1
+0	royal	http://dbpedia.org/ontology/colour	royal air force roundels	1	<adj> air force roundels	NNP NNP NNP NNPS	0.680327868852459	0.023809523809523808	0.037037037037037035	yal	0.20833333333333337	true	false	1
+1	mauve	http://dbpedia.org/ontology/colour	mauve	2	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	uve	1.0	true	true	1
+1	khaki	http://dbpedia.org/ontology/colour	khaki	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	aki	1.0	true	true	1
+0	new	http://dbpedia.org/ontology/colour	green party of aotearoa new zealand	1	green party of aotearoa <adj> zealand	NNP NNP IN NNP NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	new	0.08571428571428574	false	false	5
+1	saffron	http://dbpedia.org/ontology/colour	saffron	2	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ron	1.0	true	true	1
+0	national	http://dbpedia.org/ontology/colour	national colours	1	<adj> colours	NNP NNS	0.680327868852459	0.023809523809523808	0.037037037037037035	nal	0.5	true	false	1
+0	color	http://dbpedia.org/ontology/colour	equine coat color	2	equine coat <adj>	NNP NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	lor	0.2941176470588235	false	true	3
+1	tartan	http://dbpedia.org/ontology/colour	tartan	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	tan	1.0	true	true	1
+0	color	http://dbpedia.org/ontology/colour	x11 color names	2	x11 <adj> names	NN NN NNS	0.680327868852459	0.023809523809523808	0.037037037037037035	lor	0.33333333333333337	false	false	2
+1	bay	http://dbpedia.org/ontology/colour	bay	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	bay	1.0	true	true	1
+0	party	http://dbpedia.org/ontology/colour	green party	1	green <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	rty	0.4545454545454546	false	true	2
+1	blue	http://dbpedia.org/ontology/colour	carolina blue	1	carolina <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.3076923076923077	false	true	2
+1	blue	http://dbpedia.org/ontology/colour	dark blue	2	dark <adj>	JJ NN	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4444444444444444	false	true	2
+1	blue	http://dbpedia.org/ontology/colour	red and blue	1	red and <adj>	NNP CC NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.33333333333333337	false	true	3
+1	maroon	http://dbpedia.org/ontology/colour	maroon beret	2	<adj> beret	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	oon	0.5	true	false	1
+1	wheat	http://dbpedia.org/ontology/colour	wheat	1	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	eat	1.0	true	true	1
+1	blue	http://dbpedia.org/ontology/colour	eton blue	1	eton <adj>	NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.4444444444444444	false	true	2
+0	united	http://dbpedia.org/ontology/colour	race and ethnicity in the united states census	1	race and ethnicity in the <adj> states census	NN CC NN IN DT NNP NNPS NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ted	0.13043478260869568	false	false	6
+0	australian	http://dbpedia.org/ontology/colour	3rd battalion, royal australian regiment	1	3rd battalion, royal <adj> regiment	JJ NN , NNP NNP NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	ian	0.25	false	false	4
+0	unit	http://dbpedia.org/ontology/colour	meritorious unit commendation	1	meritorious <adj> commendation	JJ NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	nit	0.13793103448275867	false	false	2
+1	red	http://dbpedia.org/ontology/colour	shades of red	1	shades of <adj>	NNS IN JJ	0.680327868852459	0.023809523809523808	0.037037037037037035	red	0.23076923076923073	false	true	3
+1	roan	http://dbpedia.org/ontology/colour	roan	1	<adj>	NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	oan	1.0	true	true	1
+1	blue	http://dbpedia.org/ontology/colour	midnight blue	1	midnight <adj>	NN NN	0.680327868852459	0.023809523809523808	0.037037037037037035	lue	0.3076923076923077	false	true	2
+1	azure	http://dbpedia.org/ontology/colour	azure	1	<adj>	NN	0.680327868852459	0.023809523809523808	0.037037037037037035	ure	1.0	true	true	1
+0	national	http://dbpedia.org/ontology/colour	national colours of australia	1	<adj> colours of australia	NNP NNS IN NNP	0.680327868852459	0.023809523809523808	0.037037037037037035	nal	0.27586206896551724	true	false	1

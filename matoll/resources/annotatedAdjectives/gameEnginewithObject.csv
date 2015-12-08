@@ -1,0 +1,132 @@
+0	open	http://dbpedia.org/ontology/gameEngine	open dynamics engine	4	<adj> dynamics engine	NNP NNP NN	0.38596491228070173	0.008333333333333333	0.0125	pen	0.19999999999999996	true	false	1
+	4	http://dbpedia.org/ontology/gameEngine	gran turismo 4	2	gran turismo <adj>	NNP NNP CD	0.38596491228070173	0.008333333333333333	0.0125	4	0.0714285714285714	false	true	3
+0	unreal	http://dbpedia.org/ontology/gameEngine	unreal engine	204	<adj> engine	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	eal	0.46153846153846156	true	false	1
+	3	http://dbpedia.org/ontology/gameEngine	id tech 3	26	id tech <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	3	0.11111111111111116	false	true	3
+0	interactive	http://dbpedia.org/ontology/gameEngine	saber interactive	3	saber <adj>	NNP JJ	0.38596491228070173	0.008333333333333333	0.0125	ive	0.6470588235294117	false	true	2
+0	flash	http://dbpedia.org/ontology/gameEngine	adobe flash	26	adobe <adj>	NNP NN	0.38596491228070173	0.008333333333333333	0.0125	ash	0.4545454545454546	false	true	2
+0	crystal	http://dbpedia.org/ontology/gameEngine	crystal tools	6	<adj> tools	NN NNS	0.38596491228070173	0.008333333333333333	0.0125	tal	0.5384615384615384	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	rockstar advanced game engine	10	rockstar advanced <adj> engine	NNP VBD NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.13793103448275867	false	false	3
+0	x-ray	http://dbpedia.org/ontology/gameEngine	x-ray engine	3	<adj> engine	NN NN	0.38596491228070173	0.008333333333333333	0.0125	ray	0.41666666666666663	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	the godfather: the game	1	the godfather: the <adj>	DT NNP : DT NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.17391304347826086	false	true	4
+0	mt	http://dbpedia.org/ontology/gameEngine	mt framework	16	<adj> framework	NNP NN	0.38596491228070173	0.008333333333333333	0.0125	mt	0.16666666666666663	true	false	1
+0	ii	http://dbpedia.org/ontology/gameEngine	guitar hero ii	1	guitar hero <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	ii	0.1428571428571429	false	true	3
+0	31st	http://dbpedia.org/ontology/gameEngine	mechwarrior 2: 31st century combat	2	mechwarrior 2: <adj> century combat	NNP CD : CD NN NN	0.38596491228070173	0.008333333333333333	0.0125	1st	0.11764705882352944	false	false	3
+0	world	http://dbpedia.org/ontology/gameEngine	call of duty: world at war	1	call of duty: <adj> at war	NN IN NN : NN IN NN	0.38596491228070173	0.008333333333333333	0.0125	rld	0.1923076923076923	false	false	4
+0	simple	http://dbpedia.org/ontology/gameEngine	simple directmedia layer	2	<adj> directmedia layer	JJ NN NN	0.38596491228070173	0.008333333333333333	0.0125	ple	0.25	true	false	1
+0	ii	http://dbpedia.org/ontology/gameEngine	quake ii engine	11	quake <adj> engine	NN CD NN	0.38596491228070173	0.008333333333333333	0.0125	ii	0.1333333333333333	false	false	2
+0	creative	http://dbpedia.org/ontology/gameEngine	sierra's creative interpreter	27	sierra's <adj> interpreter	NNP POS JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ive	0.27586206896551724	false	false	2
+0	virtual	http://dbpedia.org/ontology/gameEngine	virtual theatre	5	<adj> theatre	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ual	0.4666666666666667	true	false	1
+0	online	http://dbpedia.org/ontology/gameEngine	expansions of eve online	2	expansions of eve <adj>	NNS IN NN NN	0.38596491228070173	0.008333333333333333	0.0125	ine	0.25	false	true	4
+1	3d	http://dbpedia.org/ontology/gameEngine	wolfenstein 3d engine	6	wolfenstein <adj> engine	NN NN NN	0.38596491228070173	0.008333333333333333	0.0125	3d	0.09523809523809523	false	false	2
+1	3d	http://dbpedia.org/ontology/gameEngine	wolfenstein 3d	2	wolfenstein <adj>	NN NN	0.38596491228070173	0.008333333333333333	0.0125	3d	0.1428571428571429	false	true	2
+0	epic	http://dbpedia.org/ontology/gameEngine	epic pinball	1	<adj> pinball	NN NN	0.38596491228070173	0.008333333333333333	0.0125	pic	0.33333333333333337	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	snowblind studios game engine	8	snowblind studios <adj> engine	NNP NNP NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	ame	0.13793103448275867	false	false	3
+1	2	http://dbpedia.org/ontology/gameEngine	infamous 2	1	infamous <adj>	JJ CD	0.38596491228070173	0.008333333333333333	0.0125	2	0.09999999999999998	false	true	2
+0	dark	http://dbpedia.org/ontology/gameEngine	dark engine	3	<adj> engine	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ark	0.36363636363636365	true	false	1
+1	open-source	http://dbpedia.org/ontology/gameEngine	open-source software	3	<adj> software	NN NN	0.38596491228070173	0.008333333333333333	0.0125	rce	0.55	true	false	1
+1	proprietary	http://dbpedia.org/ontology/gameEngine	proprietary software	14	<adj> software	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ary	0.55	true	false	1
+0	vicious	http://dbpedia.org/ontology/gameEngine	vicious engine	6	<adj> engine	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ous	0.5	true	false	1
+0	pro	http://dbpedia.org/ontology/gameEngine	tony hawk's pro skater	1	tony hawk's <adj> skater	NNP NN POS JJ NN	0.38596491228070173	0.008333333333333333	0.0125	pro	0.13636363636363635	false	false	3
+1	free	http://dbpedia.org/ontology/gameEngine	free software	3	<adj> software	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ree	0.3076923076923077	true	false	1
+0	twisted	http://dbpedia.org/ontology/gameEngine	twisted pixel games	5	<adj> pixel games	JJ NN NNS	0.38596491228070173	0.008333333333333333	0.0125	ted	0.368421052631579	true	false	1
+0	1	http://dbpedia.org/ontology/gameEngine	strike fighters: project 1	6	strike fighters: project <adj>	NN NNS : NN CD	0.38596491228070173	0.008333333333333333	0.0125	1	0.038461538461538436	false	true	4
+0	7	http://dbpedia.org/ontology/gameEngine	mode 7	1	mode <adj>	NN CD	0.38596491228070173	0.008333333333333333	0.0125	7	0.16666666666666663	false	true	2
+0	sapphire	http://dbpedia.org/ontology/gameEngine	pokémon ruby and sapphire	1	pokémon ruby and <adj>	NNP NNP CC NNP	0.38596491228070173	0.008333333333333333	0.0125	ire	0.31999999999999995	false	true	4
+0	vicarious	http://dbpedia.org/ontology/gameEngine	vicarious visions	4	<adj> visions	JJ NNS	0.38596491228070173	0.008333333333333333	0.0125	ous	0.5294117647058824	true	false	1
+0	high	http://dbpedia.org/ontology/gameEngine	high voltage software	7	<adj> voltage software	JJ NN NN	0.38596491228070173	0.008333333333333333	0.0125	igh	0.19047619047619047	true	false	1
+0	multimedia	http://dbpedia.org/ontology/gameEngine	multimedia applications development environment	3	<adj> applications development environment	NNS NNS NN NN	0.38596491228070173	0.008333333333333333	0.0125	dia	0.21276595744680848	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	lego star wars: the video game	1	lego star wars: the video <adj>	NNP NNP NNP : DT NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.1333333333333333	false	true	6
+0	gold	http://dbpedia.org/ontology/gameEngine	gold box	10	<adj> box	NN NN	0.38596491228070173	0.008333333333333333	0.0125	old	0.5	true	false	1
+0	magic	http://dbpedia.org/ontology/gameEngine	might and magic iii: isles of terra	1	might and <adj> iii: isles of terra	MD CC JJ CD : NNP IN NNP	0.38596491228070173	0.008333333333333333	0.0125	gic	0.1428571428571429	false	false	3
+0	flash	http://dbpedia.org/ontology/gameEngine	adobe flash player	2	adobe <adj> player	NNP NN NN	0.38596491228070173	0.008333333333333333	0.0125	ash	0.2777777777777778	false	false	2
+0	2	http://dbpedia.org/ontology/gameEngine	sonic adventure 2	1	sonic adventure <adj>	JJ NN CD	0.38596491228070173	0.008333333333333333	0.0125	2	0.05882352941176472	false	true	3
+0	digital	http://dbpedia.org/ontology/gameEngine	digital extremes	3	<adj> extremes	NNP NNS	0.38596491228070173	0.008333333333333333	0.0125	tal	0.4375	true	false	1
+0	enemy	http://dbpedia.org/ontology/gameEngine	wolfenstein: enemy territory	1	wolfenstein: <adj> territory	NN : NN NN	0.38596491228070173	0.008333333333333333	0.0125	emy	0.1785714285714286	false	false	2
+0	great	http://dbpedia.org/ontology/gameEngine	descent: freespace – the great war	2	descent: freespace – the <adj> war	NN : NN : DT NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	eat	0.1470588235294118	false	false	5
+0	festival	http://dbpedia.org/ontology/gameEngine	ddr festival dance dance revolution	1	ddr <adj> dance dance revolution	NNP NNP NNP NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	val	0.22857142857142854	false	false	2
+0	extra	http://dbpedia.org/ontology/gameEngine	dance dance revolution extra mix	2	dance dance revolution <adj> mix	NN NN NN JJ NN	0.38596491228070173	0.008333333333333333	0.0125	tra	0.15625	false	false	4
+0	terminal	http://dbpedia.org/ontology/gameEngine	terminal reality	4	<adj> reality	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	nal	0.5	true	false	1
+1	free	http://dbpedia.org/ontology/gameEngine	flexible isometric free engine	1	flexible isometric <adj> engine	JJ JJ JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ree	0.1333333333333333	false	false	3
+0	game	http://dbpedia.org/ontology/gameEngine	adventure game studio	15	adventure <adj> studio	NN NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.19047619047619047	false	false	2
+0	4	http://dbpedia.org/ontology/gameEngine	id tech 4	7	id tech <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	4	0.11111111111111116	false	true	3
+0	general	http://dbpedia.org/ontology/gameEngine	panzer general	3	panzer <adj>	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	ral	0.5	false	true	2
+0	total	http://dbpedia.org/ontology/gameEngine	rome: total war	2	rome: <adj> war	NNP : NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	tal	0.33333333333333337	false	false	2
+1	in-house	http://dbpedia.org/ontology/gameEngine	in-house	1	<adj>	JJ	0.38596491228070173	0.008333333333333333	0.0125	use	1.0	true	true	1
+0	game	http://dbpedia.org/ontology/gameEngine	adventure game interpreter	8	adventure <adj> interpreter	NN NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.15384615384615385	false	false	2
+0	iii	http://dbpedia.org/ontology/gameEngine	quake iii arena	1	quake <adj> arena	NN CD NN	0.38596491228070173	0.008333333333333333	0.0125	iii	0.19999999999999996	false	false	2
+0	iv	http://dbpedia.org/ontology/gameEngine	civilization iv	2	c<adj>ilization <adj>	NN CD	0.38596491228070173	0.008333333333333333	0.0125	iv	0.1333333333333333	false	true	2
+0	on	http://dbpedia.org/ontology/gameEngine	ruby on rails	1	ruby <adj> rails	NNP IN NNPS	0.38596491228070173	0.008333333333333333	0.0125	on	0.15384615384615385	false	false	2
+0	super	http://dbpedia.org/ontology/gameEngine	super mario galaxy	1	<adj> mario galaxy	NNP NNP NN	0.38596491228070173	0.008333333333333333	0.0125	per	0.2777777777777778	true	false	1
+0	interactive	http://dbpedia.org/ontology/gameEngine	io interactive	3	io <adj>	NNP JJ	0.38596491228070173	0.008333333333333333	0.0125	ive	0.7857142857142857	false	true	2
+0	festival	http://dbpedia.org/ontology/gameEngine	thomas & friends: the great festival adventure	1	thomas & friends: the great <adj> adventure	NNP CC NNPS : DT JJ NN NN	0.38596491228070173	0.008333333333333333	0.0125	val	0.17391304347826086	false	false	6
+0	iron	http://dbpedia.org/ontology/gameEngine	iron engine	2	<adj> engine	NN NN	0.38596491228070173	0.008333333333333333	0.0125	ron	0.36363636363636365	true	false	1
+0	naughty	http://dbpedia.org/ontology/gameEngine	naughty dog	3	<adj> dog	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	hty	0.6363636363636364	true	false	1
+0	keen	http://dbpedia.org/ontology/gameEngine	commander keen	3	commander <adj>	NN JJ	0.38596491228070173	0.008333333333333333	0.0125	een	0.2857142857142857	false	true	2
+0	original	http://dbpedia.org/ontology/gameEngine	lego star wars ii: the original trilogy	1	lego star wars ii: the <adj> trilogy	NNP NNP NNP NNP : DT JJ NN	0.38596491228070173	0.008333333333333333	0.0125	nal	0.20512820512820518	false	false	6
+0	star	http://dbpedia.org/ontology/gameEngine	super star wars	1	super <adj> wars	NNP NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	tar	0.2666666666666667	false	false	2
+0	crystal	http://dbpedia.org/ontology/gameEngine	crystal space	1	<adj> space	NN NN	0.38596491228070173	0.008333333333333333	0.0125	tal	0.5384615384615384	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	game blender	1	<adj> blender	NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.33333333333333337	true	false	1
+0	95	http://dbpedia.org/ontology/gameEngine	rpg maker 95	1	rpg maker <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	95	0.16666666666666663	false	true	3
+0	iii	http://dbpedia.org/ontology/gameEngine	tomb raider iii	1	tomb raider <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	iii	0.19999999999999996	false	true	3
+0	3	http://dbpedia.org/ontology/gameEngine	yakuza 3	1	yakuza <adj>	NNP CD	0.38596491228070173	0.008333333333333333	0.0125	3	0.125	false	true	2
+0	3d	http://dbpedia.org/ontology/gameEngine	duke nukem 3d	1	duke nukem <adj>	NNP NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	3d	0.15384615384615385	false	true	3
+0	insomniac	http://dbpedia.org/ontology/gameEngine	insomniac games	3	<adj> games	NNP NNPS	0.38596491228070173	0.008333333333333333	0.0125	iac	0.6	true	false	1
+0	3d	http://dbpedia.org/ontology/gameEngine	shark 3d	1	shark <adj>	NN NN	0.38596491228070173	0.008333333333333333	0.0125	3d	0.25	false	true	2
+0	magic	http://dbpedia.org/ontology/gameEngine	might and magic vi: the mandate of heaven	1	might and <adj> vi: the mandate of heaven	MD CC JJ NNP : DT NN IN NNP	0.38596491228070173	0.008333333333333333	0.0125	gic	0.12195121951219512	false	false	3
+0	2	http://dbpedia.org/ontology/gameEngine	dance dance revolution extreme 2	1	dance dance revolution extreme <adj>	NN NN NN JJ CD	0.38596491228070173	0.008333333333333333	0.0125	2	0.03125	false	true	5
+0	3	http://dbpedia.org/ontology/gameEngine	dance dance revolution hottest party 3	1	dance dance revolution hottest party <adj>	NN NN NN JJS NN CD	0.38596491228070173	0.008333333333333333	0.0125	3	0.02631578947368418	false	true	6
+0	fit	http://dbpedia.org/ontology/gameEngine	wii fit	2	wii <adj>	NNP VBD	0.38596491228070173	0.008333333333333333	0.0125	fit	0.4285714285714286	false	true	2
+0	world	http://dbpedia.org/ontology/gameEngine	animal crossing: wild world	1	animal crossing: wild <adj>	NN VBG : NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	rld	0.18518518518518523	false	true	4
+0	six	http://dbpedia.org/ontology/gameEngine	slant six games	1	slant <adj> games	NN CD NNS	0.38596491228070173	0.008333333333333333	0.0125	six	0.19999999999999996	false	false	2
+0	groovy	http://dbpedia.org/ontology/gameEngine	groovy	1	<adj>	JJ	0.38596491228070173	0.008333333333333333	0.0125	ovy	1.0	true	true	1
+0	sly	http://dbpedia.org/ontology/gameEngine	sly cooper and the thievius raccoonus	1	<adj> cooper and the thievius raccoonus	NNP NNP CC DT NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	sly	0.08108108108108103	true	false	1
+0	total	http://dbpedia.org/ontology/gameEngine	medieval ii: total war: kingdoms	1	medieval ii: <adj> war: kingdoms	JJ CD : JJ NN : NNS	0.38596491228070173	0.008333333333333333	0.0125	tal	0.15625	false	false	3
+0	super	http://dbpedia.org/ontology/gameEngine	super smash bros. brawl	1	<adj> smash bros. brawl	NNP VBP NNP NN	0.38596491228070173	0.008333333333333333	0.0125	per	0.21739130434782605	true	false	1
+0	evil	http://dbpedia.org/ontology/gameEngine	turok 2: seeds of evil	1	turok 2: seeds of <adj>	NN CD : NNS IN NN	0.38596491228070173	0.008333333333333333	0.0125	vil	0.18181818181818177	false	true	5
+0	interactive	http://dbpedia.org/ontology/gameEngine	data design interactive	1	data design <adj>	NNS NN JJ	0.38596491228070173	0.008333333333333333	0.0125	ive	0.4782608695652174	false	true	3
+0	digital	http://dbpedia.org/ontology/gameEngine	dolby digital	1	dolby <adj>	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	tal	0.5384615384615384	false	true	2
+0	super	http://dbpedia.org/ontology/gameEngine	super bomberman	1	<adj> bomberman	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	per	0.33333333333333337	true	false	1
+0	game	http://dbpedia.org/ontology/gameEngine	game maker	8	<adj> maker	NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.4	true	false	1
+0	r.c.	http://dbpedia.org/ontology/gameEngine	r.c. pro-am	1	<adj> pro-am	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	.c.	0.36363636363636365	true	false	1
+0	6	http://dbpedia.org/ontology/gameEngine	ridge racer 6	1	ridge racer <adj>	NNP NN CD	0.38596491228070173	0.008333333333333333	0.0125	6	0.07692307692307687	false	true	3
+0	world	http://dbpedia.org/ontology/gameEngine	world builder	1	<adj> builder	NN NN	0.38596491228070173	0.008333333333333333	0.0125	rld	0.3846153846153846	true	false	1
+0	platinum	http://dbpedia.org/ontology/gameEngine	platinum games	1	<adj> games	NN NNS	0.38596491228070173	0.008333333333333333	0.0125	num	0.5714285714285714	true	false	1
+0	basic	http://dbpedia.org/ontology/gameEngine	blitz basic	4	blitz <adj>	NN JJ	0.38596491228070173	0.008333333333333333	0.0125	sic	0.4545454545454546	false	true	2
+0	size	http://dbpedia.org/ontology/gameEngine	ratchet & clank: size matters	1	ratchet & clank: <adj> matters	NNP CC NNP : NN NNS	0.38596491228070173	0.008333333333333333	0.0125	ize	0.13793103448275867	false	false	4
+0	radiant	http://dbpedia.org/ontology/gameEngine	radiant ai	2	<adj> ai	JJ VBP	0.38596491228070173	0.008333333333333333	0.0125	ant	0.7	true	false	1
+0	active	http://dbpedia.org/ontology/gameEngine	active server pages	1	<adj> server pages	JJ NN NNS	0.38596491228070173	0.008333333333333333	0.0125	ive	0.3157894736842105	true	false	1
+0	diddy	http://dbpedia.org/ontology/gameEngine	diddy kong racing	1	<adj> kong racing	NNP NNP VBG	0.38596491228070173	0.008333333333333333	0.0125	ddy	0.2941176470588235	true	false	1
+0	sly	http://dbpedia.org/ontology/gameEngine	sly 2: band of thieves	1	<adj> 2: band of thieves	RB CD : NN IN NNS	0.38596491228070173	0.008333333333333333	0.0125	sly	0.13636363636363635	true	false	1
+0	fighting	http://dbpedia.org/ontology/gameEngine	mighty morphin power rangers: the fighting edition	1	mighty morphin power rangers: the <adj> edition	NNP NNP NNP NNPS : DT VBG NN	0.38596491228070173	0.008333333333333333	0.0125	ing	0.16000000000000003	false	false	6
+0	2d	http://dbpedia.org/ontology/gameEngine	2d computer graphics	1	<adj> computer graphics	NN NN NNS	0.38596491228070173	0.008333333333333333	0.0125	2d	0.09999999999999998	true	false	1
+0	silent	http://dbpedia.org/ontology/gameEngine	silent storm engine	3	<adj> storm engine	JJ NN NN	0.38596491228070173	0.008333333333333333	0.0125	ent	0.3157894736842105	true	false	1
+0	virtual	http://dbpedia.org/ontology/gameEngine	virtual pool franchise	1	<adj> pool franchise	JJ NN NN	0.38596491228070173	0.008333333333333333	0.0125	ual	0.31818181818181823	true	false	1
+0	ii	http://dbpedia.org/ontology/gameEngine	dungeon siege ii	1	dungeon siege <adj>	NNP NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	ii	0.125	false	true	3
+0	one	http://dbpedia.org/ontology/gameEngine	formula one 05	1	formula <adj> 05	NN CD NN	0.38596491228070173	0.008333333333333333	0.0125	one	0.2142857142857143	false	false	2
+0	interactive	http://dbpedia.org/ontology/gameEngine	her interactive	1	her <adj>	PRP$ JJ	0.38596491228070173	0.008333333333333333	0.0125	ive	0.7333333333333334	false	true	2
+0	extreme	http://dbpedia.org/ontology/gameEngine	extreme assault	1	<adj> assault	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	eme	0.4666666666666667	true	false	1
+0	master	http://dbpedia.org/ontology/gameEngine	tetris: the grand master	1	tetris: the grand <adj>	NNP : DT JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ter	0.25	false	true	4
+0	united	http://dbpedia.org/ontology/gameEngine	united states army	1	<adj> states army	NNP NNPS NNP	0.38596491228070173	0.008333333333333333	0.0125	ted	0.33333333333333337	true	false	1
+0	2	http://dbpedia.org/ontology/gameEngine	playstation 2	1	playstation <adj>	NNP CD	0.38596491228070173	0.008333333333333333	0.0125	2	0.07692307692307687	false	true	2
+0	visual	http://dbpedia.org/ontology/gameEngine	visual c++	1	<adj> c++	JJ NNP	0.38596491228070173	0.008333333333333333	0.0125	ual	0.6	true	false	1
+0	soviet	http://dbpedia.org/ontology/gameEngine	soviet strike	1	<adj> strike	JJ NN	0.38596491228070173	0.008333333333333333	0.0125	iet	0.46153846153846156	true	false	1
+0	5	http://dbpedia.org/ontology/gameEngine	id tech 5	1	id tech <adj>	NN NN CD	0.38596491228070173	0.008333333333333333	0.0125	5	0.11111111111111116	false	true	3
+0	game	http://dbpedia.org/ontology/gameEngine	dworkin's game driver	1	dworkin's <adj> driver	NNP POS NN NN	0.38596491228070173	0.008333333333333333	0.0125	ame	0.19047619047619047	false	false	2
+0	3	http://dbpedia.org/ontology/gameEngine	playstation 3	1	playstation <adj>	NNP CD	0.38596491228070173	0.008333333333333333	0.0125	3	0.07692307692307687	false	true	2
+0	super	http://dbpedia.org/ontology/gameEngine	super mario bros.	1	<adj> mario bros.	NNP NNP NNP .	0.38596491228070173	0.008333333333333333	0.0125	per	0.2941176470588235	true	false	1
+0	ii	http://dbpedia.org/ontology/gameEngine	darksiders ii	1	darksiders <adj>	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	ii	0.15384615384615385	false	true	2
+0	pagan	http://dbpedia.org/ontology/gameEngine	ultima viii: pagan	2	ultima viii: <adj>	NNP NNP : NN	0.38596491228070173	0.008333333333333333	0.0125	gan	0.2777777777777778	false	true	3
+0	molecular	http://dbpedia.org/ontology/gameEngine	digital molecular matter	1	digital <adj> matter	NNP JJ NN	0.38596491228070173	0.008333333333333333	0.0125	lar	0.375	false	false	2
+0	impossible	http://dbpedia.org/ontology/gameEngine	impossible creatures	4	<adj> creatures	JJ NNS	0.38596491228070173	0.008333333333333333	0.0125	ble	0.5	true	false	1
+0	dark	http://dbpedia.org/ontology/gameEngine	untold legends: dark kingdom	1	untold legends: <adj> kingdom	JJ NNS : JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ark	0.1428571428571429	false	false	3
+0	4	http://dbpedia.org/ontology/gameEngine	resident evil 4	1	resident evil <adj>	JJ JJ CD	0.38596491228070173	0.008333333333333333	0.0125	4	0.06666666666666665	false	true	3
+1	public	http://dbpedia.org/ontology/gameEngine	gnu general public license	1	gnu general <adj> license	NNP NNP NNP NN	0.38596491228070173	0.008333333333333333	0.0125	lic	0.23076923076923073	false	false	3
+0	ds	http://dbpedia.org/ontology/gameEngine	super mario 64 ds	1	super mario 64 <adj>	NNP NNP CD NN	0.38596491228070173	0.008333333333333333	0.0125	ds	0.11764705882352944	false	true	4
+0	last	http://dbpedia.org/ontology/gameEngine	tomb raider: the last revelation	1	tomb raider: the <adj> revelation	NN NN : DT JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ast	0.125	false	false	4
+0	party	http://dbpedia.org/ontology/gameEngine	mario party	1	mario <adj>	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	rty	0.4545454545454546	false	true	2
+0	11	http://dbpedia.org/ontology/gameEngine	fifa 11	1	fifa <adj>	NNP CD	0.38596491228070173	0.008333333333333333	0.0125	11	0.2857142857142857	false	true	2
+0	5	http://dbpedia.org/ontology/gameEngine	gran turismo 5	1	gran turismo <adj>	NNP NNP CD	0.38596491228070173	0.008333333333333333	0.0125	5	0.0714285714285714	false	true	3
+0	compatible	http://dbpedia.org/ontology/gameEngine	ibm pc compatible	1	ibm pc <adj>	NNP NNP JJ	0.38596491228070173	0.008333333333333333	0.0125	ble	0.5882352941176471	false	true	3
+0	sound	http://dbpedia.org/ontology/gameEngine	miles sound system	1	miles <adj> system	NNS JJ NN	0.38596491228070173	0.008333333333333333	0.0125	und	0.2777777777777778	false	false	2
+0	ii	http://dbpedia.org/ontology/gameEngine	socrates ii	1	socrates <adj>	NNP NNP	0.38596491228070173	0.008333333333333333	0.0125	ii	0.18181818181818177	false	true	2
+0	tiberian	http://dbpedia.org/ontology/gameEngine	command & conquer: tiberian sun	1	command & conquer: <adj> sun	NN CC VB : JJ NN	0.38596491228070173	0.008333333333333333	0.0125	ian	0.25806451612903225	false	false	4

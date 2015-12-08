@@ -1,0 +1,35 @@
+1	oligocene	http://dbpedia.org/ontology/geologicPeriod	oligocene	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	1.0	true	true	1
+1	precambrian	http://dbpedia.org/ontology/geologicPeriod	precambrian	7	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ian	1.0	true	true	1
+1	cretaceous	http://dbpedia.org/ontology/geologicPeriod	cretaceous	4	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ous	1.0	true	true	1
+1	triassic	http://dbpedia.org/ontology/geologicPeriod	mostly triassic	1	mostly <adj>	RB JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	sic	0.5333333333333333	false	true	2
+1	triassic	http://dbpedia.org/ontology/geologicPeriod	permian, triassic	2	permian, <adj>	NNP , NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	sic	0.47058823529411764	false	true	2
+1	mesozoic	http://dbpedia.org/ontology/geologicPeriod	mesozoic	2	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	1.0	true	true	1
+1	silurian	http://dbpedia.org/ontology/geologicPeriod	silurian	3	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ian	1.0	true	true	1
+1	holocene	http://dbpedia.org/ontology/geologicPeriod	holocene	19	<adj>	NN	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	1.0	true	true	1
+1	cenozoic	http://dbpedia.org/ontology/geologicPeriod	cenozoic	3	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	1.0	true	true	1
+1	carboniferous	http://dbpedia.org/ontology/geologicPeriod	carboniferous	2	<adj>	NN	0.7446808510638298	0.06666666666666667	0.07142857142857142	ous	1.0	true	true	1
+0	million	http://dbpedia.org/ontology/geologicPeriod	440 million years	2	440 <adj> years	CD CD NNS	0.7446808510638298	0.06666666666666667	0.07142857142857142	ion	0.4117647058823529	false	false	2
+1	cambrian	http://dbpedia.org/ontology/geologicPeriod	cambrian	1	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ian	1.0	true	true	1
+0	series	http://dbpedia.org/ontology/geologicPeriod	nascar sprint cup series	2	nascar sprint cup <adj>	NNP NNP NNP NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ies	0.25	false	true	4
+1	permian	http://dbpedia.org/ontology/geologicPeriod	permian	1	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ian	1.0	true	true	1
+1	pleistocene	http://dbpedia.org/ontology/geologicPeriod	cambrian to devonian, pleistocene	1	cambrian to devonian, <adj>	NNP TO JJ , JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	0.33333333333333337	false	true	4
+1	pleistocene	http://dbpedia.org/ontology/geologicPeriod	pleistocene	2	<adj>	NN	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	1.0	true	true	1
+0	kievan	http://dbpedia.org/ontology/geologicPeriod	kievan rus	1	<adj> rus	NNP NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	van	0.6	true	false	1
+1	quaternary	http://dbpedia.org/ontology/geologicPeriod	quaternary	7	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ary	1.0	true	true	1
+0	several	http://dbpedia.org/ontology/geologicPeriod	several	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ral	1.0	true	true	1
+1	paleoproterozoic	http://dbpedia.org/ontology/geologicPeriod	paleoproterozoic	2	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	1.0	true	true	1
+1	proterozoic	http://dbpedia.org/ontology/geologicPeriod	proterozoic	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	1.0	true	true	1
+1	tertiary	http://dbpedia.org/ontology/geologicPeriod	tertiary	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ary	1.0	true	true	1
+1	miocene	http://dbpedia.org/ontology/geologicPeriod	triassic, cretaceous, and miocene	1	triassic, cretaceous, and <adj>	NNP , JJ , CC NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	0.21212121212121215	false	true	4
+1	devonian	http://dbpedia.org/ontology/geologicPeriod	devonian	2	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ian	1.0	true	true	1
+1	american	http://dbpedia.org/ontology/geologicPeriod	american derby	1	<adj> derby	NNP NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	can	0.5714285714285714	true	false	1
+1	pleistocene	http://dbpedia.org/ontology/geologicPeriod	pleistocene marls	1	<adj> marls	JJ NNS	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	0.6470588235294117	true	false	1
+1	quaternary	http://dbpedia.org/ontology/geologicPeriod	quaternary sediments	1	<adj> sediments	JJ NNS	0.7446808510638298	0.06666666666666667	0.07142857142857142	ary	0.5	true	false	1
+1	mesozoic	http://dbpedia.org/ontology/geologicPeriod	paleozoic to mesozoic	1	paleozoic to <adj>	JJ TO JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	0.38095238095238093	false	true	3
+1	mesoproterozoic	http://dbpedia.org/ontology/geologicPeriod	mesoproterozoic	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	oic	1.0	true	true	1
+1	paleocene	http://dbpedia.org/ontology/geologicPeriod	paleocene	1	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	1.0	true	true	1
+0	ago	http://dbpedia.org/ontology/geologicPeriod	866,000-478,000 years ago	1	866,000-478,000 years <adj>	CD CD NNS IN	0.7446808510638298	0.06666666666666667	0.07142857142857142	ago	0.12	false	true	3
+1	pliocene	http://dbpedia.org/ontology/geologicPeriod	holocene, pliocene	2	holocene, <adj>	NNP , NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	ene	0.4444444444444444	false	true	2
+1	neoarchean	http://dbpedia.org/ontology/geologicPeriod	neoarchean	1	<adj>	JJ	0.7446808510638298	0.06666666666666667	0.07142857142857142	ean	1.0	true	true	1
+1	triassic	http://dbpedia.org/ontology/geologicPeriod	triassic	1	<adj>	NNP	0.7446808510638298	0.06666666666666667	0.07142857142857142	sic	1.0	true	true	1
+0	ago	http://dbpedia.org/ontology/geologicPeriod	30,000 years ago	1	30,000 years <adj>	CD NNS IN	0.7446808510638298	0.06666666666666667	0.07142857142857142	ago	0.1875	false	true	3
