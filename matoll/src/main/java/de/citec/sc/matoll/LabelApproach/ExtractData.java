@@ -109,7 +109,10 @@ public class ExtractData {
 				}
 			}
 			//System.out.println(adjectiveobject.toString());
-			updateList(list_adjectiveobject,adjectiveobject);			
+                        if(!adjectiveobject.getAdjectiveTerm().equals("") && adjectiveobject.isAdjective()){
+                            updateList(list_adjectiveobject,adjectiveobject);
+                        }
+						
 		}
 		
 		
@@ -133,18 +136,24 @@ public class ExtractData {
 		 * 
 		 */
 		String ontologyName =findOntologyName(uri);
-    	String[] tmp = uri.split("/");
-    	String name = tmp[tmp.length-1];
-    	String namespace = tmp[tmp.length-2];
-    	List<String> property = new ArrayList<String>();
-    	property.add(uri);
-    	property.add(ontologyName);
-    	property.add(namespace);
-    	property.add(language);
-    	property.add(name);
+                String[] tmp = uri.split("/");
+                String name = tmp[tmp.length-1];
+                String namespace = tmp[tmp.length-2];
+                List<String> property = new ArrayList<String>();
+                property.add(uri);
+                property.add(ontologyName);
+                property.add(namespace);
+                property.add(language);
+                property.add(name);
 		
 		List<List<String>> entities = new ArrayList<List<String>>();
-		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+//		String pathToPropertyFile = resourceFolder+property.get(1)+"/"+property.get(2)+"/"+property.get(3)+"/"+property.get(4);
+                String pathToPropertyFile = "";
+                String input_name = property.get(0).replace("http://","");
+                input_name = input_name.replace(".org","");
+                input_name = input_name.replace("/","_");
+                if(resourceFolder.endsWith("/")) pathToPropertyFile = resourceFolder+input_name;
+                else pathToPropertyFile = resourceFolder+"/"+input_name;
 		String entities_raw = "";
 		
 		File f = new File(pathToPropertyFile);
@@ -201,7 +210,7 @@ public class ExtractData {
 		return ontologyName;
 	}
 	
-	private static String cleanEntity(String term) {
+	public static String cleanEntity(String term) {
 		/*
 		 * 1: 1989-04-20+02:00^^http://www.w3.org/2001/XMLSchema#date
 		 * Only the year will be considered, in order to avoid noise with the id's from the parsed sentence
@@ -216,32 +225,37 @@ public class ExtractData {
 		 */
 		if(term.contains("(")){
 			term = term.split("\\(")[0];
-			if(term.endsWith(" ")){
-				term = term.substring(0,term.lastIndexOf(" ")-1);
-			}
 		}
 		
-		/*
-		 * 3: 62.0^^http://www.w3.org/2001/XMLSchema#double
-		 */
-		
-		if(term.contains("XMLSchema#double")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#double", "");
+		if (term.contains("[")) {
+			term = term.split("\\[")[0];
 		}
-		
-		/*
-		 * capacity:A.S.D. Torrecuso Calcio	1500^^http://www.w3.org/2001/XMLSchema#integer
-		 */
-		if(term.contains("XMLSchema#integer")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#integer", "");
+                
+                if (term.contains("<http://dbpedia.org/datatype/")) {
+			term = term.split("<http://dbpedia.org/datatype/")[0];
 		}
-		
-		/*
-		 * ^^httpwww.w3.org2001XMLSchema#decimal
-		 */
-		if(term.contains("XMLSchema#decimal")){
-			term = term.replace("^^http://www.w3.org/2001/XMLSchema#decimal", "");
+                if (term.contains("|")) {
+			term = term.split("\\|")[0];
 		}
+                
+                if(term.contains("^^")){
+                    term = term.split("\\^\\^")[0];
+                }
+                
+                if(term.contains(",")){
+                    term = term.split(",")[0];
+                }
+		
+		
+                term = term.replace("\"","");
+                
+                
+                if(term.contains("*")) return "";
+                
+                if (term.endsWith(".0")) term = term.substring(0, term.lastIndexOf(".0"));
+                
+                term = term.trim();
+                
 		return term;
 	}
 

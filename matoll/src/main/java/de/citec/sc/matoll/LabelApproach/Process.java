@@ -63,7 +63,7 @@ public class Process {
 		String path_to_write_arff = "adjective.arff";
 		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
 		String path_to_wordnet = "/Users/swalter/Backup/Software/WordNet-3.0";
-		String path_to_objects = "/Users/swalter/Desktop/Resources/";
+		String path_to_objects = "/Users/swalter/Downloads/tmp_extractPropertiesWithData/results/ontology/";
 		/*
 		 * TODO: Automatically import via maven
 		 */
@@ -147,7 +147,7 @@ public class Process {
 		
 		HashSet<String> properties = importer.getProperties();
                 runWornetPropertyApproach(properties,lexicon,wordnet,sl);
-//		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
+		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
                 HashSet<String> classes = importer.getClasses();
 		runWornetClassApproach(classes,lexicon,wordnet);
@@ -444,13 +444,24 @@ public class Process {
                                          catch(Exception e){
                                                 e.printStackTrace();
                                          }
+                                    }
+//                                    else{
+//                                        System.out.println("Preidction for "+adjectiveObject.getAdjectiveTerm()+" was "+key);
+//                                    }
+                                }
 
-                                 } 
+
                             }
-
-
-                             }
-                        }
+                    }
+//                    else{
+//                        System.out.println("no entry created for adjectiveObject:"+adjectiveObject.getAdjectiveTerm()+"DONE");
+//                        System.out.println("adjectiveObject.isAdjective():"+adjectiveObject.isAdjective());
+//                        System.out.println("Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)):"+Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)));
+//                        System.out.println("adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)):"+(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))));
+//                        System.out.println("");
+//                        System.out.println("");
+//                    }
+                    
                 }
             }
             catch(Exception e){
