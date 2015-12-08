@@ -20,6 +20,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
 import de.citec.sc.matoll.core.Language;
+import static de.citec.sc.matoll.core.Language.EN;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -33,6 +34,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.OntologyImporter;
+import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
@@ -71,6 +73,8 @@ public class Process {
 		SMO smo = new SMO();
                 smo.setOptions(weka.core.Utils.splitOptions("-M"));
                 Classifier cls = smo; 
+                
+                final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
 		
 		List<String> csv_output = new ArrayList<String>();
 		
@@ -141,11 +145,12 @@ public class Process {
 		
 		System.out.println("Done preprosessing");
 		
-//		HashSet<String> properties = importer.getProperties();
+		HashSet<String> properties = importer.getProperties();
+                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 //		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
                 HashSet<String> classes = importer.getClasses();
-		runClassApproach(classes,lexicon,wordnet);
+		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -203,21 +208,20 @@ public class Process {
 		
 		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicativeFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject","subject",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
 		
 		entry.addSyntacticBehaviour(behaviour,sense);
-		
-		
+
 				
 		SyntacticBehaviour behaviour2 = new SyntacticBehaviour();
 		
 		behaviour2.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectiveAttributiveFrame");
 				
-		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","1",null));
+		behaviour2.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg","object",null));
 		
-		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#isA","1"));
+		sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
 		
 		entry.addSyntacticBehaviour(behaviour2,sense);
                 
@@ -462,7 +466,7 @@ public class Process {
                 
     }
 
-    private static void runClassApproach(HashSet<String> classes, Lexicon lexicon, Wordnet wordnet) {
+    private static void runWornetClassApproach(HashSet<String> classes, Lexicon lexicon, Wordnet wordnet) {
         for(String uri : classes){
             String[] tmp = uri.split("/");
             String label = tmp[tmp.length-1].toLowerCase();
@@ -472,13 +476,13 @@ public class Process {
             canonicalForms.addAll(wordnet.getAllSynonyms(label));
             for(String c : canonicalForms){
                 c = c.replace("_"," ");
-                createClassEntry(c,lexicon,uri);
+                createWordnetClassEntry(c,lexicon,uri);
             }
             
         }
     }
 
-    private static void createClassEntry(String label, Lexicon lexicon, String uri) {
+    private static void createWordnetClassEntry(String label, Lexicon lexicon, String uri) {
         LexicalEntry entry = new LexicalEntry(Language.EN);
         entry.setCanonicalForm(label);
 
@@ -493,7 +497,7 @@ public class Process {
         sense.setReference(ref);
 
         //System.out.println(adjective);
-        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_ClassEntry");
+        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_WordnetClassEntry");
 
         entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
 
@@ -512,6 +516,179 @@ public class Process {
 
         lexicon.addEntry(entry);
         
+    }
+    
+    private static void createWordnetNounEntry(String label, Lexicon lexicon, String uri) {
+        LexicalEntry entry = new LexicalEntry(Language.EN);
+        entry.setCanonicalForm(label);
+
+
+        Sense sense = new Sense();
+        Reference ref = new SimpleReference(uri);
+        sense.setReference(ref);
+
+        Provenance provenance = new Provenance();
+        provenance.setFrequency(1);
+
+        sense.setReference(ref);
+
+        //System.out.println(adjective);
+        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_WordnetNounEntry");
+
+        entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+
+        SyntacticBehaviour behaviour = new SyntacticBehaviour();
+        behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#NounPPFrame");
+
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+        entry.addSyntacticBehaviour(behaviour,sense);
+
+        entry.addProvenance(provenance,sense);
+
+        lexicon.addEntry(entry);
+        
+    }
+    
+    private static void createWordnetVerbEntry(String label, Lexicon lexicon, String uri) {
+        LexicalEntry entry = new LexicalEntry(Language.EN);
+        entry.setCanonicalForm(label);
+
+
+        Sense sense = new Sense();
+        Reference ref = new SimpleReference(uri);
+        sense.setReference(ref);
+
+        Provenance provenance = new Provenance();
+        provenance.setFrequency(1);
+
+        sense.setReference(ref);
+
+        //System.out.println(adjective);
+        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_WordnetVerbEntry");
+
+        entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+
+        SyntacticBehaviour behaviour = new SyntacticBehaviour();
+        behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
+
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","object",null));
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+        entry.addSyntacticBehaviour(behaviour,sense);
+
+        entry.addProvenance(provenance,sense);
+
+        lexicon.addEntry(entry);
+        
+    }
+    
+    private static void createWordnetAdjectiveEntry(String label, Lexicon lexicon, String uri) {
+        LexicalEntry entry = new LexicalEntry(Language.EN);
+        entry.setCanonicalForm(label);
+
+
+        Sense sense = new Sense();
+        Reference ref = new SimpleReference(uri);
+        sense.setReference(ref);
+
+        Provenance provenance = new Provenance();
+        provenance.setFrequency(1);
+
+        sense.setReference(ref);
+
+        //System.out.println(adjective);
+        entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+label.replace(" ","_")+"_as_WordnetAdjectiveEntry");
+
+        entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
+
+        SyntacticBehaviour behaviour = new SyntacticBehaviour();
+        behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePredicateFrame");
+
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject","object",null));
+        behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","subject",null));
+
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#subjOfProp","subject"));
+        sense.addSenseArg(new SenseArgument("http://lemon-model.net/lemon#objOfProp","object"));
+
+        entry.addSyntacticBehaviour(behaviour,sense);
+
+        entry.addProvenance(provenance,sense);
+
+        lexicon.addEntry(entry);
+        
+    }
+
+    private static void runWornetPropertyApproach(HashSet<String> properties, Lexicon lexicon, Wordnet wordnet, StanfordLemmatizer sl) {
+        for(String uri : properties){
+            boolean b_nouns = false;
+            boolean b_adverbs = false;
+            boolean b_verbs = false;
+            boolean b_adjectives = false;
+            String[] tmp = uri.split("/");
+            String label = tmp[tmp.length-1].toLowerCase();
+            label = label.replace("_"," ");
+            String lemma = sl.getLemma(label);
+            
+            Set<String> canonicalForms = new HashSet<>();
+            canonicalForms.addAll(wordnet.getNounSynonyms(lemma));
+            if(!canonicalForms.isEmpty()){
+                b_nouns = true;
+                canonicalForms.add(lemma);
+                for(String c : canonicalForms){
+                    c = c.replace("_"," ");
+                    createWordnetNounEntry(c,lexicon,uri);
+                }
+            }
+            
+            canonicalForms.clear();
+            canonicalForms.addAll(wordnet.getAdjectiveSynonyms(label));
+            if(!canonicalForms.isEmpty()){
+                b_adjectives = true;
+                canonicalForms.add(label);
+                for(String c : canonicalForms){
+                    c = c.replace("_"," ");
+                    createWordnetAdjectiveEntry(c,lexicon,uri);
+                }
+            }
+            
+            canonicalForms.clear();
+            canonicalForms.addAll(wordnet.getAdverbSynonyms(lemma));
+            if(!canonicalForms.isEmpty()){
+                b_adverbs = true;
+                canonicalForms.add(lemma);
+                for(String c : canonicalForms){
+                    c = c.replace("_"," ");
+                    createWordnetVerbEntry(c,lexicon,uri);
+                }
+            }
+            
+            canonicalForms.clear();
+            canonicalForms.addAll(wordnet.getVerbSynonyms(lemma));
+            if(!canonicalForms.isEmpty()){
+                b_verbs = true;
+                canonicalForms.add(lemma);
+                for(String c : canonicalForms){
+                    c = c.replace("_"," ");
+                    createWordnetVerbEntry(c,lexicon,uri);
+                }
+            }
+            
+            if(!b_nouns && !b_adverbs && !b_verbs && !b_adjectives){
+                 createWordnetVerbEntry(lemma,lexicon,uri);
+                 createWordnetAdjectiveEntry(label,lexicon,uri);
+                 createWordnetNounEntry(lemma,lexicon,uri);
+            }
+            
+            
+        }
     }
 
 }
