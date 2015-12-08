@@ -51,6 +51,8 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 	22	Ferdinand	_	NNP	NNP	_	23	nn
 	23	II	_	NNP	NNP	_	21	pobj
 	24	.	_	.	.	_	12	punct
+        
+        
 	----------------------*/
         
         @Override
@@ -58,20 +60,17 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 	String query = "SELECT ?lemma ?e1_arg ?prt_form ?e2_arg WHERE"
 			+ "{ "
 			+ "?e1 <conll:form> ?e1_form . "
-			+ "?e1 <conll:deprel> \"nsubj\" . "
+			+ "?e1 <conll:deprel> \"nsubj\" ."
 			+ "?e1 <conll:cpostag> ?e1_pos . "
 			+ "?e1 <conll:head> ?y . "
 			+ "?y <conll:cpostag> ?lemma_pos . "
 			+ "FILTER regex(?lemma_pos, \"VB\") ."
 			+ "?y <conll:deprel> ?lemma_grammar . "
 			+ "?y <conll:form> ?lemma . "
-                        + "?y <conll:wordnumber> ?wordnumber ."
                         + "OPTIONAL {"
                         + "?prt <conll:head> ?y . "
                         + "?prt <conll:form> ?prt_form ."
                         + "?prt <conll:deprel> \"prt\" ."
-                        + "?prt <conll:wordnumber> ?wordnumber_prt ."
-                        + "FILTER(?wordnumber_prt<?wordnumber)."
                         + "}"
 			+ "?e2 <conll:head> ?y . "
 			+ "?e2 <conll:deprel>  \"dobj\" . "
@@ -95,19 +94,25 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
                 String e1_arg = null;
                 String e2_arg = null;
                 String prt_form = null;
-                int number = 0;
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
-                        number+=1;
                         try{
-                                verb = qs.get("?lemma").toString();
-                                e1_arg = qs.get("?e1_arg").toString();
-                                e2_arg = qs.get("?e2_arg").toString();	
+                            verb = qs.get("?lemma").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();	
 
-                                try{
-                                    prt_form = qs.get("?prt_form").toString();
-                                }catch(Exception e){
-                                   }
+                            try{
+                                prt_form = qs.get("?prt_form").toString();
+                            }catch(Exception e){
+                               }
+                           if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                if(prt_form!=null){
+                                    Templates.getTransitiveVerb(model, lexicon, sentence, verb+" "+prt_form, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                }
+                                else
+                                    Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                            } 
 
                          }
                         catch(Exception e){
@@ -118,14 +123,7 @@ public class SparqlPattern_EN_Transitive_Verb extends SparqlPattern {
 
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null&&number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(prt_form!=null){
-                        Templates.getTransitiveVerb(model, lexicon, sentence, verb+" "+prt_form, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-                    }
-                    else
-                        Templates.getTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
+		
 		
 
 	}

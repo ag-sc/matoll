@@ -51,6 +51,7 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
 	/*
 	 * TODO: Check lemma addition
 	 */
+
         
         @Override
         public String getQuery() {
@@ -60,7 +61,6 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                             //+ "FILTER regex(?e1_pos, \"NN\") ."
                             + "?e1 <conll:head> ?y . "
                             + "?y <conll:cpostag> ?lemma_pos . "
-                            + "?y <conll:wordnumber> ?wordnumber. "
                             + "{?y <conll:cpostag> \"VBN\" . }"
                             + "UNION"
                             + "{?y <conll:cpostag> \"VBG\" . }"
@@ -68,11 +68,9 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                             +"OPTIONAL{"
                             + "?lemma_nn <conll:head> ?y. "
                             + "?lemma_nn <conll:form> ?lemma_addition. "
-                            + "?lemma_nn <conll:wordnumber> ?wordnumber_lemma_nn ."
                             + "{?lemma_nn <conll:deprel> \"advmod\". }"
                             + " UNION"
                             + "{?lemma_nn <conll:deprel> \"nn\". }"
-                            + "FILTER(?wordnumber_lemma_nn<?wordnumber)."
                             +"} "
                             + "?verb <conll:head> ?y . "
                             + "?verb <conll:deprel> \"auxpass\" . "
@@ -99,11 +97,9 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                 String preposition = null;
                 String lemma_addition = "";
                 
-                int number = 0;
                 
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
-                        number+=1;
 
                         try{
                                 adjective = qs.get("?lemma").toString();
@@ -116,6 +112,13 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
                                 catch(Exception e){
 
                                 }
+                                if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && preposition.equals("by")) {
+                                    Sentence sentence = this.returnSentence(model);
+                                    if(!lemma_addition.equals("")){
+                                        Templates.getTransitiveVerb(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                    }
+                                    else Templates.getTransitiveVerb(model, lexicon, sentence, adjective, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                } 
                          }
                         catch(Exception e){
                        e.printStackTrace();
@@ -124,13 +127,6 @@ public class SparqlPattern_EN_Transitive_Passive extends SparqlPattern {
 
                qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && preposition.equals("by")&&number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(!lemma_addition.equals("")){
-                        Templates.getTransitiveVerb(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-                    }
-                    else Templates.getTransitiveVerb(model, lexicon, sentence, adjective, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
 				
 	}
 
