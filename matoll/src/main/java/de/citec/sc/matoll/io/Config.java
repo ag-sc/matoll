@@ -55,8 +55,8 @@ import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Noun_PP_appos;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Intransitive_PP;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Copulative;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Predicative_Participle_Passive;
-import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Reciprocal;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Reflexive_Transitive_PP;
+import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_Reciprocal;
 import de.citec.sc.matoll.patterns.spanish.SparqlPattern_ES_Transitive_passive;
 
 public class Config {
@@ -70,6 +70,7 @@ public class Config {
 	String OutputLexicon = "lexicon";
 	String Output = "eval";
 	Boolean Coreference = false;
+        Boolean Statistics = true;
 	String Classifier = "de.citec.sc.matoll.classifiers.FreqClassifier";
 	Language Language = EN;
 	Integer numItems;
@@ -166,7 +167,7 @@ public class Config {
                                         Patterns.add(new SparqlPattern_ES_Predicative_Participle_Passive());
                                         Patterns.add(new SparqlPattern_ES_Intransitive_PP());
                                         Patterns.add(new SparqlPattern_ES_Transitive_Reciprocal());
-//                                        Patterns.add(new SparqlPattern_ES_Reflexive_Transitive_PP()); //subsumed in Intransitive_PP
+                                        Patterns.add(new SparqlPattern_ES_Reflexive_Transitive_PP());
                                         Patterns.add(new SparqlPattern_ES_Transitive_passive());
                                         
 					
@@ -184,6 +185,12 @@ public class Config {
 			{				
 				if (node.getTextContent().equals("True")) this.RemoveStopwords = true;
 				if (node.getTextContent().equals("False")) this.RemoveStopwords = false;
+			}
+                        
+                        if (node.getNodeName().equals("Statistics"))
+			{				
+				if (node.getTextContent().equals("True")) this.Statistics = true;
+				if (node.getTextContent().equals("False")) this.Statistics = false;
 			}
 			
 			if (node.getNodeName().equals("GoldStandardLexicon"))
@@ -378,5 +385,9 @@ public class Config {
          public List<File> getFiles() {
             return files;
         }
+
+    public boolean doStatistics() {
+        return Statistics;
+    }
 
 }

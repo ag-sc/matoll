@@ -266,14 +266,21 @@ public class Matoll {
                     model.close();
                 }
             
-                System.out.println("Extracted entries - do some statistics now");
-                Map<String, Integer> absolut_number = absolutNumberEntriesByReference(automatic_lexicon);
-                for(String key:freq.keySet()){
-                    if(absolut_number.containsKey(key)){
-                        System.out.println(key+": MATOLL created "+absolut_number.get(key)+" entries from "+freq.get(key)+" sentences");
+                System.out.println("Extracted entries");
+                if(config.doStatistics()){
+                    System.out.println("do some statistics now");
+                    absolutNumberEntriesByReference(automatic_lexicon,freq,language);
+                    Map<String, Double> overall_pattern_distribution = getOverallDistributionPattern(automatic_lexicon);
+                    for(String key: overall_pattern_distribution.keySet()){
+                        System.out.println(key+":"+overall_pattern_distribution.get(key));
                     }
-                    
+                    for(Reference ref:automatic_lexicon.getReferences()){
+                        getDistributionPatternPerPreference(automatic_lexicon,ref.getURI(),language);
+                    }
                 }
+                
+                
+                System.out.println("Calculate normalized confidence");
                 calculateConfidence(automatic_lexicon,freq);  
                 normalizeConfidence(automatic_lexicon);
                 
@@ -311,17 +318,7 @@ public class Matoll {
                     Learning.doPrediction(automatic_lexicon, gold, classifier, output, language);
                 }
 //		writeByReference(automatic_lexicon,language);
-//                logger.info("Write lexicon to "+output_lexicon+"\n");
-                model = ModelFactory.createDefaultModel();
 
-                serializer.serialize(automatic_lexicon, model);
-
-                out = new FileOutputStream(new File(output_lexicon.replace(".lex",".ttl")));
-
-                RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
-
-                out.close();
-                
 		
 		
 			
@@ -366,7 +363,7 @@ public class Matoll {
          * @param lexicon
          * @throws IOException 
          */
-	private static Map<String,Integer>  absolutNumberEntriesByReference(Lexicon lexicon) throws IOException {
+	private static void absolutNumberEntriesByReference(Lexicon lexicon,TObjectIntHashMap<String> freq, Language language) throws IOException {
             Map<String,Integer> absolut_nubers = new HashMap<>();
             for(LexicalEntry entry : lexicon.getEntries()){
                 for(Sense sense:entry.getSenseBehaviours().keySet()){
@@ -380,7 +377,20 @@ public class Matoll {
                         absolut_nubers.put(uri, prov.getFrequency());
                 }
             }
-            return absolut_nubers;
+            String filename = language.toString()+"_statistics.tsv";
+            try (FileWriter writer = new FileWriter(filename)) {
+                writer.write("uri\t#entries\t#numberSentences\n");
+                
+                for (String key: absolut_nubers.keySet())
+                {
+                    if(freq.contains(key)){
+                        int number_sentences = freq.get(key);
+                        writer.write(key+"\t"+absolut_nubers.get(key)+"\t"+number_sentences+"\n");
+                        writer.flush();
+                    }
+                    
+                }
+            }
 	}
 
 
@@ -399,6 +409,86 @@ public class Matoll {
 		
 		return null;
 	}
+        
+        private static Map<String,Double> getOverallDistributionPattern(Lexicon lexicon){
+            Map<String,Double> results = new HashMap<>();
+            Map<String,Integer> tmp_results = new HashMap<>();
+            int absolut_number = 0;
+            
+            for(LexicalEntry entry:lexicon.getEntries()){
+                for(Sense sense : entry.getSenseBehaviours().keySet()){
+                    Provenance prov = entry.getProvenance(sense);
+                    absolut_number+=prov.getFrequency();
+                    for(String pattern_name: prov.getPatternset()){
+                        if(tmp_results.containsKey(pattern_name)){
+                            int value = tmp_results.get(pattern_name);
+                            tmp_results.put(pattern_name, value+prov.getFrequency());
+                        }
+                        else
+                            tmp_results.put(pattern_name, prov.getFrequency());
+                        /*
+                        numbers are not 100%correct, as one provenance can be created by different pattern and the distinction of the contribution of each pattern is then lost.
+                        */
+                    }
+                }
+            }
+            for(String key : tmp_results.keySet()){
+                double value = (tmp_results.get(key)+0.0)/absolut_number;
+                results.put(key, value);
+            }
+            
+            
+            return results;
+        }
+        
+        
+        
+        private static void getDistributionPatternPerPreference(Lexicon lexicon,String uri, Language language) throws IOException{
+            Map<String,Double> results = new HashMap<>();
+            Map<String,Integer> tmp_results = new HashMap<>();
+            int absolut_number = 0;
+            
+            for(LexicalEntry entry:lexicon.getEntriesForReference(uri)){
+                for(Sense sense : entry.getSenseBehaviours().keySet()){
+                    Provenance prov = entry.getProvenance(sense);
+                    if(uri.equals(sense.getReference().getURI())){
+                        absolut_number+=prov.getFrequency();
+                        for(String pattern_name: prov.getPatternset()){
+                            if(tmp_results.containsKey(pattern_name)){
+                                int value = tmp_results.get(pattern_name);
+                                tmp_results.put(pattern_name, value+prov.getFrequency());
+                            }
+                            else
+                                tmp_results.put(pattern_name, prov.getFrequency());
+                            /*
+                            numbers are not 100%correct, as one provenance can be created by different pattern and the distinction of the contribution of each pattern is then lost.
+                            */
+                        }
+                    }
+                }
+            }
+            for(String key : tmp_results.keySet()){
+                double value = (tmp_results.get(key)+0.0)/absolut_number;
+                results.put(key, value);
+            }
+
+            String filename = uri.replaceAll("http:\\/\\/","").replaceAll("\\/","_").replaceAll("\\.","_")+"_"+language.toString()+"_statistics.tsv";
+            try (FileWriter writer = new FileWriter(filename)) {
+                writer.write("pattern_name\t#distribution\n");
+                
+                for (String key: results.keySet())
+                {
+                    writer.write(key+"\t"+results.get(key)+"\n");
+                    writer.flush();
+                    
+                    
+                }
+            }
+            
+            
+            
+        }
+        
         
         /**
          * 
