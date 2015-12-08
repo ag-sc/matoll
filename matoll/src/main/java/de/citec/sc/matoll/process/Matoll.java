@@ -41,6 +41,7 @@ import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
 
 import java.util.HashSet;
+import java.util.Map;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -265,6 +266,14 @@ public class Matoll {
                     model.close();
                 }
             
+                System.out.println("Extracted entries - do some statistics now");
+                Map<String, Integer> absolut_number = absolutNumberEntriesByReference(automatic_lexicon);
+                for(String key:freq.keySet()){
+                    if(absolut_number.containsKey(key)){
+                        System.out.println(key+": MATOLL created "+absolut_number.get(key)+" entries from "+freq.get(key)+" sentences");
+                    }
+                    
+                }
                 calculateConfidence(automatic_lexicon,freq);  
                 normalizeConfidence(automatic_lexicon);
                 
@@ -350,6 +359,28 @@ public class Matoll {
 			
 			
 		}
+	}
+        
+        /**
+         * 
+         * @param lexicon
+         * @throws IOException 
+         */
+	private static Map<String,Integer>  absolutNumberEntriesByReference(Lexicon lexicon) throws IOException {
+            Map<String,Integer> absolut_nubers = new HashMap<>();
+            for(LexicalEntry entry : lexicon.getEntries()){
+                for(Sense sense:entry.getSenseBehaviours().keySet()){
+                    Provenance prov = entry.getProvenance(sense);
+                    String uri = sense.getReference().getURI();
+                    if(absolut_nubers.containsKey(uri)){
+                        int value = absolut_nubers.get(uri);
+                        absolut_nubers.put(uri, value+prov.getFrequency());
+                    }
+                    else 
+                        absolut_nubers.put(uri, prov.getFrequency());
+                }
+            }
+            return absolut_nubers;
 	}
 
 
