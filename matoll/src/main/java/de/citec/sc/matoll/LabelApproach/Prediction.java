@@ -1,4 +1,4 @@
-package de.citec.sc.matoll.labelapproach;
+package de.citec.sc.matoll.LabelApproach;
 
 import java.util.ArrayList;
 import java.util.HashMap;

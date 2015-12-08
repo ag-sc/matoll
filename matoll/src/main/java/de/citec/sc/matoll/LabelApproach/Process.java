@@ -1,4 +1,6 @@
-package de.citec.sc.matoll.labelapproach;
+package de.citec.sc.matoll.LabelApproach;
+
+
 
 import java.io.BufferedReader;
 import java.io.File;
