@@ -210,21 +210,22 @@ public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
         // -> Reflexiv 
         // X heiratete Y -> Transitive
         
-        /*
-        "se" has to be optional.
-        If "se" is found, create a ReflexiveTransitiveVerb, otherwise create an Intransitive entry
-        */
+
+
+        
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?se_form ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
                             + "?verb <conll:cpostag> \"v\" ."
                             + "?verb <conll:lemma> ?lemma ."
-                            + "OPTIONAL{"
+                            + "FILTER NOT EXISTS{"
                                  + "?se <conll:form> \"se\" ."
+                                 + "?se <conll:head> ?verb ."
+                            + "}"
+                            + "FILTER NOT EXISTS{"
                                  + "{?se <conll:deprel> \"DO\" .} UNION "
                                  + "{?se <conll:deprel> \"MPAS\" .}"
                                  + "?se <conll:head> ?verb ."
-                                 + "?se <conll:form> ?se_form ."
                             + "}"
 //
                             + "?e1 <conll:head> ?verb."
@@ -260,7 +261,6 @@ public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
-                String se_form = null;
                 int number = 0;
 
                 while ( rs.hasNext() ) {
@@ -273,12 +273,6 @@ public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
                             e1_arg = qs.get("?e1_arg").toString();
                             e2_arg = qs.get("?e2_arg").toString();	
                             preposition = qs.get("?prep").toString();
-                            try{
-
-                            }
-                            catch(Exception e){
-                                se_form = qs.get("?se_form").toString();
-                            }
                      }
                     catch(Exception e){
                    e.printStackTrace();
@@ -290,13 +284,7 @@ public class SparqlPattern_ES_Intransitive_PP extends SparqlPattern{
     
 		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
                     Sentence sentence = this.returnSentence(model);
-                    
-                    if(se_form!=null){
-                      Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb+"+se", e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    }
-                    else{
-                        Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    }
+                    Templates.getIntransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                 }
 		
 	

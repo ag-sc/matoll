@@ -105,16 +105,10 @@ sentence::
                             + "?verb <conll:postag> ?verb_pos . "
                             + "FILTER regex(?verb_pos, \"VMI\") ."
                             + "?verb <conll:lemma> ?lemma . "
-
-                            + "OPTIONAL{"
                             + "?se <conll:head> ?verb. "
                             + "?se <conll:deprel> \"DO\"."
                             + "?se <conll:form> ?se_form. "
-                            + "?verb <conll:wordnumber> ?wordnumber ."
-                            + "?se <conll:wordnumber> ?wordnumber_se ."
-                            + "FILTER(?wordnumber_se > ?wordnumber)."  
-                             + "}"
-                    
+                            + "?se <conll:form> \"se\". "
                             + "?e1 <conll:head> ?verb . "
                             + "?e1 <conll:deprel> \"SUBJ\". "
 
@@ -183,8 +177,6 @@ sentence::
                     if(se_form!=null){
                         Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                     }
-                    else
-                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
             } 
 		
 		
