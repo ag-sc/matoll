@@ -231,6 +231,9 @@ public class Lexicon {
 		return string;
 	}
 
+        /*
+        TODO: This function returns all entries, in which at least one reference is from the given URI. All othere seneses/referecnes in this entry are also returned.
+        */
 	public List<LexicalEntry> getEntriesForReference(String input_ref) {
 		
 		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
