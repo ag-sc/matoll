@@ -147,11 +147,11 @@ public class Process {
 		
 		HashSet<String> properties = importer.getProperties();
 
-//                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
+                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
                 HashSet<String> classes = importer.getClasses();
-//		runWornetClassApproach(classes,lexicon,wordnet);
+		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
