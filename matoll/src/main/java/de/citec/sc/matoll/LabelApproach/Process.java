@@ -146,11 +146,12 @@ public class Process {
 		System.out.println("Done preprosessing");
 		
 		HashSet<String> properties = importer.getProperties();
-                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
+
+//                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
                 HashSet<String> classes = importer.getClasses();
-		runWornetClassApproach(classes,lexicon,wordnet);
+//		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -188,6 +189,7 @@ public class Process {
 	}
 
 	private static void createRestrictionClassEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
+            if(distribution>=0.5 && isAlpha(adjective) && isAlpha(frag(object_uri))){
                 LexicalEntry entry = new LexicalEntry(Language.EN);
 		entry.setCanonicalForm(adjective);
                 
@@ -235,28 +237,36 @@ public class Process {
 		//provenance.setAgent("Frequency");
                 provenance.setFrequency(frequency);
 		
-		entry.addProvenance(provenance,sense);
-		
-		if(distribution>=0.5 && isAlpha(adjective) && isAlpha(frag(object_uri))){
-                    lexicon.addEntry(entry);
-                }
+		entry.addProvenance(provenance,sense);		
+                lexicon.addEntry(entry);
+            }
+                
+                
 		
 	}
         
          private static boolean isAlpha(String label) {
-             label = label.replace("-","");
-             label = label.replace("_", "");
-             label = label.replace(" ","");
+            if(label.length()<=2) return false;
+            label = cleanTerm(label);
+            label = label.replace("_","");
             char[] chars = label.toCharArray();
 
             for (char c : chars) {
                 if(!Character.isLetter(c)) {
-                    System.out.println("false Label:"+label);
                     return false;
                 }
             }
-
             return true;
+        }
+         private static String cleanTerm(String input){
+            String output = input.replace("ü", "ue")
+                    .replace("ö", "oe")
+                    .replace("ß", "ss")
+                    .replace("-", "_")
+                    .replace(" ", "_")
+                    .replace("\"", "")
+                    .replace("+", "_");
+            return output;
         }
 
 	private static void writeSingleArffFile(String path, String arff_prefix,
@@ -386,10 +396,10 @@ public class Process {
             Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
         
             while (matcher.find()) {
-                  return matcher.group(2).replace(" ","_");
+                  return matcher.group(2).replace(" ","_").replace(".","");
             }
             
-            return uri.replace(" ","_");
+            return uri.replace(" ","_").replace(".","");
         }
 
     private static void runAdjectiveApproach(HashSet<String> properties,ExtractData adjectiveExtractor,
