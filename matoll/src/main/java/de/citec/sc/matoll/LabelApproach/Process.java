@@ -147,6 +147,8 @@ public class Process {
 		
 		HashSet<String> properties = importer.getProperties();
 
+               
+
                 runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
                 
@@ -250,14 +252,16 @@ public class Process {
             label = cleanTerm(label);
             label = label.replace("_","");
             char[] chars = label.toCharArray();
-
+            
             for (char c : chars) {
                 if(!Character.isLetter(c)) {
                     return false;
                 }
             }
+
             return true;
         }
+         
          private static String cleanTerm(String input){
             String output = input.replace("ü", "ue")
                     .replace("ö", "oe")
@@ -383,14 +387,15 @@ public class Process {
         private static String frag(String uri) {
             
             uri = uri.replace("=","");
+            if (uri.contains("[")){
+                uri = uri.split("\\[")[0];
+            }
             uri = uri.replace("!","");
             uri = uri.replace("?","");
             uri = uri.replace("*","");
             uri = uri.replace(",","");
             uri = uri.replace("(","");
             uri = uri.replace(")","");
-            uri = uri.replace(">","");
-            uri = uri.replace("<","");
             uri = uri.replace("|"," ");
             String  pattern =  ".+(/|#)(\\w+)";
             Matcher matcher = (Pattern.compile(pattern)).matcher(uri);
@@ -448,8 +453,9 @@ public class Process {
                                          System.out.println("Frequency:"+adjectiveObject.getFrequency());
                                          System.out.println();*/
                                          try{
-                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
-                                            csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
+//                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
+                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),1.0);
+                                             csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
                                          }
                                          catch(Exception e){
                                                 e.printStackTrace();

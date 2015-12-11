@@ -178,16 +178,17 @@ public class ExtractData {
 	    	//System.out.println("obj_uri:"+obj_uri);
 	    	//System.out.println("obj:"+obj);
 	    	obj = cleanEntity(obj);
-	    	/*
-			 * In the moment only consider those adjective, which have an URI and a label as object.
-			 * With other words ignore those properties, with only literals on the right side
-			 */
-	    	//if(obj_uri.contains("http://dbpedia.org/")){
-	    		List<String> tmp_entity = new ArrayList<String>();
-	    		tmp_entity.add(obj);
-	    		tmp_entity.add(obj_uri);
-	    		entities.add(tmp_entity);
-	    	//}
+                if(obj_uri.contains("^^")){
+                    obj_uri = obj_uri.split("\\^\\^")[0];
+                }
+                obj_uri = obj_uri.replace("\"","");
+                
+                
+                List<String> tmp_entity = new ArrayList<String>();
+                tmp_entity.add(obj);
+                tmp_entity.add(obj_uri);
+                entities.add(tmp_entity);
+
 	    }
 		
 		return entities;
