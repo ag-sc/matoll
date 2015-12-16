@@ -144,16 +144,14 @@ public class Process {
 		System.out.println("Done preprosessing");
 		
 		HashSet<String> properties = importer.getProperties();
-                
-                properties.clear();
-                properties.add("http://dbpedia.org/ontology/religion");
+
                
 
                 runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
                 
                 HashSet<String> classes = importer.getClasses();
-//		runWornetClassApproach(classes,lexicon,wordnet);
+		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
