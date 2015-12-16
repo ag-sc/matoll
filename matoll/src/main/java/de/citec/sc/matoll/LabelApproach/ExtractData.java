@@ -20,12 +20,12 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 public class ExtractData {
 	
 	private static Wordnet wordnet; 
-	private static HashMap<String, String> cache;
+	private static HashMap<String, String> dbnaray_adjective_list;
 	private static HashSet<String> stopwords;
 	
 	public ExtractData(String path_to_wordnet) throws IOException{
 		ExtractData.wordnet = new Wordnet(path_to_wordnet);
-		ExtractData.cache = new HashMap<String, String>();
+		ExtractData.dbnaray_adjective_list = new HashMap<String, String>();
 		ExtractData.stopwords = new HashSet<String>();
 		String everything = "";
 		FileInputStream inputStream = new FileInputStream("resources/adjectivelist_en.txt");
@@ -41,7 +41,7 @@ public class ExtractData {
 	    	if(adjective.equals("in")){
 	    	}
 	    	else{
-	    		ExtractData.cache.put(adjective.toLowerCase(), "");
+	    		ExtractData.dbnaray_adjective_list.put(adjective.toLowerCase(), "");
 	    	}
 	    }
 	    
@@ -86,20 +86,20 @@ public class ExtractData {
 				String[] object_tmp = property_object.split(" ");
 				for(String term : object_tmp){
 					//System.out.println("term:"+term);
-					if((wordnet.checkForAdjective(term.toLowerCase())|| cache.containsKey(term.toLowerCase()))
+					if((wordnet.checkForAdjective(term.toLowerCase())|| dbnaray_adjective_list.containsKey(term.toLowerCase())||tagger.tagString(term).contains("JJ"))
 							&&!stopwords.contains(term.toLowerCase())){
 						adjectiveobject.setAdjectiveTerm(term);
 						adjectiveobject.setAdjective(true);
 						adjectiveobject.setSublabel(getSublabel(term));
 						adjectiveobject.setPattern(property_object.replace(term, "<adj>"));
-						adjectiveobject.setPos_Pattern(getPosPattern(property_object,tagger));
+						adjectiveobject.setPos_Pattern(getPosPattern(term,tagger));
 						adjectiveobject.setPos_adj_Pattern(getPosPattern(property_object.replace(term, "<adj>"),tagger));
 					}
 				}
 			}
 			else {
-				if((wordnet.checkForAdjective(property_object.toLowerCase())|| cache.containsKey(property_object.toLowerCase())
-						&&!stopwords.contains(property_object.toLowerCase()))){
+				if((wordnet.checkForAdjective(property_object.toLowerCase())|| dbnaray_adjective_list.containsKey(property_object.toLowerCase()) ||tagger.tagString("test").contains("JJ"))
+                                            &&!stopwords.contains(property_object.toLowerCase())){
 					adjectiveobject.setAdjectiveTerm(property_object);
 					adjectiveobject.setAdjective(true);
 					adjectiveobject.setSublabel(getSublabel(property_object));

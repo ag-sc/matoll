@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -39,6 +38,7 @@ import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,9 +75,7 @@ public class Process {
                 Classifier cls = smo; 
                 
                 final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
-		
-		List<String> csv_output = new ArrayList<String>();
-		
+				
 		OntologyImporter importer = new OntologyImporter("../dbpedia_2014.owl","RDF/XML");
 		
 		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
@@ -146,14 +144,16 @@ public class Process {
 		System.out.println("Done preprosessing");
 		
 		HashSet<String> properties = importer.getProperties();
-
+                
+                properties.clear();
+                properties.add("http://dbpedia.org/ontology/religion");
                
 
                 runWornetPropertyApproach(properties,lexicon,wordnet,sl);
-		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,csv_output);
+		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
                 
                 HashSet<String> classes = importer.getClasses();
-		runWornetClassApproach(classes,lexicon,wordnet);
+//		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -161,24 +161,25 @@ public class Process {
 		
 		serializer.serialize(lexicon, model);
 		
-		FileOutputStream out = new FileOutputStream(new File("new_adjectives.ttl"));
+                String path = "new_adjectives.ttl";
+		FileOutputStream out = new FileOutputStream(new File(path));
 		
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
-		
-		/*
-		 * write csv
-		 */
-		
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter(path_to_write_arff.replace(".arff", ".csv"));
-			for(String line:csv_output) writer.print(line);
-			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		extportTSV(lexicon,path);
+//		/*
+//		 * write csv
+//		 */
+//		
+//		PrintWriter writer;
+//		try {
+//			writer = new PrintWriter(path_to_write_arff.replace(".arff", ".csv"));
+//			for(String line:csv_output) writer.print(line);
+//			writer.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		
@@ -203,7 +204,6 @@ public class Process {
 
                 sense.setReference(ref);
                 
-                //System.out.println(adjective);
                 entry.setURI(lexicon.getBaseURI()+"LexicalEntry_"+adjective.replace(" ","_")+"_as_AdjectiveRestriction");
 				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#adjective");
@@ -229,14 +229,11 @@ public class Process {
 		
 		entry.addSyntacticBehaviour(behaviour2,sense);
                 
-                //entry.addSense(sense);
                 
                 Provenance provenance = new Provenance();
 		
-		//provenance.setAgent("Distribution");
 		provenance.setConfidence(distribution);
 		
-		//provenance.setAgent("Frequency");
                 provenance.setFrequency(frequency);
 		
 		entry.addProvenance(provenance,sense);		
@@ -409,8 +406,7 @@ public class Process {
 
     private static void runAdjectiveApproach(HashSet<String> properties,ExtractData adjectiveExtractor,
             HashSet<String> posAdj, HashSet<String> pos, HashSet<String> label_3, HashSet<String> label_2, 
-            Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects,
-            List<String> csv_output ) {
+            Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects) {
         int counter = 0;
         int uri_counter = 0;
         int uri_used = 0;
@@ -428,55 +424,37 @@ public class Process {
                      * ignore "adjectives", which start with a digit
                      */
                     if(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))){
-                            String tmp = "/tmp/tmp.arff";
-                            writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
-                            /*
-                             * Load instances to predict.
-                             */
-                             ArffLoader loader = new ArffLoader();
-                             loader.setFile(new File(tmp));
-                             Instances structure = loader.getStructure();
-                             structure.setClassIndex(structure.numAttributes() - 1);
+                        String tmp = "/tmp/tmp.arff";
+                        writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
+                        /*
+                         * Load instances to predict.
+                         */
+                         ArffLoader loader = new ArffLoader();
+                         loader.setFile(new File(tmp));
+                         Instances structure = loader.getStructure();
+                         structure.setClassIndex(structure.numAttributes() - 1);
 
-                             Instance current;
-                             while ((current = loader.getNextInstance(structure)) != null){
-                                 /*
-                                  * predict
-                                  */
-                                 HashMap<Integer, Double> result = prediction.predict(current);
-                                 for(int key : result.keySet()){
-                                    if(key==1){
-                                         counter+=1;
-                                         /*System.out.println("Add to lexica");
-                                         System.out.println("Adjective:"+adjectiveObject.getAdjectiveTerm());
-                                         System.out.println("Object:"+adjectiveObject.getObject());
-                                         System.out.println("Frequency:"+adjectiveObject.getFrequency());
-                                         System.out.println();*/
-                                         try{
-                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
-//                                             createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),1.0);
-                                             csv_output.add(adjectiveObject.getAdjectiveTerm()+";"+adjectiveObject.getObject()+";"+uri+"\n");
-                                         }
-                                         catch(Exception e){
-                                                e.printStackTrace();
-                                         }
-                                    }
-//                                    else{
-//                                        System.out.println("Preidction for "+adjectiveObject.getAdjectiveTerm()+" was "+key);
-//                                    }
+                         Instance current;
+                         while ((current = loader.getNextInstance(structure)) != null){
+                             /*
+                              * predict
+                              */
+                             HashMap<Integer, Double> result = prediction.predict(current);
+                             for(int key : result.keySet()){
+                                if(key==1){
+                                     counter+=1;
+                                     try{
+                                         createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
+                                     }
+                                     catch(Exception e){
+                                            e.printStackTrace();
+                                     }
                                 }
-
-
                             }
+
+
+                        }
                     }
-//                    else{
-//                        System.out.println("no entry created for adjectiveObject:"+adjectiveObject.getAdjectiveTerm()+"DONE");
-//                        System.out.println("adjectiveObject.isAdjective():"+adjectiveObject.isAdjective());
-//                        System.out.println("Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)):"+Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)));
-//                        System.out.println("adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0)):"+(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))));
-//                        System.out.println("");
-//                        System.out.println("");
-//                    }
                     
                 }
             }
@@ -716,6 +694,67 @@ public class Process {
             
             
         }
+    }
+    
+    
+    
+    private static void extportTSV(Lexicon lexicon, String path){
+        Map<String,Double> hm_double = new HashMap<>();
+        Map<String,Integer> hm_int = new HashMap<>();
+        for(LexicalEntry entry : lexicon.getEntries()){
+            for(Sense sense:entry.getSenseBehaviours().keySet()){
+                Reference ref = sense.getReference();
+                if (ref instanceof de.citec.sc.matoll.core.SimpleReference){
+                    SimpleReference reference = (SimpleReference) ref;
+                    String input = entry.getCanonicalForm()+"\t"+reference.getURI()+"\t";
+                    if(hm_int.containsKey(input)){
+                            int freq = hm_int.get(input);
+                             hm_int.put(input, entry.getProvenance(sense).getFrequency()+freq);
+                        }
+                        else{
+                            hm_int.put(input, entry.getProvenance(sense).getFrequency());
+                        }
+                }
+                else if (ref instanceof de.citec.sc.matoll.core.Restriction){
+                    Restriction reference = (Restriction) ref;
+                    String input = entry.getCanonicalForm()+"\t"+reference.getValue()+"\t"+reference.getProperty()+"\t";
+                    if(entry.getProvenance(sense).getConfidence()!=null){
+                        if(hm_double.containsKey(input)){
+                            double value = hm_double.get(input);
+                             hm_double.put(input, entry.getProvenance(sense).getConfidence()+value);
+                        }
+                        else{
+                            hm_double.put(input, entry.getProvenance(sense).getConfidence());
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        PrintWriter writer;
+        try {
+                writer = new PrintWriter(path+"_restriction.tsv");
+                for(String key:hm_double.keySet()){
+                    writer.write(key+Double.toString(hm_double.get(key))+"\n");
+                }
+                writer.close();
+        } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+
+        try {
+                writer = new PrintWriter(path+"_simple.tsv");
+                for(String key:hm_int.keySet()){
+                    writer.write(key+Integer.toString(hm_int.get(key))+"\n");
+                }
+                writer.close();
+        } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        
     }
 
 }
