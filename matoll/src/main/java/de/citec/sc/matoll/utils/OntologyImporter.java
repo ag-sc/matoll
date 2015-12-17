@@ -1,6 +1,7 @@
 package de.citec.sc.matoll.utils;
 
 import java.util.HashSet;
+import java.util.Set;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -21,9 +22,8 @@ public class OntologyImporter {
 		ontology_model.read(path_to_ontology,type);
 	}
 	
-	public HashSet<String> getProperties(){
-		HashSet<String> properties = new HashSet<String>();
-		
+	public Set<String> getProperties(){
+		Set<String> properties = new HashSet<String>();
 		QueryExecution qExec = QueryExecutionFactory.create("SELECT ?p WHERE{?p ?s ?o.}", ontology_model) ;
 	    ResultSet rs = qExec.execSelect() ;
 	    try {
@@ -56,8 +56,8 @@ public class OntologyImporter {
 	
 	
 	
-	public HashSet<String> getClasses(){
-		HashSet<String> properties = new HashSet<String>();
+	public Set<String> getClasses(){
+		Set<String> properties = new HashSet<String>();
 		
 		QueryExecution qExec = QueryExecutionFactory.create("SELECT ?p WHERE{?p ?s ?o.}", ontology_model) ;
 	    ResultSet rs = qExec.execSelect() ;

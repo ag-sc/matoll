@@ -37,11 +37,13 @@ import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.io.IOUtils;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
@@ -75,8 +77,20 @@ public class Process {
                 Classifier cls = smo; 
                 
                 final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
-				
-		OntologyImporter importer = new OntologyImporter("../dbpedia_2014.owl","RDF/XML");
+	
+//                String path_to_input_file = "../dbpedia_2014.owl";
+                String path_to_input_file = "test.txt";
+                Set<String> properties = new HashSet<>();
+                Set<String> classes = new HashSet<>();
+                if(path_to_input_file.endsWith(".txt")){
+                    properties = loadPropertyList(path_to_input_file);
+                }
+                else{
+                    OntologyImporter importer = new OntologyImporter(path_to_input_file,"RDF/XML");
+                    properties = importer.getProperties();
+                    classes = importer.getClasses();
+                }
+		
 		
 		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
 		
@@ -143,14 +157,12 @@ public class Process {
 		
 		System.out.println("Done preprosessing");
 		
-		HashSet<String> properties = importer.getProperties();
 
                
 
                 runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
                 
-                HashSet<String> classes = importer.getClasses();
 		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
@@ -402,7 +414,7 @@ public class Process {
             return uri.replace(" ","_").replace(".","");
         }
 
-    private static void runAdjectiveApproach(HashSet<String> properties,ExtractData adjectiveExtractor,
+    private static void runAdjectiveApproach(Set<String> properties,ExtractData adjectiveExtractor,
             HashSet<String> posAdj, HashSet<String> pos, HashSet<String> label_3, HashSet<String> label_2, 
             Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects) {
         int counter = 0;
@@ -469,7 +481,7 @@ public class Process {
                 
     }
 
-    private static void runWornetClassApproach(HashSet<String> classes, Lexicon lexicon, Wordnet wordnet) {
+    private static void runWornetClassApproach(Set<String> classes, Lexicon lexicon, Wordnet wordnet) {
         for(String uri : classes){
             String[] tmp = uri.split("/");
             String label = tmp[tmp.length-1].toLowerCase();
@@ -629,7 +641,7 @@ public class Process {
         
     }
 
-    private static void runWornetPropertyApproach(HashSet<String> properties, Lexicon lexicon, Wordnet wordnet, StanfordLemmatizer sl) {
+    private static void runWornetPropertyApproach(Set<String> properties, Lexicon lexicon, Wordnet wordnet, StanfordLemmatizer sl) {
         for(String uri : properties){
             boolean b_nouns = false;
             boolean b_adverbs = false;
@@ -754,5 +766,28 @@ public class Process {
         }
         
     }
+    
+    
+    	private static Set<String> loadPropertyList(String pathToProperties) throws IOException {
+            Set<String> properties = new HashSet<>();
+            String properties_raw = "";
+            /*
+             * each line contains one property
+             */
+            FileInputStream inputStream = new FileInputStream(pathToProperties);
+	    try {
+	        properties_raw = IOUtils.toString(inputStream);
+	    } finally {
+	        inputStream.close();
+	    }
+	    
+	    for(String p: properties_raw.split("\n")){
+                properties.add(p);
+	    }
+            
+            return properties;
+		
+	}
+	
 
 }
