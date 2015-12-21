@@ -57,18 +57,20 @@ public class SparqlPattern_DE_Noun_PP_appos extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String prep = null;
-                int number = 0;
-                
+
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
 
                     try{
                             noun = qs.get("?lemma").toString();
                             e1_arg = qs.get("?e1_arg").toString();
                             e2_arg = qs.get("?e2_arg").toString();	
                             prep = qs.get("?prep").toString();
-                     }
+                            if(noun!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                Templates.getNounWithPrep(model, lexicon, sentence,noun, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                            }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
@@ -76,10 +78,7 @@ public class SparqlPattern_DE_Noun_PP_appos extends SparqlPattern{
 
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && prep!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    Templates.getNounWithPrep(model, lexicon, sentence,noun, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-            } 
+
 		
 	}
 

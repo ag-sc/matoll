@@ -69,11 +69,8 @@ public class SparqlPattern_DE_Refelexive_Transitive_PP extends SparqlPattern{
                 String prep = null;
                 String particle = null;
 
-                int number = 0;
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
-
                     try{
                             verb = qs.get("?lemma").toString();
                             e1_arg = qs.get("?e1_arg").toString();
@@ -83,7 +80,14 @@ public class SparqlPattern_DE_Refelexive_Transitive_PP extends SparqlPattern{
                              particle = qs.get("?particle").toString();	   
                             }
                             catch(Exception e){}
-                     }
+                            if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                if(particle!=null){
+                                    Templates.getReflexiveTransitiveVerb(model, lexicon, sentence,particle+verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                                }else
+                                    Templates.getReflexiveTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                            }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
@@ -91,13 +95,7 @@ public class SparqlPattern_DE_Refelexive_Transitive_PP extends SparqlPattern{
 
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && prep!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(particle!=null){
-                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence,particle+verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-                    }else
-                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg,prep, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-            } 
+
 		
 	}
 

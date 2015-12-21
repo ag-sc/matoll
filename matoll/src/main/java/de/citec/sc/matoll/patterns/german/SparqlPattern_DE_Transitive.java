@@ -86,10 +86,8 @@ sentence::
                 String additional_lemma = null;
                 String avz = null;
 
-                int number = 0;
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
 
 
                     try{
@@ -105,27 +103,26 @@ sentence::
                                 avz = qs.get("?avz").toString();
                             }
                             catch (Exception e){}
-                     }
+                            if(verb!=null && e1_arg!=null && e2_arg!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                if(additional_lemma!=null){
+                                    Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                                }
+                                if(avz!=null){
+                                    Templates.getTransitiveVerb(model, lexicon, sentence, avz+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                                }
+
+                                if(avz==null && additional_lemma==null)
+                                    Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
+                            }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
                 }
 
                 qExec.close() ;
-                if(number>0)System.out.println(number);
-		if(verb!=null && e1_arg!=null && e2_arg!=null && number == 1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(additional_lemma!=null){
-                        Templates.getTransitiveVerb(model, lexicon, sentence, additional_lemma +" "+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-                    }
-                    if(avz!=null){
-                        Templates.getTransitiveVerb(model, lexicon, sentence, avz+verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-                    }
-                    
-                    if(avz==null && additional_lemma==null) 
-                        Templates.getTransitiveVerb(model, lexicon, sentence,verb, e1_arg, e2_arg, this.getReference(model), logger, this.getLemmatizer(),Language.DE,getID());
-            } 
-		
+
 	}
 
 }
