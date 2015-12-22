@@ -43,9 +43,6 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                                  + "?adjective <conll:form> ?adjective_lemma . "
                                  + "?adjective <conll:head> ?noun . "
                                  + "?adjective <conll:deprel> \"MOD\" . "
-                                 + "?noun <conll:wordnumber> ?wordnumber ."
-                                 + "?adjective <conll:wordnumber> ?wordnumber_adj ."
-                                 + "FILTER(?wordnumber_adj > ?wordnumber)."  
                                  + "?adjective <conll:cpostag> \"a\".  }"
                             + "?noun <conll:head> ?verb. "
                             + "?noun <conll:deprel> \"ATR\". "
@@ -84,11 +81,9 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                 String e2_arg = null;
                 String preposition = null;
                 String adjective_lemma = null;
-                int number = 0;
 
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
 
 
                     try{
@@ -100,7 +95,14 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                                 adjective_lemma = qs.get("?adjective_lemma").toString();
                             }
                             catch(Exception e){};
-                     }
+                            if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                if(adjective_lemma!=null)
+                                    Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                else
+                                    Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                            }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
@@ -108,13 +110,7 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(adjective_lemma!=null)
-                        Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    else
-                        Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-            } 
+
 		
 	}
 

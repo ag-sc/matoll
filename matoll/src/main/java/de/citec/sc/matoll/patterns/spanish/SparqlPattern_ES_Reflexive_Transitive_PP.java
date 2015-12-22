@@ -147,24 +147,26 @@ sentence::
                 String e2_arg = null;
                 String preposition = null;
                 String se_form = null;
-                int number = 0;
-                
+
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
-
 
                     try{
-                            verb = qs.get("?lemma").toString();
-                            e1_arg = qs.get("?e1_arg").toString();
-                            e2_arg = qs.get("?e2_arg").toString();	
-                            preposition = qs.get("?prep").toString();
-                            try{
-                                se_form = qs.get("?se_form").toString();
-                             }
-                            catch(Exception e){}
+                        verb = qs.get("?lemma").toString();
+                        e1_arg = qs.get("?e1_arg").toString();
+                        e2_arg = qs.get("?e2_arg").toString();
+                        preposition = qs.get("?prep").toString();
+                        try{
+                            se_form = qs.get("?se_form").toString();
+                        } catch(Exception e){}
+                        if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                            Sentence sentence = this.returnSentence(model);
+                            if(se_form!=null){
+                                Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                            }
+                        }
 
-                     }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
@@ -172,12 +174,7 @@ sentence::
 
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(se_form!=null){
-                        Templates.getReflexiveTransitiveVerb(model, lexicon, sentence, verb+"+"+se_form, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    }
-            } 
+
 		
 		
 	}

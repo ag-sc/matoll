@@ -35,7 +35,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
 
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 
                             + "?copula <conll:postag> ?pos . "
                             // can be VSII1S0 or "v"
@@ -46,6 +46,12 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                             + "?noun <conll:head> ?copula . "
                             + "?noun <conll:cpostag> \"n\" . "
                             + "?noun <conll:deprel> \"ATR\" ."
+
+                        + " OPTIONAL {"
+                        + "?adjective <conll:form> ?adjective_lemma . "
+                        + "?adjective <conll:head> ?noun . "
+                        + "?adjective <conll:deprel> \"MOD\" . "
+                        + "?adjective <conll:cpostag> \"a\".  }"
 
                             + "?p <conll:deprel> \"COMP\" . "
                             + "?p <conll:postag> ?prep_pos ."
@@ -84,18 +90,30 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                 String e1_arg = null;
                 String e2_arg = null;
                 String preposition = null;
-                int number = 0;
+                String adjective_lemma = null;
 
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
-                        number+=1;
 
                         try{
-                                noun = qs.get("?lemma").toString();
-                                e1_arg = qs.get("?e1_arg").toString();
-                                e2_arg = qs.get("?e2_arg").toString();	
-                                preposition = qs.get("?prep").toString();	
-                         }
+                            noun = qs.get("?lemma").toString();
+                            e1_arg = qs.get("?e1_arg").toString();
+                            e2_arg = qs.get("?e2_arg").toString();
+                            preposition = qs.get("?prep").toString();
+                            try{
+                                adjective_lemma = qs.get("?adjective_lemma").toString();
+                            }
+                            catch(Exception e){}
+                            if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                                Sentence sentence = this.returnSentence(model);
+                                if(adjective_lemma!=null){
+                                    Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                }
+                                else
+                                    Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                            }
+
+                        }
                         catch(Exception e){
                        e.printStackTrace();
                        }
@@ -103,10 +121,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
 
                 qExec.close() ;
     
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-            } 
+
 		
 	}
 

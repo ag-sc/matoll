@@ -223,21 +223,26 @@ public class SparqlPattern_ES_Predicative_Participle_Passive extends SparqlPatte
                 String e2_arg = null;
                 String preposition = null;
                 String lemma = null;
-                int number = 0;
-
 
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
-                    number+=1;
-
 
                     try{
-                            e1_arg = qs.get("?e1_arg").toString();
-                            e2_arg = qs.get("?e2_arg").toString();	
-                            lemma = qs.get("?lemma").toString();
-                            participle = qs.get("?form").toString();
-                            preposition = qs.get("?prep").toString();
-                     }
+                        e1_arg = qs.get("?e1_arg").toString();
+                        e2_arg = qs.get("?e2_arg").toString();
+                        lemma = qs.get("?lemma").toString();
+                        participle = qs.get("?form").toString();
+                        preposition = qs.get("?prep").toString();
+                        if(participle!=null && e1_arg!=null && e2_arg!=null) {
+                            Sentence sentence = this.returnSentence(model);
+                            Templates.getAdjective(model, lexicon, sentence, participle, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+
+                            if (preposition!=null)
+                            {   if(preposition.equals("por"))
+                                Templates.getTransitiveVerb(model, lexicon, sentence, lemma, e2_arg, e1_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                            }
+                        }
+                    }
                     catch(Exception e){
                    e.printStackTrace();
                    }
@@ -245,15 +250,7 @@ public class SparqlPattern_ES_Predicative_Participle_Passive extends SparqlPatte
 
                 qExec.close() ;
     
-		if(participle!=null && e1_arg!=null && e2_arg!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    Templates.getAdjective(model, lexicon, sentence, participle, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-     
-                    if (preposition!=null)
-                    {   if(preposition.equals("por"))
-                            Templates.getTransitiveVerb(model, lexicon, sentence, lemma, e2_arg, e1_arg, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
-                    }
-                } 
+
 		
 	}
 
