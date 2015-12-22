@@ -93,7 +93,6 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                     + "UNION"
                     + "{?y <conll:cpostag> \"VBZ\" .}"
                     + "?y <conll:form> ?lemma . "
-                    + "?y <conll:wordnumber> ?wordnumber ."
                     + "?e1 <conll:head> ?y . "
                     + "?e1 <conll:deprel> ?deprel. "
                     + "FILTER regex(?deprel, \"subj\") ."
@@ -106,15 +105,11 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                         + "?dobj <conll:head> ?y . "
                         + "?dobj <conll:form> ?dobj_form ."
                         + "?dobj <conll:deprel> \"dobj\" ."
-                        + "?dobj <conll:wordnumber> ?wordnumber_dobj ."
-                        + "FILTER(?wordnumber_dobj<?wordnumber)."
                     + "}"
                     + "OPTIONAL {"
                          + "?prt <conll:head> ?y . "
                          + "?prt <conll:form> ?prt_form ."
                          + "?prt <conll:deprel> \"prt\" ."
-                         + "?prt <conll:wordnumber> ?wordnumber_prt ."
-                         + "FILTER(?wordnumber_prt<?wordnumber)."
                     + "}"
                     + "?e1 <own:senseArg> ?e1_arg. "
                     + "?e2 <own:senseArg> ?e2_arg. "
@@ -133,13 +128,9 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 String preposition = null;
                 String dobj_form = null;
                 String prt_form = null;
-                
-                int number = 0;
-                
+
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
-                         number+=1;
-
                          try{
                                  verb = qs.get("?lemma").toString();
                                  e1_arg = qs.get("?e1_arg").toString();
@@ -152,8 +143,25 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                                  try{
                                      prt_form = qs.get("?prt_form").toString();
                                  }catch(Exception e){
-                                    }
-                          }
+                                 }
+                                 if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                                     Sentence sentence = this.returnSentence(model);
+                                     String cannonicalform = "";
+                                     if(dobj_form!=null && prt_form!=null){
+                                         cannonicalform = verb+" "+dobj_form +" "+prt_form;
+                                     }
+                                     else if(dobj_form==null && prt_form!=null){
+                                         cannonicalform = verb+" "+prt_form;
+                                     }
+                                     else if(dobj_form!=null && prt_form==null){
+                                         cannonicalform = verb+" "+dobj_form;
+                                     }
+                                     else{
+                                         cannonicalform = verb;
+                                     }
+                                     Templates.getIntransitiveVerb(model, lexicon, sentence, cannonicalform, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                 }
+                         }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
                         }
@@ -162,23 +170,7 @@ sentence:Steve Jobs attempted management coups twice at Apple Inc. ; first in 19
                 
                 qExec.close() ;
     
-		if(verb!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    String cannonicalform = "";
-                    if(dobj_form!=null && prt_form!=null){
-                        cannonicalform = verb+" "+dobj_form +" "+prt_form;
-                    }
-                    else if(dobj_form==null && prt_form!=null){
-                        cannonicalform = verb+" "+prt_form;
-                    }
-                    else if(dobj_form!=null && prt_form==null){
-                        cannonicalform = verb+" "+dobj_form;
-                    }
-                    else{
-                        cannonicalform = verb;
-                    }
-                    Templates.getIntransitiveVerb(model, lexicon, sentence, cannonicalform, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
+
                 
 		
 	}

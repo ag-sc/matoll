@@ -65,12 +65,9 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
                 String e2_arg = null;
                 String preposition = null;
                 String lemma_addition = "";
-                
-                int number = 0;
 
                  while ( rs.hasNext() ) {
                          QuerySolution qs = rs.next();
-                         number+=1;
 
                          try{
                                  adjective = qs.get("?lemma").toString();
@@ -81,9 +78,16 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
                                      lemma_addition = qs.get("?lemma_addition").toString();
                                  }
                                  catch(Exception e){
-                                     
                                  }
-                          }
+                                 if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                                     Sentence sentence = this.returnSentence(model);
+                                     if(!lemma_addition.equals("")){
+                                         Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+
+                                     }
+                                     else Templates.getAdjective(model, lexicon, sentence, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                 }
+                         }
 	        	 catch(Exception e){
 	     	    	e.printStackTrace();
                         }
@@ -91,14 +95,7 @@ public class SparqlPattern_EN_Predicative_Participle_copulative extends SparqlPa
 
                 qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(!lemma_addition.equals("")){
-                        Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
 
-                    }
-                    else Templates.getAdjective(model, lexicon, sentence, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
 
 	}
 

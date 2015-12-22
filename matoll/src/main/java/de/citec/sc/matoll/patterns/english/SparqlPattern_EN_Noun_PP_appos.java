@@ -27,15 +27,12 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
 			+ "{?y <conll:cpostag> \"NN\" . }"
 			+ "UNION"
 			+ "{?y <conll:cpostag> \"NNS\" . }"
-                        + "?y <conll:wordnumber> ?wordnumber ."
 			+"OPTIONAL{"
                         + "?modifier <conll:head> ?y. "
                         + "?modifier <conll:form> ?prefix. "
-                        + "?modifier <conll:wordnumber> ?wordnumber_modifier ."
 			+ "{?modifier <conll:deprel> \"nn\". }"
                         + " UNION "
 			+ "{?modifier <conll:cpostag> \"JJ\".}"
-                        + "FILTER(?wordnumber_modifier<?wordnumber)."                       
 			+"} "
                         //"Mount Apo is the highest point in the Philippines and dominates the skyline"
                         + "{?e1 <conll:head> ?y . "
@@ -68,11 +65,9 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
                 String e2_arg = null;
                 String preposition = null;
                 String modifier = "";
-                int number = 0;
-                
+
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
-                        number+=1;
                         try{
                                 noun = qs.get("?lemma").toString();
                                 e1_arg = qs.get("?e1_arg").toString();
@@ -84,22 +79,21 @@ public class SparqlPattern_EN_Noun_PP_appos extends SparqlPattern {
                                 catch(Exception e){
 
                                 }
+                                if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                                    Sentence sentence = this.returnSentence(model);
+                                    if (!modifier.equals("")){
+                                        Templates.getNounWithPrep(model, lexicon, sentence, modifier +" "+noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                    }
+                                    else Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                }
 
-                         }
+                        }
                         catch(Exception e){
                        e.printStackTrace();
                        }
                     }
 
                 qExec.close() ;
-    
-		if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null && number==1) {
-                    Sentence sentence = this.returnSentence(model);
-                    if (!modifier.equals("")){
-                        Templates.getNounWithPrep(model, lexicon, sentence, modifier +" "+noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-                    }
-                    else Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
                 
 				
 	}

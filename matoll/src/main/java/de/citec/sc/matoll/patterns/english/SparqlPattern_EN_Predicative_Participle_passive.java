@@ -131,9 +131,15 @@ sentence::
                                     lemma_addition = qs.get("?lemma_addition").toString();
                                 }
                                 catch(Exception e){
-
                                 }
-                         }
+                                if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && !preposition.equals("by")) {
+                                    Sentence sentence = this.returnSentence(model);
+                                    if(!lemma_addition.equals("")){
+                                        Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                    }
+                                    else Templates.getAdjective(model, lexicon, sentence, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                                }
+                        }
                         catch(Exception e){
                        e.printStackTrace();
                        }
@@ -141,13 +147,7 @@ sentence::
                  
                 qExec.close() ;
     
-		if(adjective!=null && e1_arg!=null && e2_arg!=null && preposition!=null && !preposition.equals("by")) {
-                    Sentence sentence = this.returnSentence(model);
-                    if(!lemma_addition.equals("")){
-                        Templates.getAdjective(model, lexicon, sentence, lemma_addition+" "+adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-                    }
-                    else Templates.getAdjective(model, lexicon, sentence, adjective, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-            } 
+
 				
 	}
 

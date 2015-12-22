@@ -118,8 +118,12 @@ sentence::
                         e1_arg = qs.get("?e1_arg").toString();
                         e2_arg = qs.get("?e2_arg").toString();	
                         preposition = qs.get("?prep").toString();
+                        if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
+                            Sentence sentence = this.returnSentence(model);
+                            Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg,preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
+                        }
 
-                 }
+                }
                 catch(Exception e){
                e.printStackTrace();
                }
@@ -127,11 +131,6 @@ sentence::
 
         qExec.close() ;
 
-        if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
-            Sentence sentence = this.returnSentence(model);
-//            System.out.println("found:"+noun);
-            Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg,preposition, this.getReference(model), logger, this.getLemmatizer(),Language.EN,getID());
-        } 
                 
     }
     
