@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 
 import static de.citec.sc.matoll.core.Language.EN;
 

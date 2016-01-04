@@ -1,6 +1,7 @@
+package de.citec.sc.matoll.test;
+
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
@@ -11,7 +12,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconLoader;
 
-public class test4 {
+public class test3 {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		LexiconLoader loader = new LexiconLoader();
@@ -31,9 +32,6 @@ public class test4 {
 		marry_entries = gold.getEntriesWithCanonicalForm("marry@en");
 		
 		System.out.print("There are "+marry_entries.size()+" entries for marry\n");
-		
-                
-                
 		
 		for (LexicalEntry entry: marry_entries)
 		{
@@ -77,8 +75,6 @@ public class test4 {
 		System.out.print(entry);
 		
 		lexicon.addEntry(entry);
-                
-              
 		
 		for (LexicalEntry myEntry: lexicon.getEntries())
 		{

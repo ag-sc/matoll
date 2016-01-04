@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 
 
 import org.apache.jena.rdf.model.Model;

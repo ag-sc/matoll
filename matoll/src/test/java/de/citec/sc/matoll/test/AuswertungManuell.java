@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Restriction;

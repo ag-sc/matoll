@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 import de.citec.sc.matoll.utils.OntologyImporter;
 
 

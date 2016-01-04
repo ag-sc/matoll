@@ -1,7 +1,9 @@
-import de.citec.sc.matoll.core.Language;
+package de.citec.sc.matoll.test;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import de.citec.sc.matoll.core.Language;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Sense;
@@ -11,7 +13,7 @@ import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconLoader;
 
-public class test2 {
+public class test4 {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		LexiconLoader loader = new LexiconLoader();
@@ -32,10 +34,14 @@ public class test2 {
 		
 		System.out.print("There are "+marry_entries.size()+" entries for marry\n");
 		
+                
+                
+		
 		for (LexicalEntry entry: marry_entries)
 		{
 			if (!lexicon.contains(entry))
 			{
+//				entry.addSentence("This is the first sentence");
 				lexicon.addEntry(entry);
 				System.out.print("Adding entry: "+entry+"\n");
 				System.out.print("Hashcode: "+entry.hashCode()+"\n");
@@ -51,16 +57,17 @@ public class test2 {
 		Sense sense = new Sense();
 		
 		sense.setReference(new SimpleReference("http://dbpedia.org/ontology/spouse"));
-		
-		
+				
 		entry.setPOS("http://www.lexinfo.net/ontology/2.0/lexinfo#verb");
+		
+//		entry.addSentence("This is the second sentence");
 		
 		SyntacticBehaviour behaviour = new SyntacticBehaviour();
 		
 		behaviour.setFrame("http://www.lexinfo.net/ontology/2.0/lexinfo#TransitiveFrame");
 				
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","2",null));
-		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#subject","1",null));
+		behaviour.add(new SyntacticArgument("http://www.lexinfo.net/ontology/2.0/lexinfo#directObject","2",null));
 		
 		entry.addSyntacticBehaviour(behaviour,sense);
 		
@@ -69,14 +76,15 @@ public class test2 {
 		
 		System.out.print("Hashcode: "+entry.hashCode());
 		
+		System.out.print(entry);
 		
-		if (lexicon.contains(entry)) 
+		lexicon.addEntry(entry);
+                
+              
+		
+		for (LexicalEntry myEntry: lexicon.getEntries())
 		{
-			System.out.print("Entry is already contained!\n");
-		}
-		else
-		{
-			System.out.print("Entry is not contained!\n");
+			System.out.print(myEntry);
 		}
 		
 	}

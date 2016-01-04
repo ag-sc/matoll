@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 import java.io.FileNotFoundException;
 
 import de.citec.sc.matoll.core.LexicalEntry;

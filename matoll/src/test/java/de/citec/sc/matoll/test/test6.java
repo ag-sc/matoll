@@ -1,3 +1,5 @@
+package de.citec.sc.matoll.test;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
