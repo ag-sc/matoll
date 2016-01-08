@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import org.apache.commons.io.IOUtils;
 
 public class GenerateArff {
@@ -18,7 +19,7 @@ public class GenerateArff {
 	
 	
 	public static void run(String path_annotatedFiles,String path_normalPath,String path_to_write,
-			HashSet<String> subLabelList,HashSet<String> subLabelList_2,HashSet<String> posPatternList,HashSet<String> posAdjPatternList) throws FileNotFoundException{
+			HashSet<String> subLabelList,HashSet<String> subLabelList_2,HashSet<String> posPatternList,HashSet<String> posAdjPatternList,MaxentTagger tagger) throws FileNotFoundException{
 		
 		
 		List<AdjectiveObject> annotated = readCSV(path_annotatedFiles);
@@ -30,7 +31,7 @@ public class GenerateArff {
 		generatePosAdjPatternList(adjectives,posAdjPatternList);
 		
 		
-		createArrf(subLabelList,subLabelList_2,posPatternList,posAdjPatternList,adjectives,path_to_write);
+		createArrf(subLabelList,subLabelList_2,posPatternList,posAdjPatternList,adjectives,path_to_write,tagger);
 		
 	}
 	
@@ -57,17 +58,17 @@ public class GenerateArff {
 
 	private static void createArrf(HashSet<String> subLabelList,HashSet<String> subLabelList_2,
 			HashSet<String> posPatternList, HashSet<String> posAdjPatternList,
-			List<AdjectiveObject> adjectives, String path_to_write) throws FileNotFoundException {
+			List<AdjectiveObject> adjectives, String path_to_write,MaxentTagger tagger) throws FileNotFoundException {
 		List<AdjectiveObject> correctAdjectives = new ArrayList<AdjectiveObject>();
 		List<AdjectiveObject> wrongAdjectives = new ArrayList<AdjectiveObject>();
 		getRightWrongEntries(correctAdjectives,wrongAdjectives,adjectives);
 		System.out.println("#correct entries"+correctAdjectives.size());
 		System.out.println("#wrong entries"+wrongAdjectives.size());
 		List<String> lines = new ArrayList<String>();
-		getCsvLine(lines,correctAdjectives,subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
+		getCsvLine(lines,correctAdjectives,subLabelList,subLabelList_2,posPatternList,posAdjPatternList,tagger);
 		//List<AdjectiveObject> randomised_wrongAdjectives = new ArrayList<AdjectiveObject>();
 		//getRandomisedWrongEntries(randomised_wrongAdjectives,wrongAdjectives,correctAdjectives.size());
-		getCsvLine(lines,wrongAdjectives,subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
+		getCsvLine(lines,wrongAdjectives,subLabelList,subLabelList_2,posPatternList,posAdjPatternList,tagger);
 		writeArff(lines,path_to_write,subLabelList,subLabelList_2,posPatternList,posAdjPatternList);
 		System.out.println("wrote #"+lines.size()+" lines");
 		System.out.println();
@@ -75,13 +76,14 @@ public class GenerateArff {
 	}
 
 
-	private static void writeArff(List<String> lines, String path_to_write,
+	public static void writeArff(List<String> lines, String path_to_write,
 			HashSet<String> subLabelList, HashSet<String> subLabelList_2, HashSet<String> posPatternList,
 			HashSet<String> posAdjPatternList) throws FileNotFoundException {
 		PrintWriter writer = new PrintWriter(path_to_write);
 		String first_line =""
 			+"@relation adjectives\n"
 			+"@attribute 'normalizedFrequency' numeric\n"
+			+"@attribute 'JJ' {0,1}\n"
 			+"@attribute 'normalizedObjectFrequency' numeric\n"
 			+"@attribute 'normalizedObjectOccourences' numeric\n"
 			+"@attribute 'ratio' numeric\n"
@@ -115,7 +117,7 @@ public class GenerateArff {
 		writer.println(first_line);
 		for(String line:lines)writer.println(line);
 
-		
+//		System.out.println("Wrote to "+path_to_write);
 		
 		writer.close();
 		
@@ -135,11 +137,17 @@ public class GenerateArff {
 	}*/
 
 
-	private static void getCsvLine(List<String> lines,
-			List<AdjectiveObject> correctAdjectives, HashSet<String> subLabelList,HashSet<String> subLabelList_2, HashSet<String> posPatternList, HashSet<String> posAdjPatternList) {
+	public static void getCsvLine(List<String> lines,
+			List<AdjectiveObject> correctAdjectives, HashSet<String> subLabelList,HashSet<String> subLabelList_2, HashSet<String> posPatternList, HashSet<String> posAdjPatternList,MaxentTagger tagger) {
 		// TODO Auto-generated method stub
 		for(AdjectiveObject adjectiveobject : correctAdjectives){
+
+			int jj = 0;
+			if(tagger.tagString(adjectiveobject.getAdjectiveTerm().toLowerCase()).contains("JJ")){
+				jj=1;
+			}
 			String line = Double.toString(adjectiveobject.getNormalizedFrequency())
+					+","+Integer.toString(jj)
 					+","+Double.toString(adjectiveobject.getNormalizedObjectFrequency())
 					+","+Double.toString(adjectiveobject.getNormalizedObjectOccurrences())
 					+","+Double.toString(adjectiveobject.getRatio())

@@ -38,6 +38,7 @@ import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -47,6 +48,7 @@ import org.apache.commons.io.IOUtils;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
+//import weka.classifiers.trees.J48;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -73,12 +75,13 @@ public class Process {
 		//String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
                 String path_to_tagger_model ="resources/english-caseless-left3words-distsim.tagger";
 		SMO smo = new SMO();
+//                J48 smo = new J48();
                 smo.setOptions(weka.core.Utils.splitOptions("-M"));
                 Classifier cls = smo; 
                 
                 final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
 	
-//                String path_to_input_file = "../dbpedia_2014.owl";
+                //String path_to_input_file = "../dbpedia_2014.owl";
                 String path_to_input_file = "test.txt";
                 Set<String> properties = new HashSet<>();
                 Set<String> classes = new HashSet<>();
@@ -120,7 +123,7 @@ public class Process {
 		 */
 		System.out.println("Generate ARFF File (Training)");
 		try {
-			GenerateArff.run(path_annotatedFiles, path_raw_files, path_to_write_arff,label_3,label_2,pos,posAdj);
+			GenerateArff.run(path_annotatedFiles, path_raw_files, path_to_write_arff,label_3,label_2,pos,posAdj,tagger);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,10 +163,10 @@ public class Process {
 
                
 
-                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
+//                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
                 
-		runWornetClassApproach(classes,lexicon,wordnet);
+//		runWornetClassApproach(classes,lexicon,wordnet);
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -177,19 +180,7 @@ public class Process {
 		RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
 		
 		extportTSV(lexicon,path);
-//		/*
-//		 * write csv
-//		 */
-//		
-//		PrintWriter writer;
-//		try {
-//			writer = new PrintWriter(path_to_write_arff.replace(".arff", ".csv"));
-//			for(String line:csv_output) writer.print(line);
-//			writer.close();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		
 		
 		
@@ -202,7 +193,7 @@ public class Process {
 	}
 
 	private static void createRestrictionClassEntry(Lexicon lexicon,String adjective, String object_uri, String uri, int frequency, double distribution) {
-            if(distribution>=0.5 && isAlpha(adjective) && isAlpha(frag(object_uri))){
+            if(isAlpha(adjective) && isAlpha(frag(object_uri))){
                 LexicalEntry entry = new LexicalEntry(Language.EN);
 		entry.setCanonicalForm(adjective);
                 
@@ -280,96 +271,6 @@ public class Process {
             return output;
         }
 
-	private static void writeSingleArffFile(String path, String arff_prefix,
-			AdjectiveObject adjectiveobject,HashSet<String> subLabelList,
-			HashSet<String> subLabelList_2,
-			HashSet<String> posPatternList,HashSet<String> posAdjPatternList) {
-		String line = Double.toString(adjectiveobject.getNormalizedFrequency())
-				+","+Double.toString(adjectiveobject.getNormalizedObjectFrequency())
-				+","+Double.toString(adjectiveobject.getNormalizedObjectOccurrences())
-				+","+Double.toString(adjectiveobject.getRatio())
-				+","+Double.toString(adjectiveobject.getRatio_pattern())
-				+","+Double.toString(adjectiveobject.getRatio_pos_pattern())
-				//+","+Double.toString(adjectiveobject.getEntropy())
-				+","+Integer.toString(adjectiveobject.getPosition());
-		if(adjectiveobject.isFirstPosition())line+=","+"1";
-		else line+=","+"0";
-		if(adjectiveobject.isLastPosition())line+=","+"1";
-		else line+=","+"0";
-		line+=","+Double.toString(adjectiveobject.getNld());
-		for(String label:subLabelList){
-			if(adjectiveobject.getSublabel().equals(label))line+=","+"1";
-			else line+=","+"0";
-		}
-		for(String label:subLabelList_2){
-			if(adjectiveobject.getSublabel_2().equals(label))line+=","+"1";
-			else line+=","+"0";
-		}
-		for(String pospattern:posPatternList){
-			if(adjectiveobject.getPos_Pattern().equals(pospattern))line+=","+"1";
-			else line+=","+"0";
-		}
-		for(String posadjpattern:posAdjPatternList){
-			if(adjectiveobject.getPos_adj_Pattern().equals(posadjpattern))line+=","+"1";
-			else line+=","+"0";
-		}
-		/*
-		 * we test always, if the line is true
-		 */
-		line+=",1";
-		arff_prefix+=line;
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter(path);
-			writer.println(arff_prefix);
-			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-
-	private static String createArffPrefix(HashSet<String> subLabelList,HashSet<String> subLabelList_2,
-			HashSet<String> posPatternList,HashSet<String> posAdjPatternList) {
-		String first_line =""
-				+"@relation adjectives\n"
-				+"@attribute 'normalizedFrequency' numeric\n"
-				+"@attribute 'normalizedObjectFrequency' numeric\n"
-				+"@attribute 'normalizedObjectOccourences' numeric\n"
-				+"@attribute 'ratio' numeric\n"
-				+"@attribute 'ratioPattern' numeric\n"
-				+"@attribute 'ratioPosPattern' numeric\n"
-				//+"@attribute 'entropy' numeric\n"
-				+"@attribute 'position' numeric\n"
-				+"@attribute 'firstPosition' {0,1}\n"
-				+"@attribute 'lastPosition' {0,1}\n"
-				+"@attribute 'nld' numeric\n";
-			int counter=0;
-			for(String label:subLabelList){
-				counter+=1;
-				first_line+="@attribute 'l"+Integer.toString(counter)+"' {0,1}\n";
-			}
-			for(String label:subLabelList_2){
-				counter+=1;
-				first_line+="@attribute 'l2"+Integer.toString(counter)+"' {0,1}\n";
-			}
-			for(String label:posPatternList){
-				counter+=1;
-				first_line+="@attribute 'p"+Integer.toString(counter)+"' {0,1}\n";
-			}
-			for(String label:posAdjPatternList){
-				counter+=1;
-				first_line+="@attribute 'pa"+Integer.toString(counter)+"' {0,1}\n";
-			}
-			
-			first_line+="@attribute 'class' {0,1}\n"
-					+"@data\n";
-			
-			
-			return first_line;
-	}
 
 	private static void generateModel(Classifier cls,String path_to_arff) throws FileNotFoundException, IOException {
 		 Instances inst = new Instances(new BufferedReader(new FileReader(path_to_arff)));
@@ -420,14 +321,13 @@ public class Process {
         int counter = 0;
         int uri_counter = 0;
         int uri_used = 0;
-        String arff_prefix = createArffPrefix(label_2, label_3, pos, posAdj);
         for(String uri:properties){
             uri_counter+=1;
             System.out.println("URI:"+uri);
             System.out.println(uri_counter+"/"+properties.size());
             try{
                 List<AdjectiveObject> object_list = adjectiveExtractor.start(path_to_objects, uri, tagger, mp);
-                System.out.println(object_list.size());
+                System.out.println("Got "+object_list.size()+" objects");
                 if(object_list.size()>0)uri_used+=1;
                 for(AdjectiveObject adjectiveObject : object_list){
                     /*
@@ -435,7 +335,16 @@ public class Process {
                      */
                     if(adjectiveObject.isAdjective() && !Character.isDigit(adjectiveObject.getAdjectiveTerm().charAt(0))){
                         String tmp = "/tmp/tmp.arff";
-                        writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
+//                        writeSingleArffFile(tmp,arff_prefix,adjectiveObject,label_2, label_3, pos, posAdj);
+                        List<String> lines = new ArrayList<String>();
+                        List<AdjectiveObject> small_object_list = new ArrayList<>();
+                        /*
+                        we want to pretict that it is a correct entry
+                        */
+                        adjectiveObject.setAnnotation("1");
+                        small_object_list.add(adjectiveObject);
+                        GenerateArff.getCsvLine(lines,small_object_list,label_2,label_3,pos,posAdj,tagger);
+                        GenerateArff.writeArff(lines,tmp,label_2,label_3,pos,posAdj);
                         /*
                          * Load instances to predict.
                          */
@@ -451,7 +360,7 @@ public class Process {
                               */
                              HashMap<Integer, Double> result = prediction.predict(current);
                              for(int key : result.keySet()){
-                                if(key==1){
+                                if(key==1 && result.get(key)>0.99){
                                      counter+=1;
                                      try{
                                          createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
@@ -459,6 +368,10 @@ public class Process {
                                      catch(Exception e){
                                             e.printStackTrace();
                                      }
+                                }
+                                else{
+//                                    System.out.println("Predicted 0 for "+adjectiveObject.getAdjectiveTerm());
+//                                    System.out.println();
                                 }
                             }
 

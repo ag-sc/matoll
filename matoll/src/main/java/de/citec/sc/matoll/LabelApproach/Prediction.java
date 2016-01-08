@@ -30,22 +30,39 @@ public class Prediction {
 		 * value_to_predict
 		 * can be only 0 or 1, as only two classes are given 
 		 */
-	    //double value=cls.classifyInstance(current.instance(value_to_predict));
+	    //double pred=cls.classifyInstance(current.instance(value_to_predict));
 		
-		double value=cls.classifyInstance(current);
-		
-		
+		double pred=cls.classifyInstance(current);
+	
+            double value=cls.classifyInstance(current);
+
+             //get the prediction percentage or distribution
+            double[] percentage=cls.distributionForInstance(current);
+
+            //get the name of the class value
+            String prediction_string=current.classAttribute().value((int)value); 
+            
+        
 
 	    //get the prediction percentage or distribution
 	    //double[] percentage=cls.distributionForInstance(current.instance(value_to_predict));
-	    double[] percentage=cls.distributionForInstance(current);
-//	    String distribution = Double.toString(percentage[(int) value]);
-//	    String prediction=current.classAttribute().value((int)value); 
+	    //double[] percentage=cls.distributionForInstance(current);
+//	    String distribution = Double.toString(percentage[(int) pred]);
+//	    String prediction=current.classAttribute().pred((int)pred); 
 	    
-
-        List<String> result = new ArrayList<String>();
-        int prediction = (int)value;
-        double distribution = percentage[(int) value];
+//        for(double x:percentage){
+//            System.out.println("x:"+x);
+//        }
+//        List<String> result = new ArrayList<String>();
+//        System.out.println("value:"+pred);
+        int prediction = (int)pred;
+        double distribution = percentage[(int) pred];
+//        if(prediction_string.contains("0")){
+//                System.out.println("YEAH");
+//                System.out.println("Prediction"+prediction);
+//            }
+//        System.out.println("prediction:"+prediction);
+//        System.out.println("distribution:"+distribution);
         hm.put(prediction, distribution);
         
         return hm;
