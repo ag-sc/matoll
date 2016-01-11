@@ -32,19 +32,44 @@ import de.citec.sc.matoll.core.SimpleReference;
 import de.citec.sc.matoll.core.SyntacticArgument;
 import de.citec.sc.matoll.core.SyntacticBehaviour;
 import de.citec.sc.matoll.io.LexiconSerialization;
+import de.citec.sc.matoll.utils.Levenshtein;
 import de.citec.sc.matoll.utils.OntologyImporter;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
 import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.io.FileInputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.document.Document;
+
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.store.FSDirectory;
+
 
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMO;
@@ -81,8 +106,8 @@ public class Process {
                 
                 final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
 	
-                //String path_to_input_file = "../dbpedia_2014.owl";
-                String path_to_input_file = "test.txt";
+                String path_to_input_file = "../dbpedia_2014.owl";
+//                String path_to_input_file = "test.txt";
                 Set<String> properties = new HashSet<>();
                 Set<String> classes = new HashSet<>();
                 if(path_to_input_file.endsWith(".txt")){
@@ -163,10 +188,10 @@ public class Process {
 
                
 
-//                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
+                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
 		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
                 
-//		runWornetClassApproach(classes,lexicon,wordnet);
+		runWornetClassApproach(classes,lexicon,wordnet,"/Users/swalter/Downloads/EnglishIndexReduced");
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -394,18 +419,51 @@ public class Process {
                 
     }
 
-    private static void runWornetClassApproach(Set<String> classes, Lexicon lexicon, Wordnet wordnet) {
+    private static void runWornetClassApproach(Set<String> classes, Lexicon lexicon, Wordnet wordnet, String pathToIndex) throws FileNotFoundException, IOException, ParseException {
+        List<String> stopwords = new ArrayList<>();
+        String everything = "";
+        FileInputStream inputStream = new FileInputStream("resources/englishST.txt");
+        try {
+        everything = IOUtils.toString(inputStream);
+        } finally {
+            inputStream.close();
+        }
+
+        for(String stopword : everything.split("\n")){
+            stopwords.add(stopword.toLowerCase());
+        }
+        stopwords.add("-LRB-");
+        stopwords.add("-RRB-");
+        
+        DirectoryReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(pathToIndex)));
+        IndexSearcher searcher = new IndexSearcher(reader);
+        Analyzer analyzer = new EnglishAnalyzer();
+        int uri_counter = 0;
         for(String uri : classes){
-            String[] tmp = uri.split("/");
-            String label = tmp[tmp.length-1].toLowerCase();
-            label = label.replace("_"," ");
-            Set<String> canonicalForms = new HashSet<>();
-            canonicalForms.add(label);
-            canonicalForms.addAll(wordnet.getAllSynonyms(label));
-            for(String c : canonicalForms){
-                c = c.replace("_"," ");
-                createWordnetClassEntry(c,lexicon,uri);
+            uri_counter+=1;
+            System.out.println("URI:"+uri);
+            System.out.println(uri_counter+"/"+classes.size()+" classes");
+            String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?label WHERE{<"+uri+"> rdfs:label ?label. FILTER (lang(?label) = 'en') }";
+            Query query = QueryFactory.create(queryString);
+            QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+            ResultSet results = qexec.execSelect();
+            Set<String> labels = new HashSet<>();
+            while ( results.hasNext() ) {
+                QuerySolution qs = results.next();
+                String label = (qs.get("?label").toString());
+                label = label.replace("@en","");
+                label = label.replace("\"", "");
+                Set<String> canonicalForms = new HashSet<>();
+                canonicalForms.add(label);
+                canonicalForms.addAll(wordnetDisambiguation(uri,label,wordnet,stopwords,searcher,analyzer));
+    //            canonicalForms.addAll(wordnet.getAllSynonyms(label));
+                for(String c : canonicalForms){
+                    c = c.replace("_"," ");
+                    createWordnetClassEntry(c,lexicon,uri);
+                }
             }
+            
+            
             
         }
     }
@@ -556,63 +614,74 @@ public class Process {
 
     private static void runWornetPropertyApproach(Set<String> properties, Lexicon lexicon, Wordnet wordnet, StanfordLemmatizer sl) {
         for(String uri : properties){
-            boolean b_nouns = false;
-            boolean b_adverbs = false;
-            boolean b_verbs = false;
-            boolean b_adjectives = false;
-            String[] tmp = uri.split("/");
-            String label = tmp[tmp.length-1].toLowerCase();
-            label = label.replace("_"," ");
-            String lemma = sl.getLemma(label);
+            String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?label WHERE{<"+uri+"> rdfs:label ?label. FILTER (lang(?label) = 'en') }";
+            Query query = QueryFactory.create(queryString);
+            QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+            ResultSet results = qexec.execSelect();
+            Set<String> labels = new HashSet<>();
+            while ( results.hasNext() ) {
+                QuerySolution qs = results.next();
+                String label = (qs.get("?label").toString());
+                label = label.replace("@en","");
+                label = label.replace("\"", "");
+                String lemma = sl.getLemma(label);
+                boolean b_nouns = false;
+                boolean b_adverbs = false;
+                boolean b_verbs = false;
+                boolean b_adjectives = false;
             
-            Set<String> canonicalForms = new HashSet<>();
-            canonicalForms.addAll(wordnet.getNounSynonyms(lemma));
-            if(!canonicalForms.isEmpty()){
-                b_nouns = true;
-                canonicalForms.add(lemma);
-                for(String c : canonicalForms){
-                    c = c.replace("_"," ");
-                    createWordnetNounEntry(c,lexicon,uri);
+                Set<String> canonicalForms = new HashSet<>();
+                canonicalForms.addAll(wordnet.getNounSynonyms(lemma));
+                if(!canonicalForms.isEmpty()){
+                    b_nouns = true;
+                    canonicalForms.add(lemma);
+                    for(String c : canonicalForms){
+                        c = c.replace("_"," ");
+                        createWordnetNounEntry(c,lexicon,uri);
+                    }
                 }
-            }
-            
-            canonicalForms.clear();
-            canonicalForms.addAll(wordnet.getAdjectiveSynonyms(label));
-            if(!canonicalForms.isEmpty()){
-                b_adjectives = true;
-                canonicalForms.add(label);
-                for(String c : canonicalForms){
-                    c = c.replace("_"," ");
-                    createWordnetAdjectiveEntry(c,lexicon,uri);
+
+                canonicalForms.clear();
+                canonicalForms.addAll(wordnet.getAdjectiveSynonyms(label));
+                if(!canonicalForms.isEmpty()){
+                    b_adjectives = true;
+                    canonicalForms.add(label);
+                    for(String c : canonicalForms){
+                        c = c.replace("_"," ");
+                        createWordnetAdjectiveEntry(c,lexicon,uri);
+                    }
                 }
-            }
-            
-            canonicalForms.clear();
-            canonicalForms.addAll(wordnet.getAdverbSynonyms(lemma));
-            if(!canonicalForms.isEmpty()){
-                b_adverbs = true;
-                canonicalForms.add(lemma);
-                for(String c : canonicalForms){
-                    c = c.replace("_"," ");
-                    createWordnetVerbEntry(c,lexicon,uri);
+
+                canonicalForms.clear();
+                canonicalForms.addAll(wordnet.getAdverbSynonyms(lemma));
+                if(!canonicalForms.isEmpty()){
+                    b_adverbs = true;
+                    canonicalForms.add(lemma);
+                    for(String c : canonicalForms){
+                        c = c.replace("_"," ");
+                        createWordnetVerbEntry(c,lexicon,uri);
+                    }
                 }
-            }
-            
-            canonicalForms.clear();
-            canonicalForms.addAll(wordnet.getVerbSynonyms(lemma));
-            if(!canonicalForms.isEmpty()){
-                b_verbs = true;
-                canonicalForms.add(lemma);
-                for(String c : canonicalForms){
-                    c = c.replace("_"," ");
-                    createWordnetVerbEntry(c,lexicon,uri);
+
+                canonicalForms.clear();
+                canonicalForms.addAll(wordnet.getVerbSynonyms(lemma));
+                if(!canonicalForms.isEmpty()){
+                    b_verbs = true;
+                    canonicalForms.add(lemma);
+                    for(String c : canonicalForms){
+                        c = c.replace("_"," ");
+                        createWordnetVerbEntry(c,lexicon,uri);
+                    }
                 }
-            }
-            
-            if(!b_nouns && !b_adverbs && !b_verbs && !b_adjectives){
-                 createWordnetVerbEntry(lemma,lexicon,uri);
-                 createWordnetAdjectiveEntry(label,lexicon,uri);
-                 createWordnetNounEntry(lemma,lexicon,uri);
+                
+                /*
+                if notheing else is generated before....
+                */
+                if(!b_nouns && !b_adverbs && !b_verbs && !b_adjectives){
+                     createWordnetVerbEntry(lemma,lexicon,uri);
+                     createWordnetAdjectiveEntry(label,lexicon,uri);
+                     createWordnetNounEntry(lemma,lexicon,uri);
+                }
             }
             
             
@@ -701,6 +770,100 @@ public class Process {
             return properties;
 		
 	}
-	
 
+    private static Set<String> wordnetDisambiguation(String uri, String inputLabel, Wordnet wordnet,List<String> stopwords, IndexSearcher searcher,Analyzer analyzer) throws ParseException, IOException {
+        
+        Set<String> wordnetLabels = wordnet.getAllSynonyms(inputLabel);
+        if(wordnetLabels.size()<=3){
+            return wordnetLabels;
+        }
+        else{
+            String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?label WHERE{?res <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <"+uri+">. ?res rdfs:label ?label. FILTER (lang(?label) = 'en') } LIMIT 100";
+            Query query = QueryFactory.create(queryString);
+            QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+            ResultSet results = qexec.execSelect();
+            Set<String> labels = new HashSet<>();
+            while ( results.hasNext() ) {
+                 QuerySolution qs = results.next();
+                 labels.add(qs.get("?label").toString());
+            }
+
+            Map<String,Integer> hm = new HashMap<>();
+            for(String label : labels){
+                label = label.replace("@en","");
+                label = label.replace("\"", "");
+                Map<String,Integer> bagOfWords = new HashMap<>();
+                try{
+                    bagOfWords = getBagOfWords(label,stopwords,searcher,analyzer);
+                }
+                catch(Exception e){}
+                for(String x : bagOfWords.keySet()){
+                    if(hm.containsKey(x)){
+                        int value = hm.get(x);
+                        hm.put(x, value+bagOfWords.get(x));
+                    }
+                    else{
+                        hm.put(x, bagOfWords.get(x));
+                    }
+                }
+            }
+            Set<String> terms = new HashSet<>();
+            Map<String,Double> tmp_terms = new HashMap();
+            for(String x: wordnetLabels){
+                List<Double> list_nld = new ArrayList<>();
+                for(String key: hm.keySet()){
+                    list_nld.add(Levenshtein.normalizedLevenshteinDistance(x, key)*hm.get(key));
+                }
+                double value = 0;
+                for(Double d:list_nld) value+=d;
+                //normalization
+                if(value!=0)
+                    tmp_terms.put(x, value/list_nld.size());
+            }
+
+            for(String x:tmp_terms.keySet()){
+                if(tmp_terms.get(x)>0.6)terms.add(x);
+            }
+            return terms;
+        }
+        
+
+    }
+
+    private static Map<String, Integer> getBagOfWords(String label, List<String> stopwords, IndexSearcher searcher,Analyzer analyzer) throws ParseException, IOException {
+        BooleanQuery booleanQuery = new BooleanQuery();
+        booleanQuery.add(new QueryParser("plain", analyzer).parse("\""+label.toLowerCase()+"\""), BooleanClause.Occur.MUST);
+        
+        Map<String, Integer> bag = new HashMap<String,Integer>();
+	
+        TopScoreDocCollector collector = TopScoreDocCollector.create(99);
+        searcher.search(booleanQuery, collector);
+
+        ScoreDoc[] hits = collector.topDocs().scoreDocs;
+
+        for(int i=0;i<hits.length;++i) {
+          int docId = hits[i].doc;
+          Document d = searcher.doc(docId);
+          ArrayList<String> result = new ArrayList<>();
+          String sentence = d.get("parsed");
+          String[] tmp = sentence.split("\t\t");
+          sentence = "";
+          for(String x : tmp){
+              sentence+=" "+x.split("\t")[1];
+          }
+          for(String x : sentence.split(" ")){
+              if(!stopwords.contains(x)&&isAlpha(x)){
+                  if(bag.containsKey(x)){
+                      int value = bag.get(x);
+                      bag.put(x, value+1);
+                  }
+                  else{
+                      bag.put(x, 1);
+                  }
+              }
+          }
+        }
+        
+        return bag;
+    }
 }
