@@ -37,11 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-
 
 
 public class LexiconLoader {
@@ -504,7 +499,7 @@ public class LexiconLoader {
 
                          Statement stmt_pattern = iter_pattern.next();
                          if (stmt_pattern != null) {
-                             patterns.addAll(getPatternWrittenRepresentation(stmt_pattern.getObject(),model));
+                             patterns.addAll(getPatternWrittenRepresentation((Resource)stmt_pattern.getObject(),model));
                          }
                     }
                      
@@ -680,31 +675,32 @@ public class LexiconLoader {
     return "";
     }
             
-    private List getPatternWrittenRepresentation(RDFNode pattern,Model model) {
+    private List getPatternWrittenRepresentation(Resource pattern,Model model) {
         List<String> pattern_name = new ArrayList<>();
+        Resource canonicalForm;
+        Statement stmt;
 
-        String query = "Select DISTINCT ?form WHERE{"
-                + "<"+pattern+"> <"+LEMON.canonicalForm+"> ?canonicalForm. "
-                + "?canonicalForm <"+LEMON.writtenRep+"> ?form}";
-        QueryExecution qExec = QueryExecutionFactory.create(query, model) ;
-        ResultSet rs = qExec.execSelect() ;
+        Literal form;
+        stmt = pattern.getProperty(LEMON.canonicalForm);
 
-        try {
-         while ( rs.hasNext() ) {
-                 QuerySolution qs = rs.next();
-                 try{
-                         pattern_name.add(qs.get("?form").toString());	
-                  }
-                 catch(Exception e){
-                     e.printStackTrace();
+        if (stmt != null)
+        {
+            canonicalForm = (Resource) stmt.getObject();
+
+            if (canonicalForm != null)
+            {
+                stmt = canonicalForm.getProperty(LEMON.writtenRep);
+
+                if (stmt != null)
+                {
+                form = (Literal) canonicalForm.getProperty(LEMON.writtenRep).getObject();
+                        if (form.toString().contains("@")){
+                            pattern_name.add(form.toString().split("@")[0]);
+                        }
+                        else pattern_name.add(form.toString());
                 }
-             }
+            }
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        qExec.close() ; 
-        
         return pattern_name;
     }
 
