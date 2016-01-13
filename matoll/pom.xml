@@ -37,6 +37,11 @@
             <artifactId>trove4j</artifactId>
             <version>3.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>tw.edu.ntu.csie</groupId>
+            <artifactId>libsvm</artifactId>
+            <version>3.17</version>
+        </dependency>
         
   	<!--<dependency>
   		<groupId>www.sc.cit-ec.uni-bielefeld.de</groupId>
@@ -96,6 +101,21 @@
       <version>0.7.3</version>
       <type>jar</type>
     </dependency>-->
+      	<dependency>
+  		<groupId>org.apache.lucene</groupId>
+  		<artifactId>lucene-queryparser</artifactId>
+  		<version>5.2.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.lucene</groupId>
+  		<artifactId>lucene-analyzers-kuromoji</artifactId>
+  		<version>5.2.1</version>
+  	</dependency>
+        <dependency>
+  		<groupId>org.apache.lucene</groupId>
+  		<artifactId>lucene-analyzers-common</artifactId>
+  		<version>5.2.1</version>
+  	</dependency>
   </dependencies>
   <build>
   <plugins>
