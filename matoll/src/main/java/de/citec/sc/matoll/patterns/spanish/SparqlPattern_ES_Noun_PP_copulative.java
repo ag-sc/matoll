@@ -38,15 +38,17 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
 	
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?adjective_lemma ?adjective_wordnumber ?lemma_wordnumber ?e1_arg ?e2_arg ?prep  WHERE {"
                             + " OPTIONAL {"
                                  + "?adjective <conll:form> ?adjective_lemma . "
+                                 + "?adjective <conll:wordnumber> ?adjective_wordnumber ."
                                  + "?adjective <conll:head> ?noun . "
                                  + "?adjective <conll:deprel> \"MOD\" . "
                                  + "?adjective <conll:cpostag> \"a\".  }"
                             + "?noun <conll:head> ?verb. "
                             + "?noun <conll:deprel> \"ATR\". "
                             + "?noun <conll:lemma> ?lemma ."
+                            + "?noun <conll:wordnumber> ?lemma_wordnumber ."
                             + "?verb <conll:postag> ?verb_pos . "
                             + "?verb <conll:lemma> \"ser\" . "
                             + "FILTER regex(?verb_pos, \"VS\") ."
@@ -81,7 +83,9 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                 String e2_arg = null;
                 String preposition = null;
                 String adjective_lemma = null;
-
+                int adjective_wordnumber = 0;
+                int lemma_wordnumber = 0;
+                
                 while ( rs.hasNext() ) {
                     QuerySolution qs = rs.next();
 
@@ -93,12 +97,17 @@ sentence:Ludicorp es la empresa creadora de Flickr , sitio web de organizacin de
                             preposition = qs.get("?prep").toString();
                             try{
                                 adjective_lemma = qs.get("?adjective_lemma").toString();
+                                adjective_wordnumber = Integer.getInteger(qs.get("?adjective_wordnumber").toString());
+                                lemma_wordnumber = Integer.getInteger(qs.get("?lemma_wordnumber").toString());
                             }
                             catch(Exception e){};
                             if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                                 Sentence sentence = this.returnSentence(model);
                                 if(adjective_lemma!=null)
-                                    Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                    if(lemma_wordnumber<adjective_wordnumber)
+                                        Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                    else
+                                        Templates.getNounWithPrep(model, lexicon, sentence, adjective_lemma+" "+noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                                 else
                                     Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                             }

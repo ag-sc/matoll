@@ -35,7 +35,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
 
         @Override
         public String getQuery() {
-            String query = "SELECT ?lemma ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
+            String query = "SELECT ?lemma ?lemma_wordnumber ?adjective_wordnumber ?adjective_lemma ?e1_arg ?e2_arg ?prep  WHERE {"
 
                             + "?copula <conll:postag> ?pos . "
                             // can be VSII1S0 or "v"
@@ -43,6 +43,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                             + "?copula <conll:lemma> \"ser\" ."
 
                             + "?noun <conll:lemma> ?lemma . "
+                            + "?noun <conll:wordnumber> ?lemma_wordnumber ."
                             + "?noun <conll:head> ?copula . "
                             + "?noun <conll:cpostag> \"n\" . "
                             + "?noun <conll:deprel> \"ATR\" ."
@@ -51,6 +52,7 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                         + "?adjective <conll:form> ?adjective_lemma . "
                         + "?adjective <conll:head> ?noun . "
                         + "?adjective <conll:deprel> \"MOD\" . "
+                        + "?adjective <conll:wordnumber> ?adjective_wordnumber ."
                         + "?adjective <conll:cpostag> \"a\".  }"
 
                             + "?p <conll:deprel> \"COMP\" . "
@@ -91,6 +93,8 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                 String e2_arg = null;
                 String preposition = null;
                 String adjective_lemma = null;
+                int adjective_wordnumber = 0;
+                int lemma_wordnumber = 0;
 
                 while ( rs.hasNext() ) {
                         QuerySolution qs = rs.next();
@@ -102,12 +106,17 @@ public class SparqlPattern_ES_Noun_PP_copulative_withHop extends SparqlPattern{
                             preposition = qs.get("?prep").toString();
                             try{
                                 adjective_lemma = qs.get("?adjective_lemma").toString();
+                                adjective_wordnumber = Integer.getInteger(qs.get("?adjective_wordnumber").toString());
+                                lemma_wordnumber = Integer.getInteger(qs.get("?lemma_wordnumber").toString());
                             }
                             catch(Exception e){}
                             if(noun!=null && e1_arg!=null && e2_arg!=null && preposition!=null) {
                                 Sentence sentence = this.returnSentence(model);
                                 if(adjective_lemma!=null){
-                                    Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                    if(lemma_wordnumber<adjective_wordnumber)
+                                        Templates.getNounWithPrep(model, lexicon, sentence, noun+" "+adjective_lemma, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
+                                    else
+                                        Templates.getNounWithPrep(model, lexicon, sentence, adjective_lemma+" "+noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
                                 }
                                 else
                                     Templates.getNounWithPrep(model, lexicon, sentence, noun, e1_arg, e2_arg, preposition, this.getReference(model), logger, this.getLemmatizer(),Language.ES,getID());
