@@ -156,21 +156,21 @@ public class Lexicon {
 	
 	public Set<Reference> getReferences()
 	{
-		Set<Reference> references = new HashSet<Reference>();
+		Set<Reference> local_references = new HashSet<Reference>();
 		
-		for (LexicalEntry entry: entries)
-		{   
-                    for (Sense sense : entry.getSenseBehaviours().keySet())
-                            references.add(sense.getReference());
-		}
+                entries.stream().forEach((entry) -> {   
+                    entry.getSenseBehaviours().keySet().stream().forEach((sense) -> {
+                        local_references.add(sense.getReference());
+                    });
+            });
 		
-		return references;
+		return local_references;
 	}
 	
-	public String getStatistics()
-	{
-		return "";
-	}
+//	public String getStatistics()
+//	{
+//		return "";
+//	}
 
 	private LexicalEntry createNewEntry(String canonicalForm, Language language) {
 		
@@ -191,7 +191,7 @@ public class Lexicon {
 		return entries.contains(entry);
 	}
 	
-        public LexicalEntry getLexicalEntry(LexicalEntry entry){
+        private LexicalEntry getLexicalEntry(LexicalEntry entry){
             String uri = entry.getURI();
             for(LexicalEntry containedEntry : entries){
                 /// if URI are euqal, then we assume the whole entry is the same (but maybe contains different senses)
@@ -219,43 +219,41 @@ public class Lexicon {
 		return entries.iterator();
 	}
 	
+        @Override
 	public String toString()
 	{
 		String string = "";
 		
-		for (LexicalEntry entry: entries)
-		{
-			string+= entry.toString() + "\n\n";
-		}
+                string = entries.stream().map((entry) -> entry.toString() + "\n\n").reduce(string, String::concat);
 		
 		return string;
 	}
+        
 
         /*
         TODO: This function returns all entries, in which at least one reference is from the given URI. All othere seneses/referecnes in this entry are also returned.
         */
 	public List<LexicalEntry> getEntriesForReference(String input_ref) {
 		
-		List<LexicalEntry> entries = new ArrayList<LexicalEntry>();
+		List<LexicalEntry> Local_entries = new ArrayList<LexicalEntry>();
 		
 		for (LexicalEntry entry: this.entries)
 		{
                     for(Reference ref: entry.getReferences()){
                         if (ref.toString().equals(input_ref)) {
-                            entries.add(entry);
+                            Local_entries.add(entry);
                             break;
                         }
                     }
 			
 		}
 		
-		return entries;
+		return Local_entries;
 	}
         
         public List<Preposition> getPrepositions(){
-            List<Preposition> prepositions = new ArrayList<>();
             
-            prepositions = this.entries.stream()
+            List<Preposition> prepositions = this.entries.stream()
                     .filter(e->e.getPreposition()!=null)
                     .map((LexicalEntry e)->{return e.getPreposition();})
                     .collect(Collectors.toList());

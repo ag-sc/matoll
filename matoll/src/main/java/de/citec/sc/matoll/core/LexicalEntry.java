@@ -76,6 +76,7 @@ public class LexicalEntry {
             return language;
         }
 	
+        @Override
 	public String toString()
 	{
 		String string = "";
@@ -95,18 +96,6 @@ public class LexicalEntry {
                         if(provenance.getSentences()!=null)for(Sentence sentence:provenance.getShortestSentences(5))string+="Sentence: "+sentence.getSentence()+"\n";
                     }
                 }
-		
-		/*for (String synArg: argumentMap.keySet())
-		{
-			string += synArg + " => "+argumentMap.get(synArg)+"\n";
-		}*/
-		
-		
-//		for (String sentence: Sentences)
-//		{
-//			string += "Sentence: "+sentence+"\n";
-//		}
-//                
                 
 		
 		
@@ -115,46 +104,6 @@ public class LexicalEntry {
 
 
 	
-//	public HashSet<Sense> getSenses()
-//	{
-//		return hashsetSense;
-//	}
-	
-	
-//	public void addSense(Sense sense) {
-//		hashsetSense.add(sense);
-//		
-//	}
-        /**
-         * Mapping of argument types
-         * @param sense
-         * @return 
-         */
-//	private HashMap<String,String> computeMappings(Sense sense) {
-//		
-//		HashMap<String,String> map = new HashMap<String,String>();
-//		
-//                for(SyntacticBehaviour Behaviour : hashsetSenseBehaviour.get(sense)){
-//                    for (SyntacticArgument synArg: Behaviour.getSynArgs())
-//                    {
-//			// System.out.print("Checking: "+synArg.getArgumentType()+"\n");
-//						
-//				for (SenseArgument senseArg: sense.getSenseArgs())
-//				{
-//					// System.out.print("Checking: "+senseArg.getArgumenType()+"\n");
-//				
-//					if (synArg.getValue().equals(senseArg.getValue()))
-//					{
-//						map.put(synArg.getArgumentType(), senseArg.getArgumenType());
-//					
-//						//System.out.print("Adding mapping: "+synArg.getArgumentType() + " -> "+senseArg.getArgumenType()+"\n");
-//					}	
-//				}
-//                    }
-//                }
-//			
-//		return map;
-//	}
 
 	
 
@@ -171,10 +120,7 @@ public class LexicalEntry {
 
 
 	@Override
-	public boolean equals(Object obj) {
-		
-		// System.out.print("I am in equals (LexicalEntry)\n");
-		
+	public boolean equals(Object obj) {		
                 LexicalEntry other = (LexicalEntry) obj;
             //now URIs are even so if the URI is not equal, return false and do not check other options
                 if(this.getURI()==null || this.getReferences().isEmpty()||other.getURI()==null || other.getReferences() == null) {
@@ -182,61 +128,6 @@ public class LexicalEntry {
                 }
                 //else return this.getURI().equals(other.getURI()) && this.getReferences().equals(other.getReferences());
                 else return this.getURI().equals(other.getURI())&&other.getLanguage().equals(this.getLanguage());
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		// System.out.print("Checking class equivalence!!!\n");
-//		if (getClass() != obj.getClass())
-//		{
-//			System.out.print(getClass() +" vs. "+obj.getClass()+"\n");
-//			return false;
-//		}
-//		
-//		if (hashsetSenseBehaviour.isEmpty()) {
-//			// System.out.print("Behaviour is null!\n");
-//			if (!other.hashsetSenseBehaviour.isEmpty())
-//				return false;
-//		} /*else if (!Behaviour.equals(other.Behaviour))
-//			return false;*/
-//                else if (!hashsetSenseBehaviour.equals(other.hashsetSenseBehaviour))
-//			return false;
-//				
-//		if (CanonicalForm == null) {
-//			if (other.CanonicalForm != null)
-//				return false;
-//		} else if (!CanonicalForm.equals(other.CanonicalForm))
-//			return false;
-//		if (POS == null) {
-//			if (other.POS != null)
-//				return false;
-//		} else if (!POS.equals(other.POS))
-//			return false;
-//		if (hashsetSense.isEmpty()) {
-//			if (!other.hashsetSense.isEmpty())
-//				return false;
-//		} /*else if (!Sense.equals(other.Sense))
-//			return false;*/
-//                else if (!hashsetSense.equals(other.hashsetSense))
-//			return false;
-//		
-//		/*if (argumentMap == null) {
-//			if (other.argumentMap != null)
-//				return false;
-//		} */
-//                /*else 
-//		{
-//			for (String synArg: this.getArgumentMap().keySet())	
-//			{
-//				if (!other.getArgumentMap().containsKey(synArg)) return false;
-//				else
-//				{
-//					if (!other.getArgumentMap().get(synArg).equals(this.getArgumentMap().get(synArg))) return false;
-//				}
-//					
-//			}
-//		}*/
-//		return true;
 	}
 
 
@@ -347,13 +238,6 @@ public class LexicalEntry {
                     references.add(sense.getReference());
                 }
             }
-//		if (hashsetSense!=null){
-//                    for(Sense sense: hashsetSense){
-//                        references.add(sense.getReference());
-//                    }
-//                    
-//                }
-		
             return references;
 		
 	}

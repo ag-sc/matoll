@@ -59,7 +59,16 @@ public class LemmaBasedEvaluation {
                     hm_gold_new.put(uri, hm_gold.get(uri));
                 }
             }
-
+                
+//            for(String x : hm_automatic_new.keySet()){
+//                System.out.println(x+":"+hm_automatic_new.get(x));
+//            }
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            for(String x : hm_gold_new.keySet()){
+//                System.out.println(x+":"+hm_gold_new.get(x));
+//            }
             
             /*
             Then do evaluation based on the map
@@ -87,7 +96,9 @@ public class LemmaBasedEvaluation {
                             String tmp_uri = uri.replace("http://dbpedia.org/ontology/", "");
                             if(!Character.isUpperCase(tmp_uri.charAt(0))){
                                 List<String>tmp = new ArrayList<>();
-                                tmp.add(pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"));
+                                pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+                                pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","");
+                                tmp.add(pos);
                                 tmp.add(form);
                                 tmp.add(uri);
 //                                System.out.println(uri);
@@ -158,6 +169,7 @@ public class LemmaBasedEvaluation {
                         }
                     }
                 }
+
                 double local_recall = (correct_entries+0.0)/lenght_gold;
                 double local_precision = (correct_entries+0.0)/lenght_automatic;
 //                System.out.println(uri+":"+local_recall);
