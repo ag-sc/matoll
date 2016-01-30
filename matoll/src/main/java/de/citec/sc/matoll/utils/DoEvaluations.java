@@ -7,6 +7,7 @@ package de.citec.sc.matoll.utils;
 
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.evaluation.LemmaBasedEvaluation;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
@@ -138,6 +139,24 @@ public class DoEvaluations {
         RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
         out.close();
         
+        
+        Set<String> set_gold = new HashSet<>();
+        Set<String> set_automatic = new HashSet<>();
+        for(LexicalEntry entry:gold_english.getEntries()){
+            for(Sense sense:entry.getSenseBehaviours().keySet()){
+                set_gold.add(sense.getReference().getURI());
+            }
+        }
+        
+        for(LexicalEntry entry:automatic_english.getEntries()){
+            for(Sense sense:entry.getSenseBehaviours().keySet()){
+                set_automatic.add(sense.getReference().getURI());
+            }
+        }
+        set_automatic.retainAll(set_gold);
+        List<String> uris = new ArrayList<>();
+        for(String x: set_automatic) uris.add(x);
+
                                 
         /*
         English only properties
@@ -165,6 +184,14 @@ public class DoEvaluations {
         
         result = LemmaBasedEvaluation.evaluate(joined, gold_english,true,false);
         writer.println("(All): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        
+        
+        result = LemmaBasedEvaluation.evaluate(joined, gold_english,true,uris,true);
+        writer.println("(Only automatic properties): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        
+        result = LemmaBasedEvaluation.evaluate(joined, gold_english,true,uris,false);
+        writer.println("(Only automatic porperties): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        
         
         writer.println("####################");
         writer.println("####################");
