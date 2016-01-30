@@ -135,7 +135,8 @@ public class Matoll_Baseline {
                 Sentence sentenceObject = returnSentence(sentence);
                 subj = sentenceObject.getSubjOfProp();
                 obj = sentenceObject.getObjOfProp();
-                if (!stopwords.isStopword(obj, language) 
+                try{
+                     if (!stopwords.isStopword(obj, language) 
                         && !stopwords.isStopword(subj, language) 
                         && !subj.equals(obj) 
                         && !subj.contains(obj) 
@@ -181,9 +182,14 @@ public class Matoll_Baseline {
                             + Only accept those terms which are noun, verbs etc (similar to the patterns)
                             + Create entry based on pos tag
                             */
+                            }
                         }
-                        
-                    }
+                    }        
+                }       
+                
+                catch(Exception e){
+                    
+                
                 }
             }
             model.close();
