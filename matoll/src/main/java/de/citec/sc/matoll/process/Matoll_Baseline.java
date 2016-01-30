@@ -6,20 +6,21 @@
 package de.citec.sc.matoll.process;
 
 import de.citec.sc.matoll.core.Language;
+import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
-import de.citec.sc.matoll.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.Stopwords;
-import gnu.trove.map.hash.TObjectIntHashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,7 +31,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
 import org.xml.sax.SAXException;
 
 /**
@@ -87,7 +87,19 @@ public class Matoll_Baseline {
 
 
 
-
+        Set<String> gold_entries = new HashSet<>();
+        Set<String> uris = new HashSet<>();
+        
+        for(LexicalEntry entry: gold.getEntries()){
+            try{
+                 for(Sense sense: entry.getSenseBehaviours().keySet()){
+                     gold_entries.add(entry.getCanonicalForm()+" "+sense.getReference().getURI());
+                     uris.add(sense.getReference().getURI());
+                 }
+            }
+            catch(Exception e){};
+        }
+//        for(String x: gold_entries) System.out.println(x);
         Lexicon automatic_lexicon = new Lexicon();
         automatic_lexicon.setBaseURI(config.getBaseUri());
 
@@ -113,8 +125,7 @@ public class Matoll_Baseline {
         }
 
 
-        TObjectIntHashMap<String> freq = new TObjectIntHashMap<String>();
-
+        Set<String> results = new HashSet<>();
 
         for(File file:list_files){
             Model model = RDFDataMgr.loadModel(file.toString());
@@ -147,7 +158,15 @@ public class Matoll_Baseline {
                         tmp = tmp.replace("-rbr-", "");
                         tmp = tmp.trim();
                         
-                        if(tmp.length()>2 && tmp.split(" ").length <4 && !stopwords.isStopword(tmp, language)){
+                        if(tmp.length()>2 && tmp.split(" ").length <3 && !stopwords.isStopword(tmp, language)){
+                            tmp = tmp.replace("with","");
+                            tmp = tmp.replace("to","");
+                            tmp = tmp.replace("from","");
+                            tmp = tmp.replace("by","");
+                            tmp = tmp.replace("after","");
+                            tmp = tmp.replace("of","");
+                            tmp = tmp.replace("and","");
+                            tmp = tmp.trim();
                             if(tmp.contains(" ")){
                                 String tmp2 = "";
                                 for(String z: tmp.split(" ")){
@@ -155,12 +174,7 @@ public class Matoll_Baseline {
                                 }
                                 tmp = tmp2.trim();
                             }
-                            System.out.println("subj:"+subj);
-                            System.out.println("obj:"+obj);
-                            System.out.println("Sentence:"+str);
-                            System.out.println("pattern:"+tmp);
-                            System.out.println();
-                            System.out.println();
+                            results.add(tmp+" "+reference);
                             /*
                             TODO:
                             + Identify posTags from each term in pattern (use information of depedency graph)
@@ -176,19 +190,41 @@ public class Matoll_Baseline {
         }
 
         System.out.println("Extracted entries");
+//        for(String x: results)System.out.println(x);
+        
+        /*
+        Calculate recall
+        */
+        int overall_entries = 0;
+        int correct_entries = 0;
+        for(String uri:uris){
+            for(String g: gold_entries){
+                if(g.contains(uri)){
+                    overall_entries+=1;
+                    for(String r:results){
+                        if(g.equals(r)){
+                            correct_entries+=1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println((correct_entries+0.0)/overall_entries);
 
-
-        LexiconSerialization serializer = new LexiconSerialization(config.removeStopwords());
-
-        Model model = ModelFactory.createDefaultModel();
-
-        serializer.serialize(automatic_lexicon, model);
-
-        FileOutputStream out = new FileOutputStream(new File(output_lexicon.replace(".lex","_beforeTraining.ttl")));
-
-        RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
-
-        out.close();
+//        LexiconSerialization serializer = new LexiconSerialization(config.removeStopwords());
+//
+//        Model model = ModelFactory.createDefaultModel();
+//
+//        serializer.serialize(automatic_lexicon, model);
+//
+//        FileOutputStream out = new FileOutputStream(new File(output_lexicon.replace(".lex","_beforeTraining.ttl")));
+//
+//        RDFDataMgr.write(out, model, RDFFormat.TURTLE) ;
+//
+//        out.close();
 
 
 
