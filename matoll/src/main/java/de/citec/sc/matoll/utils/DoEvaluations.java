@@ -143,15 +143,21 @@ public class DoEvaluations {
         Set<String> set_gold = new HashSet<>();
         Set<String> set_automatic = new HashSet<>();
         for(LexicalEntry entry:gold_english.getEntries()){
-            for(Sense sense:entry.getSenseBehaviours().keySet()){
-                set_gold.add(sense.getReference().getURI());
+            try{
+                for(Sense sense:entry.getSenseBehaviours().keySet()){
+                    set_gold.add(sense.getReference().getURI());
+                }
             }
+            catch(Exception e){}
         }
         
         for(LexicalEntry entry:automatic_english.getEntries()){
-            for(Sense sense:entry.getSenseBehaviours().keySet()){
-                set_automatic.add(sense.getReference().getURI());
+            try{
+                for(Sense sense:entry.getSenseBehaviours().keySet()){
+                    set_automatic.add(sense.getReference().getURI());
+                }
             }
+            catch(Exception e){}
         }
         set_automatic.retainAll(set_gold);
         List<String> uris = new ArrayList<>();
