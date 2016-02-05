@@ -58,6 +58,7 @@
                 <artifactId>jgraph</artifactId>
                 <version>5.13.0.0</version>
         </dependency>
+        
   
   	<!--<dependency>
   		<groupId>nz.ac.waikato.cms.moa</groupId>
@@ -116,6 +117,12 @@
   		<artifactId>lucene-analyzers-common</artifactId>
   		<version>5.2.1</version>
   	</dependency>
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-jdk1.5</artifactId>
+      <version>0.7.3</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
   <plugins>
