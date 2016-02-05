@@ -12,7 +12,9 @@ import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.core.Sentence;
 import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
+import de.citec.sc.matoll.utils.RelationshipEdge;
 import de.citec.sc.matoll.utils.Stopwords;
+import de.citec.sc.matoll.vocabularies.LEMON;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,9 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -31,6 +35,19 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultEdge;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.GraphPath;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.alg.DijkstraShortestPath;
+import org.jgrapht.alg.KShortestPaths;
+import org.jgrapht.alg.StrongConnectivityInspector;
+import org.jgrapht.ext.JGraphModelAdapter;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DirectedMultigraph;
+import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.TopologicalOrderIterator;
 import org.xml.sax.SAXException;
 
 /**
@@ -126,7 +143,7 @@ public class Matoll_Baseline {
 
 
         Set<String> results = new HashSet<>();
-
+        Map<String,Integer> shortestpatterns = new HashMap<>();
         for(File file:list_files){
             Model model = RDFDataMgr.loadModel(file.toString());
             sentences.clear();
@@ -145,6 +162,7 @@ public class Matoll_Baseline {
                     
 //                    String str = "ZZZZL <%= dsn %> AFFF <%= AFG %>";
                     String str = sentenceObject.getSentence();
+                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns);
                     Pattern pattern = Pattern.compile(subj.toLowerCase()+"(.*?)"+obj.toLowerCase());
                     Matcher matcher = pattern.matcher(str.toLowerCase());
                     while (matcher.find()) {
@@ -219,6 +237,10 @@ public class Matoll_Baseline {
         System.out.println(overall_entries);
         System.out.println(correct_entries);
         System.out.println((correct_entries+0.0)/overall_entries);
+        shortestpatterns.entrySet().stream()
+        .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()) 
+        .limit(10) 
+        .forEach(System.out::println); // or any other terminal method
 
 //        LexiconSerialization serializer = new LexiconSerialization(config.removeStopwords());
 //
@@ -389,6 +411,109 @@ public class Matoll_Baseline {
 		
 		return null;
 	}
+
+    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns) throws IOException, InterruptedException {
+        
+        DirectedGraph<Integer, RelationshipEdge> g = new DefaultDirectedGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
+//        UndirectedGraph<Integer, RelationshipEdge> g = new SimpleGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
+
+
+        Statement stmt;
+        int id_subject = 0;
+        int id_object = 0;
+        Set<Integer> hm = new HashSet<>();
+        Map<String,String> relations = new HashMap<>();
+        
+        StmtIterator iter = sentence.listStatements(null, sentence.createProperty("conll:form"), (RDFNode) null);
+         while (iter.hasNext()) {
+            stmt = iter.next();
+            String subject = stmt.getSubject().toString();
+            subject = subject.replace("token:token","").replace("_","");
+            Integer subject_value = Integer.valueOf(subject);
+            String object = stmt.getObject().toString();
+            if(subj.contains(object)){
+                id_subject = subject_value;
+            }
+            if(obj.contains(object)){
+                id_object = subject_value;
+            }
+         }
+         
+         iter = sentence.listStatements(null, sentence.createProperty("conll:deprel"), (RDFNode) null);
+         while (iter.hasNext()) {
+            stmt = iter.next();
+            String subject = stmt.getSubject().toString();
+            subject = subject.replace("token:token","").replace("_","");
+            String object = stmt.getObject().toString();
+            relations.put(subject, object);
+         }
+         
+        iter = sentence.listStatements(null, sentence.createProperty("conll:head"), (RDFNode) null);
+
+         while (iter.hasNext()) {
+            stmt = iter.next();
+            String subject = stmt.getSubject().toString();
+            String object = stmt.getObject().toString();
+            int object_value = 0;
+            int subject_value = 0;
+            subject = subject.replace("token:token","").replace("_","");
+            object = object.replace("token:token","").replace("_","");
+            object_value = Integer.valueOf(object);
+            subject_value = Integer.valueOf(subject);
+            if(!hm.contains(subject_value)){
+                g.addVertex(subject_value);
+                hm.add(subject_value);
+            }
+            
+            if(!hm.contains(object_value)){
+                g.addVertex(object_value);
+                hm.add(object_value);
+            }
+            
+            g.addEdge(subject_value, object_value,new RelationshipEdge<String>(subject, object, relations.get(subject)));
+         }
+         
+
+         
+         
+         List path;
+         try{
+             
+                if(id_subject>0 && id_object>0 && id_subject!=id_object){
+                    KShortestPaths ksp = new KShortestPaths(g, id_subject, 2); 
+                    List<GraphPath> paths = ksp.getPaths(id_object);
+                    if (paths != null){
+                        for (GraphPath p : paths) {
+                            if(p.getEdgeList().size()>2){
+//                                System.out.println(p.getEdgeList());
+                                String tmp = "";
+                                for(Object x:p.getEdgeList()){
+                                    tmp+=" "+x.toString().split("-->")[1];
+                                }
+                                tmp = tmp.trim();
+                                if(patterns.containsKey(tmp)){
+                                    patterns.put(tmp, patterns.get(tmp)+1);
+                                }
+                                else patterns.put(tmp,1);
+//                                System.out.println(p.getStartVertex());
+//                                System.out.println(p.getEndVertex());
+//                                System.out.println();
+                            }
+                            
+                        }
+                    }
+                }
+                
+ 
+         }
+         catch(Exception e){
+             e.printStackTrace();
+         }
+        
+
+
+    
+    }
     
     
     
@@ -397,3 +522,5 @@ public class Matoll_Baseline {
     
     
 }
+
+
