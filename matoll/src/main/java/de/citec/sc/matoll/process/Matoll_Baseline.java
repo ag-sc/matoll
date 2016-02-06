@@ -57,7 +57,7 @@ public class Matoll_Baseline {
         Language language;
         String output;
 
-        Stopwords stopwords=new Stopwords();
+        Stopwords stopwords = new Stopwords();
 
         HashMap<String,Double> maxima; 
         maxima = new HashMap<String,Double>();
@@ -104,7 +104,7 @@ public class Matoll_Baseline {
                  for(Sense sense: entry.getSenseBehaviours().keySet()){
                      String tmp_uri = sense.getReference().getURI().replace("http://dbpedia.org/ontology/", "");
                      if(!Character.isUpperCase(tmp_uri.charAt(0))){
-                        gold_entries.add(entry.getCanonicalForm()+" "+sense.getReference().getURI());
+                        gold_entries.add(entry.getCanonicalForm().toLowerCase()+" "+sense.getReference().getURI());
                         uris.add(sense.getReference().getURI());
                      }
                  }
@@ -158,7 +158,7 @@ public class Matoll_Baseline {
                     
 //                    String str = "ZZZZL <%= dsn %> AFFF <%= AFG %>";
                     String str = sentenceObject.getSentence();
-                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns,fragments,reference);
+                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns,fragments,reference,stopwords);
                     Pattern pattern = Pattern.compile(subj.toLowerCase()+"(.*?)"+obj.toLowerCase());
                     Matcher matcher = pattern.matcher(str.toLowerCase());
                     while (matcher.find()) {
@@ -166,6 +166,7 @@ public class Matoll_Baseline {
                         tmp = firstClean(tmp);
                         
                         if(tmp.length()>2 && tmp.split(" ").length <3 && !stopwords.isStopword(tmp, language)){
+                            for(String s:stopwords.getStopwords()) tmp = tmp.replace(s," ");
                             tmp = secondClean(tmp);
                             results.add(tmp+" "+reference);
                             /*
@@ -229,6 +230,7 @@ public class Matoll_Baseline {
         System.out.println("Baseline1b: "+(correct_entries+0.0)/overall_entries);
         
         
+//        for(String x: fragments) System.out.println(x);
         
         overall_entries = 0;
         correct_entries = 0;
@@ -483,7 +485,7 @@ public class Matoll_Baseline {
 		return null;
 	}
 
-    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns, Set<String> fragments, String reference) throws IOException, InterruptedException {
+    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns, Set<String> fragments, String reference, Stopwords stopwords) throws IOException, InterruptedException {
         
 //        DirectedGraph<Integer, RelationshipEdge> g = new DefaultDirectedGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
         UndirectedGraph<Integer, RelationshipEdge> g = new SimpleGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
@@ -563,12 +565,15 @@ public class Matoll_Baseline {
                                 String tmp2 = "";
                                 for(Object x:p.getEdgeList()){
                                     tmp+=" "+x.toString().split("-->")[1];
-                                    tmp2 += x.toString().split("-->")[2];
+                                    tmp2 += " "+ x.toString().split("-->")[2];
                                 }
                                 tmp = tmp.trim();
                                 tmp2 = tmp2.trim();
                                 tmp2 = firstClean(tmp2);
                                 tmp2 = secondClean(tmp2);
+                                for(String i: (subj+" "+obj).split(" ")) tmp2 = tmp2.toLowerCase().replace(i.toLowerCase(), " ");
+                                for(String s:stopwords.getStopwords()) tmp2 = tmp2.replace(s," ");
+                                tmp2 = tmp2.trim();
                                 fragments.add(tmp2+" "+reference);
                                 if(patterns.containsKey(tmp)){
                                     patterns.put(tmp, patterns.get(tmp)+1);
@@ -615,6 +620,12 @@ public class Matoll_Baseline {
         tmp = tmp.replace("after","");
         tmp = tmp.replace("of","");
         tmp = tmp.replace("and","");
+        tmp = tmp.replace("on","");
+        tmp = tmp.replace("all","");
+        tmp = tmp.replace("at","");
+        tmp = tmp.replace("up","");
+        tmp = tmp.replace("as","");
+        tmp = tmp.toLowerCase();
         tmp = tmp.trim();
         if(tmp.contains(" ")){
             String tmp2 = "";

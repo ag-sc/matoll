@@ -24,6 +24,9 @@ public class Stopwords {
     }
     
     
+    public List<String> getStopwords(){
+        return stopwords;
+    }
     
     public boolean isStopword(String word,Language language){
         return stopwords.contains(word.trim().toLowerCase()+"_"+language.toString());
