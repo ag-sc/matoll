@@ -266,7 +266,41 @@ public class Matoll_Baseline {
         System.out.println("Baseline2b: "+(correct_entries+0.0)/overall_entries);
         
         
+        for(String r: results) fragments.add(r);
+        overall_entries = 0;
+        correct_entries = 0;
+        for(String uri:uris){
+            for(String g: gold_entries){
+                if(g.contains(uri)){
+                    overall_entries+=1;
+                    for(String r:fragments){
+                        if(g.equals(r)){
+                            correct_entries+=1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println("Baseline3: "+(correct_entries+0.0)/overall_entries);
         
+        
+        overall_entries = 0;
+        correct_entries = 0;
+        for(String g: gold_entries){
+            overall_entries+=1;
+            for(String r:fragments){
+                if(g.equals(r)){
+                    correct_entries+=1;
+                    break;
+                }
+            }            
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println("Baseline3b: "+(correct_entries+0.0)/overall_entries);
         
         
         
