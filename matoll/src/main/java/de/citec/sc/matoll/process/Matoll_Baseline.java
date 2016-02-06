@@ -14,7 +14,6 @@ import de.citec.sc.matoll.io.Config;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.utils.RelationshipEdge;
 import de.citec.sc.matoll.utils.Stopwords;
-import de.citec.sc.matoll.vocabularies.LEMON;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -35,19 +33,12 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
-import org.jgraph.JGraph;
-import org.jgraph.graph.DefaultEdge;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.UndirectedGraph;
-import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.alg.KShortestPaths;
-import org.jgrapht.alg.StrongConnectivityInspector;
-import org.jgrapht.ext.JGraphModelAdapter;
 import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.TopologicalOrderIterator;
 import org.xml.sax.SAXException;
 
 /**
@@ -107,11 +98,15 @@ public class Matoll_Baseline {
         Set<String> gold_entries = new HashSet<>();
         Set<String> uris = new HashSet<>();
         
+        //consider only properties
         for(LexicalEntry entry: gold.getEntries()){
             try{
                  for(Sense sense: entry.getSenseBehaviours().keySet()){
-                     gold_entries.add(entry.getCanonicalForm()+" "+sense.getReference().getURI());
-                     uris.add(sense.getReference().getURI());
+                     String tmp_uri = sense.getReference().getURI().replace("http://dbpedia.org/ontology/", "");
+                     if(!Character.isUpperCase(tmp_uri.charAt(0))){
+                        gold_entries.add(entry.getCanonicalForm()+" "+sense.getReference().getURI());
+                        uris.add(sense.getReference().getURI());
+                     }
                  }
             }
             catch(Exception e){};
@@ -144,6 +139,7 @@ public class Matoll_Baseline {
 
         Set<String> results = new HashSet<>();
         Map<String,Integer> shortestpatterns = new HashMap<>();
+        Set<String> fragments = new HashSet<>();
         for(File file:list_files){
             Model model = RDFDataMgr.loadModel(file.toString());
             sentences.clear();
@@ -162,37 +158,15 @@ public class Matoll_Baseline {
                     
 //                    String str = "ZZZZL <%= dsn %> AFFF <%= AFG %>";
                     String str = sentenceObject.getSentence();
-                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns);
+                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns,fragments,reference);
                     Pattern pattern = Pattern.compile(subj.toLowerCase()+"(.*?)"+obj.toLowerCase());
                     Matcher matcher = pattern.matcher(str.toLowerCase());
                     while (matcher.find()) {
                         String tmp = matcher.group(1);
-                        tmp = tmp.replace(",","");
-                        tmp = tmp.replace(".","");
-                        tmp = tmp.replace(";","");
-                        tmp = tmp.replace("?","");
-                        tmp = tmp.replace("!","");
-                        tmp = tmp.replace("'", "");
-                        tmp = tmp.replace("-lrb-", "");
-                        tmp = tmp.replace("-rbr-", "");
-                        tmp = tmp.trim();
+                        tmp = firstClean(tmp);
                         
                         if(tmp.length()>2 && tmp.split(" ").length <3 && !stopwords.isStopword(tmp, language)){
-                            tmp = tmp.replace("with","");
-                            tmp = tmp.replace("to","");
-                            tmp = tmp.replace("from","");
-                            tmp = tmp.replace("by","");
-                            tmp = tmp.replace("after","");
-                            tmp = tmp.replace("of","");
-                            tmp = tmp.replace("and","");
-                            tmp = tmp.trim();
-                            if(tmp.contains(" ")){
-                                String tmp2 = "";
-                                for(String z: tmp.split(" ")){
-                                    if(z.length()>1) tmp2+=" "+z;
-                                }
-                                tmp = tmp2.trim();
-                            }
+                            tmp = secondClean(tmp);
                             results.add(tmp+" "+reference);
                             /*
                             TODO:
@@ -236,10 +210,73 @@ public class Matoll_Baseline {
         }
         System.out.println(overall_entries);
         System.out.println(correct_entries);
-        System.out.println((correct_entries+0.0)/overall_entries);
+        System.out.println("Baseline1: "+(correct_entries+0.0)/overall_entries);
+        
+        
+        overall_entries = 0;
+        correct_entries = 0;
+        for(String g: gold_entries){
+            overall_entries+=1;
+            for(String r:results){
+                if(g.equals(r)){
+                    correct_entries+=1;
+                    break;
+                }
+            }            
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println("Baseline1b: "+(correct_entries+0.0)/overall_entries);
+        
+        
+        
+        overall_entries = 0;
+        correct_entries = 0;
+        for(String uri:uris){
+            for(String g: gold_entries){
+                if(g.contains(uri)){
+                    overall_entries+=1;
+                    for(String r:fragments){
+                        if(g.equals(r)){
+                            correct_entries+=1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println("Baseline2: "+(correct_entries+0.0)/overall_entries);
+        
+        
+        overall_entries = 0;
+        correct_entries = 0;
+        for(String g: gold_entries){
+            overall_entries+=1;
+            for(String r:fragments){
+                if(g.equals(r)){
+                    correct_entries+=1;
+                    break;
+                }
+            }            
+        }
+        System.out.println(overall_entries);
+        System.out.println(correct_entries);
+        System.out.println("Baseline2b: "+(correct_entries+0.0)/overall_entries);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         shortestpatterns.entrySet().stream()
         .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()) 
-        .limit(10) 
+        .limit(15) 
         .forEach(System.out::println); // or any other terminal method
 
 //        LexiconSerialization serializer = new LexiconSerialization(config.removeStopwords());
@@ -412,10 +449,10 @@ public class Matoll_Baseline {
 		return null;
 	}
 
-    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns) throws IOException, InterruptedException {
+    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns, Set<String> fragments, String reference) throws IOException, InterruptedException {
         
-        DirectedGraph<Integer, RelationshipEdge> g = new DefaultDirectedGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
-//        UndirectedGraph<Integer, RelationshipEdge> g = new SimpleGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
+//        DirectedGraph<Integer, RelationshipEdge> g = new DefaultDirectedGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
+        UndirectedGraph<Integer, RelationshipEdge> g = new SimpleGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
 
 
         Statement stmt;
@@ -423,6 +460,7 @@ public class Matoll_Baseline {
         int id_object = 0;
         Set<Integer> hm = new HashSet<>();
         Map<String,String> relations = new HashMap<>();
+        Map<String,String> forms = new HashMap<>();
         
         StmtIterator iter = sentence.listStatements(null, sentence.createProperty("conll:form"), (RDFNode) null);
          while (iter.hasNext()) {
@@ -437,6 +475,7 @@ public class Matoll_Baseline {
             if(obj.contains(object)){
                 id_object = subject_value;
             }
+            forms.put(subject, object);
          }
          
          iter = sentence.listStatements(null, sentence.createProperty("conll:deprel"), (RDFNode) null);
@@ -470,7 +509,7 @@ public class Matoll_Baseline {
                 hm.add(object_value);
             }
             
-            g.addEdge(subject_value, object_value,new RelationshipEdge<String>(subject, object, relations.get(subject)));
+            g.addEdge(subject_value, object_value,new RelationshipEdge<String>(subject, object, relations.get(subject), forms.get(subject)));
          }
          
 
@@ -487,10 +526,16 @@ public class Matoll_Baseline {
                             if(p.getEdgeList().size()>2){
 //                                System.out.println(p.getEdgeList());
                                 String tmp = "";
+                                String tmp2 = "";
                                 for(Object x:p.getEdgeList()){
                                     tmp+=" "+x.toString().split("-->")[1];
+                                    tmp2 += x.toString().split("-->")[2];
                                 }
                                 tmp = tmp.trim();
+                                tmp2 = tmp2.trim();
+                                tmp2 = firstClean(tmp2);
+                                tmp2 = secondClean(tmp2);
+                                fragments.add(tmp2+" "+reference);
                                 if(patterns.containsKey(tmp)){
                                     patterns.put(tmp, patterns.get(tmp)+1);
                                 }
@@ -513,6 +558,38 @@ public class Matoll_Baseline {
 
 
     
+    }
+
+    private static String firstClean(String tmp) {
+        tmp = tmp.replace(",","");
+        tmp = tmp.replace(".","");
+        tmp = tmp.replace(";","");
+        tmp = tmp.replace("?","");
+        tmp = tmp.replace("!","");
+        tmp = tmp.replace("'", "");
+        tmp = tmp.replace("-lrb-", "");
+        tmp = tmp.replace("-rbr-", "");
+        tmp = tmp.trim();
+        return tmp;
+    }
+
+    private static String secondClean(String tmp) {
+        tmp = tmp.replace("with","");
+        tmp = tmp.replace("to","");
+        tmp = tmp.replace("from","");
+        tmp = tmp.replace("by","");
+        tmp = tmp.replace("after","");
+        tmp = tmp.replace("of","");
+        tmp = tmp.replace("and","");
+        tmp = tmp.trim();
+        if(tmp.contains(" ")){
+            String tmp2 = "";
+            for(String z: tmp.split(" ")){
+                if(z.length()>1) tmp2+=" "+z;
+            }
+            tmp = tmp2.trim();
+        }
+        return tmp;
     }
     
     
