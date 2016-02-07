@@ -117,7 +117,9 @@ public class LemmaBasedEvaluation {
                         else{
                             String uri = ref.getURI();
                             List<String>tmp = new ArrayList<>();
-                            tmp.add(pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun"));
+                            pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
+                            pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","");
+                            tmp.add(pos);
                             tmp.add(form);
                             tmp.add(uri);
                             if(hm.containsKey(uri)){
@@ -221,12 +223,12 @@ public class LemmaBasedEvaluation {
                         if(entry_gold.get(0).equals(entry_automatic.get(0)) 
                                 && entry_gold.get(1).equals(entry_automatic.get(1)) 
                                 && entry_gold.get(2).equals(entry_automatic.get(2))){
-                            correct_entries+=1;
+                            global_correct_entries+=1;
                             break;
                         }
                     }
                 }
-                global_correct_entries+=correct_entries;
+//                global_correct_entries+=correct_entries;
             }
         }
         Double global_recall=roundDown3((global_correct_entries+0.0)/number_entries_gold);
