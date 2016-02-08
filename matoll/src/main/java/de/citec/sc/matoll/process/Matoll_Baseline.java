@@ -17,6 +17,7 @@ import de.citec.sc.matoll.utils.Stopwords;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -189,6 +190,16 @@ public class Matoll_Baseline {
         }
 
         System.out.println("Extracted entries");
+        
+        
+       PrintWriter writer = new PrintWriter("baseline_plainSentence.txt");
+       for(String r:results) writer.write(r+"\n");
+       writer.close();
+       
+       writer = new PrintWriter("baseline_shortestPath.txt");
+       for(String r:fragments) writer.write(r+"\n");
+       writer.close();
+        
 //        for(String x: results)System.out.println(x);
         
         /*
@@ -327,6 +338,8 @@ public class Matoll_Baseline {
 //
 //        out.close();
 
+        
+        
 
 
     }
