@@ -138,7 +138,7 @@ public class LemmaBasedEvaluation {
                             {
 
                                 Restriction reference = (Restriction) ref;
-                                uri = reference.getURI();
+                                uri = reference.getProperty();
                             }
                             List<String>tmp = new ArrayList<>();
                             pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
