@@ -4,6 +4,8 @@ import java.util.HashMap;
 import de.citec.sc.matoll.core.LexicalEntry;
 import de.citec.sc.matoll.core.Lexicon;
 import de.citec.sc.matoll.core.Reference;
+import de.citec.sc.matoll.core.Restriction;
+import de.citec.sc.matoll.core.SimpleReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +94,18 @@ public class LemmaBasedEvaluation {
                 for( Reference ref:entry.getReferences()){
                     try{
                         if(onlyProperties){
-                            String uri = ref.getURI();
+                            String uri = "";
+                            if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
+                            {
+                                SimpleReference reference = (SimpleReference) ref;
+                                uri = reference.getURI();
+                            }
+                            if (ref instanceof de.citec.sc.matoll.core.Restriction)
+                            {
+
+                                Restriction reference = (Restriction) ref;
+                                uri = reference.getURI();
+                            }
                             String tmp_uri = uri.replace("http://dbpedia.org/ontology/", "");
                             if(!Character.isUpperCase(tmp_uri.charAt(0))){
                                 List<String>tmp = new ArrayList<>();
@@ -115,7 +128,18 @@ public class LemmaBasedEvaluation {
                             }
                         }
                         else{
-                            String uri = ref.getURI();
+                            String uri = "";
+                            if (ref instanceof de.citec.sc.matoll.core.SimpleReference)
+                            {
+                                SimpleReference reference = (SimpleReference) ref;
+                                uri = reference.getURI();
+                            }
+                            if (ref instanceof de.citec.sc.matoll.core.Restriction)
+                            {
+
+                                Restriction reference = (Restriction) ref;
+                                uri = reference.getURI();
+                            }
                             List<String>tmp = new ArrayList<>();
                             pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#noun","http://www.lexinfo.net/ontology/2.0/lexinfo#commonNoun");
                             pos = pos.replace("http://www.lexinfo.net/ontology/2.0/lexinfo#","");
