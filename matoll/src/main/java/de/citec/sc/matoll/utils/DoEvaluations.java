@@ -171,7 +171,7 @@ public class DoEvaluations {
         List<Double> result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,true,true);
         writer.println("(Label Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,true,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,true,false);
         writer.println("(Label Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
@@ -207,7 +207,7 @@ public class DoEvaluations {
         result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,false,true);
         writer.println("(Label Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,false,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,false,false);
         writer.println("(Label Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
