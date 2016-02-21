@@ -34,9 +34,9 @@ public class test123 {
 		// This test class checks if the equals method works...
 		
                 Lexicon lexicon = new Lexicon();
-		_LexiconLoaderGreaterK_ loader = new _LexiconLoaderGreaterK_(1);
+		_LexiconLoaderGreaterK_ loader = new _LexiconLoaderGreaterK_();
 		
-                lexicon = loader.loadFromFile("/Users/swalter/Downloads/new_adjectives.ttl");
+                lexicon = loader.loadFromFile("/Users/swalter/Downloads/new_adjectives.ttl",1);
                 
                 System.out.println("#entries:"+lexicon.size());
                 

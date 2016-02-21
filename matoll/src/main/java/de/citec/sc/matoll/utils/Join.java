@@ -73,14 +73,13 @@ public class Join {
         String path_automatic_spanish = "/Users/swalter/Downloads/new_results/dbpedia2014_ES_Full_beforeTraining.ttl";
         String path_automatic_adjectives = "/Users/swalter/Downloads/new_results/new_adjectives.ttl";
         
-        _LexiconLoaderGreaterK_ loader = new _LexiconLoaderGreaterK_(1);
-        _LexiconLoaderGreaterK_ loade2r = new _LexiconLoaderGreaterK_(2);
+        _LexiconLoaderGreaterK_ loader = new _LexiconLoaderGreaterK_();
         
-        Lexicon automatic_english = loade2r.loadFromFile(path_automatic_english);
-        Lexicon automatic_german = loader.loadFromFile(path_automatic_german);
-        Lexicon automatic_spanish = loader.loadFromFile(path_automatic_spanish);
+        Lexicon automatic_english = loader.loadFromFile(path_automatic_english,2);
+        Lexicon automatic_german = loader.loadFromFile(path_automatic_german,1);
+        Lexicon automatic_spanish = loader.loadFromFile(path_automatic_spanish,1);
         
-        Lexicon automatic_label_based_approach = loade2r.loadFromFile(path_automatic_adjectives);
+        Lexicon automatic_label_based_approach = loader.loadFromFile(path_automatic_adjectives,2);
         
         Lexicon joined = new Lexicon();
         joined.setBaseURI("http://localhost:8080/");

@@ -47,14 +47,14 @@ import org.apache.jena.rdf.model.ModelFactory;
 
 public class _LexiconLoaderGreaterK_ {
         int threshold = 1;
-	public  _LexiconLoaderGreaterK_(int K)
-	{
-            this.threshold=K;
-	}
+//	public  _LexiconLoaderGreaterK_(int K)
+//	{
+//            this.threshold=K;
+//	}
 	
-	public Lexicon loadFromFile(String file)
+	public Lexicon loadFromFile(String file, int k)
 	{
-		
+		this.threshold=k;
 		Model model = RDFDataMgr.loadModel(file);
 		
 		 Statement stmt;

@@ -11,6 +11,7 @@ import de.citec.sc.matoll.core.Sense;
 import de.citec.sc.matoll.evaluation.LemmaBasedEvaluation;
 import de.citec.sc.matoll.io.LexiconLoader;
 import de.citec.sc.matoll.io.LexiconSerialization;
+import de.citec.sc.matoll.io._LexiconLoaderGreaterK_;
 import de.citec.sc.matoll.patterns.PatternLibrary;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.english.SparqlPattern_EN_DatatypeNoun;
@@ -75,20 +76,34 @@ public class DoEvaluations {
         String path_automatic_adjectives = "new_adjectives.ttl";
         
         LexiconLoader loader = new LexiconLoader();
+        _LexiconLoaderGreaterK_ loader_k = new _LexiconLoaderGreaterK_();
+
         Lexicon gold_english = loader.loadFromFile(path_gold_english);
         Lexicon gold_german = loader.loadFromFile(path_gold_german);
         Lexicon gold_spanish = loader.loadFromFile(path_gold_spanish);
         
-        Lexicon automatic_english = loader.loadFromFile(path_automatic_english);
+        Lexicon automatic_english_1 = loader.loadFromFile(path_automatic_english);
+        Lexicon automatic_english_2 = loader_k.loadFromFile(path_automatic_english,1);
+        Lexicon automatic_english_5 = loader_k.loadFromFile(path_automatic_english,4);
+        Lexicon automatic_english_10 = loader_k.loadFromFile(path_automatic_english,9);
+        Lexicon automatic_english_15 = loader_k.loadFromFile(path_automatic_english,14);
+        Lexicon automatic_english_20 = loader_k.loadFromFile(path_automatic_english,19);
+        Lexicon automatic_english_30 = loader_k.loadFromFile(path_automatic_english,29);
+        Lexicon automatic_english_40 = loader_k.loadFromFile(path_automatic_english,39);
+        Lexicon automatic_english_50 = loader_k.loadFromFile(path_automatic_english,49);
+        Lexicon automatic_english_75 = loader_k.loadFromFile(path_automatic_english,74);
+        Lexicon automatic_english_90 = loader_k.loadFromFile(path_automatic_english,89);
+        Lexicon automatic_english_100 = loader_k.loadFromFile(path_automatic_english,99);
+
         Lexicon automatic_german = loader.loadFromFile(path_automatic_german);
         Lexicon automatic_spanish = loader.loadFromFile(path_automatic_spanish);
         
-        Lexicon automatic_label_based_approach = loader.loadFromFile(path_automatic_adjectives);
+        Lexicon automatic_label_based_approach_1 = loader.loadFromFile(path_automatic_adjectives);
         
         Lexicon joined = new Lexicon();
         joined.setBaseURI("http://localhost:8080/");
-        for(LexicalEntry entry:automatic_english.getEntries())joined.addEntry(entry);
-        for(LexicalEntry entry:automatic_label_based_approach.getEntries())joined.addEntry(entry);
+        for(LexicalEntry entry:automatic_english_1.getEntries())joined.addEntry(entry);
+        for(LexicalEntry entry:automatic_label_based_approach_1.getEntries())joined.addEntry(entry);
         
         
         List<SparqlPattern> patterns = new ArrayList<>();
@@ -151,7 +166,7 @@ public class DoEvaluations {
             catch(Exception e){}
         }
         
-        for(LexicalEntry entry:automatic_english.getEntries()){
+        for(LexicalEntry entry:automatic_english_1.getEntries()){
             try{
                 for(Sense sense:entry.getSenseBehaviours().keySet()){
                     set_automatic.add(sense.getReference().getURI());
@@ -168,18 +183,18 @@ public class DoEvaluations {
         English only properties
         */
         writer.println("English: Only properties");
-        List<Double> result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,true,true);
+        List<Double> result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach_1, gold_english,true,true);
         writer.println("(Label Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,true,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach_1, gold_english,true,false);
         writer.println("(Label Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,true,true);
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,true,true);
         writer.println("(Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,true,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,true,false);
         writer.println("(Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
@@ -204,18 +219,18 @@ public class DoEvaluations {
         
         
         writer.println("English: Properties and Classes");
-        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,false,true);
+        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach_1, gold_english,false,true);
         writer.println("(Label Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach, gold_english,false,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_label_based_approach_1, gold_english,false,false);
         writer.println("(Label Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,false,true);
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,false,true);
         writer.println("(Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
-        result = LemmaBasedEvaluation.evaluate(automatic_english, gold_english,false,false);
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,false,false);
         writer.println("(Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
@@ -259,6 +274,80 @@ public class DoEvaluations {
         writer.println("(Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
+        writer.println("####################");
+        writer.println("####################");
+        writer.println();
+        writer.println();
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,true,true);
+        writer.println("1 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_1, gold_english,true,false);
+        writer.println("1 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_2, gold_english,true,true);
+        writer.println("2 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_2, gold_english,true,false);
+        writer.println("2 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_5, gold_english,true,true);
+        writer.println("5 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_5, gold_english,true,false);
+        writer.println("5 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_10, gold_english,true,true);
+        writer.println("10 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_10, gold_english,true,false);
+        writer.println("10 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_15, gold_english,true,true);
+        writer.println("15 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_15, gold_english,true,false);
+        writer.println("15 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_20, gold_english,true,true);
+        writer.println("20 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_20, gold_english,true,false);
+        writer.println("20 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_30, gold_english,true,true);
+        writer.println("30 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_30, gold_english,true,false);
+        writer.println("30 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_40, gold_english,true,true);
+        writer.println("40 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_40, gold_english,true,false);
+        writer.println("40 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_50, gold_english,true,true);
+        writer.println("50 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_50, gold_english,true,false);
+        writer.println("50 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_75, gold_english,true,true);
+        writer.println("75 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_75, gold_english,true,false);
+        writer.println("75 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_90, gold_english,true,true);
+        writer.println("90 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_90, gold_english,true,false);
+        writer.println("90 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+                writer.println();
+
+        result = LemmaBasedEvaluation.evaluate(automatic_english_100, gold_english,true,true);
+        writer.println("100 (Dependency Based Approach): Macro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
+        result = LemmaBasedEvaluation.evaluate(automatic_english_100, gold_english,true,false);
+        writer.println("100 (Dependency Based Approach): Micro  P:"+result.get(0)+", R:"+result.get(1)+", F:"+result.get(2));
         
         
         
