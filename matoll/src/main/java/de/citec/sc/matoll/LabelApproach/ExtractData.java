@@ -87,7 +87,7 @@ public class ExtractData {
 				String[] object_tmp = property_object.split(" ");
 				for(String term : object_tmp){
 					//System.out.println("term:"+term);
-					if((wordnet.checkForAdjective(term.toLowerCase())|| dbnaray_adjective_list.containsKey(term.toLowerCase())||tagger.tagString(term.toLowerCase()).contains("JJ"))
+					if((wordnet.checkForAdjective(term.toLowerCase())|| dbnaray_adjective_list.containsKey(term.toLowerCase()))
 							&&!stopwords.contains(term.toLowerCase())){
 						adjectiveobject.setAdjectiveTerm(term);
 						adjectiveobject.setAdjective(true);
@@ -99,7 +99,7 @@ public class ExtractData {
 				}
 			}
 			else {
-				if((wordnet.checkForAdjective(property_object.toLowerCase())|| dbnaray_adjective_list.containsKey(property_object.toLowerCase()) || tagger.tagString(property_object.toLowerCase()).contains("JJ"))
+				if((wordnet.checkForAdjective(property_object.toLowerCase())|| dbnaray_adjective_list.containsKey(property_object.toLowerCase()))
                                             &&!stopwords.contains(property_object.toLowerCase())){
 					adjectiveobject.setAdjectiveTerm(property_object);
 					adjectiveobject.setAdjective(true);
@@ -131,7 +131,7 @@ public class ExtractData {
 
 
 	
-	private List<List<String>> getRawObjects(String resourceFolder,String uri, String language) throws IOException {
+	public List<List<String>> getRawObjects(String resourceFolder,String uri, String language) throws IOException {
 		/*
 		 * In the moment only consider those adjective, which have an URI and a label as object.
 		 * 
