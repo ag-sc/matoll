@@ -59,7 +59,7 @@ public class ReadIndex {
 
                 subj = preprocessing(subj).trim();
                 obj = preprocessing(obj).trim();
-                if (language.equals(Language.JA)) {
+                if (!language.equals(Language.JA)) {
                         if(subj.length()<=2||obj.length()<=2) return results;
                 }
 
