@@ -13,6 +13,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 
 import de.citec.sc.matoll.core.Language;
+import static de.citec.sc.matoll.core.Language.JA;
 import de.citec.sc.matoll.coreference.Coreference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,7 @@ public class ModelPreprocessor {
          * @param objectEntity 
          */
 	public void preprocess(Model model, String subjectEntity,
-			String objectEntity) {
+			String objectEntity, Language language) {
 		
 		Resource2Lemma = getResource2Lemma(model);
 		Resource2Head = getResource2Head(model);
@@ -72,38 +73,62 @@ public class ModelPreprocessor {
 		{
 			List<List<String>> objectResources = getResources(model,objectEntity);
 			hypotheses = getHypotheses(objectResources);
+                        if(language.equals(JA)){
+                            for(Hypothesis tmp : hypotheses){
+                                for( String tmp2 : tmp.getNodes()){
+                                    model.add(model.getResource(tmp2), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+
+                                    senseArgs.put(tmp2, "http://lemon-model.net/lemon#objOfProp");
+                                }
+                            }
+                        }
+                        
+                        else{
+                            for (Hypothesis hypo: hypotheses)
+                            {
+                                    // System.out.print("Final hypo: "+hypo.toString());
+
+                                    root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
+
+                                    if (root != null) 
+                                    {
+                                            model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
+                                            senseArgs.put(root, "http://lemon-model.net/lemon#objOfProp");
+                                    }
+                            }
+                        }
 			
-			for (Hypothesis hypo: hypotheses)
-			{
-				// System.out.print("Final hypo: "+hypo.toString());
-				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
-				
-				if (root != null) 
-				{
-					model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#objOfProp"));
-					senseArgs.put(root, "http://lemon-model.net/lemon#objOfProp");
-				}
-			}
 		}
 		
 		if (subjectEntity != null)
 		{
 			List<List<String>> subjectResources = getResources(model,subjectEntity);
 			 hypotheses = getHypotheses(subjectResources);
-			for (Hypothesis hypo: hypotheses)
-			{
-				
-				// System.out.print("Final hypo: "+hypo.toString());
-				
-				root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
-				
-				if (root != null) 
-				{	
-					model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
-					senseArgs.put(root, "http://lemon-model.net/lemon#subjOfProp");
-				}	
-			}
+                         if(language.equals(JA)){
+                            for(Hypothesis tmp : hypotheses){
+                                for( String tmp2 : tmp.getNodes()){
+                                    model.add(model.getResource(tmp2), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
+
+                                    senseArgs.put(tmp2, "http://lemon-model.net/lemon#subjOfProp");
+                                }
+                            }
+                        }
+                        else{
+                             for (Hypothesis hypo: hypotheses)
+                            {
+
+                                    // System.out.print("Final hypo: "+hypo.toString());
+
+                                    root = hypo.checkValidAndReturnRoot(Resource2Head,Resource2Dependency,DEP);
+
+                                    if (root != null) 
+                                    {	
+                                            model.add(model.getResource(root), model.createProperty("own:senseArg"), model.createResource("http://lemon-model.net/lemon#subjOfProp"));
+                                            senseArgs.put(root, "http://lemon-model.net/lemon#subjOfProp");
+                                    }	
+                            }
+                        }
+			
 		}
 		
                 if (doCoref) try {

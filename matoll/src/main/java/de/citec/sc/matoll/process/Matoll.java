@@ -260,7 +260,7 @@ public class Matoll {
                                 && !obj.contains(subj)) {
                             reference = getReference(sentence);
                             if(!reference.equals("http://dbpedia.org/ontology/type")&&!reference.equals("http://dbpedia.org/ontology/isPartOf")){
-                                preprocessor.preprocess(sentence,subj,obj);
+                                preprocessor.preprocess(sentence,subj,obj,language);
                                 freq.adjustOrPutValue(reference, 1, 1);
                                 library.extractLexicalEntries(sentence, automatic_lexicon);
                             }
@@ -711,7 +711,8 @@ public class Matoll {
         try {
                 writer = new PrintWriter(path+"_simple.tsv");
                 for(String key:hm_int.keySet()){
-                    writer.write(key+Integer.toString(hm_int.get(key))+"\n");
+                    if(hm_int.get(key)>1)
+                        writer.write(key+Integer.toString(hm_int.get(key))+"\n");
                 }
                 writer.close();
         } catch (FileNotFoundException e) {
