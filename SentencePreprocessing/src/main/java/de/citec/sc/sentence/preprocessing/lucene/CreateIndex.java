@@ -45,15 +45,15 @@ public class CreateIndex {
         Analyzer analyzer = null;
         
         List<String> files = new ArrayList<>();
-        //files.add("/Users/swalter/Downloads/german_sentences_reduced.txt");
-        //String indexPath = "/Users/swalter/Index/GermanIndexReduced/";
-        //Language language = Language.DE;
-        //Directory dir = FSDirectory.open(Paths.get(indexPath));
-        
-        files.add("/home/bettina/CITEC/MATOLL/preprocessSentences/idealSentences/idealSents_mecab_jdepp_rmvPunct_CoNLLU");
-        String indexPath = "/home/bettina/CITEC/MATOLL/preprocessSentences/idealSentences/index";
-        Language language = Language.JA;
+        files.add("/Users/swalter/Downloads/german_sentences_reduced.txt");
+        String indexPath = "/Users/swalter/Index/GermanIndexReduced/";
+        Language language = Language.DE;
         Directory dir = FSDirectory.open(Paths.get(indexPath));
+        
+        //files.add("/home/bettina/CITEC/MATOLL/preprocessSentences/idealSentences/idealSents_mecab_jdepp_rmvPunct_CoNLLU");
+        //String indexPath = "/home/bettina/CITEC/MATOLL/preprocessSentences/idealSentences/index";
+        //Language language = Language.JA;
+        //Directory dir = FSDirectory.open(Paths.get(indexPath));
         
         if(language.equals(Language.DE)) analyzer = new GermanAnalyzer();
         if(language.equals(Language.ES)) analyzer = new SpanishAnalyzer();
