@@ -270,22 +270,22 @@ public class Matoll {
                 }
             
                 System.out.println("Extracted entries");
-//                if(config.doStatistics()){
-//                    System.out.println("do some statistics now");
-//                    absolutNumberEntriesByReference(automatic_lexicon,freq,language);
-//                    Map<String, Double> overall_pattern_distribution = getOverallDistributionPattern(automatic_lexicon);
-//                    for(String key: overall_pattern_distribution.keySet()){
-//                        System.out.println(key+":"+overall_pattern_distribution.get(key));
-//                    }
-//                    for(Reference ref:automatic_lexicon.getReferences()){
-//                        getDistributionPatternPerPreference(automatic_lexicon,ref.getURI(),language);
-//                    }
-//                }
-//                
-//                
-//                System.out.println("Calculate normalized confidence");
-//                calculateConfidence(automatic_lexicon,freq);  
-//                normalizeConfidence(automatic_lexicon);
+                if(config.doStatistics()){
+                    System.out.println("do some statistics now");
+                    absolutNumberEntriesByReference(automatic_lexicon,freq,language);
+                    Map<String, Double> overall_pattern_distribution = getOverallDistributionPattern(automatic_lexicon);
+                    for(String key: overall_pattern_distribution.keySet()){
+                        System.out.println(key+":"+overall_pattern_distribution.get(key));
+                    }
+                    for(Reference ref:automatic_lexicon.getReferences()){
+                        getDistributionPatternPerPreference(automatic_lexicon,ref.getURI(),language);
+                    }
+                }
+                
+                
+                System.out.println("Calculate normalized confidence");
+                calculateConfidence(automatic_lexicon,freq);  
+                normalizeConfidence(automatic_lexicon);
                 
 		
 //		logger.info("Extracted all entries \n");
