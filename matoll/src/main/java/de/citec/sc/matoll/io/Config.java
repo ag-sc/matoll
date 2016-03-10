@@ -129,9 +129,9 @@ public class Config {
 					Patterns.add(new SparqlPattern_EN_Predicative_Participle_copulative());
                                         Patterns.add(new SparqlPattern_EN_Transitive_Passive());
                                         Patterns.add(new SparqlPattern_EN_Noun_PP_possessive());
-                                        Patterns.add(new SparqlPattern_EN_DatatypeNoun());
-					Patterns.add(new SparqlPattern_EN_DatatypeNoun_2());
-                                        Patterns.add((new SparqlPattern_EN_Noun_PP_player()));
+//                                        Patterns.add(new SparqlPattern_EN_DatatypeNoun());
+//					Patterns.add(new SparqlPattern_EN_DatatypeNoun_2());
+//                                        Patterns.add((new SparqlPattern_EN_Noun_PP_player()));
 					logger.info("Adding patterns 1-9 (EN) to pattern library \n");
 				}
 				if (Language.equals(DE))
