@@ -140,6 +140,7 @@ public class Matoll_Baseline {
 
         Set<String> results = new HashSet<>();
         Map<String,Integer> shortestpatterns = new HashMap<>();
+        Map<String,Set<String>> pattern_sentence = new HashMap<>();
         Set<String> fragments = new HashSet<>();
         for(File file:list_files){
             Model model = RDFDataMgr.loadModel(file.toString());
@@ -159,7 +160,7 @@ public class Matoll_Baseline {
                     
 //                    String str = "ZZZZL <%= dsn %> AFFF <%= AFG %>";
                     String str = sentenceObject.getSentence();
-                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns,fragments,reference,stopwords);
+                    doShortestPathExtraction(sentence,subj,obj,shortestpatterns,fragments,reference,stopwords,pattern_sentence,sentenceObject);
                     Pattern pattern = Pattern.compile(subj.toLowerCase()+"(.*?)"+obj.toLowerCase());
                     Matcher matcher = pattern.matcher(str.toLowerCase());
                     while (matcher.find()) {
@@ -323,8 +324,22 @@ public class Matoll_Baseline {
         
         shortestpatterns.entrySet().stream()
         .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()) 
-        .limit(15) 
-        .forEach(System.out::println); // or any other terminal method
+        .limit(100) 
+        .forEach(System.out::println); 
+
+        writer = new PrintWriter("shortestpath_examples.tsv");
+        for(String key : shortestpatterns.keySet()){
+            String outputstring = key +"\t"+ shortestpatterns.get(key)+"\t";
+            Set<String> examplesentences = pattern_sentence.get(key);
+            for(String ex : examplesentences){
+                outputstring += ex+"\t";
+            }
+            outputstring += "\n";
+            writer.write(outputstring);
+        }
+        writer.close();
+
+// or any other terminal method
 
 //        LexiconSerialization serializer = new LexiconSerialization(config.removeStopwords());
 //
@@ -498,7 +513,7 @@ public class Matoll_Baseline {
 		return null;
 	}
 
-    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns, Set<String> fragments, String reference, Stopwords stopwords) throws IOException, InterruptedException {
+    private static void doShortestPathExtraction(Model sentence, String subj, String obj, Map<String,Integer> patterns, Set<String> fragments, String reference, Stopwords stopwords, Map<String,Set<String>> pattern_sentence, Sentence sentenceObject) throws IOException, InterruptedException {
         
 //        DirectedGraph<Integer, RelationshipEdge> g = new DefaultDirectedGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
         UndirectedGraph<Integer, RelationshipEdge> g = new SimpleGraph<Integer, RelationshipEdge>(RelationshipEdge.class);
@@ -592,6 +607,19 @@ public class Matoll_Baseline {
                                     patterns.put(tmp, patterns.get(tmp)+1);
                                 }
                                 else patterns.put(tmp,1);
+                                if(pattern_sentence.containsKey(tmp)){
+                                    Set<String> tmp_set = pattern_sentence.get(tmp);
+                                    if(tmp_set.size()<11){
+                                        tmp_set.add(sentenceObject.getSentence());
+                                        pattern_sentence.put(tmp, tmp_set);
+                                    }
+                                }
+                                else{
+                                    Set<String> tmp_set = new HashSet<>();
+                                    tmp_set.add(sentenceObject.getSentence());
+                                    pattern_sentence.put(tmp, tmp_set);
+                                    
+                                }
 //                                System.out.println(p.getStartVertex());
 //                                System.out.println(p.getEndVertex());
 //                                System.out.println();
