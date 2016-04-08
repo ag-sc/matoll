@@ -610,7 +610,7 @@ public class Matoll_Baseline {
                                 if(pattern_sentence.containsKey(tmp)){
                                     Set<String> tmp_set = pattern_sentence.get(tmp);
                                     if(tmp_set.size()<11){
-                                        tmp_set.add(sentenceObject.getSentence());
+                                        tmp_set.add(sentenceObject.getSubjOfProp()+";"+sentenceObject.getObjOfProp()+";"+sentenceObject.getSentence());
                                         pattern_sentence.put(tmp, tmp_set);
                                     }
                                 }
