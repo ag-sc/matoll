@@ -88,14 +88,18 @@ public class ReadIndex {
 	          Document d = searcher.doc(docId);
 	          ArrayList<String> result = new ArrayList<>();
 	          String sentence = d.get("parsed");
-                  if(!cache.contains(sentence)){
+                  String plain_sentence = getPlainSentence(sentence);
+                  //System.out.println(plain_sentence);
+                  //System.out.println(subj);
+                  //System.out.println(obj);
+                  if(!cache.contains(plain_sentence+subj+obj) && plain_sentence.contains(subj) && plain_sentence.contains(obj)){
                       result.add(sentence);
                       result.add(subj);
                       result.add(obj);
                       result.add(subj_uri);
                       result.add(obj_uri);
                       results.add(result);
-                      cache.add(sentence);
+                      cache.add(plain_sentence+subj+obj);
                   }
 	        	  
 	          
@@ -147,5 +151,17 @@ public class ReadIndex {
 		System.out.println(Integer.toString(sentences.size())+" #sentences");
 		return sentences;
 	}
+
+    private String getPlainSentence(String sentence) {
+        String output = "";
+        if (sentence.contains("\t\t")){
+            String[] tmp = sentence.split("\t\t");
+            for(String t : tmp){
+                output+=" "+t.split("\t")[1];
+            }
+        }
+        
+        return output.trim();
+    }
 
 }
