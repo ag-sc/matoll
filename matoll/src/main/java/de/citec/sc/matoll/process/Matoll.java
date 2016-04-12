@@ -242,7 +242,7 @@ public class Matoll {
                     list_files.addAll(config.getFiles());
                 }
 		                
-                
+                int sentence_counter = 0;
                 TObjectIntHashMap<String> freq = new TObjectIntHashMap<String>();
                 
                 
@@ -262,6 +262,7 @@ public class Matoll {
                             if(!reference.equals("http://dbpedia.org/ontology/type")&&!reference.equals("http://dbpedia.org/ontology/isPartOf")){
                                 preprocessor.preprocess(sentence,subj,obj,language);
                                 freq.adjustOrPutValue(reference, 1, 1);
+                                sentence_counter+=1;
                                 library.extractLexicalEntries(sentence, automatic_lexicon);
                             }
                         }
@@ -305,7 +306,7 @@ public class Matoll {
                 
                 out.close();
 		
-                
+                System.out.println("Actual number used sentences:"+Integer.toString(sentence_counter));
                 
                 
 //                WEKAclassifier classifier = new WEKAclassifier(language);
