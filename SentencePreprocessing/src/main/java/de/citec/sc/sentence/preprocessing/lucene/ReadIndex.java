@@ -48,7 +48,7 @@ public class ReadIndex {
 	
 	
         
-        private List<List<String>> runSearch(String subj, String obj, String subj_uri, String obj_uri, boolean strict)
+        public List<List<String>> runSearch(String subj, String obj, String subj_uri, String obj_uri, boolean strict)
 			throws IOException {
             Set<String> cache = new HashSet<>();
             List<List<String>> results = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ReadIndex {
                     booleanQuery.add(new QueryParser("plain", analyzer).parse(obj.toLowerCase()), BooleanClause.Occur.MUST);
                 }
                 
-//                System.out.println(booleanQuery.toString());
+                System.out.println(booleanQuery.toString());
                     
                 
                 int hitsPerPage = 99;
@@ -92,8 +92,9 @@ public class ReadIndex {
                   //System.out.println(plain_sentence);
                   //System.out.println(subj);
                   //System.out.println(obj);
-                  if(!cache.contains(plain_sentence+subj+obj) && plain_sentence.contains(subj) && plain_sentence.contains(obj)
-                          && !subj.contains(obj) && !obj.contains(subj) && !subj.equals(obj)){
+                  //if(!cache.contains(plain_sentence+subj+obj) && plain_sentence.contains(subj) && plain_sentence.contains(obj)
+                  //        && !subj.contains(obj) && !obj.contains(subj) && !subj.equals(obj)){
+                  if(!cache.contains(plain_sentence+subj+obj)){
                       result.add(sentence);
                       result.add(subj);
                       result.add(obj);
