@@ -1,1 +1,1 @@
-http://dbpedia.org/ontology/spouse
+http://dbpedia.org/ontology/test
