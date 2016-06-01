@@ -1,5 +1,4 @@
 package de.citec.sc.matoll.LabelApproach;
-
 public class AdjectiveObject {
 	private String adjectiveTerm = "";
 	private String object = "";

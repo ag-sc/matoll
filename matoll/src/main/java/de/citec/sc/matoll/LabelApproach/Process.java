@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,8 +73,12 @@ import org.apache.lucene.store.FSDirectory;
 
 
 import weka.classifiers.Classifier;
-import weka.classifiers.functions.SMO;
+import weka.classifiers.Evaluation;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.trees.J48;
+//import weka.classifiers.functions.SMO;
 //import weka.classifiers.trees.J48;
+import weka.classifiers.trees.RandomForest;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -93,21 +98,45 @@ public class Process {
 		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
 		String path_to_wordnet = "/Users/swalter/Backup/Software/WordNet-3.0";
 		String path_to_objects = "/Users/swalter/Downloads/tmp_extractPropertiesWithData/results/ontology/";
-		/*
-		 * TODO: Automatically import via maven
-		 */
 		
-		//String path_to_tagger_model ="resources/english-left3words/english-caseless-left3words-distsim.tagger";
+                Set<String> feature_list = new HashSet<String>();
+                feature_list.add("NAF");
+                feature_list.add("Trigrams");
+                feature_list.add("Bigrams");
+                feature_list.add("PR");
+                feature_list.add("POSPR");
+                feature_list.add("AR");
+                feature_list.add("PAP");
+
+//                feature_list.add("NAF");
+//                feature_list.add("Trigrams");
+//                feature_list.add("Bigrams");
+//                feature_list.add("PR");
+//                feature_list.add("POSPR");
+//                feature_list.add("AR");
+//                feature_list.add("PAP");
+//                feature_list.add("NOF");
+//                feature_list.add("PP");
+//                feature_list.add("NLD");
+//                feature_list.add("AP");
+//                feature_list.add("AFP");
+//                feature_list.add("ALP");
+                        
+
+                LabelFeature label_feature = new LabelFeature();
+                label_feature.setFeature(feature_list);
+                
+                
                 String path_to_tagger_model ="resources/english-caseless-left3words-distsim.tagger";
-		SMO smo = new SMO();
+		RandomForest smo = new RandomForest();
 //                J48 smo = new J48();
-                smo.setOptions(weka.core.Utils.splitOptions("-M"));
+                //smo.setOptions(weka.core.Utils.splitOptions("-M"));
                 Classifier cls = smo; 
                 
                 final StanfordLemmatizer sl = new StanfordLemmatizer(EN);
 	
-                String path_to_input_file = "../dbpedia_2014.owl";
-//                String path_to_input_file = "test.txt";
+//                String path_to_input_file = "../dbpedia_2014.owl";
+                String path_to_input_file = "test.txt";
                 Set<String> properties = new HashSet<>();
                 Set<String> classes = new HashSet<>();
                 if(path_to_input_file.endsWith(".txt")){
@@ -148,7 +177,7 @@ public class Process {
 		 */
 		System.out.println("Generate ARFF File (Training)");
 		try {
-			GenerateArff.run(path_annotatedFiles, path_raw_files, path_to_write_arff,label_3,label_2,pos,posAdj,tagger);
+			GenerateArff.run(path_annotatedFiles, path_raw_files, path_to_write_arff,label_3,label_2,pos,posAdj,tagger,label_feature);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,10 +217,10 @@ public class Process {
 
                
 
-                runWornetPropertyApproach(properties,lexicon,wordnet,sl);
-		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects);
+                //runWornetPropertyApproach(properties,lexicon,wordnet,sl);
+		runAdjectiveApproach(properties,adjectiveExtractor,posAdj,pos,label_3,label_2, prediction,tagger, lexicon, mp,path_to_objects,label_feature);
                 
-		runWornetClassApproach(classes,lexicon,wordnet,"/Users/swalter/Downloads/EnglishIndexReduced");
+//		runWornetClassApproach(classes,lexicon,wordnet,"/Users/swalter/Downloads/EnglishIndexReduced");
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -296,9 +325,22 @@ public class Process {
             return output;
         }
 
+        public static BufferedReader readDataFile(String filename) {
+            BufferedReader inputReader = null;
 
+            try {
+                inputReader = new BufferedReader(new FileReader(filename));
+            } catch (FileNotFoundException ex) {
+                System.err.println("File not found: " + filename);
+            }
+
+            return inputReader;
+        }
+        
 	private static void generateModel(Classifier cls,String path_to_arff) throws FileNotFoundException, IOException {
 		 Instances inst = new Instances(new BufferedReader(new FileReader(path_to_arff)));
+                 
+    
 		 inst.setClassIndex(inst.numAttributes() - 1);
 		 try {
 			cls.buildClassifier(inst);
@@ -342,7 +384,7 @@ public class Process {
 
     private static void runAdjectiveApproach(Set<String> properties,ExtractData adjectiveExtractor,
             HashSet<String> posAdj, HashSet<String> pos, HashSet<String> label_3, HashSet<String> label_2, 
-            Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects) {
+            Prediction prediction,MaxentTagger tagger, Lexicon lexicon, Morphology mp, String path_to_objects,LabelFeature label_feature) {
         int counter = 0;
         int uri_counter = 0;
         int uri_used = 0;
@@ -368,8 +410,8 @@ public class Process {
                         */
                         adjectiveObject.setAnnotation("1");
                         small_object_list.add(adjectiveObject);
-                        GenerateArff.getCsvLine(lines,small_object_list,label_2,label_3,pos,posAdj,tagger);
-                        GenerateArff.writeArff(lines,tmp,label_2,label_3,pos,posAdj);
+                        GenerateArff.getCsvLine(lines,small_object_list,label_2,label_3,pos,posAdj,tagger,label_feature);
+                        GenerateArff.writeArff(lines,tmp,label_2,label_3,pos,posAdj,label_feature);
                         /*
                          * Load instances to predict.
                          */
@@ -385,7 +427,7 @@ public class Process {
                               */
                              HashMap<Integer, Double> result = prediction.predict(current);
                              for(int key : result.keySet()){
-                                if(key==1 && result.get(key)>0.99){
+                                if(key==1 && result.get(key)>0.70){
                                      counter+=1;
                                      try{
                                          createRestrictionClassEntry(lexicon,adjectiveObject.getAdjectiveTerm(),adjectiveObject.getObjectURI(),uri, adjectiveObject.getFrequency(),result.get(key));
@@ -398,6 +440,7 @@ public class Process {
 //                                    System.out.println("Predicted 0 for "+adjectiveObject.getAdjectiveTerm());
 //                                    System.out.println();
                                 }
+
                             }
 
 
@@ -420,6 +463,8 @@ public class Process {
     }
 
     private static void runWornetClassApproach(Set<String> classes, Lexicon lexicon, Wordnet wordnet, String pathToIndex) throws FileNotFoundException, IOException, ParseException {
+        System.out.println("in runWornetClassApproach");
+        System.out.println(classes.size());
         List<String> stopwords = new ArrayList<>();
         String everything = "";
         FileInputStream inputStream = new FileInputStream("resources/englishST.txt");
@@ -774,9 +819,14 @@ public class Process {
     private static Set<String> wordnetDisambiguation(String uri, String inputLabel, Wordnet wordnet,List<String> stopwords, IndexSearcher searcher,Analyzer analyzer) throws ParseException, IOException {
         
         Set<String> wordnetLabels = wordnet.getAllSynonyms(inputLabel);
+        System.out.println("Input:");
+        for(String l : wordnetLabels){
+            System.out.println(l);
+        }
         if(wordnetLabels.size()<=3){
             return wordnetLabels;
         }
+        
         else{
             String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?label WHERE{?res <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <"+uri+">. ?res rdfs:label ?label. FILTER (lang(?label) = 'en') } LIMIT 100";
             Query query = QueryFactory.create(queryString);
@@ -824,6 +874,11 @@ public class Process {
             for(String x:tmp_terms.keySet()){
                 if(tmp_terms.get(x)>0.6)terms.add(x);
             }
+            System.out.println("Output:");
+            for(String l : terms){
+                System.out.println(l);
+            }
+        
             return terms;
         }
         
