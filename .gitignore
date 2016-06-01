@@ -24,7 +24,7 @@ matoll/nb-configuration.xml
 *.log
 
 
-matoll/run.sh
+
 
 *.ttl
 
