@@ -26,7 +26,7 @@ For further questions, or if you are interested in extending M-ATOLL to more lan
 In order to run matoll you need to have installed the jar of our [lemon.api](https://github.com/ag-sc/lemon.api)
 with 
 
-mvn install:install-file -Dfile=<path-to-jar> -DpomFile=<path-to-pom>
+mvn install:install-file -Dfile=\<path-to-jar> -DpomFile=\<path-to-pom>
 
 
 ## References 
