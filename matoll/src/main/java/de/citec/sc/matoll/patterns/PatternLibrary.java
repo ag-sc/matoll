@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.jena.rdf.model.Model;
 
-import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.lemon.core.Lexicon;
 import de.citec.sc.matoll.utils.Lemmatizer;
 import java.util.HashMap;
 import java.util.Map;

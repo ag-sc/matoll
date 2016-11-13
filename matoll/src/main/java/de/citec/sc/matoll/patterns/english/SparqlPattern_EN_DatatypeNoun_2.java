@@ -5,9 +5,9 @@
  */
 package de.citec.sc.matoll.patterns.english;
 
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Sentence;
+import de.citec.sc.lemon.core.Language;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import org.apache.jena.query.QueryExecution;

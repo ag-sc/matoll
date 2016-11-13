@@ -19,22 +19,21 @@ import javax.xml.parsers.ParserConfigurationException;
 
 
 
-import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Reference;
+import de.citec.sc.lemon.core.LexicalEntry;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Reference;
 import de.citec.sc.matoll.io.Config;
-import de.citec.sc.matoll.io.LexiconLoader;
-import de.citec.sc.matoll.io.LexiconSerialization;
+import de.citec.sc.lemon.io.LexiconLoader;
+import de.citec.sc.lemon.io.LexiconSerialization;
 import de.citec.sc.matoll.patterns.PatternLibrary;
 import de.citec.sc.matoll.preprocessor.ModelPreprocessor;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
-import de.citec.sc.matoll.classifiers.WEKAclassifier;
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.Provenance;
-import de.citec.sc.matoll.core.Restriction;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SimpleReference;
-import de.citec.sc.matoll.utils.Learning;
+import de.citec.sc.lemon.core.Language;
+import de.citec.sc.lemon.core.Provenance;
+import de.citec.sc.lemon.core.Restriction;
+import de.citec.sc.lemon.core.Sense;
+import de.citec.sc.lemon.core.SimpleReference;
+import de.citec.sc.lemon.io.CSV_LexiconSerialization;
 import de.citec.sc.matoll.utils.Stopwords;
 import java.io.PrintWriter;
 
@@ -289,12 +288,15 @@ public class Matoll {
                 normalizeConfidence(automatic_lexicon);
                 
 		
-//		logger.info("Extracted all entries \n");
-//		logger.info("Lexicon contains "+Integer.toString(automatic_lexicon.getEntries().size())+" entries\n");
 		
-		LexiconSerialization serializer = new LexiconSerialization(library.getPatternSparqlMapping(),config.removeStopwords());
+//		LexiconSerialization serializer = new LexiconSerialization(library.getPatternSparqlMapping(),config.removeStopwords());
+                
+                LexiconSerialization serializer = new LexiconSerialization();
+                //TODO: Add stopword removel, calculating the sameAs Link, as well as ass the Name of the Pattern.
+                
+                CSV_LexiconSerialization csv_serialiser = new CSV_LexiconSerialization(); 
 		
-                extportTSV(automatic_lexicon,output_lexicon);
+		csv_serialiser.serialize(automatic_lexicon,output_lexicon.replace(".lex", ".tsv"));
                 
                 Model model = ModelFactory.createDefaultModel();
 		
@@ -309,25 +311,7 @@ public class Matoll {
                 System.out.println("Actual number used sentences:"+Integer.toString(sentence_counter));
                 
                 
-//                WEKAclassifier classifier = new WEKAclassifier(language);
-//		
-////		logger.info("Starting "+mode+"\n");	
-//		boolean predict = true;
-//		if (mode.equals("train"))
-//		{
-//                    /*
-//                    during training only entries with a frequency of at least 2 are considered (per sense)
-//                    */
-//                    Learning.doTraining(automatic_lexicon,gold,maxima,language, classifier,2);
-//		
-//		}
-//                else{
-//                    Learning.doPrediction(automatic_lexicon, gold, classifier, output, language);
-//                }
-////		writeByReference(automatic_lexicon,language);
 
-		
-		
 			
 	}
         
@@ -661,66 +645,66 @@ public class Matoll {
         
     }
     
-    private static void extportTSV(Lexicon lexicon, String path){
-        Map<String,Double> hm_double = new HashMap<>();
-        Map<String,Integer> hm_int = new HashMap<>();
-        for(LexicalEntry entry : lexicon.getEntries()){
-            for(Sense sense:entry.getSenseBehaviours().keySet()){
-                Reference ref = sense.getReference();
-                if (ref instanceof de.citec.sc.matoll.core.SimpleReference){
-                    SimpleReference reference = (SimpleReference) ref;
-                    String preposition = "";
-                    if(entry.getPreposition()!=null) preposition = entry.getPreposition().getCanonicalForm();
-                    String input = entry.getCanonicalForm()+"\t"+preposition+"\t"+reference.getURI()+"\t";
-                    if(hm_int.containsKey(input)){
-                            int freq = hm_int.get(input);
-                             hm_int.put(input, entry.getProvenance(sense).getFrequency()+freq);
-                        }
-                        else{
-                            hm_int.put(input, entry.getProvenance(sense).getFrequency());
-                        }
-                }
-                else if (ref instanceof de.citec.sc.matoll.core.Restriction){
-                    Restriction reference = (Restriction) ref;
-                    String input = entry.getCanonicalForm()+"\t"+reference.getValue()+"\t"+reference.getProperty()+"\t";
-                    if(entry.getProvenance(sense).getConfidence()!=null){
-                        if(hm_double.containsKey(input)){
-                            double value = hm_double.get(input);
-                             hm_double.put(input, entry.getProvenance(sense).getConfidence()+value);
-                        }
-                        else{
-                            hm_double.put(input, entry.getProvenance(sense).getConfidence());
-                        }
-                    }
-                    
-                }
-            }
-        }
-        
-        PrintWriter writer;
-        try {
-                writer = new PrintWriter(path+"_restriction.tsv");
-                for(String key:hm_double.keySet()){
-                    writer.write(key+Double.toString(hm_double.get(key))+"\n");
-                }
-                writer.close();
-        } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-
-        try {
-                writer = new PrintWriter(path+"_simple.tsv");
-                for(String key:hm_int.keySet()){
-                    if(hm_int.get(key)>1)
-                        writer.write(key+Integer.toString(hm_int.get(key))+"\n");
-                }
-                writer.close();
-        } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-        
-    }
+//    private static void extportTSV(Lexicon lexicon, String path){
+//        Map<String,Double> hm_double = new HashMap<>();
+//        Map<String,Integer> hm_int = new HashMap<>();
+//        for(LexicalEntry entry : lexicon.getEntries()){
+//            for(Sense sense:entry.getSenseBehaviours().keySet()){
+//                Reference ref = sense.getReference();
+//                if (ref instanceof de.citec.sc.matoll.core.SimpleReference){
+//                    SimpleReference reference = (SimpleReference) ref;
+//                    String preposition = "";
+//                    if(entry.getPreposition()!=null) preposition = entry.getPreposition().getCanonicalForm();
+//                    String input = entry.getCanonicalForm()+"\t"+preposition+"\t"+reference.getURI()+"\t";
+//                    if(hm_int.containsKey(input)){
+//                            int freq = hm_int.get(input);
+//                             hm_int.put(input, entry.getProvenance(sense).getFrequency()+freq);
+//                        }
+//                        else{
+//                            hm_int.put(input, entry.getProvenance(sense).getFrequency());
+//                        }
+//                }
+//                else if (ref instanceof de.citec.sc.matoll.core.Restriction){
+//                    Restriction reference = (Restriction) ref;
+//                    String input = entry.getCanonicalForm()+"\t"+reference.getValue()+"\t"+reference.getProperty()+"\t";
+//                    if(entry.getProvenance(sense).getConfidence()!=null){
+//                        if(hm_double.containsKey(input)){
+//                            double value = hm_double.get(input);
+//                             hm_double.put(input, entry.getProvenance(sense).getConfidence()+value);
+//                        }
+//                        else{
+//                            hm_double.put(input, entry.getProvenance(sense).getConfidence());
+//                        }
+//                    }
+//                    
+//                }
+//            }
+//        }
+//        
+//        PrintWriter writer;
+//        try {
+//                writer = new PrintWriter(path+"_restriction.tsv");
+//                for(String key:hm_double.keySet()){
+//                    writer.write(key+Double.toString(hm_double.get(key))+"\n");
+//                }
+//                writer.close();
+//        } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//        }
+//
+//        try {
+//                writer = new PrintWriter(path+"_simple.tsv");
+//                for(String key:hm_int.keySet()){
+//                    if(hm_int.get(key)>1)
+//                        writer.write(key+Integer.toString(hm_int.get(key))+"\n");
+//                }
+//                writer.close();
+//        } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//        }
+//        
+//    }
 
 }

@@ -6,7 +6,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.citec.sc.matoll.core.Lexicon;
+import de.citec.sc.lemon.core.Lexicon;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 
 

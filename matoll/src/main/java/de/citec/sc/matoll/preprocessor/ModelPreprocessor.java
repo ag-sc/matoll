@@ -12,8 +12,8 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 
-import de.citec.sc.matoll.core.Language;
-import static de.citec.sc.matoll.core.Language.JA;
+import de.citec.sc.lemon.core.Language;
+import static de.citec.sc.lemon.core.Language.JA;
 import de.citec.sc.matoll.coreference.Coreference;
 import java.util.logging.Level;
 import java.util.logging.Logger;

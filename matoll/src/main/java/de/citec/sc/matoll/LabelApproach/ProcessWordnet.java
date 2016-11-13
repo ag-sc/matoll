@@ -15,20 +15,20 @@ import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
-import de.citec.sc.matoll.core.Language;
-import static de.citec.sc.matoll.core.Language.EN;
+import de.citec.sc.lemon.core.Language;
+import static de.citec.sc.lemon.core.Language.EN;
 
-import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Provenance;
-import de.citec.sc.matoll.core.Reference;
-import de.citec.sc.matoll.core.Restriction;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SenseArgument;
-import de.citec.sc.matoll.core.SimpleReference;
-import de.citec.sc.matoll.core.SyntacticArgument;
-import de.citec.sc.matoll.core.SyntacticBehaviour;
-import de.citec.sc.matoll.io.LexiconSerialization;
+import de.citec.sc.lemon.core.LexicalEntry;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Provenance;
+import de.citec.sc.lemon.core.Reference;
+import de.citec.sc.lemon.core.Restriction;
+import de.citec.sc.lemon.core.Sense;
+import de.citec.sc.lemon.core.SenseArgument;
+import de.citec.sc.lemon.core.SimpleReference;
+import de.citec.sc.lemon.core.SyntacticArgument;
+import de.citec.sc.lemon.core.SyntacticBehaviour;
+import de.citec.sc.lemon.io.LexiconSerialization;
 import de.citec.sc.matoll.utils.Levenshtein;
 import de.citec.sc.matoll.utils.OntologyImporter;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
@@ -120,7 +120,7 @@ public class ProcessWordnet {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		LexiconSerialization serializer = new LexiconSerialization(false);
+		LexiconSerialization serializer = new LexiconSerialization();
 		
 		serializer.serialize(lexicon, model);
 		
@@ -460,64 +460,64 @@ public class ProcessWordnet {
     
     
     
-    private static void extportTSV(Lexicon lexicon, String path){
-        Map<String,Double> hm_double = new HashMap<>();
-        Map<String,Integer> hm_int = new HashMap<>();
-        for(LexicalEntry entry : lexicon.getEntries()){
-            for(Sense sense:entry.getSenseBehaviours().keySet()){
-                Reference ref = sense.getReference();
-                if (ref instanceof de.citec.sc.matoll.core.SimpleReference){
-                    SimpleReference reference = (SimpleReference) ref;
-                    String input = entry.getCanonicalForm()+"\t"+reference.getURI()+"\t";
-                    if(hm_int.containsKey(input)){
-                            int freq = hm_int.get(input);
-                             hm_int.put(input, entry.getProvenance(sense).getFrequency()+freq);
-                        }
-                        else{
-                            hm_int.put(input, entry.getProvenance(sense).getFrequency());
-                        }
-                }
-                else if (ref instanceof de.citec.sc.matoll.core.Restriction){
-                    Restriction reference = (Restriction) ref;
-                    String input = entry.getCanonicalForm()+"\t"+reference.getValue()+"\t"+reference.getProperty()+"\t";
-                    if(entry.getProvenance(sense).getConfidence()!=null){
-                        if(hm_double.containsKey(input)){
-                            double value = hm_double.get(input);
-                             hm_double.put(input, entry.getProvenance(sense).getConfidence()+value);
-                        }
-                        else{
-                            hm_double.put(input, entry.getProvenance(sense).getConfidence());
-                        }
-                    }
-                    
-                }
-            }
-        }
-        
-        PrintWriter writer;
-        try {
-                writer = new PrintWriter(path+"_restriction.tsv");
-                for(String key:hm_double.keySet()){
-                    writer.write(key+Double.toString(hm_double.get(key))+"\n");
-                }
-                writer.close();
-        } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-
-        try {
-                writer = new PrintWriter(path+"_simple.tsv");
-                for(String key:hm_int.keySet()){
-                    writer.write(key+Integer.toString(hm_int.get(key))+"\n");
-                }
-                writer.close();
-        } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-        
-    }
+//    private static void extportTSV(Lexicon lexicon, String path){
+//        Map<String,Double> hm_double = new HashMap<>();
+//        Map<String,Integer> hm_int = new HashMap<>();
+//        for(LexicalEntry entry : lexicon.getEntries()){
+//            for(Sense sense:entry.getSenseBehaviours().keySet()){
+//                Reference ref = sense.getReference();
+//                if (ref instanceof de.citec.sc.lemon.core.SimpleReference){
+//                    SimpleReference reference = (SimpleReference) ref;
+//                    String input = entry.getCanonicalForm()+"\t"+reference.getURI()+"\t";
+//                    if(hm_int.containsKey(input)){
+//                            int freq = hm_int.get(input);
+//                             hm_int.put(input, entry.getProvenance(sense).getFrequency()+freq);
+//                        }
+//                        else{
+//                            hm_int.put(input, entry.getProvenance(sense).getFrequency());
+//                        }
+//                }
+//                else if (ref instanceof de.citec.sc.lemon.core.Restriction){
+//                    Restriction reference = (Restriction) ref;
+//                    String input = entry.getCanonicalForm()+"\t"+reference.getValue()+"\t"+reference.getProperty()+"\t";
+//                    if(entry.getProvenance(sense).getConfidence()!=null){
+//                        if(hm_double.containsKey(input)){
+//                            double value = hm_double.get(input);
+//                             hm_double.put(input, entry.getProvenance(sense).getConfidence()+value);
+//                        }
+//                        else{
+//                            hm_double.put(input, entry.getProvenance(sense).getConfidence());
+//                        }
+//                    }
+//                    
+//                }
+//            }
+//        }
+//        
+//        PrintWriter writer;
+//        try {
+//                writer = new PrintWriter(path+"_restriction.tsv");
+//                for(String key:hm_double.keySet()){
+//                    writer.write(key+Double.toString(hm_double.get(key))+"\n");
+//                }
+//                writer.close();
+//        } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//        }
+//
+//        try {
+//                writer = new PrintWriter(path+"_simple.tsv");
+//                for(String key:hm_int.keySet()){
+//                    writer.write(key+Integer.toString(hm_int.get(key))+"\n");
+//                }
+//                writer.close();
+//        } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//        }
+//        
+//    }
     
     
     	private static Set<String> loadPropertyList(String pathToProperties) throws IOException {

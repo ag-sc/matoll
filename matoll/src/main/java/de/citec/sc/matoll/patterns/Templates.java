@@ -5,18 +5,18 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 
 import org.apache.jena.rdf.model.Model;
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Preposition;
-import de.citec.sc.matoll.core.Provenance;
-import de.citec.sc.matoll.core.Reference;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.SenseArgument;
-import de.citec.sc.matoll.core.Sentence;
-import de.citec.sc.matoll.core.SimpleReference;
-import de.citec.sc.matoll.core.SyntacticArgument;
-import de.citec.sc.matoll.core.SyntacticBehaviour;
+import de.citec.sc.lemon.core.Language;
+import de.citec.sc.lemon.core.LexicalEntry;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Preposition;
+import de.citec.sc.lemon.core.Provenance;
+import de.citec.sc.lemon.core.Reference;
+import de.citec.sc.lemon.core.Sense;
+import de.citec.sc.lemon.core.SenseArgument;
+import de.citec.sc.lemon.core.Sentence;
+import de.citec.sc.lemon.core.SimpleReference;
+import de.citec.sc.lemon.core.SyntacticArgument;
+import de.citec.sc.lemon.core.SyntacticBehaviour;
 import de.citec.sc.matoll.utils.Lemmatizer;
 
 public class Templates {

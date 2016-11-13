@@ -5,8 +5,8 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.StmtIterator;
 
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Sentence;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Sentence;
 import de.citec.sc.matoll.utils.Lemmatizer;
 import org.apache.jena.rdf.model.Statement;
 

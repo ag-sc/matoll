@@ -11,7 +11,7 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import de.citec.sc.matoll.core.Language;
+import de.citec.sc.lemon.core.Language;
 import java.util.HashSet;
 import java.util.Set;
 

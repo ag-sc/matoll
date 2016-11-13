@@ -5,13 +5,13 @@
  */
 package de.citec.sc.matoll.process;
 
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.LexicalEntry;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Sense;
-import de.citec.sc.matoll.core.Sentence;
+import de.citec.sc.lemon.core.Language;
+import de.citec.sc.lemon.core.LexicalEntry;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Sense;
+import de.citec.sc.lemon.core.Sentence;
 import de.citec.sc.matoll.io.Config;
-import de.citec.sc.matoll.io.LexiconLoader;
+import de.citec.sc.lemon.io.LexiconLoader;
 import de.citec.sc.matoll.utils.RelationshipEdge;
 import de.citec.sc.matoll.utils.Stopwords;
 import java.io.File;

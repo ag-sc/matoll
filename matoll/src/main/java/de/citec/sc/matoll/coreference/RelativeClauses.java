@@ -3,7 +3,7 @@ package de.citec.sc.matoll.coreference;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 
-import de.citec.sc.matoll.core.Language;
+import de.citec.sc.lemon.core.Language;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.jena.query.Query;

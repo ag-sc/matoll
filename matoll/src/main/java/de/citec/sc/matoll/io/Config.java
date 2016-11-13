@@ -1,11 +1,11 @@
 package de.citec.sc.matoll.io;
 
 
-import de.citec.sc.matoll.core.Language;
-import static de.citec.sc.matoll.core.Language.DE;
-import static de.citec.sc.matoll.core.Language.EN;
-import static de.citec.sc.matoll.core.Language.ES;
-import static de.citec.sc.matoll.core.Language.JA;
+import de.citec.sc.lemon.core.Language;
+import static de.citec.sc.lemon.core.Language.DE;
+import static de.citec.sc.lemon.core.Language.EN;
+import static de.citec.sc.lemon.core.Language.ES;
+import static de.citec.sc.lemon.core.Language.JA;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

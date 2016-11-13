@@ -1,6 +1,6 @@
 package de.citec.sc.matoll.utils;
 
-import de.citec.sc.matoll.core.Language;
+import de.citec.sc.lemon.core.Language;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;

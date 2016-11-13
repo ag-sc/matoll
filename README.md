@@ -21,6 +21,13 @@ Finally the folder `public` contain results for our paper [Automatic acquisition
 
 For further questions, or if you are interested in extending M-ATOLL to more languages, please contact the main developer [Sebastian Walter](http://sebastianwalter.org).
 
+## lemon.api
+
+In order to run matoll you need to have installed the jar of our [lemon.api](https://github.com/ag-sc/lemon.api)
+with 
+
+mvn install:install-file -Dfile=<path-to-jar> -DpomFile=<path-to-pom>
+
 
 ## References 
 

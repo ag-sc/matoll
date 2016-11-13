@@ -9,9 +9,9 @@ import org.apache.jena.query.ResultSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.citec.sc.matoll.core.Language;
-import de.citec.sc.matoll.core.Lexicon;
-import de.citec.sc.matoll.core.Sentence;
+import de.citec.sc.lemon.core.Language;
+import de.citec.sc.lemon.core.Lexicon;
+import de.citec.sc.lemon.core.Sentence;
 import de.citec.sc.matoll.patterns.SparqlPattern;
 import de.citec.sc.matoll.patterns.Templates;
 import java.util.List;

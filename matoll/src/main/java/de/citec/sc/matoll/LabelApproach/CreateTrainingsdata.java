@@ -3,19 +3,17 @@ package de.citec.sc.matoll.LabelApproach;
 
 
 
+import static de.citec.sc.lemon.core.Language.EN;
 import java.io.IOException;
 import java.util.HashSet;
 
-import static de.citec.sc.matoll.core.Language.EN;
 
 import de.citec.sc.matoll.utils.OntologyImporter;
 import de.citec.sc.matoll.utils.StanfordLemmatizer;
-import de.citec.sc.matoll.utils.Wordnet;
 import edu.stanford.nlp.process.Morphology;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
-import static java.lang.Math.random;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,7 +37,7 @@ public class CreateTrainingsdata {
 		// TODO Auto-generated method stub
 
 		String path_to_write_arff = "adjective.arff";
-		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
+//		String path_weka_model = path_to_write_arff.replace(".arff", ".model");
 		String path_to_wordnet = "/Users/swalter/Backup/Software/WordNet-3.0";
 		String path_to_objects = "/Users/swalter/Downloads/tmp_extractPropertiesWithData/results/ontology/";
 		/*
@@ -69,17 +67,17 @@ public class CreateTrainingsdata {
                 }
 		
 		
-		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
+//		ExtractData adjectiveExtractor = new ExtractData(path_to_wordnet);
 		
 		MaxentTagger tagger = new MaxentTagger(path_to_tagger_model);
 		Morphology mp = new Morphology();
                 
-                Wordnet wordnet = new Wordnet(path_to_wordnet);
+//                Wordnet wordnet = new Wordnet(path_to_wordnet);
 		int min = 1;
                 int max = properties.size()-1;
                 List<String> tmp_properties = new ArrayList<>();
                 for(String p:properties)tmp_properties.add(p);
-                Set<String> random_properties = new HashSet<>();
+//                Set<String> random_properties = new HashSet<>();
                 ExtractData ed = new ExtractData(path_to_wordnet);
                 Random rn = new Random();
                 for(int i = 0;i<200;i++)

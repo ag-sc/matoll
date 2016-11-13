@@ -27,6 +27,11 @@
                 <artifactId>jena-core</artifactId>
                 <version>3.0.0</version>
         </dependency>
+        <dependency>
+                <groupId>citec.de</groupId>
+                <artifactId>lemon.api</artifactId>
+                <version>1.0</version>
+        </dependency>
   	<dependency>
   		<groupId>org.apache.logging.log4j</groupId>
   		<artifactId>log4j-api</artifactId>
@@ -204,4 +209,5 @@
 
 
 </build>
+    <name>matoll_sc</name>
 </project>
