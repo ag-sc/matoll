@@ -89,6 +89,10 @@ public class ReadIndex {
 	          ArrayList<String> result = new ArrayList<>();
 	          String sentence = d.get("parsed");
                   String plain_sentence = getPlainSentence(sentence);
+                  if(sentence.contains("<n>")) sentence = sentence.replace("<n>", "\t\t");
+                  if(sentence.contains("<t>")) sentence = sentence.replace("<t>", "\t");
+                  if(plain_sentence.contains("<n>")) sentence = sentence.replace("<n>", "\t\t");
+                  if(plain_sentence.contains("<t>")) sentence = sentence.replace("<t>", "\t");
                   //System.out.println(plain_sentence);
                   //System.out.println(subj);
                   //System.out.println(obj);
